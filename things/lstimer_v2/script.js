@@ -162,15 +162,6 @@ function tick() {
 	if (!SAFETYPIN&&RAINBOWFLAG) _rainbowMode();
 	tsTimeChange++;
 	tsHueChange++;
-	var daytime = now.getHours()*3600+now.getMinutes()*60+now.getSeconds();
-	if (daytime>43200) {
-		daytime=86400-daytime;
-	}
-	if (daytime>=21600&&lightFlag==false) {
-		changeLight(true);
-	} else if (daytime<21600&&lightFlag==true) {
-		changeLight(false);
-	}
 	if (tsTimeChange>=timeChangeInterval) {
 		changeTime();
 	}
@@ -252,13 +243,13 @@ function changeTime() {
 			return;
 		}
 		if (_getSecLeft(_getDateFromInput(0,0,0,0,0),true)-0.5 < _prevSec) {
-			_prevSec=Math.floor(_getSecLeft(_getDateFromInput(0,0,0,0,0),true)-0.5);
+			_prevSec=Math.floor(_getSecLeft(_getDateFromInput(0,0,0,0,0),true)-0.9);
 			for (var i=store_ringStart; i<=8; i++) {
 				var curRot=_getRotation(_prevSec,i);
 				if (_prevRot[i]==curRot) continue;
-				if (curRot==315) _tempRelease(i,curRot);
 				_prevRot[i]=curRot;
-				$("#r"+i).css("transform","var(--trans-center) rotate("+_prevRot[i]+"deg)");
+				$("#r"+i).css("animation",`0.5s cubic-bezier(1,0,.8,.25) forwards rotate${curRot}`);
+				$("#r"+i).attr("angle",`${curRot}`);
 				if (_prevSec%Math.pow(8,8-i)==0) break;
 			}
 		}
@@ -669,7 +660,7 @@ function _runTimerAnimation() {
 		dateEditingFlag=false;
 	}
 	$(".glowring").removeClass("retracted");
-	$(".glowring").css("transition","width 0.5s, height 0.5s, left 0.5s, top 0.5s, transform 0.5s ease-in");
+	$(".glowring").css("transition","width 0.5s, height 0.5s, left 0.5s, top 0.5s");
 	$(".pdisplay").removeClass("datetextactive");
 	$(".pdisplay").addClass("glowmore");
 	_declose();
@@ -696,11 +687,11 @@ function _waitForInit() {
 }
 var timerActuallyRunning=false;
 function _initialTimerAnimation() {
-	$(".glowring").css("transition","width 0.5s, height 0.5s, left 0.5s, top 0.5s, transform 1.5s cubic-bezier(.47,0,.58,1.48)");
 	var second=_getSecLeft(_getDateFromInput(0,0,0,0,0))-2;
 	for (var i=store_ringStart; i<=8; i++) {
 		_prevRot[i]=_getRotation(second,i);
-		$("#r"+i).css("transform","var(--trans-center) rotate("+_prevRot[i]+"deg)");
+		$("#r"+i).css("animation",`1.5s cubic-bezier(.47,0,.58,1.48) forwards rotate${_prevRot[i]}`);
+		$("#r"+i).attr("angle",`${_prevRot[i]}`);
 	}
 	window.setTimeout(_startTimer,2000);
 }
@@ -708,7 +699,7 @@ function _initialTimerAnimation() {
 function _startTimer() {
 	if (!store_timerRunning) return;
 	_prevSec=_getSecLeft(_getDateFromInput(0,0,0,0,0));
-	$(".glowring").css("transition","border-color 0.5s, box-shadow 0.5s, transform 0.5s ease-in");
+	$(".glowring").css("transition","border-color 0.5s, box-shadow 0.5s");
 	if (store_timerRunning) timerActuallyRunning=true;
 	_changeHueTransState(false);
 }
@@ -720,18 +711,11 @@ function _getRotation(second,ringnum) {
 	return sleft;
 }
 
-function _tempRelease(ringnum) {
-	$("#r"+ringnum).css("transition","none");
-	$("#r"+ringnum).css("transform","var(--trans-center) rotate(360deg)");
-	$("#r"+ringnum)[0].offsetHeight; // reflow라나 뭐라나 아무튼 이렇게 해야 transition이 안됨
-	$("#r"+ringnum).css("transition","border-color 0.5s, box-shadow 0.5s, transform 0.5s ease-in");
-}
-
 function _timerSuspend() {
 	store_timerRunning = false;
 	timerActuallyRunning = false;
 	console.log("_timerSuspend");
-	$(".glowring").css("transition","width 0.5s, height 0.5s, left 0.5s, top 0.5s, transform 0.5s ease-in");
+	$(".glowring").css("transition","width 0.5s, height 0.5s, left 0.5s, top 0.5s");
 	$(".glowring").addClass("retracted");
 	$(".pdisplay").removeClass("glowmore");
 	$(".datecontainer").css("width","calc(49 * var(--size-default1))");
@@ -787,6 +771,11 @@ function _getPercent() {
 		return (100-_getRealNumber()/_getRingCap()*100).toFixed(3)+"%";
 	}
 }
+
+$(".glowring").on("animationend", function() {
+	$(this).removeClass("rotate0").removeClass("rotate45").removeClass("rotate90").removeClass("rotate135").removeClass("rotate180").removeClass("rotate225").removeClass("rotate270").removeClass("rotate315");
+	$(this).addClass(`rotate${$(this).attr("angle")}`);
+})
 
 var KILLCODE=0;
 window.onload = function() {

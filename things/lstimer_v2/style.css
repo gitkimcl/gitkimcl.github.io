@@ -2,7 +2,7 @@
 	transition: var(--default-trans);
 }
 
-html {
+:root {
 	--default-trans: background-color 0.5s linear, color 0.5s linear, border 0.5s linear, border-color 0.5s linear, box-shadow 0.5s linear, text-shadow 0.5s linear;
 	--trans-center: translate(-50%, -50%);
 	--theme-hue:330;
@@ -84,10 +84,10 @@ body {
 .glowring {
 	aspect-ratio: 1;
 	transition: width 0.5s, height 0.5s, left 0.5s, top 0.5s, opacity 0.5s, border-color 0.5s, box-shadow 0.5s, transform 0.5s ease-in;
+	transform: translate(-50%, -50%) rotate(0deg);
 	position: absolute;
 	left: 50%;
 	top: 52.5%;
-	transform: var(--trans-center);
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;
@@ -571,4 +571,68 @@ body {
 .pdisplay.datetextactive:has(#play:hover) .ringnum {
 	color: var(--theme-glow3);
 	text-shadow: 0px 0px 2px var(--theme-glow2);
+}
+
+@keyframes rotate0 {
+	to { transform: translate(-50%, -50%) rotate(0deg); }
+}
+
+@keyframes rotate45 {
+	to { transform: translate(-50%, -50%) rotate(45deg); }
+}
+
+@keyframes rotate90 {
+	to { transform: translate(-50%, -50%) rotate(90deg); }
+}
+
+@keyframes rotate135 {
+	to { transform: translate(-50%, -50%) rotate(135deg); }
+}
+
+@keyframes rotate180 {
+	to { transform: translate(-50%, -50%) rotate(180deg); }
+}
+
+@keyframes rotate225 {
+	to { transform: translate(-50%, -50%) rotate(225deg); }
+}
+
+@keyframes rotate270 {
+	to { transform: translate(-50%, -50%) rotate(270deg); }
+}
+
+@keyframes rotate315 {
+	to { transform: translate(-50%, -50%) rotate(315deg); }
+}
+
+.rotate0 {
+	transform: translate(-50%, -50%) rotate(360deg);
+}
+
+.rotate45 {
+	transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.rotate90 {
+	transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.rotate135 {
+	transform: translate(-50%, -50%) rotate(135deg);
+}
+
+.rotate180 {
+	transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.rotate225 {
+	transform: translate(-50%, -50%) rotate(225deg);
+}
+
+.rotate270 {
+	transform: translate(-50%, -50%) rotate(270deg);
+}
+
+.rotate315 {
+	transform: translate(-50%, -50%) rotate(315deg);
 }
