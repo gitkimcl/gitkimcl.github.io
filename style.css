@@ -1,0 +1,49 @@
+@import url('https://fonts.cdnfonts.com/css/br-cobane');
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+
+:root {
+    --dark: #232323;
+    --bright: #FAFAFA;
+    --blue: #007AFF;
+    --font: 'BR Cobane', 'Pretendard Variable', sans-serif;
+    --base-length: max(10vw, 10vh);
+    font-family: var(--font);
+}
+
+body {
+    background-color: var(--dark);
+}
+
+a {
+    text-decoration: none;
+    color: var(--bright);
+    font-weight: 600;
+}
+
+a:hover {
+    color: var(--blue);
+    text-decoration: underline;
+}
+
+.tile {
+    position: relative;
+    width: calc(3 * var(--base-length));
+    height: calc(3 * var(--base-length));
+    border-radius: calc(0.15 * var(--base-length));
+    overflow: hidden;
+    box-shadow: inset calc(-0.04 * var(--base-length)) calc(-0.04 * var(--base-length)) calc(0.15 * var(--base-length)) var(--dark);
+    transition-duration: 0.5s;
+}
+
+.tile:hover {
+    box-shadow: inset 0 0 0 transparent,
+        0 0 calc(0.2 * var(--base-length)) var(--bright);
+}
+
+.tile-img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    z-index: -1;
+}

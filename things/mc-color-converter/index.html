@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<div class="container" id="bg">
+			<div class="glowborder" id="border">
+				<div class="title" id="title">
+				색깔 변환기
+				</div>
+				<br>
+				<input type="number" placeholder=0 min=0 max=255 class="rgb short" id="red">
+				<input type="number" placeholder=0 min=0 max=255 class="rgb short" id="green">
+				<input type="number" placeholder=0 min=0 max=255 class="rgb short" id="blue">
+				<input type="color" id="col">
+				<br>
+				<br>
+				<br>
+				<span id="sans" style="font-weight: bold;">
+					마크,스크래치 컬러코드: 
+				</span>
+				<input type="number" placeholder=0 class="code" id="code">
+				<br>
+				<br>
+				<button id="button" onclick="randomForFun();">
+					무작위 색깔
+				</button>
+			</div>
+			<script src="script.js"></script>
+		</div>
+	</body>
+</html>
