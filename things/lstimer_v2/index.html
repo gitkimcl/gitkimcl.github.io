@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko" id="var">
+	<head>
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Roboto+Flex:opsz@8..144&display=swap" rel="stylesheet">
+		<link id="fav" rel="icon" href="icon/ring_notimer.ico" type="image/ico">
+		<link rel="stylesheet" href="style.css">
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<title id="title">loading</title>
+	</head>
+	<body>
+		<div class="blind"></div>
+		<div class="glowring retracted" id="r0" style="opacity:0%;"></div>
+		<div class="glowring retracted" id="r1"></div>
+		<div class="glowring retracted" id="r2"></div>
+		<div class="glowring retracted" id="r3"></div>
+		<div class="glowring retracted" id="r4"></div>
+		<div class="glowring retracted" id="r5"></div>
+		<div class="glowring retracted" id="r6"></div>
+		<div class="glowring retracted" id="r7"></div>
+		<div class="glowring retracted" id="r8"></div>
+		<p class="secleft">
+			<span class="d1">0</span>
+			<span class="d2">0</span>
+			<span class="d3">0</span>
+			<span class="d4">0</span>
+			<span class="d5">0</span>
+			<span class="d6">0</span>
+			<span class="d7">0</span>
+			<span class="d8">0</span>
+		</p>
+		<div id="inputs">
+			<div class="nigroup glowborder" id="nidisplay"></div>
+			<div class="ligroup glowborder" id="lidisplay"></div>
+			<input class="nigroup" id="nameinput" placeholder="이름 입력" readonly>
+			<input class="ligroup" id="linkinput" placeholder="링크 없음" readonly>
+		</div>
+		<div class="nedisplay glowborder"></div>
+		<button id="nameedit" class="">
+			<div class="em1 editmark glowline"></div>
+			<div class="em2 editmark editmark2 glowline"></div>
+		</button>
+		<div class="datecontainer glowborder">
+			<div class="dedisplay glowborder"></div>
+			<button id="dateedit">
+				<div class="dem1 deditmark glowline"></div>
+				<div class="dem2 deditmark editmark2 glowline"></div>
+			</button>
+			<div class="dzdisplay glowborder"></div>
+			<button id="datezero" class="">
+				<div class="zero glowborder"></div>
+			</button>
+			<div class="datetextcon">
+				<div class="datetext glowborder" id="dyear"></div>
+				<div class="datetext glowborder" id="dmonth"></div>
+				<div class="datetext glowborder" id="dday"></div>
+				<div class="datesep glowline" id="dateseparate"></div>
+				<div class="datetext glowborder" id="dhour"></div>
+				<div class="datetext glowborder" id="dmin"></div>
+			</div>
+			<input id="dateinput" type="datetime-local" style="opacity:0%">
+		</div>
+		<div class="pdisplay glowborder">
+			<p class="ringnum">8</p>
+			<button id="play">
+				<div class="playline pl1 glowline"></div>
+				<div class="playline pl2 glowline"></div>
+			</button>
+		</div>
+		<script src="script.js">
+		</script>
+	</body>
+</html>

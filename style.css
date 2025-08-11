@@ -6,12 +6,13 @@
     --bright: #FAFAFA;
     --blue: #007AFF;
     --font: 'BR Cobane', 'Pretendard Variable', sans-serif;
-    --base-length: max(10vw, 10vh);
+    --base-length: min(28.571vw, 18vh);
     font-family: var(--font);
 }
 
 body {
     background-color: var(--dark);
+    margin: 0;
 }
 
 a {
@@ -25,19 +26,52 @@ a:hover {
     text-decoration: underline;
 }
 
+.row {
+    width: 100vw;
+    text-align: center;
+}
 .tile {
+    display: inline-block;
     position: relative;
     width: calc(3 * var(--base-length));
     height: calc(3 * var(--base-length));
     border-radius: calc(0.15 * var(--base-length));
+    margin: calc(0.25 * var(--base-length));
     overflow: hidden;
-    box-shadow: inset calc(-0.04 * var(--base-length)) calc(-0.04 * var(--base-length)) calc(0.1 * var(--base-length)) var(--dark);
+    box-shadow: 0 0 calc(0.1 * var(--base-length)) 0 transparent,
+        calc(-0.7 * var(--base-length)) calc(-0.7 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.7 * var(--base-length)) transparent,
+        calc(0.7 * var(--base-length)) calc(-0.7 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.7 * var(--base-length)) transparent,
+        calc(-0.7 * var(--base-length)) calc(0.7 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.7 * var(--base-length)) transparent,
+        calc(0.7 * var(--base-length)) calc(0.7 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.7 * var(--base-length)) transparent;
     transition-duration: 0.2s;
 }
 
+.tile::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 calc(0.1 * var(--base-length)) var(--dark);
+    transition-duration: 0.2s;
+    pointer-events: none;
+}
+
 .tile:hover {
-    box-shadow: inset 0 0 0 transparent,
-        0 0 calc(0.2 * var(--base-length)) var(--bright);
+    --glow: var(--bright);
+    --glow0: color-mix(in srgb,var(--glow) 25%,transparent);
+    --glow1: var(--glow);
+    --glow2: var(--glow);
+    --glow3: var(--glow);
+    --glow4: var(--glow);
+    box-shadow: 0 0 calc(0.1 * var(--base-length)) 0 var(--glow0),
+        calc(-0.7 * var(--base-length)) calc(-0.7 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.7 * var(--base-length)) var(--glow1),
+        calc(0.7 * var(--base-length)) calc(-0.7 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.7 * var(--base-length)) var(--glow2),
+        calc(-0.7 * var(--base-length)) calc(0.7 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.7 * var(--base-length)) var(--glow3),
+        calc(0.7 * var(--base-length)) calc(0.7 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.7 * var(--base-length)) var(--glow4);
+    transform: scale(1.05);
+}
+
+.tile:hover::after {
+    box-shadow: inset 0 0 0 transparent;
 }
 
 .tile-img {
@@ -45,5 +79,10 @@ a:hover {
     width: 100%;
     height: 100%;
     image-rendering: pixelated;
+    object-fit: cover;
     z-index: -1;
+}
+
+.tilted {
+    transform: scale(1.6) rotate3d(-1,1,1,45deg);
 }
