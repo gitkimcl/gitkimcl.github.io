@@ -78,14 +78,6 @@ function _load() {
 		localStorage.setItem("targetDate","zero");
 	}
 	_reload("date");
-	if (localStorage.getItem("timerRunning")=="true") {
-		store_timerRunning=true;
-	} else {
-		store_timerRunning=false;
-	}
-	if (store_timerRunning) {
-		_runTimerAnimation();
-	}
 	if (localStorage.getItem("timerName")==null) localStorage.setItem("timerName","");
 	if (localStorage.getItem("timerLink")==null) localStorage.setItem("timerLink","");
 	if (localStorage.getItem("ringStart")==null) localStorage.setItem("ringStart","1");
@@ -94,6 +86,14 @@ function _load() {
 	store_ringStart=parseInt(localStorage.getItem("ringStart"));
 	_reload("namelink");
 	_reload("ring");
+	if (localStorage.getItem("timerRunning")=="true") {
+		store_timerRunning=true;
+	} else {
+		store_timerRunning=false;
+	}
+	if (store_timerRunning) {
+		_runTimerAnimation();
+	}
 }
 
 function _reload(instruct) {
@@ -188,32 +188,32 @@ function changeHue() {
 	tsHueChange=0;
 	if (!SAFETYPIN&&(CUSTOMIZECOLOR||RAINBOWFLAG)) return;
 	if (dateEditingFlag&&store_dateZero) {
-		if (prevHue==210) return;
-		_setVar("--theme-hue","210");
-		prevHue=210;
+		if (prevHue==170) return;
+		_setVar("--theme-hue","170");
+		prevHue=170;
 		_setIcon("0");
 		return;
 	}
 	if (store_timerRunning||(dateEditingFlag&&!store_dateZero)) {
 		var hue=_getRealNumber()/_getRingCap();
 		_setIcon(Math.floor(hue*8).toString());
-		hue*=90;
-		hue+=210;
+		hue*=160;
+		hue+=170;
 		hue=Math.floor(hue);
 		if (prevHue==hue) return;
 		_setVar("--theme-hue",hue);
 		prevHue=hue;
 		return;
 	}
-	if (prevHue==330) return;
-	_setVar("--theme-hue","330");
-	prevHue=330;
+	if (prevHue==345) return;
+	_setVar("--theme-hue","345");
+	prevHue=345;
 	_setIcon("_notimer");
 }
 
 var CUSTOMIZEDATE=false;
 var _prevSec=-1;
-var _prevRot=[-1,0,0,0,0,0,0,0,0];
+var _prevRot=[-1,-1,-1,-1,-1,-1,-1,-1,-1];
 function changeTime() {
 	tsTimeChange=0;
 	if (SAFETYPIN || !CUSTOMIZEDATE) {
@@ -243,14 +243,13 @@ function changeTime() {
 			return;
 		}
 		if (_getSecLeft(_getDateFromInput(0,0,0,0,0),true)-0.5 < _prevSec) {
-			_prevSec=Math.floor(_getSecLeft(_getDateFromInput(0,0,0,0,0),true)-0.9);
+			_prevSec=Math.floor(_getSecLeft(_getDateFromInput(0,0,0,0,0),true)-0.5);
 			for (var i=store_ringStart; i<=8; i++) {
 				var curRot=_getRotation(_prevSec,i);
 				if (_prevRot[i]==curRot) continue;
 				_prevRot[i]=curRot;
 				$("#r"+i).css("animation",`0.5s cubic-bezier(1,0,.8,.25) forwards rotate${curRot}`);
 				$("#r"+i).attr("angle",`${curRot}`);
-				if (_prevSec%Math.pow(8,8-i)==0) break;
 			}
 		}
 		if (_getSecLeft(_getDateFromInput(0,0,0,0,0),true)-1 < _prevSec) {
@@ -426,7 +425,7 @@ function _liclose() {
 	$("#nameedit .editmark").removeClass("glowmore");
 	$(".nedisplay").removeClass("glowmore");
 	$("#inputs .glowborder").removeClass("glowmore");
-	$("#inputs input").css("color","var(--theme-text)");
+	$("#inputs input").css("color","var(--theme-solid)");
 	$("#inputs input").removeClass("glowplaceholder");
 	$(".ligroup").removeClass("liopen");
 	$(".em1").css("transform","translate(-50%,-50%) rotate(0deg)");
@@ -659,8 +658,8 @@ function _runTimerAnimation() {
 	if (dateEditingFlag) {
 		dateEditingFlag=false;
 	}
+	$(".glowring").css("transition","width 0.5s, height 0.5s, left 0.5s, top 0.5s, transform 0.5s");
 	$(".glowring").removeClass("retracted");
-	$(".glowring").css("transition","width 0.5s, height 0.5s, left 0.5s, top 0.5s");
 	$(".pdisplay").removeClass("datetextactive");
 	$(".pdisplay").addClass("glowmore");
 	_declose();
@@ -669,45 +668,29 @@ function _runTimerAnimation() {
 	$(".ringnum").css("opacity","0%");
 	$(".playline").addClass("glowmore");
 	$(".playline").css("opacity","100%");
-	waitPrevSec=_getSecLeft(_getDateFromInput(0,0,0,0,0));
-	window.setTimeout(_doublewait,1000);
-}
-
-function _doublewait() {
-	timerInitKillcode=window.setInterval(_waitForInit,9);
-}
-
-var timerInitKillcode=-1;
-var waitPrevSec;
-function _waitForInit() {
-	if (_getSecLeft(_getDateFromInput(0,0,0,0,0))!=waitPrevSec) {
-		window.clearInterval(timerInitKillcode);
-		_initialTimerAnimation();
-	}
-}
-var timerActuallyRunning=false;
-function _initialTimerAnimation() {
-	var second=_getSecLeft(_getDateFromInput(0,0,0,0,0))-2;
+	_prevSec=Math.floor(_getSecLeft(_getDateFromInput(0,0,0,0,0),true)-1.5);
 	for (var i=store_ringStart; i<=8; i++) {
-		_prevRot[i]=_getRotation(second,i);
-		$("#r"+i).css("animation",`1.5s cubic-bezier(.47,0,.58,1.48) forwards rotate${_prevRot[i]}`);
-		$("#r"+i).attr("angle",`${_prevRot[i]}`);
+		var curRot=_getRotation(_prevSec,i);
+		_prevRot[i]=curRot;
+		console.log(`${i} ${curRot}`)
+		$("#r"+i).attr("angle",`${curRot}`);
+		$("#r"+i).css("animation", `1s cubic-bezier(.47,0,.58,1.48) forwards rotate${curRot}`);
 	}
-	window.setTimeout(_startTimer,2000);
+	window.setTimeout(_startTimer,1000);
 }
 
+var timerActuallyRunning=false;
 function _startTimer() {
 	if (!store_timerRunning) return;
-	_prevSec=_getSecLeft(_getDateFromInput(0,0,0,0,0));
 	$(".glowring").css("transition","border-color 0.5s, box-shadow 0.5s");
-	if (store_timerRunning) timerActuallyRunning=true;
 	_changeHueTransState(false);
+	timerActuallyRunning=true;
 }
 
 function _getRotation(second,ringnum) {
 	var sleft=second;
 	sleft=Math.floor(sleft/Math.pow(8,8-ringnum));
-	sleft=(sleft+1)%8*45;
+	sleft=(sleft)%8*45;
 	return sleft;
 }
 
@@ -715,8 +698,13 @@ function _timerSuspend() {
 	store_timerRunning = false;
 	timerActuallyRunning = false;
 	console.log("_timerSuspend");
-	$(".glowring").css("transition","width 0.5s, height 0.5s, left 0.5s, top 0.5s");
+	$(".glowring").css("transition","width 0.5s, height 0.5s, left 0.5s, top 0.5s, border-width 0.5s");
 	$(".glowring").addClass("retracted");
+	$(".glowring").removeClass("rotate0").removeClass("rotate45").removeClass("rotate90").removeClass("rotate135").removeClass("rotate180").removeClass("rotate225").removeClass("rotate270").removeClass("rotate315").each(function() {
+		if ($(this).attr("angle")=="-1") return;
+		$(this).addClass(`rotate${$(this).attr("angle")}`);
+	});
+	$(".glowring").attr("angle","-1");
 	$(".pdisplay").removeClass("glowmore");
 	$(".datecontainer").css("width","calc(49 * var(--size-default1))");
 	$(".nedisplay, #nameedit, .dedisplay, #dateedit, .dzdisplay, #datezero, #nidisplay").css("display","inline-block");
