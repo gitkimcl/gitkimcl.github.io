@@ -1,16 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko" id="var">
+<html lang="ko">
 	<head>
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR&family=Roboto+Flex:opsz@8..144&display=swap" rel="stylesheet">
 		<link id="fav" rel="icon" href="icon/ring_notimer.ico" type="image/ico">
 		<link rel="stylesheet" href="style.css">
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<title id="title">loading</title>
 	</head>
 	<body>
-		<div class="blind"></div>
+		<div class="blind hidden transparent"></div>
 		<div class="glowring retracted rotate0" id="r0" angle="-1" style="opacity:0%;"></div>
 		<div class="glowring retracted rotate0" id="r1" angle="-1" ></div>
 		<div class="glowring retracted rotate0" id="r2" angle="-1" ></div>
@@ -32,20 +29,18 @@
 		</p>
 		<div id="inputs">
 			<div class="nigroup glowborder" id="nidisplay"></div>
-			<div class="ligroup glowborder" id="lidisplay"></div>
+			<div class="ligroup glowborder hidden" id="lidisplay"></div>
 			<input class="nigroup" id="nameinput" placeholder="이름 입력" readonly>
-			<input class="ligroup" id="linkinput" placeholder="링크 없음" readonly>
+			<input class="ligroup hidden" id="linkinput" placeholder="링크 없음" readonly>
 		</div>
 		<div class="nedisplay glowborder"></div>
 		<button id="nameedit" class="">
-			<div class="em1 editmark glowline"></div>
-			<div class="em2 editmark editmark2 glowline"></div>
+			<div class="nameplus plus glowline"></div>
 		</button>
 		<div class="datecontainer glowborder">
 			<div class="dedisplay glowborder"></div>
 			<button id="dateedit">
-				<div class="dem1 deditmark glowline"></div>
-				<div class="dem2 deditmark editmark2 glowline"></div>
+				<div class="dateplus plus glowline"></div>
 			</button>
 			<div class="dzdisplay glowborder"></div>
 			<button id="datezero" class="">
@@ -59,15 +54,12 @@
 				<div class="datetext glowborder" id="dhour"></div>
 				<div class="datetext glowborder" id="dmin"></div>
 			</div>
-			<input id="dateinput" type="datetime-local" style="opacity:0%">
+			<input id="dateinput" class="transparent" type="datetime-local" style="opacity:0%">
 		</div>
 		<div class="pdisplay glowborder">
 			<p class="ringnum">8</p>
 			<button id="play">
-				<div class="playline pl1 glowline"></div>
-				<div class="playline pl2 glowline"></div>
-				<div class="playline pl1 glowlinetop"></div>
-				<div class="playline pl2 glowlinetop"></div>
+				<div class="playline plus pluson glowline transparent"></div>
 			</button>
 		</div>
 		<script src="script.js">

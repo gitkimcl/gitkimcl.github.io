@@ -1,574 +1,343 @@
-var now = new Date();
-
-const SAFETYPIN = false;
-// RESET, SAVE & LOAD
-function reset() {
-	// debug mode only
-	console.log("resetting");
-	window.location.reload();
-}
-
-var store_targetDate;
-var store_dateZero;
-var store_timerRunning;
-var store_timerName;
-var store_timerLink;
-var store_ringStart;
-function _savepart(obj,name) {
-	if (obj == undefined) return 28;
-	console.log(name+" saved: "+obj);
-	localStorage.setItem(name,obj.toString());
-	return 8;
-}
-
-function _save() {
-	var sum=0;
-	if (store_targetDate==undefined) {
-		store_targetDate=new Date();
-		store_dateZero=true;
-		localStorage.setItem("targetDate","zero");
-		_reload("date");
-		sum+=16;
-	} else if (store_targetDate<new Date()) {
-		store_targetDate=new Date();
-		store_dateZero=true;
-		localStorage.setItem("targetDate","zero");
-		_reload("date");
-		sum+=16;
+var store = {"target":undefined,"zero":undefined,"running":false,"name":"","link":"","ring":1};
+function save() {
+	let now = new Date();
+	if (store.target==undefined || store.target<now) {
+		store.target = now;
+		store.zero=true;
+		reload_date();
+		set_vnum(0);
+		set_rnum(0);
 	} else {
-		sum+=_savepart(store_targetDate,"targetDate");
-		store_dateZero = false;
-		sum+=8;
+		store.zero = false;
 	}
-	if (store_dateZero) {
-		setNumber(0);
-		_setRealNumber(0);
-	}
-	if (store_timerRunning) {
-		localStorage.setItem("timerRunning","true");
-		console.log("timerRunning saved: true");
+	localStorage.setItem("store", JSON.stringify(store));
+}
+
+function load() {
+	let now = new Date();
+	if (localStorage.getItem("store")!=null) store = JSON.parse(localStorage.getItem("store"));
+	if (store.zero || store.target==undefined || new Date(store.target)<now) {
+		store.target=now;
+		store.zero=true;
 	} else {
-		localStorage.setItem("timerRunning",null);
-		console.log("timerRunning saved: false");
+		store.target = new Date(store.target);
 	}
-	sum+=8;
-	sum+=_savepart(store_timerName,"timerName");
-	sum+=_savepart(store_timerLink,"timerLink");
-	sum+=_savepart(store_ringStart,"ringStart");
-	return sum;
+	reload_date();
+
+	if (store.name!=undefined) $("#nameinput").val(store.name);
+	else store.name="";
+	if (store.link!=undefined) $("#linkinput").val(store.link);
+	else store.link="";
+	set_title(store.name);
+
+	if (store.ring==undefined) store.ring=1;
+	reload_ringnum();
+	reload_hue();
+
+	if (store.running) start_timer();
+	localStorage.setItem("store", JSON.stringify(store));
 }
 
-function _load() {
-	if (!SAFETYPIN) console.log("---SAFETY PIN IS DETACHED");
-	if (localStorage.getItem("targetDate")!=null) {
-		if (localStorage.getItem("targetDate")=="zero") {
-			store_targetDate=new Date();
-			store_dateZero=true;
-		} else {
-			store_targetDate=new Date(localStorage.getItem("targetDate"));
-		}
-	} else {
-		store_targetDate=new Date();
-		store_dateZero=true;
-		localStorage.setItem("targetDate","zero");
-	}
-	if (store_targetDate<new Date()) {
-		store_targetDate=new Date();
-		store_dateZero=true;
-		localStorage.setItem("targetDate","zero");
-	}
-	_reload("date");
-	if (localStorage.getItem("timerName")==null) localStorage.setItem("timerName","");
-	if (localStorage.getItem("timerLink")==null) localStorage.setItem("timerLink","");
-	if (localStorage.getItem("ringStart")==null) localStorage.setItem("ringStart","1");
-	store_timerName=localStorage.getItem("timerName");
-	store_timerLink=localStorage.getItem("timerLink");
-	store_ringStart=parseInt(localStorage.getItem("ringStart"));
-	_reload("namelink");
-	_reload("ring");
-	if (localStorage.getItem("timerRunning")=="true") {
-		store_timerRunning=true;
-	} else {
-		store_timerRunning=false;
-	}
-	if (store_timerRunning) {
-		_runTimerAnimation();
-	}
+function reload_date() {
+	$("#dyear").text(store.target.getFullYear());
+	$("#dmonth").text(store.target.getMonth()+1);
+	$("#dday").text(store.target.getDate());
+	$("#dhour").text(store.target.getHours());
+	$("#dmin").text(store.target.getMinutes());
+	$("#dateinput").val(new Date(input_date().valueOf()-new Date().getTimezoneOffset() * 60000).toISOString().substring(0,16));
 }
 
-function _reload(instruct) {
-	if (instruct=="namelink") {
-		if (store_timerName!=undefined) $("#nameinput").val(store_timerName);
-		if (store_timerLink!=undefined) $("#linkinput").val(store_timerLink);
-		_setTitle(store_timerName);
-	} else if (instruct=="date") {
-		if (store_targetDate==undefined) return;
-		$("#dyear").text(store_targetDate.getYear()+1900);
-		$("#dmonth").text(store_targetDate.getMonth()+1);
-		$("#dday").text(store_targetDate.getDate());
-		$("#dhour").text(store_targetDate.getHours());
-		$("#dmin").text(store_targetDate.getMinutes());
-		$("#dateinput").val(new Date(_getDateFromInput(0,0,0,0,0).valueOf()-new Date().getTimezoneOffset() * 60000).toISOString().substring(0,16));
-	} else if (instruct=="ring") {
-		_updateRing();
+function reload_ringnum() {
+	$(".glowring").removeClass("transparent");
+	for (let i=0; i<=8; i++) {
+		if (i>=store.ring) break;
+		$(`#r${i}`).addClass("transparent");
 	}
+	$(".ringnum").text(9-store.ring);
 }
 
-function _clear() {
-	localStorage.clear();
-}
 
-// CSS VARIABLES
-function _getVar(name) {
-	return getComputedStyle(document.getElementById("var")).getPropertyValue(name);
-}
+function set_var(name,value) { $(":root").css(name,value); }
+function reset_var(name) { $(":root").css(name,""); }
 
-function _setVar(name,value) {
-	document.getElementById("var").style.setProperty(name,value);
-}
 
-var hueTransState = true;
-function _changeHueTransState(val) {
-	if (hueTransState==val) return;
-	hueTransState=val;
-	if (hueTransState) {
-		_setVar("--default-trans","background-color 0.5s linear, color 0.5s linear, border 0.5s linear, border-color 0.5s linear, box-shadow 0.5s linear, text-shadow 0.5s linear");
-	} else {
-		_setVar("--default-trans","none");
-	}
-}
-//ICON & TITLE
 var icon = "";
-function _setIcon(name) {
+function set_icon(name) {
 	if (name==icon) return;
 	icon=name;
-	$("#fav").attr("href","icon/ring"+name+".ico");
+	$("#fav").attr("href",`icon/ring${name}.ico`);
 }
 
 var title="loading";
-function _setTitle(name) {
-	if (name==title) return;
+function set_title(name) {
+	if (name==undefined || name==title) return;
 	title=name;
 	$("#title").text(name);
 }
 
-// TICK & INTERVAL FUNCTIONS
-const tickLength = 19;
-const timeChangeInterval = 1;
-const hueChangeInterval = 20;
-var tsTimeChange = timeChangeInterval-1;
-var tsHueChange = hueChangeInterval-1;
-function tick() {
-	if (!SAFETYPIN&&RAINBOWFLAG) _rainbowMode();
-	tsTimeChange++;
-	tsHueChange++;
-	if (tsTimeChange>=timeChangeInterval) {
-		changeTime();
-	}
-	if (tsHueChange>=hueChangeInterval) {
-		changeHue();
-	}
+var huetrans = true;
+function set_huetrans(val) {
+	if (val==huetrans) return;
+	huetrans=val;
+	if (huetrans) reset_var("--default-trans");
+	else set_var("--default-trans","none");
 }
 
-var CUSTOMIZECOLOR = false;
-var lightFlag = false;
-function changeLight(lf) {
-	if (!SAFETYPIN&&CUSTOMIZECOLOR) return;
-	if (lf) {
-		_setVar("--theme-light","80%");
-		lightFlag=true;
-	} else {
-		_setVar("--theme-light","20%");
-		lightFlag=false;
-	}
-}
 
-var prevHue=-1;
-function changeHue() {
-	tsHueChange=0;
-	if (!SAFETYPIN&&(CUSTOMIZECOLOR||RAINBOWFLAG)) return;
-	if (dateEditingFlag&&store_dateZero) {
-		if (prevHue==170) return;
-		_setVar("--theme-hue","170");
-		prevHue=170;
-		_setIcon("0");
-		return;
-	}
-	if (store_timerRunning||(dateEditingFlag&&!store_dateZero)) {
-		var hue=_getRealNumber()/_getRingCap();
-		_setIcon(Math.floor(hue*8).toString());
-		hue*=160;
-		hue+=170;
-		hue=Math.floor(hue);
-		if (prevHue==hue) return;
-		_setVar("--theme-hue",hue);
-		prevHue=hue;
-		return;
-	}
-	if (prevHue==345) return;
-	_setVar("--theme-hue","345");
-	prevHue=345;
-	_setIcon("_notimer");
-}
+var rdigits=[-1,0,0,0,0,0,0,0,0]; // real digits
+var vdigits=[-1,0,0,0,0,0,0,0,0]; // visual digits
 
-var CUSTOMIZEDATE=false;
-var _prevSec=-1;
-var _prevRot=[-1,-1,-1,-1,-1,-1,-1,-1,-1];
-function changeTime() {
-	tsTimeChange=0;
-	if (SAFETYPIN || !CUSTOMIZEDATE) {
-		now = new Date();
-		if (!dateEditingFlag&&store_dateZero) {
-			store_targetDate=now;
-			_reload("date");
-		}
-	}
-	if ((store_timerRunning||(dateEditingFlag&&!store_dateZero))&&!in_animation) {
-		setNumber(_getSecLeft(_getDateFromInput(0,0,0,0,0)));
-		_setRealNumber(_getSecLeft(_getDateFromInput(0,0,0,0,0)));
-	}
-	if (dateEditingFlag) {
-		if (_getDateFromInput(0,0,0,0,0)>new Date()) store_dateZero = false;
-		else store_dateZero = true;
-	}  else if (timerActuallyRunning) {
-		if (_getDateFromInput(0,0,0,0,0)<new Date()) {
-			store_timerRunning=false;
-			store_dateZero=true;
-			_save();
-			if (store_timerLink!="") {
-				_timerEnd();
-			} else {
-				_timerSuspend();
-			}
-			return;
-		}
-		if (_getSecLeft(_getDateFromInput(0,0,0,0,0),true)-0.5 < _prevSec) {
-			_prevSec=Math.floor(_getSecLeft(_getDateFromInput(0,0,0,0,0),true)-0.5);
-			for (var i=store_ringStart; i<=8; i++) {
-				var curRot=_getRotation(_prevSec,i);
-				if (_prevRot[i]==curRot) continue;
-				_prevRot[i]=curRot;
-				$("#r"+i).css("animation",`0.5s cubic-bezier(1,0,.8,.25) forwards rotate${curRot}`);
-				$("#r"+i).attr("angle",`${curRot}`);
-			}
-		}
-		if (_getSecLeft(_getDateFromInput(0,0,0,0,0),true)-1 < _prevSec) {
-			_setTitle(store_timerName+": "+_getPercent());
-		}
-	}
-	if (!store_timerRunning) {
-		_setTitle(store_timerName);
-	}
-}
-
-var RAINBOWFLAG=false;
-function _rainbowMode() {
-	// WARNING: severe lag
-	_changeHueTransState(false);
-	_setVar("--theme-hue",Number.parseInt(_getVar("--theme-hue"))+1);
-}
-
-// NUMBER MODIFIER FUNCTIONS
-var digits=[-1,0,0,0,0,0,0,0,0]; // digits[0] : unused
-var visualdigits=[-1,0,0,0,0,0,0,0,0]; // visualdigits[0] : unused
-function _getNumber() {
-	var result=0;
-	for (var i=1; i<=8; i++) {
+function get_rnum() {
+	let result=0;
+	for (let i=1; i<=8; i++) {
 		result*=10;
-		result+=visualdigits[i];
+		result+=rdigits[i];
 	}
 	return result;
-}
-
-function _getRealNumber() {
-	var result=0;
-	for (var i=1; i<=8; i++) {
-		result*=10;
-		result+=digits[i];
-	}
-	return result;
-}
-
-function _setDigitAnim(dnum,val,code) {
-	if (cur_animation != code) return;
-	if (!(1<=dnum<=8));
-	$(".d"+dnum).text(val);
-	visualdigits[dnum]=val;
-}
-
-function _setDigit(dnum,val) {
-	if (!(1<=dnum<=8));
-	$(".d"+dnum).text(val);
-	visualdigits[dnum]=val;
 }
  
-function setNumber(num) {
-	if (!Number.isInteger(num)) return 48;
-	if (num<0) return 28;
-	
-	for (var i=8; i>=1; i--) {
-		_setDigit(i,num%10);
+function set_vnum(num) {
+	for (let i=8; i>=2; i--) {
+		set_vdigit(i,num%10);
 		num=Math.floor(num/10);
 	}
-	return 8;
+	set_vdigit(1,num);
 }
 
-function _setRealNumber(num) {
-	if (!Number.isInteger(num)) return 48;
-	if (num<0) return 28;
-	
-	for (var i=8; i>=1; i--) {
-		_setRealDigit(i,num%10);
+function set_vdigit(dnum,val) {
+	$(`.d${dnum}`).text(val<10?val:String.fromCharCode(55+val));
+	vdigits[dnum]=val;
+}
+
+function set_rnum(num) {
+	for (let i=8; i>=2; i--) {
+		rdigits[i] = num%10;
 		num=Math.floor(num/10);
 	}
-	return 8;
-}
-
-function _setRealDigit(dnum,val) {
-	digits[dnum]=val;
+	rdigits[1] = num;
 }
 
 var in_animation = false;
 var cur_animation = 0;
-function setNumberAnimation(num,duration) {
+function anim_vnum(num,duration) {
 	in_animation = true;
 	cur_animation++;
-	var isUp = _getRealNumber()<num;
-	_setRealNumber(num);
-	window.setTimeout(endAnimation,duration+10,cur_animation);
-	if (!(typeof isUp == "boolean")) return 48;
-	if (!Number.isInteger(num)) return 48;
-	if (!Number.isInteger(duration)) return 48;
-	if (num<0) return 28;
-	if (duration<10) return 28;
+	let isUp = get_rnum()<num;
+	set_rnum(num);
 	
-	var cur, steps, point;
-	for (var i=8; i>=1; i--) {
-		cur=num%10;
-		num=Math.floor(num/10);
+	let cur, steps, point;
+	for (let i=8; i>=1; i--) {
+		cur=rdigits[i];
 		if (isUp) {
-			point=visualdigits[i];
-			steps=(cur-point+10)%10;
-			for (var j=0; j<steps; j++) {
+			point=vdigits[i];
+			if (i==1) steps=cur-point;
+			else steps=(cur-point+10)%10;
+			for (let j=0; j<steps; j++) {
 				point++;
-				point%=10;
-				window.setTimeout(_setDigitAnim,duration/steps*j,i,point,cur_animation);
+				if (i!=1) point%=10;
+				window.setTimeout(set_vdigit_anim,duration/steps*j,i,point,cur_animation);
 			}
 		} else {
-			steps=(visualdigits[i]-cur+10)%10;
-			point=visualdigits[i];
-			for (var j=0; j<steps; j++) {
+			point=vdigits[i];
+			if (i==1) steps=point-cur;
+			else steps=(point-cur+10)%10;
+			for (let j=0; j<steps; j++) {
 				point--;
 				if (point<0) point+=10;
-				window.setTimeout(_setDigitAnim,duration/steps*j,i,point,cur_animation);
+				window.setTimeout(set_vdigit_anim,duration/steps*j,i,point,cur_animation);
 			}
 		}
 	}
+
+	window.setTimeout(function(num,code) {
+		if (cur_animation != code) return;
+		in_animation = false;
+		set_vnum(num);
+	},duration+10,num,cur_animation);
 }
 
-function endAnimation(code) {
+function set_vdigit_anim(dnum,val,code) {
 	if (cur_animation != code) return;
-	in_animation = false;
-	setNumber(_getSecLeft(0,0,0,0,0));
+	$(`.d${dnum}`).text(val<10?val:String.fromCharCode(55+val));
+	vdigits[dnum]=val;
 }
 
-// NAME & LINK EDITING STATE TOGGLER FUNCTIONS
-var nameEditingFlag = false;
-const DEBUGMODE = true;
-function nameEditToggle() {
-	if (store_timerRunning) return;
-	if (nameEditingFlag) {
-		window.setTimeout(_liclose,10);
-		nameEditingFlag=false;
-		if (!SAFETYPIN&&DEBUGMODE&&$("#nameinput").val()=="EXECUTE") {
-			console.log("!!DEBUG MODE!!");
-			console.log("reloading and executing");
-			try {
-				eval($("#linkinput").val());
-			} catch (err) {
-				console.log(err.message);
-			}
-			_reload("namelink");
-			return;
-		}
-		store_timerName=$("#nameinput").val();
-		store_timerLink=$("#linkinput").val();
-		_save();
+
+var is_editing_name = false;
+$("#nameedit").on("click",function() {
+	if (store.running||is_editing_date) return;
+	if (is_editing_name) {
+		window.setTimeout(close_linkinput,10);
+		is_editing_name=false;
+		store.name=$("#nameinput").val();
+		store.link=$("#linkinput").val();
+		save();
 	} else {
-		if (dateEditingFlag) return;
-		$("#lidisplay").css("display","flex");
-		$("#linkinput").css("display","inline-block");
-		window.setTimeout(_liopen,10);
-		nameEditingFlag=true;
+		$(".ligroup").removeClass("hidden");
+		window.setTimeout(open_linkinput,10);
+		is_editing_name=true;
 	}
-}
+});
 
-function _liopen() {
-	window.clearInterval(_closeKillcode);
+var close_killcode;
+function open_linkinput() {
+	window.clearInterval(close_killcode);
 	$("#nameinput").prop("readonly",false);
 	$("#linkinput").prop("readonly",false);
-	$("#nameedit .editmark").addClass("glowmore");
+	$("#nameedit .nameplus").addClass("glowmore");
 	$(".nedisplay").addClass("glowmore");
 	$("#inputs .glowborder").addClass("glowmore");
-	$("#inputs input").css("color","var(--theme-glow3)");
 	$("#inputs input").addClass("glowplaceholder");
 	$(".ligroup").addClass("liopen");
-	$(".em1").css("transform","translate(-50%,-50%) rotate(45deg)");
-	$(".em2").css("transform","translate(-50%,-50%) rotate(135deg)");
+	$(".nameplus").addClass("pluson");
 }
 
-var _closeKillcode;
-function _liclose() {
-	window.clearInterval(_closeKillcode);
+function close_linkinput() {
+	window.clearInterval(close_killcode);
 	$("#nameinput").prop("readonly",true);
 	$("#linkinput").prop("readonly",true);
-	$("#nameedit .editmark").removeClass("glowmore");
+	$("#nameedit .nameplus").removeClass("glowmore");
 	$(".nedisplay").removeClass("glowmore");
 	$("#inputs .glowborder").removeClass("glowmore");
-	$("#inputs input").css("color","var(--theme-solid)");
 	$("#inputs input").removeClass("glowplaceholder");
 	$(".ligroup").removeClass("liopen");
-	$(".em1").css("transform","translate(-50%,-50%) rotate(0deg)");
-	$(".em2").css("transform","translate(-50%,-50%) rotate(90deg)");
-	_closeKillcode=window.setTimeout(_closegrp,1010);
+	$(".nameplus").removeClass("pluson");
+	close_killcode=window.setTimeout(function() {
+		$(".ligroup").addClass("hidden");
+	},1010);
 }
 
-function _closegrp() {
-	$(".ligroup").css("display","none");
-}
-document.getElementById("nameedit").addEventListener("click",nameEditToggle);
 
-// DATE EDITING STATE TOGGLER FUNCTIONS
-var dateEditingFlag=false;
-function dateEditToggle() {
-	if (store_timerRunning) return;
-	if (dateEditingFlag) {
-		window.setTimeout(_declose,10);
-		window.setTimeout(_save,12);
-		store_targetDate = _getDateFromInput(0,0,0,0,0);
-		setNumberAnimation(0,500);
-		dateEditingFlag=false;
+var is_editing_date=false;
+$("#dateedit").on("click",function() {
+	if (store.running||is_editing_name) return;
+	if (is_editing_date) {
+		window.setTimeout(close_dateedit,10);
+		store.target = input_date();
+		anim_vnum(0,500);
+		set_rnum(0);
+		is_editing_date=false;
+		save();
 	} else {
-		if (nameEditingFlag) return;
-		setNumberAnimation(_getSecLeft(_getDateFromInput(0,0,0,0,0)),500);
-		window.setTimeout(_deopen,10);
-		dateEditingFlag=true;
+		if (!store.zero) anim_vnum(until(input_date()),500);
+		window.setTimeout(open_dateedit,10);
+		is_editing_date=true;
 	}
-}
-document.getElementById("dateedit").addEventListener("click",dateEditToggle);
+});
 
-function _getDateFromInput(ytweak,mtweak,dtweak,htweak,mintweak) {
-	var date=Number.parseInt($("#dday").text());
-	if (date<=_dayOfMonth($("#dyear").text(),$("#dmonth").text())&&date>_dayOfMonth($("#dyear").text()+ytweak,$("#dmonth").text()+mtweak)) date=_dayOfMonth($("#dyear").text()+ytweak,$("#dmonth").text()+mtweak);
-	return new Date(Number.parseInt($("#dyear").text())+ytweak,Number.parseInt($("#dmonth").text())-1+mtweak,date+dtweak,Number.parseInt($("#dhour").text())+htweak,Number.parseInt($("#dmin").text())+mintweak,0);
-}
-
-function _deopen() {
+function open_dateedit() {
 	$(".datecontainer").addClass("glowmore");
-	$("#dateedit .deditmark").addClass("glowmore");
+	$("#dateedit .dateplus").addClass("glowmore");
 	$(".dedisplay").addClass("glowmore");
 	$(".dedisplay").addClass("glowmore");
 	$("#dateseparate").addClass("glowmore");
 	$(".datetext").addClass("datetextactive");
 	$(".pdisplay").addClass("datetextactive");
-	$(".dem1").css("transform","translate(-50%,-50%) rotate(45deg)");
-	$(".dem2").css("transform","translate(-50%,-50%) rotate(135deg)");
+	$(".dateplus").addClass("pluson");
+	reload_hue();
 }
 
-function _declose() {
+function close_dateedit() {
 	$(".datecontainer").removeClass("glowmore");
-	$("#dateedit .deditmark").removeClass("glowmore");
+	$("#dateedit .dateplus").removeClass("glowmore");
 	$(".dedisplay").removeClass("glowmore");
 	$("#dateseparate").removeClass("glowmore");
 	$(".datetext").removeClass("datetextactive");
 	$(".pdisplay").removeClass("datetextactive");
-	$(".dem1").css("transform","translate(-50%,-50%)");
-	$(".dem2").css("transform","translate(-50%,-50%) rotate(90deg)");
-	if (_getDateFromInput(0,0,0,0,0)>new Date()) store_dateZero = false;
-	if (dateInputOn) {
-		dateInputOn = false;
-		$("#dateinput").css("opacity","0%");
+	$(".dateplus").removeClass("pluson");
+	if (input_date()>new Date()) store.zero = false;
+	if (is_dateinput_on) {
+		is_dateinput_on = false;
+		$("#dateinput").addClass("transparent");
 	}
+	reload_hue();
 }
 
-function dateZero() {
-	if (dateEditingFlag) {
-		store_dateZero=true;
-		store_targetDate=new Date();
-		setNumberAnimation(0,500);
-		$(".dzdisplay").addClass("glowmore");
-		$(".zero").addClass("glowmore");
-		window.setTimeout(_zeroShineEnd,500);
-		_reload("date");
+$("#datezero").on("click",function() {
+	if (!is_editing_date) return;
+	store.zero=true;
+	store.target=new Date();
+	anim_vnum(0,500);
+	$(".dzdisplay").addClass("glowmore");
+	$(".zero").addClass("glowmore");
+	reload_date();
+
+	window.setTimeout(function() {
+		$(".dzdisplay").removeClass("glowmore");
+		$(".zero").removeClass("glowmore");
+	},500);
+});
+
+
+document.addEventListener("keydown",function(event) {
+	if (is_editing_date && (event.key=='ArrowUp' || event.key=='ArrowDown')) {
+		modify_date(event.key=='ArrowUp');
 	}
-}
-document.getElementById("datezero").addEventListener("click",dateZero);
+});
 
-function _zeroShineEnd() {
-	$(".dzdisplay").removeClass("glowmore");
-	$(".zero").removeClass("glowmore");
-}
-
-// DATE MODIFIER FUNCTIONS
-function _onKeyPress(event) {
-	if (event.keyCode==38 || event.keyCode==40) {
-		_modifyDate(event.keyCode==38);
-	}
-}
-document.addEventListener("keydown",_onKeyPress);
-
-function _modifyDate(isUp) {
-	if (!dateEditingFlag) return;
-	if (document.getElementById("dyear").matches(':hover')) {
+function modify_date(isUp) {
+	let now = new Date();
+	if ($("#dyear").is(':hover')) {
 		if (isUp) {
-			if (!(0<=_getSecLeft(_getDateFromInput(1,0,0,0,0))&&_getSecLeft(_getDateFromInput(1,0,0,0,0))<=_getRingCap())) return;
+			if (until(input_date(1,0,0,0,0))>ringcap()) return;
 			$("#dyear").text(Number.parseInt($("#dyear").text())+1);
 		} else {
-			if (!(0<=_getSecLeft(_getDateFromInput(-1,0,0,0,0))&&_getSecLeft(_getDateFromInput(-1,0,0,0,0))<=_getRingCap())) return;
+			if (until(input_date(-1,0,0,0,0))<0) return;
 			$("#dyear").text(Number.parseInt($("#dyear").text())-1);
 		}
-	} else if (document.getElementById("dmonth").matches(':hover')) {
+	} else if ($("#dmonth").is(':hover')) {
 		if (isUp) {
-			if (!(0<=_getSecLeft(_getDateFromInput(0,1,0,0,0))&&_getSecLeft(_getDateFromInput(0,1,0,0,0))<=_getRingCap())) return;
+			if (until(input_date(0,1,0,0,0))>ringcap()) return;
 			$("#dmonth").text(Number.parseInt($("#dmonth").text())+1);
 		} else {
-			if (!(0<=_getSecLeft(_getDateFromInput(0,-1,0,0,0))&&_getSecLeft(_getDateFromInput(0,-1,0,0,0))<=_getRingCap())) return;
+			if (until(input_date(0,-1,0,0,0))<0) return;
 			$("#dmonth").text(Number.parseInt($("#dmonth").text())-1);
 		}
-		if ($("#dday").text()>_dayOfMonth(now.getYear()+1900,$("#dmonth").text())) $("#dday").text(_dayOfMonth(now.getYear()+1900,$("#dmonth").text()));
-	} else if (document.getElementById("dday").matches(':hover')) {
+		if ($("#dday").text()>month_length(now.getFullYear(),$("#dmonth").text())) $("#dday").text(month_length(now.getFullYear(),$("#dmonth").text()));
+	} else if ($("#dday").is(':hover')) {
 		if (isUp) {
-			if (!(0<=_getSecLeft(_getDateFromInput(0,0,1,0,0))&&_getSecLeft(_getDateFromInput(0,0,1,0,0))<=_getRingCap())) return;
+			if (until(input_date(0,0,1,0,0))>ringcap()) return;
 			$("#dday").text(Number.parseInt($("#dday").text())+1);
 		} else {
-			if (!(0<=_getSecLeft(_getDateFromInput(0,0,-1,0,0))&&_getSecLeft(_getDateFromInput(0,0,-1,0,0))<=_getRingCap())) return;
+			if (until(input_date(0,0,-1,0,0))<0) return;
 			$("#dday").text(Number.parseInt($("#dday").text())-1);
 		}
-	} else if (document.getElementById("dhour").matches(':hover')) {
+	} else if ($("#dhour").is(':hover')) {
 		if (isUp) {
-			if (!(0<=_getSecLeft(_getDateFromInput(0,0,0,1,0))&&_getSecLeft(_getDateFromInput(0,0,0,1,0))<=_getRingCap())) return;
+			if (until(input_date(0,0,0,1,0))>ringcap()) return;
 			$("#dhour").text(Number.parseInt($("#dhour").text())+1);
 		} else {
-			if (!(0<=_getSecLeft(_getDateFromInput(0,0,0,-1,0))&&_getSecLeft(_getDateFromInput(0,0,0,-1,0))<=_getRingCap())) return;
+			if (until(input_date(0,0,0,-1,0))<0) return;
 			$("#dhour").text(Number.parseInt($("#dhour").text())-1);
 		}
-	} else if (document.getElementById("dmin").matches(':hover')) {
+	} else if ($("#dmin").is(':hover')) {
 		if (isUp) {
-			if (!(0<=_getSecLeft(_getDateFromInput(0,0,0,0,1))&&_getSecLeft(_getDateFromInput(0,0,0,0,1))<=_getRingCap())) return;
+			if (until(input_date(0,0,0,0,1))>ringcap()) return;
 			$("#dmin").text(Number.parseInt($("#dmin").text())+1);
 		} else {
-			if (!(0<=_getSecLeft(_getDateFromInput(0,0,0,0,-1))&&_getSecLeft(_getDateFromInput(0,0,0,0,-1))<=_getRingCap())) return;
+			if (until(input_date(0,0,0,0,-1))<0) return;
 			$("#dmin").text(Number.parseInt($("#dmin").text())-1);
 		}
-	} else if (document.getElementById("play").matches(':hover')) {
-		_modifyRingnum(isUp);
+	} else if ($("#play").is(':hover')) {
+		modify_ringnum(isUp);
 	}
-	setNumberAnimation(_getSecLeft(_getDateFromInput(0,0,0,0,0)),500);
-	store_targetDate=_getDateFromInput(0,0,0,0,0);
-	_reload("date");
+	store.target=input_date();
+	store.zero = (store.target<=now);
+	if (!store.zero) anim_vnum(until(input_date()),500);
+	reload_date();
+	reload_hue();
 }
 
-function _dayOfMonth(year,month) {
+function input_date(ytweak,mtweak,dtweak,htweak,mintweak) {
+	if (ytweak==undefined) {
+		ytweak = mtweak = dtweak = htweak = mintweak = 0;
+	}
+	let date=Number.parseInt($("#dday").text());
+	if (date<=month_length($("#dyear").text(),$("#dmonth").text())&&date>month_length($("#dyear").text()+ytweak,$("#dmonth").text()+mtweak)) date=month_length($("#dyear").text()+ytweak,$("#dmonth").text()+mtweak);
+	return new Date(Number.parseInt($("#dyear").text())+ytweak,Number.parseInt($("#dmonth").text())-1+mtweak,date+dtweak,Number.parseInt($("#dhour").text())+htweak,Number.parseInt($("#dmin").text())+mintweak,0);
+}
+
+function month_length(year,month) {
 	month=Number.parseInt(month);
 	switch (month) {
 		case 1: case 3: case 5: case 7:
@@ -581,198 +350,264 @@ function _dayOfMonth(year,month) {
 	}
 }
 
-function _getSecLeft(date) {
-	return Math.floor((date - now) / 1000);
+
+var is_dateinput_on = false;
+$("#dyear").on("click",function() {
+	if (!is_dateinput_on) {
+		if (!is_editing_date) return;
+		is_dateinput_on=true;
+		$("#dateinput").removeClass("transparent");
+	} else {
+		let cursec=until(new Date($("#dateinput").val()));
+		if (cursec>ringcap()) return;
+		if (cursec<=0) {
+			store.zero = true;
+			store.target = new Date();
+		} else {
+			store.zero = false;
+			store.target=new Date($("#dateinput").val());
+		}
+		is_dateinput_on=false;
+		$("#dateinput").addClass("transparent");
+		reload_date();
+		save();
+	}
+});
+
+
+function ringcap() {
+	return 1<<(3*(9-store.ring));
 }
 
-function _getSecLeft(date,millisecond) {
+function modify_ringnum(isUp) {
+	if (isUp) {
+		if (store.ring==0) return;
+		store.ring--;
+	} else {
+		if (store.ring==7) return;
+		if (until(input_date())>ringcap()/8) return;
+		store.ring++;
+	}
+	reload_ringnum();
+}
+
+
+$("#play").on("click",function() {
+	if (store.running) {
+		suspend_timer();
+		save();
+		return;
+	}
+	if (is_editing_name || !is_editing_date || store.zero) return;
+	store.target = input_date();
+	store.running = true;
+	save();
+	start_timer();
+});
+
+var is_actually_running=false;
+function start_timer() {
+	is_editing_date = false;
+	close_dateedit();
+
+	$(".pdisplay").removeClass("datetextactive").addClass("glowmore");
+	$(".playline").removeClass("transparent").addClass("glowmore");
+	$(".nedisplay, #nameedit, .dedisplay, #dateedit, .dzdisplay, #datezero, #nidisplay").addClass("hidden");
+	$(".ringnum").addClass("transparent");
+	$(".datecontainer").addClass("shrunk");
+	$(".glowring").css("animation", "0.5s forwards expand").removeClass("retracted");
+	
+	window.setTimeout(function() {
+		time=Math.floor(until(input_date(),true)-1.5);
+		for (let i=store.ring; i<=8; i++) {
+			let curRot=get_angle(time,i);
+			rotation[i]=curRot;
+			$(`#r${i}`).attr("angle",`${curRot}`);
+			$(`#r${i}`).css("animation", `1s cubic-bezier(.3,0,.5,1.75) forwards rotate${curRot}`);
+		}
+	},510);
+	window.setTimeout(function() {
+		if (!store.running) return;
+		set_huetrans(false);
+		is_actually_running=true;
+	},1500);
+}
+
+function suspend_timer() {
+	store.running = false;
+	is_actually_running = false;
+
+	$(".pdisplay").removeClass("glowmore");
+	$(".playline").removeClass("glowmore");
+	$(".playline").addClass("transparent");
+	$(".nedisplay, #nameedit, .dedisplay, #dateedit, .dzdisplay, #datezero, #nidisplay").removeClass("hidden");
+	$(".ringnum").removeClass("transparent");
+	$(".datecontainer").removeClass("shrunk");
+	$(".glowring").removeClass("rotate0").removeClass("rotate45").removeClass("rotate90").removeClass("rotate135").removeClass("rotate180").removeClass("rotate225").removeClass("rotate270").removeClass("rotate315").each(function() {
+		$(this).addClass(`rotate${$(this).attr("angle")}`);
+	});
+	$(".glowring").css("animation", "0.5s forwards retract").addClass("retracted");
+	
+	set_huetrans(true);
+	if (!store.zero) anim_vnum(until(input_date()),500);
+	window.setTimeout(open_dateedit,10);
+	is_editing_date=true;
+	window.setTimeout(function() {
+		if (store.running) return;
+	}, 500);
+}
+
+function redirect() {
+	window.clearInterval(KILLCODE);
+	is_actually_running = false;
+	store.running = false;
+	store.link = "";
+	save();
+
+	set_huetrans(true);
+	$(".glowring").addClass("glowmore");
+	set_var("--theme-hue","140");
+	set_icon("_redirect");
+	$(".blind").removeClass("hidden");
+
+	window.setTimeout(function() {
+		$(".blind").removeClass("transparent");
+	},1500);
+
+	window.setTimeout(function() {
+		window.location.href = $("#linkinput").val();
+	},6000);
+}
+
+function until(date,millisecond) {
+	let now = new Date();
 	if (!millisecond) return Math.floor((date - now) / 1000);
 	return (date - now) / 1000;
 }
 
-// DATETIME INPUT MENU FOR ACCESSIBILITY
-var dateInputOn = false;
-function dateInputToggle() {
-	if (!dateInputOn) {
-		if (!dateEditingFlag) return;
-		dateInputOn=true;
-		$("#dateinput").css("opacity","100%");
-	} else {
-		var cursec=_getSecLeft(new Date($("#dateinput").val()));
-		if (!(0<cursec&&cursec<=_getRingCap())) return;
-		dateInputOn=false;
-		$("#dateinput").css("opacity","0%");
-		store_targetDate=new Date($("#dateinput").val());
-		_reload("date");
-		_save();
-	}
-}
-document.getElementById("dyear").addEventListener("click",dateInputToggle);
-
-// FUNCTIONS ABOUT ADJUSTING RING NUMBER
-function _getRingCap() {
-	return Math.min(99999999,Math.pow(8,9-store_ringStart));
-}
-
-function _updateRing() {
-	for (var i=0; i<=8; i++) {
-		if (i<store_ringStart) {
-			$("#r"+i).css("opacity","0%");
-		} else {
-			$("#r"+i).css("opacity","100%");
-		}
-	}
-	$(".ringnum").text(9-store_ringStart);
-}
-
-function _modifyRingnum(isUp) {
-	if (isUp) {
-		if (store_ringStart==0) return;
-		store_ringStart--;
-	} else {
-		if (store_ringStart==6) return;
-		if (_getSecLeft(_getDateFromInput(0,0,0,0,0))>Math.pow(8,8-store_ringStart)) return;
-		store_ringStart++;
-	}
-	_updateRing();
-}
-
-// FUNCTIONS ABOUT EXECUTING TIMER
-function runTimer() {
-	if (!store_timerRunning) {
-		if (nameEditingFlag || !dateEditingFlag) return;
-		if (store_dateZero) return;
-		window.setTimeout(_runTimerAnimation,10);
-		store_targetDate = _getDateFromInput(0,0,0,0,0);
-		store_timerRunning = true;
-		_save();
-	} else {
-		_timerSuspend();
-		store_timerRunning = false;
-		_save();
-	}
-}
-document.getElementById("play").addEventListener("click",runTimer);
-
-function _runTimerAnimation() {
-	if (dateEditingFlag) {
-		dateEditingFlag=false;
-	}
-	$(".glowring").css("transition","width 0.5s, height 0.5s, left 0.5s, top 0.5s, transform 0.5s");
-	$(".glowring").removeClass("retracted");
-	$(".pdisplay").removeClass("datetextactive");
-	$(".pdisplay").addClass("glowmore");
-	_declose();
-	$(".datecontainer").css("width","calc(38.55 * var(--size-default1))");
-	$(".nedisplay, #nameedit, .dedisplay, #dateedit, .dzdisplay, #datezero, #nidisplay").css("display","none");
-	$(".ringnum").css("opacity","0%");
-	$(".playline").addClass("glowmore");
-	$(".playline").css("opacity","100%");
-	_prevSec=Math.floor(_getSecLeft(_getDateFromInput(0,0,0,0,0),true)-1.5);
-	for (var i=store_ringStart; i<=8; i++) {
-		var curRot=_getRotation(_prevSec,i);
-		_prevRot[i]=curRot;
-		console.log(`${i} ${curRot}`)
-		$("#r"+i).attr("angle",`${curRot}`);
-		$("#r"+i).css("animation", `1s cubic-bezier(.47,0,.58,1.48) forwards rotate${curRot}`);
-	}
-	window.setTimeout(_startTimer,1000);
-}
-
-var timerActuallyRunning=false;
-function _startTimer() {
-	if (!store_timerRunning) return;
-	$(".glowring").css("transition","border-color 0.5s, box-shadow 0.5s");
-	_changeHueTransState(false);
-	timerActuallyRunning=true;
-}
-
-function _getRotation(second,ringnum) {
-	var sleft=second;
-	sleft=Math.floor(sleft/Math.pow(8,8-ringnum));
+function get_angle(second,ringnum) {
+	let sleft=second;
+	sleft>>=3*(8-ringnum);
 	sleft=(sleft)%8*45;
 	return sleft;
 }
 
-function _timerSuspend() {
-	store_timerRunning = false;
-	timerActuallyRunning = false;
-	console.log("_timerSuspend");
-	$(".glowring").css("transition","width 0.5s, height 0.5s, left 0.5s, top 0.5s, border-width 0.5s");
-	$(".glowring").addClass("retracted");
-	$(".glowring").removeClass("rotate0").removeClass("rotate45").removeClass("rotate90").removeClass("rotate135").removeClass("rotate180").removeClass("rotate225").removeClass("rotate270").removeClass("rotate315").each(function() {
-		if ($(this).attr("angle")=="-1") return;
-		$(this).addClass(`rotate${$(this).attr("angle")}`);
-	});
-	$(".glowring").attr("angle","-1");
-	$(".pdisplay").removeClass("glowmore");
-	$(".datecontainer").css("width","calc(49 * var(--size-default1))");
-	$(".nedisplay, #nameedit, .dedisplay, #dateedit, .dzdisplay, #datezero, #nidisplay").css("display","inline-block");
-	$(".nigroup").css("border","");
-	$(".ringnum").css("opacity","100%");
-	$(".playline").removeClass("glowmore");
-	$(".playline").css("opacity","0%");
-	_changeHueTransState(true);
-	dateEditingFlag=false;
-	dateEditToggle();
-	window.setTimeout(_remove_ring_trans, 500);
-}
-
-function _remove_ring_trans() {
-	if (store_timerRunning) return;
-	$(".glowring").css("transition","opacity 0.5s");
-}
-
-function _timerEnd() {
-	store_timerRunning = false;
-	store_timerLink = "";
-	_save();
-	timerActuallyRunning = false;
-	window.setTimeout(_endSeqA,10);
-	window.setTimeout(_endSeqB,1510);
-	window.setTimeout(_endSeqC,6010);
-}
-
-function _endSeqA() {
-	CUSTOMIZECOLOR = true;
-	_changeHueTransState(true);
-	$(".glowring").addClass("glowmore");
-	_setVar("--theme-hue","180");
-	_setIcon("_redirect");
-	$(".blind").css("display","block");
-}
-
-function _endSeqB() {
-	$(".blind").css("opacity","100%");
-}
-
-function _endSeqC() {
-	window.location.href = $("#linkinput").val();
-}
-
-function _getPercent() {
-	if (store_ringStart==0) {
-		return (100-_getRealNumber()/_getRingCap()*100).toFixed(6)+"%";
-	} else if (store_ringStart<4) {
-		return (100-_getRealNumber()/_getRingCap()*100).toFixed(7-store_ringStart)+"%";
+function percent() {
+	if (store.ring==0) {
+		return `${(100-get_rnum()/ringcap()*100).toFixed(6)}%`;
+	} else if (store.ring<4) {
+		return `${(100-get_rnum()/ringcap()*100).toFixed(7-store.ring)}%`;
 	} else {
-		return (100-_getRealNumber()/_getRingCap()*100).toFixed(3)+"%";
+		return `${(100-get_rnum()/ringcap()*100).toFixed(3)}%`;
 	}
 }
 
-$(".glowring").on("animationend", function() {
+const tick_length = 49;
+const reload_time_ticks = 1;
+const reload_hue_ticks = 20;
+var since_reload_time = reload_time_ticks-1;
+var since_reload_hue = reload_hue_ticks-1;
+function tick() {
+	since_reload_time++;
+	since_reload_hue++;
+	if (since_reload_time>=reload_time_ticks) {
+		since_reload_time=0;
+		reload_time();
+	}
+	if (since_reload_hue>=reload_hue_ticks) {
+		since_reload_hue=0;
+		reload_hue();
+	}
+}
+
+var hue=-1;
+function reload_hue() {
+	if (is_editing_date&&store.zero) {
+		if (hue==170) return;
+		set_var("--theme-hue","170");
+		hue=170;
+		set_icon("0");
+		return;
+	}
+	if (is_editing_date||store.running) {
+		var n_hue=get_rnum()/ringcap();
+		set_icon(Math.round(n_hue*8).toString());
+		n_hue=Math.floor(n_hue*160+170);
+		if (hue==n_hue) return;
+		hue=n_hue;
+		set_var("--theme-hue",hue);
+		return;
+	}
+	if (hue==345) return;
+	reset_var("--theme-hue");
+	hue=345;
+	set_icon("_notimer");
+}
+
+var time=-1;
+var rotation=[-1,-1,-1,-1,-1,-1,-1,-1,-1];
+function reload_time() {
+	let now = new Date();
+	if (store.zero) {
+		store.target=now;
+		reload_date();
+	}
+	if (is_editing_date) {
+		store.zero = (input_date()<=now);
+	}  else if (is_actually_running) {
+		if (input_date()<=now) {
+			store.running=false;
+			store.zero=true;
+			save();
+			if (store.link!="") {
+				redirect();
+			} else {
+				suspend_timer();
+			}
+			return;
+		}
+		if (until(input_date(),true)-0.5 < time) {
+			time=Math.floor(until(input_date(),true)-0.5);
+			if (store.link!="" && time<0) {
+				$("#r1, #r3, #r5, #r7").css("animation","1s cubic-bezier(1,0,.8,.25) forwards finalspin-odd");
+				$("#r0, #r2, #r4, #r6, #r8").css("animation","1s cubic-bezier(1,0,.8,.25) forwards finalspin-even");
+			} else {
+				for (var i=store.ring; i<=8; i++) {
+					var curRot=get_angle(time,i);
+					if (rotation[i]==curRot) continue;
+					rotation[i]=curRot;
+					$(`#r${i}`).css("animation",`0.5s cubic-bezier(1,0,.8,.25) forwards rotate${curRot}`);
+					$(`#r${i}`).attr("angle",`${curRot}`);
+				}
+			}
+		}
+	}
+	if (!in_animation&&(store.running||(is_editing_date&&!store.zero))) {
+		set_vnum(until(input_date()));
+		set_rnum(until(input_date()));
+	}
+	if (!store.running) {
+		set_title(store.name);
+	}
+}
+
+$(".glowring").on("animationend", function(event) {
+	if (event.animationName=="retract" || event.animationName=="expand") return;
 	$(this).removeClass("rotate0").removeClass("rotate45").removeClass("rotate90").removeClass("rotate135").removeClass("rotate180").removeClass("rotate225").removeClass("rotate270").removeClass("rotate315");
 	$(this).addClass(`rotate${$(this).attr("angle")}`);
+	if ($(this).is("#r8")) set_title(`${store.name}: ${percent()}`);
 })
+
 
 var KILLCODE=0;
 window.onload = function() {
 	console.log("loading...");
-	KILLCODE = window.setInterval(tick,tickLength);
-	window.setTimeout(_load,10);
+	KILLCODE = window.setInterval(tick,tick_length);
+	window.setTimeout(load,10);
 }
 
 window.onbeforeunload = function() {
 	window.clearInterval(KILLCODE);
-	console.log("outting...");
+	save();
+	console.log("quitting...");
 }
