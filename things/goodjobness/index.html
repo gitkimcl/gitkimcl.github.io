@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--using namespace std;-->
+
+<html>
+    <head>
+        <title>Goodjobness!</title>
+        <link rel="icon" href="fav.ico">
+        <link rel="stylesheet" href="style.css">
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="data_ignored.js"></script>
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <div id="keep_distance"></div>
+        <nav id="subject_selector">
+            <button class="s_button s_button_active" id="s_all" style="--color-button-main: var(--color-all-solid);"
+                onclick="change_page('all')" type="button">전체</button>
+            <button class="s_button" id="s_first"  style="--color-button-main: var(--color-first-solid);"
+                onclick="change_page('first')" type="button">중간</button>
+            <button class="s_button" id="s_second" style="--color-button-main: var(--color-second-solid);"
+                onclick="change_page('second')" type="button">기말</button>
+            <button class="s_button" id="s_kor" style="--color-button-main: var(--color-red);"
+                onclick="change_page('kor')" type="button">국어</button>
+            <button class="s_button" id="s_mat" style="--color-button-main: var(--color-green);"
+                onclick="change_page('mat')" type="button">수학</button>
+            <button class="s_button" id="s_soc" style="--color-button-main: var(--color-yellow);"
+                onclick="change_page('soc')" type="button">사회</button>
+            <button class="s_button" id="s_eng" style="--color-button-main: var(--color-purple);"
+                onclick="change_page('eng')" type="button">영어</button>
+            <button class="s_button" id="s_phy" style="--color-button-main: var(--color-blue);"
+                onclick="change_page('phy')" type="button">물리</button>
+            <button class="s_button" id="s_che" style="--color-button-main: var(--color-bright-red);"
+                onclick="change_page('che')" type="button">화학</button>
+            <button class="s_button" id="s_sci" style="--color-button-main: var(--color-lime);"
+                onclick="change_page('sci')" type="button">통과</button>
+            <button class="s_button" id="s_inf" style="--color-button-main: var(--color-gray);"
+                onclick="change_page('inf')" type="button">정보</button>
+        </nav>
+        <main id="infos">
+
+        </main>
+    </body>
+</html>
