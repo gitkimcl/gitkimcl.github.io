@@ -60,7 +60,7 @@ button {
 
 .short {
 	display:inline-block;
-	width:min(6em,12vw);
+	width:min(4em,8vw);
 }
 
 #col {
@@ -68,9 +68,9 @@ button {
 	top:3px;
 }
 
-.code {
+.code, .codealpha {
 	display:inline-block;
-	width:min(16em,32vw);
+	width:min(8em,16vw);
 	position:relative;
 	top:-1px;
 }
