@@ -15,6 +15,17 @@ body {
     margin: 0;
 }
 
+.title {
+    display: inline-block;
+    color: var(--bright);
+    font-family: var(--font);
+    font-size: calc(0.75 * var(--base-length));
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    transform: translate(0,-50%);
+}
+
 a {
     text-decoration: none;
     color: var(--bright);
@@ -33,16 +44,16 @@ a:hover {
 .tile {
     display: inline-block;
     position: relative;
+    aspect-ratio: 1;
     width: calc(3 * var(--base-length));
-    height: calc(3 * var(--base-length));
     border-radius: calc(0.15 * var(--base-length));
     margin: calc(0.25 * var(--base-length));
     overflow: hidden;
-    box-shadow: 0 0 calc(0.1 * var(--base-length)) 0 transparent,
-        calc(-0.7 * var(--base-length)) calc(-0.7 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.7 * var(--base-length)) transparent,
-        calc(0.7 * var(--base-length)) calc(-0.7 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.7 * var(--base-length)) transparent,
-        calc(-0.7 * var(--base-length)) calc(0.7 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.7 * var(--base-length)) transparent,
-        calc(0.7 * var(--base-length)) calc(0.7 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.7 * var(--base-length)) transparent;
+    box-shadow: 0 0 calc(0.15 * var(--base-length)) 0 transparent,
+        calc(-0.75 * var(--base-length)) calc(-0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) transparent,
+        calc(0.75 * var(--base-length)) calc(-0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) transparent,
+        calc(-0.75 * var(--base-length)) calc(0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) transparent,
+        calc(0.75 * var(--base-length)) calc(0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) transparent;
     transition-duration: 0.2s;
 }
 
@@ -58,15 +69,15 @@ a:hover {
 .tile:hover {
     --glow: var(--bright);
     --glow0: color-mix(in srgb,var(--glow) 25%,transparent);
-    --glow1: var(--glow);
-    --glow2: var(--glow);
-    --glow3: var(--glow);
-    --glow4: var(--glow);
-    box-shadow: 0 0 calc(0.1 * var(--base-length)) 0 var(--glow0),
-        calc(-0.7 * var(--base-length)) calc(-0.7 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.7 * var(--base-length)) var(--glow1),
-        calc(0.7 * var(--base-length)) calc(-0.7 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.7 * var(--base-length)) var(--glow2),
-        calc(-0.7 * var(--base-length)) calc(0.7 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.7 * var(--base-length)) var(--glow3),
-        calc(0.7 * var(--base-length)) calc(0.7 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.7 * var(--base-length)) var(--glow4);
+    --glow1: var(--glow0);
+    --glow2: var(--glow0);
+    --glow3: var(--glow0);
+    --glow4: var(--glow0);
+    box-shadow: 0 0 calc(0.15 * var(--base-length)) 0 var(--glow0),
+        calc(-0.75 * var(--base-length)) calc(-0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) var(--glow1),
+        calc(0.75 * var(--base-length)) calc(-0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) var(--glow2),
+        calc(-0.75 * var(--base-length)) calc(0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) var(--glow3),
+        calc(0.75 * var(--base-length)) calc(0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) var(--glow4);
     transform: scale(1.05);
 }
 
@@ -85,4 +96,13 @@ a:hover {
 
 .tilted {
     transform: scale(1.6) rotate3d(-1,1,1,45deg);
+}
+
+@keyframes test-rotate {
+    from {
+        filter: hue-rotate(0deg);
+    }
+    to {
+        filter: hue-rotate(360deg);
+    }
 }
