@@ -15,7 +15,7 @@ body {
     margin: 0;
 }
 
-.title {
+#title {
     display: inline-block;
     color: var(--bright);
     font-family: var(--font);
@@ -41,6 +41,11 @@ a:hover {
     width: 100vw;
     text-align: center;
 }
+
+.row.hidden-site {
+    background-color: #000;
+}
+
 .tile {
     display: inline-block;
     position: relative;
@@ -55,6 +60,7 @@ a:hover {
         calc(-0.75 * var(--base-length)) calc(0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) transparent,
         calc(0.75 * var(--base-length)) calc(0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) transparent;
     transition-duration: 0.2s;
+    z-index: 1;
 }
 
 .tile::after {
@@ -91,7 +97,6 @@ a:hover {
     height: 100%;
     image-rendering: pixelated;
     object-fit: cover;
-    z-index: -1;
 }
 
 .tilted {
@@ -105,4 +110,13 @@ a:hover {
     to {
         filter: hue-rotate(360deg);
     }
+}
+
+
+.hidden {
+    display: none;
+}
+
+.transparent {
+    opacity: 0%;
 }

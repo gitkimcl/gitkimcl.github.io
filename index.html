@@ -4,18 +4,46 @@
         <title>kimcl web</title>
         <link rel="icon" type="image/png" href="img/favicon.png">
         <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="script.js"></script>
     </head>
     <body>
         <div class="row" style="text-align: left; position: relative;">
-            <a class="tile" href="javascript:void(console.log('ecyc e'));" onclick="this.style.animation='none'; this.offsetHeight; this.style.animation='1s test-rotate';" style="width: var(--base-length);">
-                <img class="tile-img tilted" src="img/test_img.png">
-            </a>
-            <h1 class="title">kimcl web</h1>
+            <button class="tile" onclick="logo_click(this);" style="padding: 0; border: 0; background: none; width: var(--base-length);">
+                <img id="logo-img" class="tile-img tilted" src="img/test_img.png">
+            </button>
+            <h1 id="title">kimcl web</h1>
         </div>
 
-        <div class="row">
-            <a href="things/eight-timer/index.html" class="tile" style="--glow1:white;--glow2:lightgray;--glow3:darkgray;--glow4:gray;">
+        <div class="row hidden-site hidden">
+            <a href="things/traffic-sign-recorder/index.html" class="tile">
+                <img class="tile-img" src="img/test_img.png">
+            </a>
+            <a href="things/time-manager/index.html" class="tile">
+                <img class="tile-img" src="img/test_img.png">
+            </a>
+        </div>
+        <div class="row hidden-site hidden">
+            <a href="things/brick-timer/index.html" class="tile">
+                <img class="tile-img" src="img/test_img.png">
+            </a>
+            <a href="things/eight-timer/index.html" class="tile">
                 <img class="tile-img" src="img/eight-timer.png">
+            </a>
+        </div>
+        <div class="row hidden-site hidden">
+            <a href="things/special-dobby-timer/index.html" class="tile">
+                <img class="tile-img" src="img/test_img.png">
+            </a>
+            <a href="things/special-dobby-timer2/index.html" class="tile">
+                <img class="tile-img" src="img/test_img.png">
+            </a>
+        </div>
+
+
+        <div class="row">
+            <a href="things/lstimer_v2/index.html" class="tile" style="--glow1:hsl(180,100%,60%);--glow2:hsl(215,100%,60%);--glow3:hsl(320,100%,60%);--glow4:hsl(285,100%,60%);">
+                <img class="tile-img" src="img/test_img.png">
             </a>
             <a href="things/lstimer_decimal/index.html" class="tile" style="--glow1:hsl(160,100%,60%);--glow2:hsl(215,100%,60%);--glow3:hsl(320,100%,60%);--glow4:hsl(285,100%,60%);">
                 <img class="tile-img" src="img/lstimer.png">

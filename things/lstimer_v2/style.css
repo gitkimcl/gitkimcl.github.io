@@ -6,7 +6,7 @@
 }
 
 :root {
-	--default-trans: background-color 0.5s linear, color 0.5s linear, border 0.5s linear, border-color 0.5s linear, box-shadow 0.5s linear, text-shadow 0.5s linear;
+	--default-trans: background-color 0.5s linear, color 0.5s linear, border-color 0.5s linear, box-shadow 0.5s linear, text-shadow 0.5s linear;
 	--trans-center: translate(-50%, -50%);
 	--theme-hue:345;
 	--theme-solid:hsl(var(--theme-hue),100%,60%);
