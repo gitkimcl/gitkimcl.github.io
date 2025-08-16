@@ -1,0 +1,136 @@
+body {
+    background-color: #232323;
+    overflow: hidden;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.nums {
+    position: absolute;
+    top: 5vh;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.numcontainer {
+    width: 8vw;
+    height: 12.571vw;
+    margin: 0.5714vw;
+    overflow: hidden;
+}
+
+.colon {
+    width: 5.714vw;
+}
+
+.num {
+    width: auto;
+    height: 100%;
+    image-rendering: pixelated;
+}
+
+.numatlas {
+    content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGgAAAALAgMAAADuEiDGAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAUGVYSWZNTQAqAAAACAACARIAAwAAAAEAAQAAh2kABAAAAAEAAAAmAAAAAAADoAEAAwAAAAEAAQAAoAIABAAAAAEAAABooAMABAAAAAEAAAALAAAAALMceJIAAAFZaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJYTVAgQ29yZSA2LjAuMCI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOnRpZmY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vdGlmZi8xLjAvIj4KICAgICAgICAgPHRpZmY6T3JpZW50YXRpb24+MTwvdGlmZjpPcmllbnRhdGlvbj4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+Chle4QcAAAAJUExURQAAAAAAAP///4Pdz9IAAAABdFJOUwBA5thmAAAAj0lEQVQYV22NMQqEQAxF36YQmWqPYD2XdI5iKckUHiH3mcZeIVvoLLLsK0LgwX+SStKiK6xkJavo0s/CReIXgWPDYAIMLCo4J7hst4p/Ki1kmAEFZdz3mfEavDi/jf396i2aN2QQmoMzOR71oYBb8VS5KGFBLlCYocgKpbfCon+9KYcf5lah0oxmVJqFbc0+cGpOlS17xt0AAAAASUVORK5CYII=");
+}
+
+.numcol {
+    content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAALCAYAAACzkJeoAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAUGVYSWZNTQAqAAAACAACARIAAwAAAAEAAQAAh2kABAAAAAEAAAAmAAAAAAADoAEAAwAAAAEAAQAAoAIABAAAAAEAAAAHoAMABAAAAAEAAAALAAAAAAZ7HEkAAAIwaVRYdFhNTDpjb20uYWRvYmUueG1wAAAAAAA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJYTVAgQ29yZSA2LjAuMCI+CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyI+CiAgICAgICAgIDxleGlmOlBpeGVsWURpbWVuc2lvbj42NDwvZXhpZjpQaXhlbFlEaW1lbnNpb24+CiAgICAgICAgIDxleGlmOkNvbG9yU3BhY2U+MTwvZXhpZjpDb2xvclNwYWNlPgogICAgICAgICA8ZXhpZjpQaXhlbFhEaW1lbnNpb24+NjI8L2V4aWY6UGl4ZWxYRGltZW5zaW9uPgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KwDwuCwAAAC9JREFUGBljYCAXMMI0/gcCGJsRCEBsJpgANhqvJNxYoE64sUA2sjg2Q5FU0NFBAErtCg0jvGU1AAAAAElFTkSuQmCC");
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+}
+
+#bg-video, #bg-image {
+    z-index: -999;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+@media (min-aspect-ratio: 16/9) {
+    #bg-video, #bg-image {
+        /* height = 100 * (9 / 16) = 56.25 */
+        height: 56.25vw;
+    }
+}
+@media (max-aspect-ratio: 16/9) {
+    #bg-video, #bg-image {
+        /* width = 100 / (9 / 16) = 177.777777 */
+        width: 177.78vh;
+    }
+}
+
+#logo {
+    width: 60vw;
+    height: auto;
+    position: absolute;
+    left: 20vw;
+    top: 0;
+}
+
+#vswitch {
+    position: absolute;
+    left: 90vw;
+    top: calc(100vh - 10vw);
+    width: 5vw;
+    height: 5vw;
+    background-color: #3d894c;
+    border-style: solid;
+    border-width: 0.4vw;
+    border-color: #316C42;
+    border-top-color: #64cb55;
+    clip-path: polygon(8% 0%, 92% 0%, 92% 8%, 100% 8%, 100% 92%, 92% 92%, 92% 100%, 8% 100%, 8% 92%, 0% 92%, 0% 8%, 8% 8%);
+}
+
+#vswitch:hover {
+    background-color: #449657;
+}
+
+#vswitch:active {
+    background-color: #3d894c;
+}
+
+#vswitch-border {
+    z-index: -1;
+    position: absolute;
+    left: calc(90vw - 2px);
+    top: calc(100vh - 10vw - 2px);
+    width: calc(5vw + 4px);
+    height: calc(5vw + 4px);
+    background-color: black;
+    clip-path: polygon(8% 0%, 92% 0%, 92% 8%, 100% 8%, 100% 92%, 92% 92%, 92% 100%, 8% 100%, 8% 92%, 0% 92%, 0% 8%, 8% 8%);
+}
+
+#vswitch:active + #vswitch-border {
+    background-color: white;
+}
+
+#vswitch-image {
+    width: 1.5vw;
+    height: 3vw;
+    image-rendering: pixelated;
+    position: relative;
+    left: 1px;
+}
