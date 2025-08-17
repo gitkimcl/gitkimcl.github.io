@@ -376,6 +376,9 @@ body {
 	border: min(0.39vw,0.39vh) solid white;
 	border-radius: min(3vw,3vh);
 	padding: 0 min(0.65vw,0.65vh);
+	font-family: monospace;
+	font-size: min(2.5vw,2.5vh);
+	line-height: min(4.5vw, 4.5vh);
 }
 
 .pdisplay, #play {

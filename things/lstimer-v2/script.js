@@ -279,7 +279,7 @@ function modify_date(isUp) {
 	let now = new Date();
 	if ($("#dyear").is(':hover')) {
 		if (isUp) {
-			if (until(input_date(1,0,0,0,0))>ringcap()) return;
+			if (until(input_date(1,0,0,0,0))>=ringcap()) return;
 			$("#dyear").text(Number.parseInt($("#dyear").text())+1);
 		} else {
 			if (until(input_date(-1,0,0,0,0))<0) return;
@@ -287,7 +287,7 @@ function modify_date(isUp) {
 		}
 	} else if ($("#dmonth").is(':hover')) {
 		if (isUp) {
-			if (until(input_date(0,1,0,0,0))>ringcap()) return;
+			if (until(input_date(0,1,0,0,0))>=ringcap()) return;
 			$("#dmonth").text(Number.parseInt($("#dmonth").text())+1);
 		} else {
 			if (until(input_date(0,-1,0,0,0))<0) return;
@@ -296,7 +296,7 @@ function modify_date(isUp) {
 		if ($("#dday").text()>month_length(now.getFullYear(),$("#dmonth").text())) $("#dday").text(month_length(now.getFullYear(),$("#dmonth").text()));
 	} else if ($("#dday").is(':hover')) {
 		if (isUp) {
-			if (until(input_date(0,0,1,0,0))>ringcap()) return;
+			if (until(input_date(0,0,1,0,0))>=ringcap()) return;
 			$("#dday").text(Number.parseInt($("#dday").text())+1);
 		} else {
 			if (until(input_date(0,0,-1,0,0))<0) return;
@@ -304,7 +304,7 @@ function modify_date(isUp) {
 		}
 	} else if ($("#dhour").is(':hover')) {
 		if (isUp) {
-			if (until(input_date(0,0,0,1,0))>ringcap()) return;
+			if (until(input_date(0,0,0,1,0))>=ringcap()) return;
 			$("#dhour").text(Number.parseInt($("#dhour").text())+1);
 		} else {
 			if (until(input_date(0,0,0,-1,0))<0) return;
@@ -312,7 +312,7 @@ function modify_date(isUp) {
 		}
 	} else if ($("#dmin").is(':hover')) {
 		if (isUp) {
-			if (until(input_date(0,0,0,0,1))>ringcap()) return;
+			if (until(input_date(0,0,0,0,1))>=ringcap()) return;
 			$("#dmin").text(Number.parseInt($("#dmin").text())+1);
 		} else {
 			if (until(input_date(0,0,0,0,-1))<0) return;
@@ -358,20 +358,29 @@ $("#dyear").on("click",function() {
 		is_dateinput_on=true;
 		$("#dateinput").removeClass("transparent");
 	} else {
-		let cursec=until(new Date($("#dateinput").val()));
-		if (cursec>ringcap()) return;
-		if (cursec<=0) {
-			store.zero = true;
-			store.target = new Date();
-		} else {
-			store.zero = false;
-			store.target=new Date($("#dateinput").val());
-		}
 		is_dateinput_on=false;
 		$("#dateinput").addClass("transparent");
 		reload_date();
 		save();
 	}
+});
+
+$("#dateinput").on("input",function() {
+	let cursec = until(new Date($("#dateinput").val()));
+	if (cursec<ringcap()) {
+		if (cursec<=0) {
+			store.zero = true;
+			store.target = new Date();
+			set_vnum(0);
+			set_rnum(0);
+		} else {
+			store.zero = false;
+			store.target = new Date($("#dateinput").val());
+		}
+	}
+	reload_date();
+	reload_hue();
+	save();
 });
 
 
