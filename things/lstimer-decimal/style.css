@@ -40,31 +40,18 @@ body {
 	border: min(0.39vw,0.39vh) solid var(--theme-white);
 }
 
-.plus {
+.plus1, .plus2 {
 	transition: var(--default-trans), transform 1s;
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	transform: var(--trans-center);
 	width: min(2vw,2vh);
 }
 
-.plus::before {
-	content: " ";
-	transition: inherit;
-	position: inherit;
-	left: inherit;
-	top: inherit;
-	background-color: inherit;
-	border-radius: inherit;
-	width: inherit;
-	height: inherit;
-	transform: var(--trans-center) rotate(90deg);
-}
-
-.plus.pluson {
-	transform: var(--trans-center) rotate(45deg);
-}
+.plus1 { transform: var(--trans-center); }
+.plus2 { transform: var(--trans-center) rotate(90deg); }
+.plus1.pluson { transform: var(--trans-center) rotate(45deg); }
+.plus2.pluson { transform: var(--trans-center) rotate(135deg); }
 
 .glowring {
 	aspect-ratio: 1;
@@ -382,6 +369,9 @@ body {
 	border: min(0.39vw,0.39vh) solid white;
 	border-radius: min(3vw,3vh);
 	padding: 0 min(0.65vw,0.65vh);
+	font-family: monospace;
+	font-size: min(2.5vw,2.5vh);
+	line-height: min(4.5vw, 4.5vh);
 }
 
 .pdisplay, #play {

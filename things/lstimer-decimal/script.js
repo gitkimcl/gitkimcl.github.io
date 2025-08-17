@@ -44,7 +44,7 @@ function reload_date() {
 	$("#dday").text(store.target.getDate());
 	$("#dhour").text(store.target.getHours());
 	$("#dmin").text(store.target.getMinutes());
-	$("#dateinput").val(new Date(input_date().valueOf()-new Date().getTimezoneOffset() * 60000).toISOString().substring(0,16));
+	$("#dateinput").val(new Date(store.target.valueOf()-new Date().getTimezoneOffset() * 60000).toISOString().substring(0,16));
 }
 
 function reload_ringnum() {
@@ -354,20 +354,29 @@ $("#dyear").on("click",function() {
 		is_dateinput_on=true;
 		$("#dateinput").removeClass("transparent");
 	} else {
-		let cursec=until(new Date($("#dateinput").val()));
-		if (cursec>ringcap()) return;
-		if (cursec<=0) {
-			store.zero = true;
-			store.target = new Date();
-		} else {
-			store.zero = false;
-			store.target=new Date($("#dateinput").val());
-		}
 		is_dateinput_on=false;
 		$("#dateinput").addClass("transparent");
 		reload_date();
 		save();
 	}
+});
+
+$("#dateinput").on("input",function() {
+	let cursec = until(new Date($("#dateinput").val()));
+	if (cursec<ringcap()) {
+		if (cursec<=0) {
+			store.zero = true;
+			store.target = new Date();
+			set_vnum(0);
+			set_rnum(0);
+		} else {
+			store.zero = false;
+			store.target = new Date($("#dateinput").val());
+		}
+	}
+	reload_date();
+	reload_hue();
+	save();
 });
 
 
