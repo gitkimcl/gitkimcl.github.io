@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>kimcyc e area</title>
+        <link rel="icon" type="image/png" href="/img/favicon.png">
+        <link rel="stylesheet" type="text/css" href="/style.css">
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <style>
+            @keyframes imgscroll {
+                from {
+                    background-position: 0 0;
+                }
+                to {
+                    background-position: calc(-1 * var(--base-length)) calc(-1 * var(--base-length));
+                }
+            }
+
+            .title {
+                transition: opacity 1s;
+
+                display: inline-block;
+                color: var(--bright);
+                font-family: var(--font);
+                font-size: calc(0.6 * var(--base-length));
+                line-height: 100%;
+                margin: 0;
+                margin-right: calc(0.25 * var(--base-length));
+                position: absolute;
+                top: 50%;
+                transform: translate(0,-50%);
+            }
+
+            #title1, #title2 {
+                line-height: 115%;
+                font-size: calc(0.3 * var(--base-length));
+            }
+
+            #logo-img {
+                animation: forwards infinite linear 3s imgscroll;
+            }
+            
+            .tile-img {
+                position: absolute;
+                inset: 0;
+            }
+
+            .cyc-icon {
+                display: block;
+                position: absolute;
+                top: 27%;
+                left: 25%;
+                width: 50%;
+                height: 50%;
+                object-fit: cover;
+                background-size: cover;
+            }
+
+
+            .qpi-style {
+                position: absolute;
+                inset: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                padding: calc(0.2 * var(--base-length));
+            }
+
+            .qpi-style * {
+                color: var(--bright);
+            }
+
+            .item-eyebrow {
+                margin: 0;
+                opacity: 0.8;
+                margin-bottom: calc(0.057 * var(--base-length));
+
+                font-size: calc(0.1 * var(--base-length));
+                font-weight: 600;
+                line-height: 1.28571;
+                letter-spacing: .011em;
+            }
+
+            .item-headline {
+                margin: 0;
+                margin-bottom: calc(0.086 * var(--base-length));
+
+                font-size: calc(0.286 * var(--base-length));
+                font-weight: 600;
+                line-height: 1.1;
+                letter-spacing: -.003em;
+            }
+
+            .item-cta {
+                margin-top: auto;
+                padding-top: calc(0.171 * var(--base-length));
+            }
+
+            .cta-link {
+                font-size: calc(0.121 * var(--base-length));
+                font-weight: 400;
+                line-height: 1.47059;
+                letter-spacing: -.022em;
+            }
+
+
+            .notion {
+                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"
+            }
+        </style>
+    </head>
+    <body>
+        <div class="row" style="text-align: left; position: relative;">
+            <button class="tile" onclick="this.style.animation='none'; this.offsetHeight; this.style.animation='1s test-rotate';" style="padding: 0; border: 0; background: none; width: var(--base-length);">
+                <div id="logo-img" class="tile-img tilted pixel" style="background-image: url('img/arealoop.png'); background-size: 100% 100%;">
+            </button>
+            <h1 class="title transparent" id="title1">안녕하세요 여러분.</h1>
+            <h1 class="title transparent" id="title2">공간 사이의 공간에 오신 것을 환영합니다.</h1>
+            <h1 class="title transparent" id="title3">이끾끼 에리어</h1>
+        </div>
+
+        <div class="row">
+            <a href="https://www.notion.so/2538f00ad6ba80588d83e43e30c6d9e5" target="_blank" class="tile">
+                <span class="tile-img" style="background: #191919;"></span>
+                <span class="cyc-icon" style="background-image: url('img/cycrecord_text.svg');"></span>
+
+                <div class="qpi-style">
+                    <div class="item-eyebrow typography-caption2 notion">NOTION</div>
+                    <h2 class="item-headline typography-headline notion"><img style="height:calc(0.286*var(--base-length)); position: relative; top: calc(0.03*var(--base-length));", src="img/cycrecord_text.svg"/> 끾기록 디지털화</h2>
+                    <div class="item-cta"></div>
+                </div>
+            </a>
+
+            <a href="https://www.notion.so/246420eb286580dca036d2d001ca00f9" target="_blank" class="tile">
+                <span class="tile-img" style="background: #191919;"></span>
+                <span class="cyc-icon" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; font-size: calc(1.2 * var(--base-length));">📔</span>
+
+                <div class="qpi-style">
+                    <div class="item-eyebrow typography-caption2 notion">NOTION</div>
+                    <h2 class="item-headline typography-headline notion"><span style="display: inline-block; height:calc(0.286*var(--base-length)); aspect-ratio: 1; border-radius: 20%; position: relative; top: calc(0.03*var(--base-length)); background-image: url('img/rhdehd.webp'); background-size: cover;"></span> 공동일기구역</h2>
+                    <div class="item-cta"></div>
+                </div>
+            </a>
+        </div>
+
+        <div class="row">
+            <a href="https://qpi.kro.kr/archive/ecyce.html" class="tile">
+                <span class="tile-img" style="background: linear-gradient(150deg, #10004C 0%, #5F6584 100%);"></span>
+                <span class="cyc-icon" style="background-image: url('img/logo_dark.ico');"></span>
+
+                <div class="qpi-style">
+                    <div class="item-eyebrow typography-caption2">QPI</div>
+                    <h2 class="item-headline typography-headline">쿼터파이</h2>
+                    <div class="item-cta">
+                        <span class="cta-link typography-caption1">더 알아보기 →</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <script>
+            window.setTimeout(() => {
+                $("#title1").removeClass("transparent");
+                window.setTimeout(() => {
+                    $("#title1").addClass("transparent");
+                    window.setTimeout(() => {
+                        $("#title2").removeClass("transparent");
+                        window.setTimeout(() => {
+                            $("#title2").addClass("transparent");
+                            window.setTimeout(() => {
+                                $("#title3").removeClass("transparent");
+                            }, 1000);
+                        }, 2000);
+                    }, 1000);
+                }, 1500);
+            }, 10);
+        </script>
+    </body>
+</html>
