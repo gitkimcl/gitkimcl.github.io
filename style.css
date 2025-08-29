@@ -48,6 +48,13 @@ a:hover {
 }
 
 .tile {
+    --glow: var(--bright);
+    --glow0: color-mix(in srgb,var(--glow) 25%,transparent);
+    --glow1: var(--glow0);
+    --glow2: var(--glow0);
+    --glow3: var(--glow0);
+    --glow4: var(--glow0);
+    
     display: inline-block;
     position: relative;
     aspect-ratio: 1;
@@ -60,7 +67,7 @@ a:hover {
         calc(0.75 * var(--base-length)) calc(-0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) transparent,
         calc(-0.75 * var(--base-length)) calc(0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) transparent,
         calc(0.75 * var(--base-length)) calc(0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) transparent;
-    transition-duration: 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
     z-index: 1;
 }
 
@@ -69,17 +76,11 @@ a:hover {
     position: absolute;
     inset: 0;
     box-shadow: inset 0 0 calc(0.1 * var(--base-length)) var(--dark);
-    transition-duration: 0.2s;
+    transition: transform 0.2s, box-shadow 0.2s;
     pointer-events: none;
 }
 
 .tile:hover {
-    --glow: var(--bright);
-    --glow0: color-mix(in srgb,var(--glow) 25%,transparent);
-    --glow1: var(--glow0);
-    --glow2: var(--glow0);
-    --glow3: var(--glow0);
-    --glow4: var(--glow0);
     box-shadow: 0 0 calc(0.15 * var(--base-length)) 0 var(--glow0),
         calc(-0.75 * var(--base-length)) calc(-0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) var(--glow1),
         calc(0.75 * var(--base-length)) calc(-0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) var(--glow2),
