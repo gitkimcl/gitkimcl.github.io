@@ -33,6 +33,7 @@
                 left: 0;
                 top: 0;
                 overscroll-behavior: none;
+                overflow: hidden;
                 background: none;
             }
             
@@ -58,6 +59,7 @@
                 position: absolute;
                 top: 50%;
                 transform: translate(0,-50%);
+                word-break: keep-all;
             }
 
             #title1, #title2 {
@@ -121,6 +123,7 @@
 
             .item-description {
                 opacity: 0.8;
+                margin: 0;
                 margin-bottom: calc(0.171 * var(--base-length));
 
                 font-size: calc(0.121 * var(--base-length));
@@ -177,6 +180,8 @@
                 transition: opacity 1s;
                 width: 100vw;
                 height: 30vh;
+                position: absolute;
+                top: calc(1.5 * var(--base-length));
             }
 
             #intro-row {
@@ -199,15 +204,16 @@
                 backdrop-filter: grayscale(0.75) brightness(60%) blur(10px);
             }
 
-            #intro-tile {
+            .intro-tile {
                 box-shadow: none;
             }
-            #intro-tile::after {
+            .intro-tile::after {
                 box-shadow: none;
             }
 
             main {
-                overflow: auto;
+                overscroll-behavior: none;
+                overflow: hidden;
                 perspective: 1px;
                 transform-style: preserve-3d;
                 width: 100vw;
@@ -215,26 +221,33 @@
             }
 
             .bg {
+                z-index: -1;
+                
                 background: url('img/arealoop.png');
                 background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
                 animation: forwards infinite linear 30s imgscroll2;
                 
                 position: absolute;
-                width: 100vw;
-                height: 100vh;
+                inset: 0;
+                height: 200vh;
 
                 transform: translateZ(-3px) scale(4);
-                transform-style: preserve-3d;
             }
 
-            .bgfilter {
+            .bg::after {
+                content: '';
+
                 position: absolute;
                 width: 100vw;
-                height: 100vh;
+                height: 200vh;
 
                 transition: backdrop-filter 1s;
                 backdrop-filter: contrast(0) brightness(27.3%);
                 overflow: hidden;
+            }
+
+            .bgon:after {
+                backdrop-filter: none;
             }
 
             .initial {
@@ -242,36 +255,61 @@
                 height: 100vh;
                 overflow: hidden;
             }
+
+            @supports not (mix-blend-mode: hard-light) {
+                * {
+                    background: red !important;
+                }
+            }
+
+            .semitransp {
+                opacity: 50%;
+            }
+
+            .transparent {
+                opacity: 0%;
+            }
         </style>
     </head>
     <body>
         <main>
             <div class="bg"></div>
-            <div class="bgfilter"></div>
-            <div class="initial">
-                <div class="row" style="text-align: left; position: relative;">
-                    <button class="tile" onclick="this.style.animation='none'; this.offsetHeight; this.style.animation='1s test-rotate'; skip_cutscene();" style="padding: 0; border: 0; background: none; width: var(--base-length);">
-                        <div id="logo-img" class="tile-img tilted pixel" style="background-image: url('img/arealoop.png'); background-size: 100% 100%;">
-                    </button>
-                    <h1 class="title transparent" id="title1">안녕하세요 여러분.</h1>
-                    <h1 class="title transparent" id="title2">공간 사이의 공간에 오신 것을 환영합니다.</h1>
-                    <h1 class="title transparent" id="title3">이끾끼 에리어</h1>
-                </div>
-                <img class="areatext transparent" src="img/areatext.png" style="object-fit: cover; object-position: center; mix-blend-mode: overlay;" />
-                <div class="row transparent" id="intro-row" style="margin-top: calc(70vh - 3.8 * var(--base-length)); mix-blend-mode: hard-light;">
-                    <a target="_blank" id="intro-tile" class="tile double-tile" style="height: calc(1.8 * var(--base-length));">
-                        <span class="tile-img" style="background: #277AEA;"></span>
+            
+            <div class="row" style="text-align: left; position: absolute;">
+                <button class="tile" onclick="this.style.animation='none'; this.offsetHeight; this.style.animation='1s test-rotate'; skip_cutscene();" style="padding: 0; border: 0; background: none; width: var(--base-length);">
+                    <div id="logo-img" class="tile-img tilted pixel" style="background-image: url('img/arealoop.png'); background-size: 100% 100%;">
+                </button>
+                <h1 class="title transparent" id="title1">안녕하세요 여러분.</h1>
+                <h1 class="title transparent" id="title2">공간 사이의 공간에 오신 것을 환영합니다.</h1>
+                <h1 class="title transparent" id="title3">이끾끼 에리어</h1>
+            </div>
+            
+            <img class="areatext transparent" src="img/areatext.png" style="object-fit: cover; object-position: center; mix-blend-mode: overlay;" />
+            <div class="row transparent hardlight" id="intro-row" style="margin-top: calc(100vh - 2.3 * var(--base-length)); mix-blend-mode: hard-light;">
+                <a href="/" class="tile intro-tile" style="height: calc(1.8 * var(--base-length));">
+                    <span class="tile-img" style="background: #277AEA;"></span>
 
-                        <div class="qpi-style">
-                            <div class="item-eyebrow typography-caption2">ECYC E AREA</div>
-                            <h2 class="item-headline typography-headline">공간 사이의 공간</h2>
-                            <h2 class="item-description typography-headline">이끾끼 에리어는 곳곳에 숨겨져 있습니다.<br>이끾끼 에리어의 중심에 오신 것을 환영합니다.</h2>
-                            <div class="item-cta">
-                                <span class="cta-link typography-caption1">둘러보기 ↓</span>
-                            </div>
+                    <div class="qpi-style">
+                        <div class="item-eyebrow typography-caption2">ECYC E AREA</div>
+                        <h2 class="item-headline typography-headline">공간 사이의 공간</h2>
+                        <h2 class="item-description typography-headline">이끾끼 에리어는 곳곳에 숨겨져 있습니다.<br>이끾끼 에리어의 중심에 오신 것을 환영합니다.<br>돌아가고 싶으시다면, 선택을 존중합니다.</h2>
+                        <div class="item-cta">
+                            <span class="cta-link typography-caption1">← 돌아가기</span>
                         </div>
-                    </a>
-                </div>
+                    </div>
+                </a>
+                <a href="#" onclick="togglePower();" class="tile intro-tile" style="height: calc(1.8 * var(--base-length));">
+                    <span class="tile-img" style="background: #277AEA;"></span>
+
+                    <div class="qpi-style">
+                        <div class="item-eyebrow typography-caption2">POWER OF ECYC E</div>
+                        <h2 class="item-headline typography-headline">이끾끼의 힘</h2>
+                        <h2 id="reducepowerdesc" class="item-description typography-headline">이끾끼 에리어에는 이끾끼의 힘이 충만합니다.<br>이 힘은 몇몇에게는 감당할 수 없을 정도로 강합니다.<br>공간이 2차원적으로 보인다면, 이곳을 눌러야 합니다.</h2>
+                        <div class="item-cta">
+                            <span id="reducepower" class="cta-link typography-caption1">힘 제한하기 →</span>
+                        </div>
+                    </div>
+                </a>
             </div>
 
             <div class="hidden rows rowbg">
@@ -345,6 +383,33 @@
         </main>
         
         <script>
+            if (localStorage.getItem("lesspower")=="1") {
+                $(".areatext").css("mix-blend-mode", "normal");
+                $(".areatext").addClass("semitransp");
+                $(".hardlight").css("mix-blend-mode", "normal");
+                $("#reducepowerdesc").html("이끾끼 에리어에는 이끾끼의 힘이 충만합니다.<br>감당할 수 있겠다고 생각하신다면, 이곳을 눌러야 합니다.<br>배경의 원근감이 사라진다면, 즉시 다시 눌러야 합니다.");
+                $("#reducepower").text("힘 방출하기 →");
+            }
+
+            function togglePower() {
+                let curpower = localStorage.getItem("lesspower");
+                if (curpower=="1") {
+                    localStorage.setItem("lesspower","0");
+                    $(".areatext").css("mix-blend-mode", "overlay");
+                    $(".areatext").removeClass("semitransp");
+                    $(".hardlight").css("mix-blend-mode", "hard-light");
+                    $("#reducepowerdesc").html("이끾끼 에리어에는 이끾끼의 힘이 충만합니다.<br>이 힘은 몇몇에게는 감당할 수 없을 정도로 강합니다.<br>배경에 원근감이 없다면, 즉시 이곳을 눌러야 합니다.");
+                    $("#reducepower").text("힘 제한하기 →");
+                } else {
+                    localStorage.setItem("lesspower","1");
+                    $(".areatext").css("mix-blend-mode", "normal");
+                    $(".areatext").addClass("semitransp");
+                    $(".hardlight").css("mix-blend-mode", "normal");
+                    $("#reducepowerdesc").html("이끾끼 에리어에는 이끾끼의 힘이 충만합니다.<br>감당할 수 있겠다고 생각하신다면, 이곳을 눌러야 합니다.<br>배경의 원근감이 사라진다면, 즉시 다시 눌러야 합니다.");
+                    $("#reducepower").text("힘 방출하기 →");
+                }
+            }
+            
             var killcode;
             killcode = window.setTimeout(() => {
                 $("#title1").removeClass("transparent");
@@ -359,8 +424,9 @@
                             $("#logo-img").css("filter", "none");
                             $(".rows").removeClass("hidden");
                             $("#intro-row").removeClass("transparent");
-                            $(".bgfilter").css("backdrop-filter","contrast(1) brightness(85%)");
+                            $(".bg").addClass("bgon");
                             $(".areatext").removeClass("transparent");
+                            $("main").css("overflow-y", "auto");
                             }, 1000);
                         }, 2000);
                     }, 1000);
@@ -375,8 +441,9 @@
                 $("#logo-img").css("filter", "none");
                 $(".rows").removeClass("hidden");
                 $("#intro-row").removeClass("transparent");
-                $(".bgfilter").css("backdrop-filter","contrast(1) brightness(85%)");
+                $(".bg").addClass("bgon");
                 $(".areatext").removeClass("transparent");
+                $("main").css("overflow-y", "auto");
             }
         </script>
     </body>
