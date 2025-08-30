@@ -4,338 +4,66 @@
         <title>kimcyc e area</title>
         <link rel="icon" type="image/png" href="/img/favicon.png">
         <link rel="stylesheet" type="text/css" href="/style.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-        <style>
-            @keyframes imgscroll {
-                from {
-                    background-position: 0 0;
-                }
-                to {
-                    background-position: calc(-1 * var(--base-length)) calc(-1 * var(--base-length));
-                }
-            }
-
-            @keyframes imgscroll2 {
-                from {
-                    background-position: 0 0;
-                }
-                to {
-                    background-position: calc(-6 * var(--base-length)) calc(-6 * var(--base-length));
-                }
-            }
-
-            html {
-                overscroll-behavior: none;
-            }
-
-            body {
-                position: absolute;
-                left: 0;
-                top: 0;
-                overscroll-behavior: none;
-                overflow: hidden;
-                background: none;
-            }
-            
-            #logo-img {
-                transition: opacity 1s, filter 1s;
-                filter: grayscale(1) blur(calc(0.05 * var(--base-length)));
-            }
-
-            a:hover {
-                color: inherit;
-            }
-
-            .title {
-                transition: opacity 1s;
-
-                display: inline-block;
-                color: var(--bright);
-                font-family: var(--font);
-                font-size: calc(0.6 * var(--base-length));
-                line-height: 100%;
-                margin: 0;
-                margin-right: calc(0.25 * var(--base-length));
-                position: absolute;
-                top: 50%;
-                transform: translate(0,-50%);
-                word-break: keep-all;
-            }
-
-            #title1, #title2 {
-                line-height: 115%;
-                font-size: calc(0.3 * var(--base-length));
-            }
-
-            #logo-img {
-                animation: forwards infinite linear 3s imgscroll;
-            }
-            
-            .tile-img {
-                position: absolute;
-                inset: 0;
-            }
-
-            .cyc-icon {
-                display: block;
-                position: absolute;
-                top: 27%;
-                left: 25%;
-                width: 50%;
-                height: 50%;
-                object-fit: cover;
-                background-size: cover;
-            }
-
-
-            .qpi-style {
-                position: absolute;
-                inset: 0;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-                padding: calc(0.2 * var(--base-length));
-                color: var(--bright);
-            }
-
-            .item-eyebrow {
-                margin: 0;
-                opacity: 0.8;
-                margin-bottom: calc(0.057 * var(--base-length));
-
-                font-size: calc(0.1 * var(--base-length));
-                font-weight: 600;
-                line-height: 1.28571;
-                letter-spacing: .011em;
-            }
-
-            .item-headline {
-                margin: 0;
-                margin-bottom: calc(0.086 * var(--base-length));
-
-                font-size: calc(0.286 * var(--base-length));
-                font-weight: 600;
-                line-height: 1.1;
-                letter-spacing: -.003em;
-            }
-
-            .item-description {
-                opacity: 0.8;
-                margin: 0;
-                margin-bottom: calc(0.171 * var(--base-length));
-
-                font-size: calc(0.121 * var(--base-length));
-                font-weight: 400;
-                line-height: 1.47059;
-                letter-spacing: -.022em;
-            }
-
-            .item-cta {
-                margin-top: auto;
-                padding-top: calc(0.171 * var(--base-length));
-            }
-
-            .cta-link {
-                font-size: calc(0.121 * var(--base-length));
-                font-weight: 400;
-                line-height: 1.47059;
-                letter-spacing: -.022em;
-            }
-
-
-            .notion {
-                font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"
-            }
-
-            .notion-icon {
-                display: inline-block;
-                height: calc(0.286*var(--base-length));
-                aspect-ratio: 1;
-                border-radius: 20%;
-                position: relative;
-                top: calc(0.03*var(--base-length));
-                background-size: cover;
-            }
-
-            .gdocs {
-                font-family: "Google Sans",Arial,sans-serif; /* Google Sans는 아쉽게도 라이선스상 사용이 안 된다고 하네요. */
-            }
-
-            .tile {
-                --glow0: var(--bright);
-                --glow1: transparent;
-                --glow2: transparent;
-                --glow3: transparent;
-                --glow4: transparent;
-            }
-
-            .double-tile {
-                width: calc(min(126vh, 100vw) - 0.5 * var(--base-length));
-                height: calc(3 * var(--base-length));
-            }
-
-            .areatext {
-                transition: opacity 1s;
-                width: 100vw;
-                height: 30vh;
-                position: absolute;
-                top: calc(1.5 * var(--base-length));
-            }
-
-            #intro-row {
-                transition: opacity 1s;
-            }
-
-            .rowbg {
-                background: url('img/arealoop.png');
-                background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
-                animation: forwards infinite linear 30s imgscroll2;
-                position: relative;
-                box-sizing: border-box;
-                border-top: 3px solid color-mix(in srgb, var(--bright) 25%, var(--dark));
-            }
-
-            .rowbgfilter {
-                position: absolute;
-                inset: 0;
-                background-color: color-mix(in srgb, var(--dark), transparent 60%);
-                backdrop-filter: grayscale(0.75) brightness(60%) blur(10px);
-            }
-
-            .intro-tile {
-                box-shadow: none;
-            }
-            .intro-tile::after {
-                box-shadow: none;
-            }
-
-            main {
-                overscroll-behavior: none;
-                overflow: hidden;
-                perspective: 1px;
-                transform-style: preserve-3d;
-                width: 100vw;
-                height: 100vh;
-            }
-
-            .bg {
-                z-index: -1;
-                
-                background: url('img/arealoop.png');
-                background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
-                animation: forwards infinite linear 30s imgscroll2;
-                
-                position: absolute;
-                inset: 0;
-                height: 200vh;
-
-                transform: translateZ(-3px) scale(4);
-            }
-
-            .bg::after {
-                content: '';
-
-                position: absolute;
-                width: 100vw;
-                height: 200vh;
-
-                transition: backdrop-filter 1s;
-                backdrop-filter: contrast(0) brightness(27.3%);
-                overflow: hidden;
-            }
-
-            .bgon:after {
-                backdrop-filter: none;
-            }
-
-            .initial {
-                width: 100vw;
-                height: 100vh;
-                overflow: hidden;
-            }
-
-            @supports not (mix-blend-mode: hard-light) {
-                * {
-                    background: red !important;
-                }
-            }
-
-            .semitransp {
-                opacity: 50%;
-            }
-
-            .transparent {
-                opacity: 0%;
-            }
-        </style>
     </head>
     <body>
         <main>
             <div class="bg"></div>
-            
-            <div class="row" style="text-align: left; position: absolute;">
-                <button class="tile" onclick="this.style.animation='none'; this.offsetHeight; this.style.animation='1s test-rotate'; skip_cutscene();" style="padding: 0; border: 0; background: none; width: var(--base-length);">
-                    <div id="logo-img" class="tile-img tilted pixel" style="background-image: url('img/arealoop.png'); background-size: 100% 100%;">
-                </button>
-                <h1 class="title transparent" id="title1">안녕하세요 여러분.</h1>
-                <h1 class="title transparent" id="title2">공간 사이의 공간에 오신 것을 환영합니다.</h1>
-                <h1 class="title transparent" id="title3">이끾끼 에리어</h1>
-            </div>
-            
-            <img class="areatext transparent" src="img/areatext.png" style="object-fit: cover; object-position: center; mix-blend-mode: overlay;" />
-            <div class="row transparent hardlight" id="intro-row" style="margin-top: calc(100vh - 2.3 * var(--base-length)); mix-blend-mode: hard-light;">
-                <a href="/" class="tile intro-tile" style="height: calc(1.8 * var(--base-length));">
-                    <span class="tile-img" style="background: #277AEA;"></span>
-
-                    <div class="qpi-style">
-                        <div class="item-eyebrow typography-caption2">ECYC E AREA</div>
-                        <h2 class="item-headline typography-headline">공간 사이의 공간</h2>
-                        <h2 class="item-description typography-headline">이끾끼 에리어는 곳곳에 숨겨져 있습니다.<br>이끾끼 에리어의 중심에 오신 것을 환영합니다.<br>돌아가고 싶으시다면, 선택을 존중합니다.</h2>
-                        <div class="item-cta">
-                            <span class="cta-link typography-caption1">← 돌아가기</span>
+            <div>
+                <div class="row" id="title-row">
+                    <div class="title-row-bg"></div>
+                    <button class="tile" onclick="this.style.animation='none'; this.offsetHeight; this.style.animation='1s test-rotate'; skip_cutscene();" style="padding: 0; border: 0; background: none; width: var(--base-length);">
+                        <div id="logo-img" class="tile-img tilted pixel" style="background-image: url('img/arealoop.png'); background-size: 100% 100%;">
+                    </button>
+                    <h1 class="title transparent" id="title1">안녕하세요 여러분.</h1>
+                    <h1 class="title transparent" id="title2">공간 사이의 공간에 오신 것을 환영합니다.</h1>
+                    <h1 class="title transparent" id="title3">이끾끼 에리어</h1>
+                </div>
+                <img id="areatext" src="img/areatext.png"/>
+                <div class="row" id="about-row">
+                    <a href="/" class="tile about-tile">
+                        <div class="tile-img" style="background: #277AEA;"></div>
+                        <div class="tile-flex">
+                            <div class="item-eyebrow">ECYC E AREA</div>
+                            <h2 class="item-headline">공간 사이의 공간</h2>
+                            <h2 class="item-description">이끾끼 에리어는 곳곳에 숨겨져 있습니다.<br>이끾끼 에리어의 중심에 오신 것을 환영합니다.<br>돌아가고 싶으시다면, 선택을 존중합니다.</h2>
+                            <div class="item-cta">← 돌아가기</div>
                         </div>
-                    </div>
-                </a>
-                <a href="#" onclick="togglePower();" class="tile intro-tile" style="height: calc(1.8 * var(--base-length));">
-                    <span class="tile-img" style="background: #277AEA;"></span>
-
-                    <div class="qpi-style">
-                        <div class="item-eyebrow typography-caption2">POWER OF ECYC E</div>
-                        <h2 class="item-headline typography-headline">이끾끼의 힘</h2>
-                        <h2 id="reducepowerdesc" class="item-description typography-headline">이끾끼 에리어에는 이끾끼의 힘이 충만합니다.<br>이 힘은 몇몇에게는 감당할 수 없을 정도로 강합니다.<br>배경에 원근감이 없다면, 즉시 이곳을 눌러야 합니다.</h2>
-                        <div class="item-cta">
-                            <span id="reducepower" class="cta-link typography-caption1">힘 제한하기 →</span>
+                    </a>
+                    <a class="tile about-tile" onclick="togglePower();" >
+                        <div class="tile-img" style="background: #277AEA;"></div>
+                        <div class="tile-flex">
+                            <div class="item-eyebrow">POWER OF ECYC E</div>
+                            <h2 class="item-headline">이끾끼의 힘</h2>
+                            <h2 class="item-description" id="powerdesc1">이끾끼 에리어에는 이끾끼의 힘이 충만합니다.<br>이 힘은 몇몇에게는 감당할 수 없을 정도로 강합니다.<br>배경에 원근감이 없다면, 즉시 이곳을 눌러야 합니다.</h2>
+                            <h2 class="item-description" id="powerdesc2">이끾끼 에리어에는 이끾끼의 힘이 충만합니다.<br>감당할 수 있겠다고 생각하신다면, 이곳을 눌러야 합니다.<br>배경의 원근감이 사라진다면, 즉시 다시 눌러야 합니다.</h2>
+                            <div class="item-cta" id="powercta1">힘 제한하기 →</div>
+                            <div class="item-cta" id="powercta2">힘 방출하기 →</div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
 
-            <div class="hidden rows rowbg">
-                <div class="rowbgfilter"></div>
+            <div class="rows">
                 <div style="height: calc(0.5 * var(--base-length));"></div>
                 <div class="row">
                     <a href="https://docs.google.com/document/d/1LRkUSsMmdVSv3C44eqoVH8vy-Akz9FTCfsSYkYMwuFQ/edit?tab=t.e41fn347z50s" target="_blank" class="tile">
-                        <span class="tile-img" style="background: #F9FBFD;"></span>
-                        <span class="cyc-icon" style="background-image: url('img/gdocs.svg'); background-size: contain; background-position: center; background-repeat: no-repeat;"></span>
-
-                        <div class="qpi-style" style="color: var(--dark);">
-                            <div class="item-eyebrow typography-caption2 gdocs">GOOGLE DOCS</div>
-                            <h2 class="item-headline typography-headline gdocs">영어 수행평가 계획</h2>
-                            <div class="item-cta">
-                                <span class="cta-link typography-caption1 gdocs">이끾끼 디멘션은 최초의 이끾끼 에리어입니다.</span>
-                            </div>
+                        <div class="tile-img" style="background: #F9FBFD;"></div>
+                        <img class="tile-icon" src="img/gdocs.svg">
+                        <div class="tile-flex" style="color: var(--dark);">
+                            <div class="item-eyebrow gdocs">GOOGLE DOCS</div>
+                            <h2 class="item-headline gdocs">영어 수행평가 계획</h2>
+                            <div class="item-cta gdocs">이끾끼 디멘션은 최초의 이끾끼 에리어입니다.</div>
                         </div>
                     </a><!--
 
                     --><a href="https://www.notion.so/246420eb286580dca036d2d001ca00f9" target="_blank" class="tile">
-                        <span class="tile-img" style="background: #191919;"></span>
-                        <span class="cyc-icon" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'; font-size: calc(1.2 * var(--base-length));">📔</span>
-
-                        <div class="qpi-style">
-                            <div class="item-eyebrow typography-caption2 notion">NOTION</div>
-                            <h2 class="item-headline typography-headline notion"><span class="notion-icon" style="background-image: url('img/rhdehd.webp');"></span> 공동일기구역</h2>
+                        <div class="tile-img" style="background: #191919;"></div>
+                        <div class="tile-icon notion" style="font-size: calc(1.2 * var(--base-length));">📔</div>
+                        <div class="tile-flex">
+                            <div class="item-eyebrow notion">NOTION</div>
+                            <h2 class="item-headline notion"><span class="notion-icon" style="background-image: url('img/rhdehd.webp');"></span> 공동일기구역</h2>
                             <div class="item-cta"></div>
                         </div>
                     </a>
@@ -343,23 +71,21 @@
 
                 <div class="row">
                     <a href="https://www.notion.so/2481ff5c232f80739ae3ffadd2717a29" target="_blank" class="tile">
-                        <span class="tile-img" style="background: #191919;"></span>
-                        <span class="cyc-icon" style="background-image: url('img/Notion-logo.svg.png');"></span>
-
-                        <div class="qpi-style">
-                            <div class="item-eyebrow typography-caption2 notion">NOTION</div>
-                            <h2 class="item-headline typography-headline notion"><span class="notion-icon" style="background-image: url('img/sciencekimchi.png');"></span> 개인 노션</h2>
+                        <div class="tile-img" style="background: #191919;"></div>
+                        <img class="tile-icon" src="img/Notion-logo.svg.png">
+                        <div class="tile-flex">
+                            <div class="item-eyebrow notion">NOTION</div>
+                            <h2 class="item-headline notion"><span class="notion-icon" style="background-image: url('img/sciencekimchi.png');"></span> 개인 노션</h2>
                             <div class="item-cta"></div>
                         </div>
                     </a><!--
 
                     --><a href="https://www.notion.so/2538f00ad6ba80588d83e43e30c6d9e5" target="_blank" class="tile">
-                        <span class="tile-img" style="background: #191919;"></span>
-                        <span class="cyc-icon" style="background-image: url('img/cycrecord_text.svg');"></span>
-
-                        <div class="qpi-style">
-                            <div class="item-eyebrow typography-caption2 notion">NOTION</div>
-                            <h2 class="item-headline typography-headline notion"><span class="notion-icon" style="background-image: url('img/cycrecord_text.svg');"></span> 끾기록 디지털화</h2>
+                        <div class="tile-img" style="background: #191919;"></div>
+                        <img class="tile-icon" src="img/cycrecord_text.svg">
+                        <div class="tile-flex">
+                            <div class="item-eyebrow notion">NOTION</div>
+                            <h2 class="item-headline notion"><span class="notion-icon" style="background-image: url('img/cycrecord_text.svg');"></span> 끾기록 디지털화</h2>
                             <div class="item-cta"></div>
                         </div>
                     </a>
@@ -367,15 +93,12 @@
 
                 <div class="row">
                     <a href="https://qpi.kro.kr/archive/ecyce.html" target="_blank" class="tile">
-                        <span class="tile-img" style="background: linear-gradient(150deg, #10004C 0%, #5F6584 100%);"></span>
-                        <span class="cyc-icon" style="background-image: url('img/logo_dark.ico');"></span>
-
-                        <div class="qpi-style">
-                            <div class="item-eyebrow typography-caption2">QPI</div>
-                            <h2 class="item-headline typography-headline">쿼터파이</h2>
-                            <div class="item-cta">
-                                <span class="cta-link typography-caption1">더 알아보기 →</span>
-                            </div>
+                        <div class="tile-img" style="background: linear-gradient(150deg, #10004C 0%, #5F6584 100%);"></div>
+                        <img class="tile-icon" src="img/logo_dark.ico">
+                        <div class="tile-flex">
+                            <div class="item-eyebrow">QPI</div>
+                            <h2 class="item-headline">쿼터파이</h2>
+                            <div class="item-cta">더 알아보기 →</div>
                         </div>
                     </a>
                 </div>
@@ -384,29 +107,16 @@
         
         <script>
             if (localStorage.getItem("lesspower")=="1") {
-                $(".areatext").css("mix-blend-mode", "normal");
-                $(".areatext").addClass("semitransp");
-                $(".hardlight").css("mix-blend-mode", "normal");
-                $("#reducepowerdesc").html("이끾끼 에리어에는 이끾끼의 힘이 충만합니다.<br>감당할 수 있겠다고 생각하신다면, 이곳을 눌러야 합니다.<br>배경의 원근감이 사라진다면, 즉시 다시 눌러야 합니다.");
-                $("#reducepower").text("힘 방출하기 →");
+                $("main").addClass("restricted");
             }
 
             function togglePower() {
-                let curpower = localStorage.getItem("lesspower");
-                if (curpower=="1") {
+                if (localStorage.getItem("lesspower")=="1") {
                     localStorage.setItem("lesspower","0");
-                    $(".areatext").css("mix-blend-mode", "overlay");
-                    $(".areatext").removeClass("semitransp");
-                    $(".hardlight").css("mix-blend-mode", "hard-light");
-                    $("#reducepowerdesc").html("이끾끼 에리어에는 이끾끼의 힘이 충만합니다.<br>이 힘은 몇몇에게는 감당할 수 없을 정도로 강합니다.<br>배경에 원근감이 없다면, 즉시 이곳을 눌러야 합니다.");
-                    $("#reducepower").text("힘 제한하기 →");
+                    $("main").removeClass("restricted");
                 } else {
                     localStorage.setItem("lesspower","1");
-                    $(".areatext").css("mix-blend-mode", "normal");
-                    $(".areatext").addClass("semitransp");
-                    $(".hardlight").css("mix-blend-mode", "normal");
-                    $("#reducepowerdesc").html("이끾끼 에리어에는 이끾끼의 힘이 충만합니다.<br>감당할 수 있겠다고 생각하신다면, 이곳을 눌러야 합니다.<br>배경의 원근감이 사라진다면, 즉시 다시 눌러야 합니다.");
-                    $("#reducepower").text("힘 방출하기 →");
+                    $("main").addClass("restricted");
                 }
             }
             
@@ -420,13 +130,8 @@
                         killcode = window.setTimeout(() => {
                             $("#title2").addClass("transparent");
                             killcode = window.setTimeout(() => {
-                            $("#title3").removeClass("transparent");
-                            $("#logo-img").css("filter", "none");
-                            $(".rows").removeClass("hidden");
-                            $("#intro-row").removeClass("transparent");
-                            $(".bg").addClass("bgon");
-                            $(".areatext").removeClass("transparent");
-                            $("main").css("overflow-y", "auto");
+                                $("#title3").removeClass("transparent");
+                                $("main").addClass("on");
                             }, 1000);
                         }, 2000);
                     }, 1000);
@@ -438,12 +143,7 @@
                 $("#title1").addClass("transparent");
                 $("#title2").addClass("transparent");
                 $("#title3").removeClass("transparent");
-                $("#logo-img").css("filter", "none");
-                $(".rows").removeClass("hidden");
-                $("#intro-row").removeClass("transparent");
-                $(".bg").addClass("bgon");
-                $(".areatext").removeClass("transparent");
-                $("main").css("overflow-y", "auto");
+                $("main").addClass("on");
             }
         </script>
     </body>
