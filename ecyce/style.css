@@ -25,14 +25,21 @@
     }
 }
 
-a:hover {
-    color: inherit;
+:root {
+    --off-filter: contrast(0) brightness(195.3%);
+    --bg-filter: grayscale(0.9) brightness(180%) blur(10px);
 }
 
+@media screen and (prefers-color-scheme: dark) {
+    :root {
+        --off-filter: contrast(0) brightness(27.3%);
+        --bg-filter: grayscale(0.75) brightness(60%) blur(10px);
+    }
+}
 
 html {
     overscroll-behavior: none;
-    background-color: var(--dark);
+    background-color: var(--c-bg);
 }
 
 body {
@@ -73,7 +80,7 @@ main.on {
     transition: backdrop-filter 1s;
     position: absolute;
     inset: 0;
-    backdrop-filter: contrast(0) brightness(27.3%);
+    backdrop-filter: var(--off-filter);
     overflow: hidden;
 }
 
@@ -101,15 +108,15 @@ main.on {
     background-origin: border-box;
     background-position-y: calc(1.5 * var(--base-length) + 3px);
     background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
-    border-bottom: 3px solid color-mix(in srgb, var(--bright) 50%, var(--dark));
+    border-bottom: 3px solid var(--c-grayl2);
 }
 
 .title-row-bg::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-color: color-mix(in srgb, var(--dark), transparent 60%);
-    backdrop-filter: grayscale(0.75) brightness(60%) blur(10px);
+    background-color: rgb(from var(--c-bg) r g b / 40%);
+    backdrop-filter: var(--bg-filter);
 }
 
 .on .title-row-bg {
@@ -135,8 +142,7 @@ main.on {
     transform: translate(0,-50%);
     margin: 0;
     margin-right: calc(0.25 * var(--base-length));
-    color: var(--bright);
-    font-family: var(--font);
+    color: var(--c-text);
     font-size: calc(0.3 * var(--base-length));
     line-height: 115%;
     word-break: keep-all;
@@ -206,7 +212,7 @@ main.on {
 }
 
 .tile {
-    --glow0: var(--bright);
+    --glow0: var(--c-text);
     --glow1: transparent;
     --glow2: transparent;
     --glow3: transparent;
@@ -242,7 +248,7 @@ main.on {
     align-items: center;
     text-align: center;
     padding: calc(0.2 * var(--base-length));
-    color: var(--bright);
+    color: var(--c-ltext);
 }
 
 .item-eyebrow {
@@ -314,15 +320,15 @@ main.on {
     background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
     animation: forwards infinite linear 30s imgscroll2;
     position: relative;
-    border-top: 3px solid color-mix(in srgb, var(--bright) 50%, var(--dark));
+    border-top: 3px solid var(--c-grayl2);
 }
 
 .rows::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-color: color-mix(in srgb, var(--dark), transparent 60%);
-    backdrop-filter: grayscale(0.75) brightness(60%) blur(10px);
+    background-color: rgb(from var(--c-bg) r g b / 40%);
+    backdrop-filter: var(--bg-filter);
 }
 
 .on .rows {

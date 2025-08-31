@@ -3,17 +3,18 @@
     <head>
         <title>kimcyc e area</title>
         <link rel="icon" type="image/png" href="/img/favicon.png">
+        <link rel="preload" type="image/png" as="image" href="img/arealoop.png">
         <link rel="stylesheet" type="text/css" href="/style.css">
         <link rel="stylesheet" type="text/css" href="style.css">
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     </head>
     <body>
-        <main>
+        <main id="main">
             <div class="bg"></div>
             <div>
                 <div class="row" id="title-row">
                     <div class="title-row-bg"></div>
-                    <button class="tile" onclick="this.style.animation='none'; this.offsetHeight; this.style.animation='1s test-rotate'; skip_cutscene();" style="padding: 0; border: 0; background: none; width: var(--base-length);">
+                    <button class="tile" onclick="iconclick(this);" style="padding: 0; border: 0; background: none; width: var(--base-length);">
                         <div id="logo-img" class="tile-img tilted pixel" style="background-image: url('img/arealoop.png'); background-size: 100% 100%;">
                     </button>
                     <h1 class="title transparent" id="title1">안녕하세요 여러분.</h1>
@@ -51,7 +52,7 @@
                     <a href="https://docs.google.com/document/d/1LRkUSsMmdVSv3C44eqoVH8vy-Akz9FTCfsSYkYMwuFQ/edit?tab=t.e41fn347z50s" target="_blank" class="tile">
                         <div class="tile-img" style="background: #F9FBFD;"></div>
                         <img class="tile-icon" src="img/gdocs.svg">
-                        <div class="tile-flex" style="color: var(--dark);">
+                        <div class="tile-flex" style="color: var(--c-dtext);">
                             <div class="item-eyebrow gdocs">GOOGLE DOCS</div>
                             <h2 class="item-headline gdocs">영어 수행평가 계획</h2>
                             <div class="item-cta gdocs">이끾끼 디멘션은 최초의 이끾끼 에리어입니다.</div>
@@ -93,7 +94,7 @@
 
                 <div class="row">
                     <a href="https://qpi.kro.kr/archive/ecyce.html" target="_blank" class="tile">
-                        <div class="tile-img" style="background: linear-gradient(150deg, #10004C 0%, #5F6584 100%);"></div>
+                        <div class="tile-img" style="background: radial-gradient(circle at 50% 52%, rgb(from var(--c-bg) r g b / 20%) 0% 20%, transparent 70%), linear-gradient(150deg, #10004C 0%, #5F6584 100%);"></div>
                         <img class="tile-icon" src="img/logo_dark.ico">
                         <div class="tile-flex">
                             <div class="item-eyebrow">QPI</div>
@@ -138,7 +139,15 @@
                 }, 1500);
             }, 10);
 
-            function skip_cutscene() {
+            function iconclick(e) {
+                e.style.animation='none';
+                e.offsetHeight;
+                e.style.animation='1s test-rotate';
+                m = document.getElementById("main");
+                m.style.animation='none';
+                m.offsetHeight;
+                m.style.animation='1s test-rotate';
+
                 window.clearTimeout(killcode);
                 $("#title1").addClass("transparent");
                 $("#title2").addClass("transparent");
