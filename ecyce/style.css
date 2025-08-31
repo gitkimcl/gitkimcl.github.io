@@ -173,7 +173,6 @@ main.on {
 }
 
 .title {
-    transition: opacity 1s;
     display: inline-block;
     position: absolute;
     top: 50%;
