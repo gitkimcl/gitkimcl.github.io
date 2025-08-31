@@ -28,6 +28,7 @@
 :root {
     --off-filter: contrast(0) brightness(195.3%);
     --bg-filter: grayscale(0.9) brightness(180%) blur(10px);
+    --title-length: max(min(28.571vw, 18vh), 4rem);
 }
 
 @media screen and (prefers-color-scheme: dark) {
@@ -85,10 +86,6 @@ main.on {
 
 .on .bg::before {
     backdrop-filter: none;
-}
-
-.initial {
-    --title-length: max(min(28.571vw, 18vh), 4rem);
 }
 
 #title-row {

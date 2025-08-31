@@ -13,10 +13,10 @@
     <body>
         <main id="main">
             <div class="bg"></div>
-            <div class="initial">
+            <div id="initial">
                 <div class="row" id="title-row">
                     <div class="title-row-bg"></div>
-                    <button class="tile" onclick="iconclick(this);" style="padding: 0; border: 0; background: none; width: var(--base-length);">
+                    <button class="tile" onclick="logo_click(this);" style="padding: 0; border: 0; background: none; width: var(--base-length);">
                         <div id="logo-img" class="tile-img tilted pixel" style="background-image: url('img/arealoop.png'); background-size: 100% 100%;">
                     </button>
                     <h1 class="title transparent" id="title1">안녕하세요 여러분.</h1>
@@ -141,7 +141,7 @@
                 }, 1500);
             }, 10);
 
-            function iconclick(e) {
+            function logo_click(e) {
                 e.style.animation='none';
                 e.offsetHeight;
                 e.style.animation='1s test-rotate';
