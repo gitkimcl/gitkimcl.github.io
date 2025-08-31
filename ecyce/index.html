@@ -124,22 +124,24 @@
             }
             
             var killcode;
-            killcode = window.setTimeout(() => {
-                $("#title1").removeClass("transparent");
+            window.addEventListener("load", () => {
                 killcode = window.setTimeout(() => {
-                    $("#title1").addClass("transparent");
+                    $("#title1").removeClass("transparent");
                     killcode = window.setTimeout(() => {
-                        $("#title2").removeClass("transparent");
+                        $("#title1").addClass("transparent");
                         killcode = window.setTimeout(() => {
-                            $("#title2").addClass("transparent");
+                            $("#title2").removeClass("transparent");
                             killcode = window.setTimeout(() => {
-                                $("#title3").removeClass("transparent");
-                                $("main").addClass("on");
-                            }, 1000);
-                        }, 2000);
-                    }, 1000);
-                }, 1500);
-            }, 10);
+                                $("#title2").addClass("transparent");
+                                killcode = window.setTimeout(() => {
+                                    $("#title3").removeClass("transparent");
+                                    $("main").addClass("on");
+                                }, 1000);
+                            }, 2000);
+                        }, 1000);
+                    }, 1500);
+                }, 10);
+            });
 
             function logo_click(e) {
                 e.style.animation='none';
