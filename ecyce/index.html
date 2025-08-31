@@ -125,7 +125,11 @@
             
             var killcode;
             window.addEventListener("load", () => {
+                $("#title-row").css("animation","6s title");
                 killcode = window.setTimeout(() => {
+                    $("main").addClass("on");
+                }, 6000);
+                /*killcode = window.setTimeout(() => {
                     $("#title1").removeClass("transparent");
                     killcode = window.setTimeout(() => {
                         $("#title1").addClass("transparent");
@@ -140,7 +144,7 @@
                             }, 2000);
                         }, 1000);
                     }, 1500);
-                }, 10);
+                }, 10);*/
             });
 
             function logo_click(e) {
@@ -153,9 +157,9 @@
                 m.style.animation='1s test-rotate';
 
                 window.clearTimeout(killcode);
-                $("#title1").addClass("transparent");
+                /*$("#title1").addClass("transparent");
                 $("#title2").addClass("transparent");
-                $("#title3").removeClass("transparent");
+                $("#title3").removeClass("transparent");*/
                 $("main").addClass("on");
             }
         </script>

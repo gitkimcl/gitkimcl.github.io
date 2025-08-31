@@ -1,3 +1,38 @@
+@property --opacity1 {
+    syntax: "<number>";
+    inherits: true;
+    initial-value: 0;
+}
+
+@property --opacity2 {
+    syntax: "<number>";
+    inhertis: true;
+    initial-value: 0;
+}
+
+@keyframes title {
+    0% {
+        --opacity1: 0;
+        --opacity2: 0;
+    }
+    16.67%, 33.33% {
+        --opacity1: 1;
+        --opacity2: 0;
+    }
+    50% {
+        --opacity1: 0;
+        --opacity2: 0;
+    }
+    66.67%, 83.33% {
+        --opacity1: 0;
+        --opacity2: 1;
+    }
+    100% {
+        --opacity1: 0;
+        --opacity2: 0;
+    }
+}
+
 @keyframes imgscroll {
     from {
         background-position: 0 0;
@@ -90,6 +125,8 @@ main.on {
 
 #title-row {
     --base-length: var(--title-length);
+    --opacity1: 0;
+    --opacity2: 0;
     transition: border-bottom 1s;
     position: sticky;
     left: 0;
@@ -149,9 +186,22 @@ main.on {
     word-break: keep-all;
 }
 
+#title1 {
+    opacity: var(--opacity1);
+}
+
+#title2 {
+    opacity: var(--opacity2);
+}
+
 #title3 {
     line-height: 100%;
     font-size: calc(0.6 * var(--base-length));
+    opacity: 0;
+}
+
+.on #title3 {
+    opacity: 1;
 }
 
 #areatext {
