@@ -6,7 +6,7 @@
 
 @property --opacity2 {
     syntax: "<number>";
-    inhertis: true;
+    inherits: true;
     initial-value: 0;
 }
 
@@ -14,32 +14,18 @@
     0% {
         --opacity1: 0;
         --opacity2: 0;
-        animation-timing-function: ease;
     }
-    16.67% {
+    16.67%, 33.33% {
         --opacity1: 1;
         --opacity2: 0;
-        animation-timing-function: ease;
-    }
-    33.33% {
-        --opacity1: 1;
-        --opacity2: 0;
-        animation-timing-function: ease;
     }
     50% {
         --opacity1: 0;
         --opacity2: 0;
-        animation-timing-function: ease;
     }
-    66.67% {
+    66.67%, 83.33% {
         --opacity1: 0;
         --opacity2: 1;
-        animation-timing-function: ease;
-    }
-    83.33% {
-        --opacity1: 0;
-        --opacity2: 1;
-        animation-timing-function: ease;
     }
     100% {
         --opacity1: 0;
@@ -208,6 +194,7 @@ main.on {
 }
 
 #title3 {
+    transition: opacity 1s;
     line-height: 100%;
     font-size: calc(0.6 * var(--base-length));
     opacity: 0;
