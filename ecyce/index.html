@@ -19,9 +19,9 @@
                     <button class="tile" onclick="logo_click(this);" style="padding: 0; border: 0; background: none; width: var(--base-length);">
                         <div id="logo-img" class="tile-img tilted pixel" style="background-image: url('img/arealoop.png'); background-size: 100% 100%;">
                     </button>
-                    <h1 class="title transparent" id="title1">안녕하세요 여러분.</h1>
-                    <h1 class="title transparent" id="title2">공간 사이의 공간에 오신 것을 환영합니다.</h1>
-                    <h1 class="title transparent" id="title3">이끾끼 에리어</h1>
+                    <h1 class="title" id="title1">안녕하세요 여러분.</h1>
+                    <h1 class="title" id="title2">공간 사이의 공간에 오신 것을 환영합니다.</h1>
+                    <h1 class="title" id="title3">이끾끼 에리어</h1>
                 </div>
                 <div id="areatext"></div>
                 <div class="row" id="about-row">
@@ -125,7 +125,7 @@
             
             var killcode;
             window.addEventListener("load", () => {
-                $("#title-row").css("animation","6s ease title");
+                $("#title-row").css("animation","6s title");
                 killcode = window.setTimeout(() => {
                     $("main").addClass("on");
                 }, 6000);

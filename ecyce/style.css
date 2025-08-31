@@ -14,18 +14,32 @@
     0% {
         --opacity1: 0;
         --opacity2: 0;
+        animation-timing-function: ease;
     }
-    16.67%, 33.33% {
+    16.67% {
         --opacity1: 1;
         --opacity2: 0;
+        animation-timing-function: ease;
+    }
+    33.33% {
+        --opacity1: 1;
+        --opacity2: 0;
+        animation-timing-function: ease;
     }
     50% {
         --opacity1: 0;
         --opacity2: 0;
+        animation-timing-function: ease;
     }
-    66.67%, 83.33% {
+    66.67% {
         --opacity1: 0;
         --opacity2: 1;
+        animation-timing-function: ease;
+    }
+    83.33% {
+        --opacity1: 0;
+        --opacity2: 1;
+        animation-timing-function: ease;
     }
     100% {
         --opacity1: 0;
