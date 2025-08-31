@@ -205,7 +205,7 @@ body {
 	font-size: min(2vw,2vh);
 	font-family: 'BR Cobane', 'Pretendard Variable', sans-serif;
 	color: var(--theme-solid);
-	background-color: color-mix(in srgb, var(--theme-white) 30%, transparent);
+	background-color: rgb(from var(--theme-white) r g b / 30%);
 }
 
 .liopen {
