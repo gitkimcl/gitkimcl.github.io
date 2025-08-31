@@ -123,7 +123,7 @@ main.on {
     backdrop-filter: none;
 }
 
-#title-row {
+.title-row {
     --base-length: var(--title-length);
     --opacity1: 0;
     --opacity2: 0;
@@ -162,24 +162,20 @@ main.on {
     animation: forwards infinite linear 30s imgscroll3;
 }
 
-#logo-img {
+.logo-img {
     transition: opacity 1s, filter 1s;
     filter: grayscale(1) blur(calc(0.05 * var(--base-length)));
     animation: forwards infinite linear 3s imgscroll;
+    background-image: url('img/arealoop.png');
+    background-size: 100% 100%;
 }
 
-.on #logo-img {
+.on .logo-img {
     filter: none;
 }
 
 .title {
-    display: inline-block;
-    position: absolute;
-    top: 50%;
-    transform: translate(0,-50%);
-    margin: 0;
     margin-right: calc(0.25 * var(--base-length));
-    color: var(--c-text);
     font-size: calc(0.3 * var(--base-length));
     line-height: 115%;
     word-break: keep-all;
@@ -204,7 +200,7 @@ main.on {
     opacity: 1;
 }
 
-#areatext {
+.areatext {
     transition: opacity 1s;
     width: calc(max(min(100vw,126vh),60.9rem) - 0.5 * var(--base-length));
     aspect-ratio: 3;
@@ -220,27 +216,27 @@ main.on {
     mix-blend-mode: overlay;
 }
 
-.on #areatext {
+.on .areatext {
     opacity: 1;
 }
 
-.on.restricted #areatext {
+.on.restricted .areatext {
     mix-blend-mode: normal;
     opacity: 0.5;
 }
 
-#about-row {
+.about-row {
     transition: opacity 1s;
     margin-top: calc(100vh - 1.5 * var(--title-length));
     opacity: 0;
     mix-blend-mode: hard-light;
 }
 
-.on #about-row {
+.on .about-row {
     opacity: 1;
 }
 
-.restricted #about-row {
+.restricted .about-row {
     mix-blend-mode: normal;
 }
 
@@ -386,4 +382,9 @@ main.on {
 
 .on .rows {
     display: revert;
+}
+
+
+.bg-archive {
+    background-image: url('img/archiveloop.png');
 }

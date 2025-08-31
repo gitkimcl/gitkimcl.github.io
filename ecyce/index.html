@@ -14,17 +14,17 @@
         <main id="main">
             <div class="bg"></div>
             <div id="initial"> <!-- #title-row의 position:sticky 때문에 만든 거임 이거 지우면 안 됨 -->
-                <div class="row" id="title-row">
+                <div class="row title-row">
                     <div class="title-row-bg"></div>
-                    <button class="tile" onclick="logo_click(this);" style="padding: 0; border: 0; background: none; width: var(--base-length);">
-                        <div id="logo-img" class="tile-img tilted pixel" style="background-image: url('img/arealoop.png'); background-size: 100% 100%;">
+                    <button class="tile logo" onclick="logo_click(this);">
+                        <div class="tile-img tilted logo-img" class="tile-img tilted pixel">
                     </button>
                     <h1 class="title" id="title1">안녕하세요 여러분.</h1>
                     <h1 class="title" id="title2">공간 사이의 공간에 오신 것을 환영합니다.</h1>
                     <h1 class="title" id="title3">이끾끼 에리어</h1>
                 </div>
-                <div id="areatext"></div>
-                <div class="row" id="about-row">
+                <div class="areatext"></div>
+                <div class="row about-row">
                     <a href="/" class="tile about-tile">
                         <div class="tile-img" style="background: #277AEA;"></div>
                         <div class="tile-flex">
@@ -34,7 +34,7 @@
                             <div class="item-cta">← 돌아가기</div>
                         </div>
                     </a>
-                    <a class="tile about-tile" onclick="togglePower();" >
+                    <a href="#" class="tile about-tile" onclick="togglePower();" >
                         <div class="tile-img" style="background: #277AEA;"></div>
                         <div class="tile-flex">
                             <div class="item-eyebrow">POWER OF ECYC E</div>
@@ -123,31 +123,17 @@
                 }
             }
             
-            var killcode;
-            window.addEventListener("load", () => {
-                $("#title-row").css("animation","6s ease title");
-                killcode = window.setTimeout(() => {
-                    $("main").addClass("on");
-                }, 6000);
-                /*killcode = window.setTimeout(() => {
-                    $("#title1").removeClass("transparent");
-                    killcode = window.setTimeout(() => {
-                        $("#title1").addClass("transparent");
-                        killcode = window.setTimeout(() => {
-                            $("#title2").removeClass("transparent");
-                            killcode = window.setTimeout(() => {
-                                $("#title2").addClass("transparent");
-                                killcode = window.setTimeout(() => {
-                                    $("#title3").removeClass("transparent");
-                                    $("main").addClass("on");
-                                }, 1000);
-                            }, 2000);
-                        }, 1000);
-                    }, 1500);
-                }, 10);*/
-            });
+            window.onload = () => {
+                $(".title-row").css("animation","6s ease title");
+            };
 
+            $(".title-row").on("animationend", () => {
+                $("main").addClass("on");
+            })
+
+            var clicks = 0;
             function logo_click(e) {
+                if (clicks >= 6) return;
                 e.style.animation='none';
                 e.offsetHeight;
                 e.style.animation='1s test-rotate';
@@ -156,11 +142,20 @@
                 m.offsetHeight;
                 m.style.animation='1s test-rotate';
 
-                window.clearTimeout(killcode);
-                /*$("#title1").addClass("transparent");
-                $("#title2").addClass("transparent");
-                $("#title3").removeClass("transparent");*/
+                $(".title-row").css("animation","none");
                 $("main").addClass("on");
+
+                clicks++;
+                console.log(`ecyc ${clicks}`);
+                if (clicks<6) {
+                    window.setTimeout(() => { if (clicks < 6) clicks = 0; }, 1000);
+                    return;
+                } else {
+                    $(".logo-img").addClass("bg-archive");
+                    $(".bg").addClass("bg-archive");
+                    $(".title-row-bg").addClass("bg-archive");
+                    $(".rows").addClass("bg-archive");
+                }
             }
         </script>
     </body>
