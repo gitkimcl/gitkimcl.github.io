@@ -84,6 +84,7 @@ body {
     border: 0;
     background: none;
     width: var(--base-length);
+    touch-action: manipulation;
 }
 
 a {

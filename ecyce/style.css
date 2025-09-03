@@ -33,16 +33,7 @@
     }
 }
 
-@keyframes imgscroll {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: calc(-1 * var(--base-length)) calc(-1 * var(--base-length));
-    }
-}
-
-@keyframes imgscroll2 {
+@keyframes imgscroll1 {
     from {
         background-position: 0 0;
     }
@@ -51,7 +42,7 @@
     }
 }
 
-@keyframes imgscroll3 {
+@keyframes imgscroll2 {
     from {
         background-position: 0 calc(1.5 * var(--base-length) + 3px);
     }
@@ -105,9 +96,8 @@ main.on {
     height: 200vh;
     z-index: -1;
     transform: translateZ(-3px) scale(4);
-    background: url('img/arealoop.png');
-    background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
-    animation: forwards infinite linear 30s imgscroll2;
+    background: url('img/area.png');
+    background-size: cover;
 }
 
 .bg::before {
@@ -142,7 +132,7 @@ main.on {
     position: absolute;
     inset: 0;
     bottom: -3px;
-    background: url('img/arealoop.png');
+    background: url('img/areablur.png');
     background-origin: border-box;
     background-position-y: calc(1.5 * var(--base-length) + 3px);
     background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
@@ -159,14 +149,13 @@ main.on {
 
 .on .title-row-bg {
     opacity: 1;
-    animation: forwards infinite linear 30s imgscroll3;
+    animation: forwards infinite linear 30s imgscroll2;
 }
 
 .logo-img {
     transition: opacity 1s, filter 1s;
     filter: grayscale(1) blur(calc(0.05 * var(--base-length)));
-    animation: forwards infinite linear 3s imgscroll;
-    background-image: url('img/arealoop.png');
+    background-image: url('img/cycarealogo.png');
     background-size: 100% 100%;
 }
 
@@ -364,10 +353,10 @@ main.on {
 
 .rows {
     display: none;
-    background: url('img/arealoop.png');
+    background: url('img/areablur.png');
     background-origin: border-box;
     background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
-    animation: forwards infinite linear 30s imgscroll2;
+    animation: forwards infinite linear 30s imgscroll1;
     position: relative;
     border-top: 3px solid var(--c-grayl2);
 }
@@ -384,7 +373,14 @@ main.on {
     display: revert;
 }
 
+.logo-img.bg-archive {
+    background-image: url('img/cycarchivelogo.png');
+}
+
+.bg.bg-archive {
+    background-image: url('img/archive.png');
+}
 
 .bg-archive {
-    background-image: url('img/archiveloop.png');
+    background-image: url('img/archiveblur.png');
 }
