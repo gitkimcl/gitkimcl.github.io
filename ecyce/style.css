@@ -33,24 +33,6 @@
     }
 }
 
-@keyframes imgscroll1 {
-    from {
-        background-position: 0 0;
-    }
-    to {
-        background-position: calc(-6 * var(--base-length)) calc(-6 * var(--base-length));
-    }
-}
-
-@keyframes imgscroll2 {
-    from {
-        background-position: 0 calc(1.5 * var(--base-length) + 3px);
-    }
-    to {
-        background-position: calc(-6 * var(--base-length)) calc(-4.5 * var(--base-length) + 3px);
-    }
-}
-
 :root {
     --off-filter: contrast(0) brightness(195.3%);
     --bg-filter: grayscale(0.9) brightness(180%) blur(10px);
@@ -149,7 +131,6 @@ main.on {
 
 .on .title-row-bg {
     opacity: 1;
-    animation: forwards infinite linear 30s imgscroll2;
 }
 
 .logo-img {
@@ -356,7 +337,6 @@ main.on {
     background: url('img/areablur.png');
     background-origin: border-box;
     background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
-    animation: forwards infinite linear 30s imgscroll1;
     position: relative;
     border-top: 3px solid var(--c-grayl2);
 }
