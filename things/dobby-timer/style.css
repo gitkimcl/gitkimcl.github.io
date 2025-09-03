@@ -1,7 +1,8 @@
 @font-face {
-    font-family: "thatfont";
-    src: url("bmdohyeon_ttf.ttf") format("truetype");
+    font-family: 'thatfont';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
     font-weight: normal;
+    font-display: swap;
 }
 
 :root {
