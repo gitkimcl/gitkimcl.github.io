@@ -135,6 +135,16 @@ a {
     z-index: 1;
 }
 
+@media screen and (prefers-color-scheme: dark) {
+    .tile {
+        --glow0: var(--dglow0);
+        --glow1: var(--dglow1);
+        --glow2: var(--dglow2);
+        --glow3: var(--dglow3);
+        --glow4: var(--dglow4);
+    }
+}
+
 .tile::after {
     content: '';
     position: absolute;
@@ -194,14 +204,4 @@ a {
 
 .transparent {
     opacity: 0%;
-}
-
-@media screen and (prefers-color-scheme: dark) {
-    .tile {
-        --glow0: var(--dglow0);
-        --glow1: var(--dglow1);
-        --glow2: var(--dglow2);
-        --glow3: var(--dglow3);
-        --glow4: var(--dglow4);
-    }
 }
