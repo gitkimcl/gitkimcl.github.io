@@ -74,7 +74,7 @@ main.on {
 .bg {
     position: absolute;
     inset: 0;
-    height: calc(100vh + 3 * var(--base-length));
+    height: calc(100vh + 5 * var(--base-length));
     z-index: -1;
     transform: translateZ(-3px) scale(4);
     background: url('img/area.png');
