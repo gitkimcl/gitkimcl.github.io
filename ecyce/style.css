@@ -83,7 +83,8 @@ main.on {
 
 .bg::before {
     content: '';
-    transition: background-color 1s;
+    transition: background-color 1s, display 1s;
+    transition-behavior: allow-discrete;
     position: absolute;
     inset: 0;
     background: var(--c-bg);
@@ -92,6 +93,7 @@ main.on {
 
 .on .bg::before {
     background: none;
+    display: none;
 }
 
 .title-row {
@@ -101,7 +103,6 @@ main.on {
     position: absolute;
     left: 0;
     top: 0;
-    z-index: 2;
     text-align: left;
     background: url('img/areablur.png');
     background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
@@ -114,7 +115,7 @@ main.on {
     position: absolute;
     inset: 0;
     backdrop-filter: var(--bg-filter);
-    background: var(--c-bg);
+    background-color: var(--c-bg);
 }
 
 .on .title-row {
