@@ -197,8 +197,7 @@ main.on {
 
 .about-row {
     transition: opacity 1s;
-    position: relative;
-    top: calc(100% - 1.5 * var(--title-length));
+    margin-top: calc(100vh - 1.5 * var(--title-length));
     opacity: 0;
     mix-blend-mode: hard-light;
 }
