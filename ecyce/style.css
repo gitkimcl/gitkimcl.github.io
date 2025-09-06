@@ -34,15 +34,14 @@
 }
 
 :root {
-    --off-filter: contrast(0) brightness(195.3%);
-    --bg-filter: grayscale(0.9) brightness(180%) blur(10px);
-    --title-length: max(min(28.571svw, 18svh), 4rem);
+    --off-filter: contrast(0) grayscale(1) brightness(195.3%);
+    --bg-filter: contrast(1) grayscale(0.9) brightness(180%) blur(calc(0.06 * var(--base-length)));
 }
 
 @media screen and (prefers-color-scheme: dark) {
     :root {
-        --off-filter: contrast(0) brightness(27.3%);
-        --bg-filter: grayscale(0.75) brightness(60%) blur(10px);
+        --off-filter: contrast(0) grayscale(1) brightness(27.3%);
+        --bg-filter: contrast(1) grayscale(0.75) brightness(60%) blur(calc(0.06 * var(--base-length)));
     }
 }
 
@@ -75,7 +74,7 @@ main.on {
 .bg {
     position: absolute;
     inset: 0;
-    height: 200vh;
+    height: calc(100vh + 3 * var(--base-length));
     z-index: -1;
     transform: translateZ(-3px) scale(4);
     background: url('img/area.png');
@@ -84,49 +83,46 @@ main.on {
 
 .bg::before {
     content: '';
-    transition: backdrop-filter 1s;
+    transition: background-color 1s;
     position: absolute;
     inset: 0;
-    backdrop-filter: var(--off-filter);
+    background: var(--c-bg);
     overflow: hidden;
 }
 
 .on .bg::before {
-    backdrop-filter: none;
+    background: none;
 }
 
 .title-row {
-    --base-length: var(--title-length);
     --opacity1: 0;
     --opacity2: 0;
-    transition: border-bottom 1s;
-    position: sticky;
+    transition: border-bottom-color 1s;
+    position: absolute;
     left: 0;
     top: 0;
     z-index: 2;
     text-align: left;
-    border-bottom: 3px solid transparent;
-}
-
-.title-row-bg {
-    opacity: 0;
-    transition: opacity 1s;
-    position: absolute;
-    inset: 0;
-    bottom: -3px;
     background: url('img/areablur.png');
-    background-origin: border-box;
-    background-position-y: calc(1.5 * var(--base-length) + 3px);
     background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
-    border-bottom: 3px solid var(--c-grayl2);
+    border-bottom: calc(0.03 * var(--base-length)) solid var(--c-bg);
 }
 
-.title-row-bg::before {
+.title-row::before {
     content: '';
+    transition: background-color 1s;
     position: absolute;
     inset: 0;
-    background-color: rgb(from var(--c-bg) r g b / 40%);
     backdrop-filter: var(--bg-filter);
+    background: var(--c-bg);
+}
+
+.on .title-row {
+    border-bottom-color: var(--c-grayl2);
+}
+
+.on .title-row::before {
+    background-color: rgb(from var(--c-bg) r g b / 40%);
 }
 
 .on .title-row-bg {
@@ -172,11 +168,12 @@ main.on {
 
 .areatext {
     transition: opacity 1s;
-    width: calc(max(min(100svw,126svh),60.9rem) - 0.5 * var(--base-length));
+    width: calc(6.5 * var(--base-length));
+    max-width: calc(100vw - 0.5 * var(--base-length));
     aspect-ratio: 3;
     position: absolute;
     left: 50%;
-    top: calc(50vh + 0.75 * var(--title-length));
+    top: calc(50vh + 0.75 * var(--base-length));
     transform: translate(-50%, -50%);
     margin: auto;
     background: url('img/areatext.png');
@@ -197,7 +194,7 @@ main.on {
 
 .about-row {
     transition: opacity 1s;
-    margin-top: calc(100vh - 1.5 * var(--title-length));
+    margin-top: 100vh;
     opacity: 0;
     mix-blend-mode: hard-light;
 }
@@ -335,10 +332,9 @@ main.on {
 .rows {
     display: none;
     background: url('img/areablur.png');
-    background-origin: border-box;
     background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
     position: relative;
-    border-top: 3px solid var(--c-grayl2);
+    border-top: calc(0.03 * var(--base-length)) solid var(--c-grayl2);
 }
 
 .rows::before {
