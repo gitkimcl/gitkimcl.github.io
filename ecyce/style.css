@@ -172,7 +172,7 @@ main.on {
 
 .areatext {
     transition: opacity 1s;
-    width: calc(max(min(100vw,126vh),60.9rem) - 0.5 * var(--base-length));
+    width: calc(max(min(100svw,126svh),60.9rem) - 0.5 * var(--base-length));
     aspect-ratio: 3;
     position: absolute;
     left: 50%;
