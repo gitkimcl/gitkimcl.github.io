@@ -36,7 +36,7 @@
 :root {
     --off-filter: contrast(0) brightness(195.3%);
     --bg-filter: grayscale(0.9) brightness(180%) blur(10px);
-    --title-length: max(min(28.571vw, 18vh), 4rem);
+    --title-length: max(min(28.571svw, 18svh), 4rem);
 }
 
 @media screen and (prefers-color-scheme: dark) {
@@ -197,7 +197,8 @@ main.on {
 
 .about-row {
     transition: opacity 1s;
-    margin-top: calc(100% - 1.5 * var(--title-length));
+    position: relative;
+    top: calc(100% - 1.5 * var(--title-length));
     opacity: 0;
     mix-blend-mode: hard-light;
 }
