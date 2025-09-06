@@ -11,39 +11,37 @@
     <body>
         <main id="main">
             <div class="bg"></div>
-            <div id="initial"> <!-- #title-row의 position:sticky 때문에 만든 거임 이거 지우면 안 됨 -->
-                <div class="row title-row">
-                    <div class="title-row-bg"></div>
-                    <button class="tile logo" onclick="logo_click(this);">
-                        <div class="tile-img logo-img pixel">
-                    </button>
-                    <h1 class="title" id="title1">안녕하세요 여러분.</h1>
-                    <h1 class="title" id="title2">공간 사이의 공간에 오신 것을 환영합니다.</h1>
-                    <h1 class="title" id="title3">이끾끼 에리어</h1>
-                </div>
-                <div class="areatext"></div>
-                <div class="row about-row">
-                    <a href="/" class="tile about-tile">
-                        <div class="tile-img" style="background: #277AEA;"></div>
-                        <div class="tile-flex">
-                            <div class="item-eyebrow">ECYC E AREA</div>
-                            <h2 class="item-headline">공간 사이의 공간</h2>
-                            <h2 class="item-description">이끾끼 에리어는 곳곳에 숨겨져 있습니다.<br>이끾끼 에리어의 중심에 오신 것을 환영합니다.<br>돌아가고 싶으시다면, 선택을 존중합니다.</h2>
-                            <div class="item-cta">← 돌아가기</div>
-                        </div>
-                    </a>
-                    <a class="tile about-tile" onclick="togglePower();" style="cursor: pointer;">
-                        <div class="tile-img" style="background: #277AEA;"></div>
-                        <div class="tile-flex">
-                            <div class="item-eyebrow">POWER OF ECYC E</div>
-                            <h2 class="item-headline">이끾끼의 힘</h2>
-                            <h2 class="item-description" id="powerdesc1">이끾끼 에리어에는 이끾끼의 힘이 충만합니다.<br>이 힘은 몇몇에게는 감당할 수 없을 정도로 강합니다.<br>배경에 원근감이 없다면, 즉시 이곳을 눌러야 합니다.</h2>
-                            <h2 class="item-description" id="powerdesc2">이끾끼 에리어에는 이끾끼의 힘이 충만합니다.<br>감당할 수 있겠다고 생각하신다면, 이곳을 눌러야 합니다.<br>배경의 원근감이 사라진다면, 즉시 다시 눌러야 합니다.</h2>
-                            <div class="item-cta" id="powercta1">힘 제한하기 →</div>
-                            <div class="item-cta" id="powercta2">힘 방출하기 →</div>
-                        </div>
-                    </a>
-                </div>
+            <div class="row title-row">
+                <div class="title-row-bg"></div>
+                <button class="tile logo" onclick="logo_click(this);">
+                    <div class="tile-img logo-img pixel">
+                </button>
+                <h1 class="title" id="title1">안녕하세요 여러분.</h1>
+                <h1 class="title" id="title2">공간 사이의 공간에 오신 것을 환영합니다.</h1>
+                <h1 class="title" id="title3">이끾끼 에리어</h1>
+            </div>
+            <div class="areatext"></div>
+            <div class="row about-row">
+                <a href="/" class="tile about-tile">
+                    <div class="tile-img" style="background: #277AEA;"></div>
+                    <div class="tile-flex">
+                        <div class="item-eyebrow">ECYC E AREA</div>
+                        <h2 class="item-headline">공간 사이의 공간</h2>
+                        <h2 class="item-description">이끾끼 에리어는 곳곳에 숨겨져 있습니다.<br>이끾끼 에리어의 중심에 오신 것을 환영합니다.<br>돌아가고 싶으시다면, 선택을 존중합니다.</h2>
+                        <div class="item-cta">← 돌아가기</div>
+                    </div>
+                </a>
+                <a class="tile about-tile" onclick="togglePower();" style="cursor: pointer;">
+                    <div class="tile-img" style="background: #277AEA;"></div>
+                    <div class="tile-flex">
+                        <div class="item-eyebrow">POWER OF ECYC E</div>
+                        <h2 class="item-headline">이끾끼의 힘</h2>
+                        <h2 class="item-description" id="powerdesc1">이끾끼 에리어에는 이끾끼의 힘이 충만합니다.<br>이 힘은 몇몇에게는 감당할 수 없을 정도로 강합니다.<br>배경에 원근감이 없다면, 즉시 이곳을 눌러야 합니다.</h2>
+                        <h2 class="item-description" id="powerdesc2">이끾끼 에리어에는 이끾끼의 힘이 충만합니다.<br>감당할 수 있겠다고 생각하신다면, 이곳을 눌러야 합니다.<br>배경의 원근감이 사라진다면, 즉시 다시 눌러야 합니다.</h2>
+                        <div class="item-cta" id="powercta1">힘 제한하기 →</div>
+                        <div class="item-cta" id="powercta2">힘 방출하기 →</div>
+                    </div>
+                </a>
             </div>
 
             <div class="rows">
