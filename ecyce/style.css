@@ -100,9 +100,8 @@ main.on {
     --opacity1: 0;
     --opacity2: 0;
     transition: border-bottom-color 1s;
+    transform: translateZ(0);
     position: absolute;
-    left: 0;
-    top: 0;
     text-align: left;
     background: url('img/areablur.png');
     background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
