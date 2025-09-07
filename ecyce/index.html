@@ -132,8 +132,10 @@
             var hue = 0;
             var prevhue = 0;
             function logo_click(e) {
-                if (prevhue==hue) hue += 360;
-                window.setTimeout(() => { prevhue = hue; }, 500);
+                if (prevhue==hue) {
+                    hue += 360;
+                    window.setTimeout(() => { prevhue = hue; }, 500);
+                }
                 $("#logo-img").css("filter", `grayscale(0) hue-rotate(${hue}deg)`);
                 $("main").css("filter", `hue-rotate(${hue}deg)`);
                 $(".title-row").css("animation","none");
