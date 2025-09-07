@@ -106,6 +106,7 @@ body {
     border: 0;
     background: none;
     width: var(--base-length);
+    user-select: none;
     touch-action: manipulation;
 }
 
