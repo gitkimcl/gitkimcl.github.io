@@ -58,7 +58,6 @@ body {
 }
 
 main {
-    transition: filter 1s;
     overscroll-behavior: none;
     overflow: clip;
     perspective: 1px;
@@ -131,12 +130,13 @@ main.on {
 }
 
 #logo-img {
+    transition: opacity 1s, filter 1s;
     filter: grayscale(1);
     background-image: url('img/cycarealogo.png');
     background-size: 100% 100%;
 }
 
-.on .logo-img {
+.on #logo-img {
     filter: none;
 }
 
@@ -347,10 +347,6 @@ main.on {
 
 .on .rows {
     display: revert;
-}
-
-.logo-img.bg-archive {
-    background-image: url('img/cycarchivelogo.png');
 }
 
 .bg.bg-archive {

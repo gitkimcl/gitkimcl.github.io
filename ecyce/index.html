@@ -129,15 +129,16 @@
             });
 
             var clicks = 0;
-            var hue = 0;
-            var prevhue = 0;
+            var killcode = null;
             function logo_click(e) {
-                if (prevhue==hue) {
-                    hue += 360;
-                    window.setTimeout(() => { prevhue = hue; }, 500);
-                }
-                $("#logo-img").css("filter", `grayscale(0) hue-rotate(${hue}deg)`);
-                $("main").css("filter", `hue-rotate(${hue}deg)`);
+                e.style.animation='none';
+                e.offsetHeight;
+                e.style.animation='1s test-rotate';
+                m = document.getElementById("main");
+                m.style.animation='none';
+                m.offsetHeight;
+                m.style.animation='1s test-rotate';
+
                 $(".title-row").css("animation","none");
                 $("main").addClass("on");
 
@@ -147,6 +148,7 @@
                     killcode = window.setTimeout(() => { if (clicks<6) clicks = 0; }, 1000);
                     return;
                 } else {
+                    window.clearTimeout(killcode);
                     $("#logo-img").attr("src","img/cycarchivelogo.png");
                     $(".bg").addClass("bg-archive");
                     $(".title-row-bg").addClass("bg-archive");
