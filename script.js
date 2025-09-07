@@ -9,6 +9,7 @@ function logo_click(e) {
         killcode = window.setTimeout(() => { if (clicks<6) clicks = 0; }, 1000);
         return;
     } else {
+        window.clearTimeout(killcode);
         $("#logo-img").removeClass("tilted");
         $("#title").text("rlachi web");
         $(".hidden-site").removeClass("hidden");
