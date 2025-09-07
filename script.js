@@ -6,7 +6,7 @@ function logo_click(e) {
     clicks++;
     console.log(`ecyc ${clicks}`);
     if (clicks<6) {
-        killcode = window.setTimeout(() => { if (clicks<6) clicks = 0; }, 1000);
+        killcode = window.setTimeout(() => { clicks = 0; }, 1000);
         return;
     } else {
         window.clearTimeout(killcode);
