@@ -130,8 +130,7 @@ main.on {
     opacity: 1;
 }
 
-.logo-img {
-    transition: opacity 1s, filter 1s;
+#logo-img {
     filter: grayscale(1);
     background-image: url('img/cycarealogo.png');
     background-size: 100% 100%;

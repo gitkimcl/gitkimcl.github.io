@@ -14,7 +14,7 @@
             <div class="bg"></div>
             <div class="row title-row">
                 <button class="tile logo" onclick="logo_click(this);">
-                    <div class="tile-img logo-img pixel">
+                    <img id="logo-img" class="tile-img pixel" src="img/cycarealogo.png">
                 </button>
                 <h1 class="title" id="title1">안녕하세요 여러분.</h1>
                 <h1 class="title" id="title2">공간 사이의 공간에 오신 것을 환영합니다.</h1>
@@ -131,10 +131,8 @@
             var clicks = 0;
             var hue = 0;
             function logo_click(e) {
-                e.style.filter = `hue-rotate(${hue}deg)`;
-                m = document.getElementById("main");
-                m.style.filter = `hue-rotate(${hue}deg)`;
-
+                hue += 360;
+                $("#logo-img").css("filter", `grayscale(0) hue-rotate(${hue}deg)`);
                 $(".title-row").css("animation","none");
                 $("main").addClass("on");
 
@@ -144,7 +142,7 @@
                     killcode = window.setTimeout(() => { if (clicks<6) clicks = 0; }, 1000);
                     return;
                 } else {
-                    $(".logo-img").addClass("bg-archive");
+                    $("#logo-img").attr("src","img/cycarchiveloop.png");
                     $(".bg").addClass("bg-archive");
                     $(".title-row-bg").addClass("bg-archive");
                     $(".rows").addClass("bg-archive");
