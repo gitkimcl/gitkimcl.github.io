@@ -109,6 +109,12 @@ body {
     touch-action: manipulation;
 }
 
+#logo-img {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+}
+
 a {
     text-decoration: none;
     color: var(--c-text);
