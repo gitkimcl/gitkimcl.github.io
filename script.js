@@ -2,7 +2,7 @@ var clicks = 0;
 var hue = 0;
 function logo_click(e) {
     hue += 360;
-    e.style.filter = `hue-rotate(${hue}deg)`;
+    $("#logo-img").css("filter", `hue-rotate(${hue}deg)`);
     clicks++;
     console.log(`ecyc ${clicks}`);
     if (clicks<6) {

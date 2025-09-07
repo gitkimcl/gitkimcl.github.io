@@ -102,12 +102,15 @@ body {
 }
 
 .logo.tile {
-    transition: filter 1s;
     padding: 0;
     border: 0;
     background: none;
     width: var(--base-length);
     touch-action: manipulation;
+}
+
+#logo-img {
+    transition: filter 1s;
 }
 
 a {
