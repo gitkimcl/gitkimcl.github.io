@@ -129,14 +129,11 @@
             });
 
             var clicks = 0;
+            var hue = 0;
             function logo_click(e) {
-                e.style.animation='none';
-                e.offsetHeight;
-                e.style.animation='1s test-rotate';
+                e.style.filter = `hue-rotate(${hue}deg)`;
                 m = document.getElementById("main");
-                m.style.animation='none';
-                m.offsetHeight;
-                m.style.animation='1s test-rotate';
+                m.style.filter = `hue-rotate(${hue}deg)`;
 
                 $(".title-row").css("animation","none");
                 $("main").addClass("on");

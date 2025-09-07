@@ -58,6 +58,7 @@ body {
 }
 
 main {
+    transition: filter 1s;
     overscroll-behavior: none;
     overflow: clip;
     perspective: 1px;
