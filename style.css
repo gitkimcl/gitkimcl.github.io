@@ -106,12 +106,11 @@ body {
     border: 0;
     background: none;
     width: var(--base-length);
-    user-select: none;
     touch-action: manipulation;
 }
 
 #logo-img {
-    user-select: none;
+    pointer-events: none;
 }
 
 a {
