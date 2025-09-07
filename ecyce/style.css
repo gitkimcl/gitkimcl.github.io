@@ -96,13 +96,12 @@ main.on {
     display: none;
 }
 
-.title-row {
+.row.title-row {
     --opacity1: 0;
     --opacity2: 0;
     transition: border-bottom-color 1s;
     transform: translateZ(0);
     position: absolute;
-    text-align: left;
     background: url('img/areablur.png');
     background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
     border-bottom: calc(0.03 * var(--base-length)) solid var(--c-bg);
