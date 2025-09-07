@@ -133,6 +133,7 @@
             function logo_click(e) {
                 hue += 360;
                 $("#logo-img").css("filter", `grayscale(0) hue-rotate(${hue}deg)`);
+                $("main").css("filter", `hue-rotate(${hue}deg)`);
                 $(".title-row").css("animation","none");
                 $("main").addClass("on");
 
@@ -142,7 +143,7 @@
                     killcode = window.setTimeout(() => { if (clicks<6) clicks = 0; }, 1000);
                     return;
                 } else {
-                    $("#logo-img").attr("src","img/cycarchiveloop.png");
+                    $("#logo-img").attr("src","img/cycarchivelogo.png");
                     $(".bg").addClass("bg-archive");
                     $(".title-row-bg").addClass("bg-archive");
                     $(".rows").addClass("bg-archive");
