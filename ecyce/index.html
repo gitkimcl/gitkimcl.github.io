@@ -8,12 +8,13 @@
         <link rel="stylesheet" type="text/css" href="/style.css">
         <link rel="stylesheet" type="text/css" href="style.css">
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        <script src="script.js" defer></script>
     </head>
     <body>
         <main id="main">
             <div class="bg"></div>
             <div class="row title-row">
-                <button class="tile logo" onclick="logo_click(this);">
+                <button class="tile logo" onclick="logo_click();">
                     <img id="logo-img" class="tile-img pixel" src="img/cycarealogo.png">
                 </button>
                 <h1 class="title" id="title1">안녕하세요 여러분.</h1>
@@ -103,55 +104,5 @@
                 </div>
             </div>
         </main>
-        
-        <script>
-            if (localStorage.getItem("lesspower")=="1") {
-                $("main").addClass("restricted");
-            }
-
-            function togglePower() {
-                if (localStorage.getItem("lesspower")=="1") {
-                    localStorage.setItem("lesspower","0");
-                    $("main").removeClass("restricted");
-                } else {
-                    localStorage.setItem("lesspower","1");
-                    $("main").addClass("restricted");
-                }
-            }
-            
-            window.onload = () => {
-                $(".title-row").css("animation","6s ease title");
-            };
-
-            $(".title-row").on("animationend", () => {
-                $(".title-row").css("animation","none");
-                $("main").addClass("on");
-            });
-
-            var clicks = 0;
-            var killcode = null;
-            function logo_click(e) {
-                m = document.getElementById("main");
-                m.style.animation='none';
-                m.offsetHeight;
-                m.style.animation='1s test-rotate';
-
-                $(".title-row").css("animation","none");
-                $("main").addClass("on");
-
-                clicks++;
-                console.log(`ecyc ${clicks}`);
-                if (clicks<6) {
-                    killcode = window.setTimeout(() => { clicks = 0; }, 1000);
-                    return;
-                } else {
-                    window.clearTimeout(killcode);
-                    $("#logo-img").attr("src","img/cycarchivelogo.png");
-                    $(".bg").addClass("bg-archive");
-                    $(".title-row-bg").addClass("bg-archive");
-                    $(".rows").addClass("bg-archive");
-                }
-            }
-        </script>
     </body>
 </html>
