@@ -102,6 +102,7 @@ body {
 }
 
 .logo.tile {
+    transition: filter 1s;
     padding: 0;
     border: 0;
     background: none;
@@ -215,15 +216,6 @@ a {
 
 .tilted {
     transform: scale(1.6) rotate3d(-1,1,1,45deg);
-}
-
-@keyframes test-rotate {
-    from {
-        filter: hue-rotate(0deg);
-    }
-    to {
-        filter: hue-rotate(360deg);
-    }
 }
 
 

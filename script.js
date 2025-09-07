@@ -1,8 +1,8 @@
 var clicks = 0;
+var hue = 0;
 function logo_click(e) {
-    e.style.animation='none';
-    e.offsetHeight;
-    e.style.animation='1s test-rotate';
+    hue += 360;
+    e.style.filter = `hue-rotate(${hue}deg)`;
     clicks++;
     console.log(`ecyc ${clicks}`);
     if (clicks<6) {
