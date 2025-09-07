@@ -75,7 +75,7 @@
     }
 }
 
-@media screen and (max-aspect-ratio: 1/1) {
+@media screen and (max-width: 480px) {
     :root {
         --base-length: 28.571vw;
     }
@@ -90,6 +90,11 @@ body {
     margin: 0;
 }
 
+.row.title-row {
+    text-align: left;
+    position: relative;
+}
+
 .title {
     display: inline-block;
     color: var(--c-text);
@@ -101,11 +106,12 @@ body {
     transform: translate(0,-50%);
 }
 
-.logo.tile {
+.tile.logo {
     padding: 0;
     border: 0;
     background: none;
     width: var(--base-length);
+    margin-right: calc(0.25 * var(--base-length));
     touch-action: manipulation;
 }
 
@@ -122,12 +128,22 @@ a {
 }
 
 .row {
+    padding-inline: calc(0.125 * var(--base-length));
+    box-sizing: border-box;
     width: 100vw;
     text-align: center;
 }
 
 .row.hidden-site {
     background-color: var(--c-gray1);
+}
+
+.row.row-start {
+    padding-block-start: calc(0.125 * var(--base-length));
+}
+
+.row.row-end {
+    padding-block-end: calc(0.125 * var(--base-length));
 }
 
 .tile {
@@ -152,7 +168,7 @@ a {
     aspect-ratio: 1;
     width: calc(3 * var(--base-length));
     border-radius: calc(0.15 * var(--base-length));
-    margin: calc(0.25 * var(--base-length));
+    margin: calc(0.125 * var(--base-length));
     overflow: hidden;
     box-shadow: 0 0 calc(0.1 * var(--base-length)) 0 transparent,
         calc(-0.75 * var(--base-length)) calc(-0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) transparent,
