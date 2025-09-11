@@ -1,6 +1,6 @@
 body {
     background-color: #232323;
-    overflow: hidden;
+    overflow: clip;
     margin: 0;
     width: 100vw;
     height: 100vh;
