@@ -1,3 +1,7 @@
+html {
+    overflow: clip;
+}
+
 body {
     background-color: #232323;
     overflow: clip;
