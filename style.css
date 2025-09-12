@@ -113,18 +113,12 @@ body {
     width: var(--base-length);
     margin-right: calc(0.25 * var(--base-length));
     box-shadow: 0 0 calc(0.15 * var(--base-length)) 0 transparent,
-        0 0 calc(0.15 * var(--base-length)) 0 transparent,
-        0 0 calc(0.15 * var(--base-length)) 0 transparent,
-        0 0 calc(0.15 * var(--base-length)) 0 transparent,
         0 0 calc(0.15 * var(--base-length)) 0 transparent;
     touch-action: manipulation;
 }
 
 .tile.logo:hover {
     box-shadow: 0 0 calc(0.15 * var(--base-length)) 0 var(--glow0),
-        0 0 calc(0.15 * var(--base-length)) 0 var(--glow0),
-        0 0 calc(0.15 * var(--base-length)) 0 var(--glow0),
-        0 0 calc(0.15 * var(--base-length)) 0 var(--glow0),
         0 0 calc(0.15 * var(--base-length)) 0 var(--glow0);
 }
 
