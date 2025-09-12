@@ -70,7 +70,7 @@ body {
 	border-width: var(--base-length);
 	border-color: transparent;
 	background-image: conic-gradient(
-		hsl(160,100%,60%) 0deg 18deg,
+		hsl(150,100%,60%) 0deg 18deg,
 		hsl(320,100%,60%) 18deg 54deg,
 		hsl(305,100%,60%) 54deg 90deg,
 		hsl(285,100%,60%) 90deg 126deg,
@@ -80,7 +80,7 @@ body {
 		hsl(210,100%,60%) 234deg 270deg,
 		hsl(195,100%,60%) 270deg 306deg,
 		hsl(185,100%,60%) 306deg 342deg,
-		hsl(160,100%,60%) 342deg 360deg);
+		hsl(150,100%,60%) 342deg 360deg);
 	background-origin: border-box;
 	background-clip: border-box;
 }
