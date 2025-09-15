@@ -19,6 +19,7 @@ body {
     height: 100vh;
     overscroll-behavior: none;
     background: none;
+    overflow: clip;
 }
 
 main {
