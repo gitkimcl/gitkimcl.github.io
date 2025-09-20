@@ -1,6 +1,4 @@
-window.onload = () => {
-    $(".title-row").css("animation","6s ease title");
-};
+$(".title-row").css("animation","6s ease title");
 
 $(".title-row").on("animationend", () => {
     $(".title-row").css("animation","none");
