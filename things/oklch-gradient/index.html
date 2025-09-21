@@ -1,80 +1,96 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="/gallery.css">
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/html2canvas-pro@1.5.11/dist/html2canvas-pro.min.js"></script>
-        <style>
-            div {
-                display: inline-block;
-            }
-        </style>
         <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
     </head>
-    <body style="text-align: center; background: #FAFAFA">
+    <body>
         <h1>그라디언트 연습장</h1>
-        <a href="a.html" title="oklab 2d 이미지(P3)&NewLine;oklab->P3 변환하는 거 챗GPT가 만든 거라 확실치는 않은데&NewLine;나름대로 정확한 것으로 보임(이유는 뒤에 보면 있음)">a.html</a>
-        <a href="a copy.html" title="oklab 2d 이미지(sRGB)&NewLine;얘도 변환하는 걸 챗GPT가 만들긴 했으나 그게 정확함을 믿을 만한 방법으로 검증함&NewLine;sRGB 범위 안에 있는 곳에서 이 sRGB 이미지와 P3 이미지의 색깔이 같은 것으로 보아 oklab->P3 변환 공식이 나름 정확한 것으로 보임">a copy.html</a>
-        <a href="b.html" title="원">b.html</a>
-        <a href="b copy.html" title="다이아몬드">b copy.html</a>
-        <a href="c.html" title="P3 테스트(줄무늬가 안 보이면 P3이 안 되는 거임)">c.html</a>
-        <a href="icon.html" title="숫자 아이콘">icons.html</a>
-        <br><br>
-        <div>l = 0.7, c = 0.1687(Rec2020 한계)<br>
-        <div style="background:linear-gradient(-45deg in oklch longer hue, oklch(0.7 0.1687 22), oklch(0.7 0.1687 382)); width:800px; height:450px;"></div>
-        </div><br><br>
-        <div>c = 0.2<br>
-        <div style="background:linear-gradient(-45deg in oklch longer hue, oklch(0.7 0.2 22), oklch(0.7 0.2 382)); width:800px; height:450px;"></div>
-        </div><br><br>
-        <div>c = 0.3<br>
-        <div style="background:linear-gradient(-45deg in oklch longer hue, oklch(0.7 0.3 22), oklch(0.7 0.3 382)); width:800px; height:450px;"></div>
-        </div><br><br>
-        <div>c = 0.4<br>
-        <div style="background:linear-gradient(-45deg in oklch longer hue, oklch(0.7 0.4 22), oklch(0.7 0.4 382)); width:800px; height:450px;"></div>
-        </div><br><br>
-        <div>HSL<br>
-        <div style="background:linear-gradient(-45deg in hsl longer hue, hsl(0 100 50), hsl(360 100 50)); width:800px; height:450px;"></div>
-        </div><br><br>
-        <div>l = 0.7, c = 0.1592(P3 한계)<br>
-        <div style="background:linear-gradient(-45deg in oklch longer hue, oklch(0.7 0.1592 22), oklch(0.7 0.1592 382)); width:800px; height:450px;"></div>
-        </div><br><br>
-        <div>세로(900x1600)(450x800이긴 한데 Retina 어쩌고 때매 스샷 찍으면 900x1600임)<br>
-        <div style="background:linear-gradient(-45deg in oklch longer hue, oklch(0.7 0.1592 22), oklch(0.7 0.1592 382)); height:800px; width:450px;"></div>
-        </div><br><br>
-        <div>정방형(1000x1000)<br>
-        <div style="background:linear-gradient(-45deg in oklch longer hue, oklch(0.7 0.1592 22), oklch(0.7 0.1592 382)); width:500px; height:500px;"></div>
-        </div><br><br>
-        <div>oklab 그리드(a,b=-0.25~0.25, L=0.7)(canvas갖고 만듦)(챗지피티가 만듦)(P3임)(P3으로 변환하는 행렬 정확한지 확인 안 했는데 SRGB로 변환하는 거(확인함)랑 잘 맞는 거 같아서 그냥 확인 안 하기로 함)<a href="a.html"></a><br>
-        <img style="zoom:0.5" src="1.png"></img>
-        </div><br><br>
-        <div>SRGB<a href="a copy.html"></a><br>
-        <img style="zoom:0.5" src="2.png"></img>
-        </div><br><br>
-        <div>-0.2~0.2 정방형<br>
-        <img style="zoom:0.5" src="3.png"></img>
-        </div><br><br>
-        <div>가로<br>
-        <img style="zoom:0.5" src="4.png"></img>
-        </div><br><br>
-        <div>세로<br>
-        <img style="zoom:0.5" src="5.png"></img>
-        </div><br><br>
-        <div>원<br>
-        <img style="zoom:0.5" src="6.png"></img>
-        </div><br><br>
-        <div>원(-0.25~0.25)<br>
-        <img style="zoom:0.5" src="7.png"></img>
-        </div><br><br>
-        <div>원(빨-파=상-하)<br>
-        <img style="zoom:0.5" src="8.png"></img>
-        </div><br><br>
-        <div>원(빨-파=우-좌)<br>
-        <img style="zoom:0.5" src="9.png"></img>
-        </div><br><br>
-        <div>원(빨-파=좌-우)<br>
-        <img style="zoom:0.5" src="10.png"></img>
-        </div><br><br>
-        <div>다이아몬드(빨-파=좌-우)<br>
-        <img style="zoom:0.5" src="11.png"></img>
-        </div><br><br>
+        <p>
+            <a href="a.html" title="oklab 2d 이미지(P3)&NewLine;oklab->P3 변환하는 거 챗GPT가 만든 거라 확실치는 않은데&NewLine;나름대로 정확한 것으로 보임(이유는 뒤에 보면 있음)">a.html</a>
+            <a href="a copy.html" title="oklab 2d 이미지(sRGB)&NewLine;얘도 변환하는 걸 챗GPT가 만들긴 했으나 그게 정확함을 믿을 만한 방법으로 검증함&NewLine;sRGB 범위 안에 있는 곳에서 이 sRGB 이미지와 P3 이미지의 색깔이 같은 것으로 보아 oklab->P3 변환 공식이 나름 정확한 것으로 보임">a copy.html</a>
+            <a href="b.html" title="원">b.html</a>
+            <a href="b copy.html" title="다이아몬드">b copy.html</a>
+            <a href="c.html" title="P3 테스트(줄무늬가 안 보이면 P3이 안 되는 거임)">c.html</a>
+            <a href="icon.html" title="숫자 아이콘">icons.html</a>
+        </p>
+        <figure>
+            <figcaption>l = 0.7, c = 0.1687(Rec2020 한계)</figcaption>
+            <div style="background:linear-gradient(-45deg in oklch longer hue, oklch(0.7 0.1687 22), oklch(0.7 0.1687 382)); width:800px; height:450px;"></div>
+        </figure>
+        <figure>
+            <figcaption>c = 0.2</figcaption>
+            <div style="background:linear-gradient(-45deg in oklch longer hue, oklch(0.7 0.2 22), oklch(0.7 0.2 382)); width:800px; height:450px;"></div>
+        </figure>
+        <figure>
+            <figcaption>c = 0.3</figcaption>
+            <div style="background:linear-gradient(-45deg in oklch longer hue, oklch(0.7 0.3 22), oklch(0.7 0.3 382)); width:800px; height:450px;"></div>
+        </figure>
+        <figure>
+            <figcaption>c = 0.4</figcaption>
+            <div style="background:linear-gradient(-45deg in oklch longer hue, oklch(0.7 0.4 22), oklch(0.7 0.4 382)); width:800px; height:450px;"></div>
+        </figure>
+        <figure>
+            <figcaption>HSL</figcaption>
+            <div style="background:linear-gradient(-45deg in hsl longer hue, hsl(0 100 50), hsl(360 100 50)); width:800px; height:450px;"></div>
+        </figure>
+        <figure>
+            <figcaption>l = 0.7, c = 0.1592(P3 한계)</figcaption>
+            <div style="background:linear-gradient(-45deg in oklch longer hue, oklch(0.7 0.1592 22), oklch(0.7 0.1592 382)); width:800px; height:450px;"></div>
+        </figure>
+        <figure>
+            <figcaption>세로(900x1600)(450x800이긴 한데 Retina 어쩌고 때매 스샷 찍으면 900x1600임)</figcaption>
+            <div style="background:linear-gradient(-45deg in oklch longer hue, oklch(0.7 0.1592 22), oklch(0.7 0.1592 382)); height:800px; width:450px;"></div>
+        </figure>
+        <figure>
+            <figcaption>정방형(1000x1000)</figcaption>
+            <div style="background:linear-gradient(-45deg in oklch longer hue, oklch(0.7 0.1592 22), oklch(0.7 0.1592 382)); width:500px; height:500px;"></div>
+        </figure>
+        <figure>
+            <figcaption>oklab 그리드(a,b=-0.25~0.25, L=0.7)(canvas갖고 만듦)(챗지피티가 만듦)(P3임)(P3으로 변환하는 행렬 정확한지 확인 안 했는데 SRGB로 변환하는 거(확인함)랑 잘 맞는 거 같아서 그냥 확인 안 하기로 함)</figcaption>
+            <img style="zoom:0.5" src="1.png"></img>
+        </figure>
+        <figure>
+            <figcaption>SRGB</figcaption>
+            <img style="zoom:0.5" src="2.png"></img>
+        </figure>
+        <figure>
+            <figcaption>-0.2~0.2 정방형</figcaption>
+            <img style="zoom:0.5" src="3.png"></img>
+        </figure>
+        <figure>
+            <figcaption>가로</figcaption>
+            <img style="zoom:0.5" src="4.png"></img>
+        </figure>
+        <figure>
+            <figcaption>세로</figcaption>
+            <img style="zoom:0.5" src="5.png"></img>
+        </figure>
+        <figure>
+            <figcaption>원</figcaption>
+            <img style="zoom:0.5" src="6.png"></img>
+        </figure>
+        <figure>
+            <figcaption>원(-0.25~0.25)</figcaption>
+            <img style="zoom:0.5" src="7.png"></img>
+        </figure>
+        <figure>
+            <figcaption>원(빨-파=상-하)</figcaption>
+            <img style="zoom:0.5" src="8.png"></img>
+        </figure>
+        <figure>
+            <figcaption>원(빨-파=우-좌)</figcaption>
+            <img style="zoom:0.5" src="9.png"></img>
+        </figure>
+        <figure>
+            <figcaption>원(빨-파=좌-우)</figcaption>
+            <img style="zoom:0.5" src="10.png"></img>
+        </figure>
+        <figure>
+            <figcaption>다이아몬드(빨-파=좌-우)</figcaption>
+            <img style="zoom:0.5" src="11.png"></img>
+        </figure>
     </body>
 </html>

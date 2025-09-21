@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="/gallery.css">
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/html2canvas-pro@1.5.11/dist/html2canvas-pro.min.js"></script>
         <style>
@@ -13,15 +14,16 @@
                 max-height: 500px;
                 margin: 0;
                 position: relative;
+                z-index: 2;
                 top: -0.11em;
-                color: white;
+                color: #bbb;
                 mix-blend-mode: overlay;
             }
 
             div {
-                display: inline-block;
                 vertical-align: top;
             }
+
             .stack {
                 display: inline-grid;
                 place-items: center;
@@ -29,16 +31,34 @@
                 grid-template-rows: 1fr;
                 grid-template-columns: 1fr;
                 background-color: white;
-                margin: 10px;
+                border: 1px solid green;
             }
+
             .stack * {
                 grid-area: center;
             }
+
             .hexagon {
                 clip-path: url("#hexagon");
+                width: 500px;
+                height: 500px;
             }
+
             .neg-hexagon {
                 clip-path: url("#neg-hexagon");
+                background: #bbb;
+                width: 420px;
+                height: 420px;
+                mix-blend-mode: overlay;
+            }
+
+            .border-extra {
+                width: 420px;
+                height: 420px;
+                border: 40px solid #bbb;
+                position: relative;
+                z-index: 1;
+                mix-blend-mode: overlay;
             }
 
             .plus {
@@ -57,264 +77,335 @@
             </clipPath>
         </svg>
     </head>
-    <body style="text-align: center; background: #FAFAFA">
-        <div>l = 0.7, c = 0.1687(Rec2020 한계)<br>
-        <div style="background:linear-gradient(-45deg in oklch longer hue, oklch(0.7 0.1687 22), oklch(0.7 0.1687 382)); width:500px; height:500px;"></div>
-        </div><br><br>
-        <div>qpi<br>
-        <div style="background:linear-gradient(150deg, oklch(20.069% 0.12409 277.142) 0%, oklch(51.368% 0.04975 275.997) 100%); width:500px; height:500px;"></div>
-        </div><br><br>
-        <div>hue=0<br>
-        <div style="background:linear-gradient(150deg, oklch(20.069% 0.12409 0) 0%, oklch(51.368% 0.04975 0) 100%); width:500px; height:500px;"></div>
-        </div><br><br>
-        <div>hue=0 135deg<br>
-        <div style="background:linear-gradient(135deg, oklch(51.368% 0.04975 0) 0%, oklch(20.069% 0.12409 0) 100%); width:500px; height:500px;"></div>
-        </div><br><br>
-        <div>hexagon<br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(51.368% 0.04975 0) 0%, oklch(20.069% 0.12409 0) 100%); width:500px; height:500px;"></div>
-        </div>
-        </div><br><br>
-        <div>border<br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(51.368% 0.04975 0) 0%, oklch(20.069% 0.12409 0) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:white; width: 450px; height: 450px; mix-blend-mode: overlay;"></div>
-        <div style="width: 450px; height: 450px; border: 25px solid white; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        </div>
-        </div><br><br>
-        <div>text<br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(51.368% 0.04975 0) 0%, oklch(20.069% 0.12409 0) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:white; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid white; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2;" class="dongle">9<span class="plus">+</span></p>
-        </div>
-        </div><br><br>
-        <div>color<br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 0) 0%, oklch(50.069% 0.20409 0) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">9<span class="plus">+</span></p>
-        </div>
-        </div><br><br>
-        <div>result</div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(41.368% 0 0) 0%, oklch(15.069% 0 0) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#ddd; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #ddd; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #ddd;" class="dongle">0</p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(56.368% 0 0) 0%, oklch(30.069% 0 0) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">0<span class="plus">+</span></p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 7.5) 0%, oklch(50.069% 0.20409 7.5) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb; right: 0.03em;" class="dongle">1</p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 20) 0%, oklch(50.069% 0.20409 20) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb; right: 0.03em;" class="dongle">1<span class="plus" style="right: 0.12em;">+</span></p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 40) 0%, oklch(50.069% 0.20409 40) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">2</p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 60) 0%, oklch(50.069% 0.20409 60) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">2<span class="plus">+</span></p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 80) 0%, oklch(50.069% 0.20409 80) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">3</p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 100) 0%, oklch(50.069% 0.20409 100) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">3<span class="plus">+</span></p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 120) 0%, oklch(50.069% 0.20409 120) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">4</p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 140) 0%, oklch(50.069% 0.20409 140) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">4<span class="plus">+</span></p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 160) 0%, oklch(50.069% 0.20409 160) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">5</p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 180) 0%, oklch(50.069% 0.20409 180) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">5<span class="plus">+</span></p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 200) 0%, oklch(50.069% 0.20409 200) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">6</p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 220) 0%, oklch(50.069% 0.20409 220) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">6<span class="plus">+</span></p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 240) 0%, oklch(50.069% 0.20409 240) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">7</p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 260) 0%, oklch(50.069% 0.20409 260) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">7<span class="plus">+</span></p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 280) 0%, oklch(50.069% 0.20409 280) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">8</p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 300) 0%, oklch(50.069% 0.20409 300) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">8<span class="plus">+</span></p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 320) 0%, oklch(50.069% 0.20409 320) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">9</p>
-        </div>
-        <br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 340) 0%, oklch(50.069% 0.20409 340) 100%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb;" class="dongle">9<span class="plus">+</span></p>
-        </div><br><br>
-        <div>7+, 8+, 9+ is dummy data btw</div><br><br>
+    <body>
+        <h1>icon</h1>
+        <figure>
+            <figcaption>l = 0.7, c = 0.1687(Rec2020 한계)</figcaption>
+            <div style="background:linear-gradient(-45deg in oklch longer hue, oklch(0.7 0.1687 22), oklch(0.7 0.1687 382)); width:500px; height:500px;"></div>
+        </figure>
+        <figure>
+            <figcaption>qpi</figcaption>
+            <div style="background:linear-gradient(150deg, oklch(20.069% 0.12409 277.142) 0%, oklch(51.368% 0.04975 275.997) 100%); width:500px; height:500px;"></div>
+        </figure>
+        <figure>
+            <figcaption>hue=0</figcaption>
+            <div style="background:linear-gradient(150deg, oklch(20.069% 0.12409 0) 0%, oklch(51.368% 0.04975 0) 100%); width:500px; height:500px;"></div>
+        </figure>
+        <figure>
+            <figcaption>hue=0 135deg</figcaption>
+            <div style="background:linear-gradient(135deg, oklch(51.368% 0.04975 0) 0%, oklch(20.069% 0.12409 0) 100%); width:500px; height:500px;"></div>
+        </figure>
+        <figure>
+            <figcaption>hexagon</figcaption>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(51.368% 0.04975 0) 0%, oklch(20.069% 0.12409 0) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <figcaption>border</figcaption>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(51.368% 0.04975 0) 0%, oklch(20.069% 0.12409 0) 100%);"></div>
+                <div class="neg-hexagon" style="background: white; width: 450px; height: 450px;"></div>
+                <div class="border-extra" style="width: 450px; height: 450px; border: 25px solid white;"></div>
+            </div>
+        </figure>
+        <figure>
+            <figcaption>text</figcaption>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(51.368% 0.04975 0) 0%, oklch(20.069% 0.12409 0) 100%);"></div>
+                <div class="neg-hexagon" style="background:white;"></div>
+                <div class="border-extra" style="border: 40px solid white;"></div>
+                <p class="dongle" style="color: white;">9<span class="plus">+</span></p>
+            </div>
+        </figure>
+        <figure>
+            <figcaption>color</figcaption>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 0) 0%, oklch(50.069% 0.20409 0) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">9<span class="plus">+</span></p>
+            </div>
+        </figure>
 
-        <div>hexagon only</div>
-        <br><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(41.368% 0 0) 0%, oklch(15.069% 0 0) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(56.368% 0 0) 0%, oklch(30.069% 0 0) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 7.5) 0%, oklch(50.069% 0.20409 7.5) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 20) 0%, oklch(50.069% 0.20409 20) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 40) 0%, oklch(50.069% 0.20409 40) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 60) 0%, oklch(50.069% 0.20409 60) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 80) 0%, oklch(50.069% 0.20409 80) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 100) 0%, oklch(50.069% 0.20409 100) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 120) 0%, oklch(50.069% 0.20409 120) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 140) 0%, oklch(50.069% 0.20409 140) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 160) 0%, oklch(50.069% 0.20409 160) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 180) 0%, oklch(50.069% 0.20409 180) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 200) 0%, oklch(50.069% 0.20409 200) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 220) 0%, oklch(50.069% 0.20409 220) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 240) 0%, oklch(50.069% 0.20409 240) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 260) 0%, oklch(50.069% 0.20409 260) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 280) 0%, oklch(50.069% 0.20409 280) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 300) 0%, oklch(50.069% 0.20409 300) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 320) 0%, oklch(50.069% 0.20409 320) 100%); width:500px; height:500px;"></div>
-        </div><br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 340) 0%, oklch(50.069% 0.20409 340) 100%); width:500px; height:500px;"></div>
-        </div><br><br>
-        <br><br>
-        <div>???<br>
-        <div class="stack" style="border: 1px solid green;">
-        <div class="hexagon" style="background:linear-gradient(135deg in oklch longer hue, oklch(61.368% 0.12975 0) 18%, oklch(55.069% 0.20409 360) 85%); width:500px; height:500px;"></div>
-        <div class="neg-hexagon" style="background:#bbb; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
-        <div style="width: 420px; height: 420px; border: 40px solid #bbb; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
-        <p style="z-index: 2; color: #bbb; right: 0.05em;" class="dongle">10</p>
-        </div>
-        </div>
-        <br>
-        <div>https://weareoutman.github.io/rounded-polygon/ | side length 52, radius 13 -> 100x100에서 소수점 2칸씩 옮김</div><br>
-        <div>https://fonts.google.com/specimen/Monomaniac+One</div><br>
+        <h2>result</h2>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(41.368% 0 0) 0%, oklch(15.069% 0 0) 100%);"></div>
+                <div class="neg-hexagon" style="background:#ddd; width: 420px; height: 420px; mix-blend-mode: overlay;"></div>
+                <div style="width: 420px; height: 420px; border: 40px solid #ddd; position: relative; z-index: 1; mix-blend-mode: overlay;"></div>
+                <p class="dongle" style="color: #ddd;">0</p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(56.368% 0 0) 0%, oklch(30.069% 0 0) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">0<span class="plus">+</span></p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 7.5) 0%, oklch(50.069% 0.20409 7.5) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle" style="right: 0.03em;">1</p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 20) 0%, oklch(50.069% 0.20409 20) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle" style="right: 0.03em;">1<span class="plus" style="right: 0.12em;">+</span></p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 40) 0%, oklch(50.069% 0.20409 40) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">2</p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 60) 0%, oklch(50.069% 0.20409 60) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">2<span class="plus">+</span></p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 80) 0%, oklch(50.069% 0.20409 80) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">3</p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 100) 0%, oklch(50.069% 0.20409 100) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">3<span class="plus">+</span></p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 120) 0%, oklch(50.069% 0.20409 120) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">4</p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 140) 0%, oklch(50.069% 0.20409 140) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">4<span class="plus">+</span></p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 160) 0%, oklch(50.069% 0.20409 160) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">5</p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 180) 0%, oklch(50.069% 0.20409 180) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">5<span class="plus">+</span></p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 200) 0%, oklch(50.069% 0.20409 200) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">6</p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 220) 0%, oklch(50.069% 0.20409 220) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">6<span class="plus">+</span></p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 240) 0%, oklch(50.069% 0.20409 240) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">7</p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 260) 0%, oklch(50.069% 0.20409 260) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">7<span class="plus">+</span></p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 280) 0%, oklch(50.069% 0.20409 280) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">8</p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 300) 0%, oklch(50.069% 0.20409 300) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">8<span class="plus">+</span></p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 320) 0%, oklch(50.069% 0.20409 320) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">9</p>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 340) 0%, oklch(50.069% 0.20409 340) 100%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle">9<span class="plus">+</span></p>
+            </div>
+        </figure>
+        <p>7+, 8+, 9+ is dummy data btw</p>
+            
+        <h3>hexagon only</h3>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(41.368% 0 0) 0%, oklch(15.069% 0 0) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(56.368% 0 0) 0%, oklch(30.069% 0 0) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 7.5) 0%, oklch(50.069% 0.20409 7.5) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 20) 0%, oklch(50.069% 0.20409 20) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 40) 0%, oklch(50.069% 0.20409 40) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 60) 0%, oklch(50.069% 0.20409 60) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 80) 0%, oklch(50.069% 0.20409 80) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 100) 0%, oklch(50.069% 0.20409 100) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 120) 0%, oklch(50.069% 0.20409 120) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 140) 0%, oklch(50.069% 0.20409 140) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 160) 0%, oklch(50.069% 0.20409 160) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 180) 0%, oklch(50.069% 0.20409 180) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 200) 0%, oklch(50.069% 0.20409 200) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 220) 0%, oklch(50.069% 0.20409 220) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 240) 0%, oklch(50.069% 0.20409 240) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 260) 0%, oklch(50.069% 0.20409 260) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 280) 0%, oklch(50.069% 0.20409 280) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 300) 0%, oklch(50.069% 0.20409 300) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 320) 0%, oklch(50.069% 0.20409 320) 100%);"></div>
+            </div>
+        </figure>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg, oklch(76.368% 0.12975 340) 0%, oklch(50.069% 0.20409 340) 100%);"></div>
+            </div>
+        </figure>
+
+        <h2>???</h2>
+        <figure>
+            <div class="stack">
+                <div class="hexagon" style="background:linear-gradient(135deg in oklch longer hue, oklch(61.368% 0.12975 0) 18%, oklch(55.069% 0.20409 360) 85%);"></div>
+                <div class="neg-hexagon"></div>
+                <div class="border-extra"></div>
+                <p class="dongle" style="right: 0.05em;">10</p>
+            </div>
+        </figure>
+        <p>
+            https://weareoutman.github.io/rounded-polygon/ | side length 52, radius 13 -> 100x100에서 소수점 2칸씩 옮김<br>
+            https://fonts.google.com/specimen/Monomaniac+On
+        </p>
         <!--
         Copyright 2020 The Monomaniac Project Authors (https://github.com/ManiackersDesign/monomaniac), all rights reserved.
 

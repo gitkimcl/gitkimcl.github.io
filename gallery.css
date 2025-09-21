@@ -1,0 +1,30 @@
+@import "colors.css";
+
+body {
+    background-color: var(--c-bg);
+    color: var(--c-text);
+    font-family: system-ui, sans-serif;
+    padding-inline: 5vw;
+}
+
+img {
+    display: block;
+    margin-inline: auto;
+    max-width: 80vw;
+}
+
+div, p, h1, h2, h3, h4, h5, h6, figure {
+    text-align: center;
+}
+
+div {
+    margin-inline: auto;
+}
+
+a {
+    color: var(--c-blue);
+}
+
+a:hover {
+    color: var(--c-blue-active);
+}
