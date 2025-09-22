@@ -57,7 +57,7 @@ body {
     background: none;
 }
 
-#main {
+#parallax {
     overscroll-behavior: none;
     overflow: clip;
     perspective: 1px;
@@ -67,7 +67,7 @@ body {
     contain: strict;
 }
 
-.on #main {
+.on #parallax {
     overflow-y: auto;
 }
 
@@ -96,20 +96,19 @@ body {
     display: none;
 }
 
-.row.title-row {
+header {
     --opacity1: 0;
     --opacity2: 0;
     transition: border-bottom-color 1s;
     transform: translateZ(0);
     position: absolute;
+    width: 100vw;
     background: url('img/areablur.png');
     background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
     border-bottom: calc(0.03 * var(--base-length)) solid var(--c-bg);
-    padding-block-start: calc(0.125 * var(--base-length));
-    padding-block-end: calc(0.125 * var(--base-length));
 }
 
-.title-row::before {
+header::before {
     content: '';
     transition: background-color 1s;
     position: absolute;
@@ -118,11 +117,11 @@ body {
     background-color: var(--c-bg);
 }
 
-.on .title-row {
+.on header {
     border-bottom-color: var(--c-grayl2);
 }
 
-.on .title-row::before {
+.on header::before {
     background-color: rgb(from var(--c-bg) r g b / 40%);
 }
 
@@ -191,18 +190,18 @@ body {
     opacity: 0.5;
 }
 
-.about-row {
+.about {
     transition: opacity 1s;
     margin-top: 100vh;
     opacity: 0;
     mix-blend-mode: hard-light;
 }
 
-.on .about-row {
+.on .about {
     opacity: 1;
 }
 
-.restricted .about-row {
+.restricted .about {
     mix-blend-mode: normal;
 }
 
@@ -328,7 +327,7 @@ body {
     font-family: "Google Sans",Arial,sans-serif; /* Google Sans는 아쉽게도 라이선스상 사용이 안 된다고 하네요. */
 }
 
-.rows {
+main.tiles {
     display: none;
     background: url('img/areablur.png');
     background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
@@ -336,7 +335,7 @@ body {
     border-top: calc(0.03 * var(--base-length)) solid var(--c-grayl2);
 }
 
-.rows::before {
+main.tiles::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -344,8 +343,8 @@ body {
     backdrop-filter: var(--bg-filter);
 }
 
-.on .rows {
-    display: revert;
+.on main.tiles {
+    display: flex;
 }
 
 .bg.bg-archive {

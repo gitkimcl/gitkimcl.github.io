@@ -22,14 +22,11 @@ body {
     margin: 0;
 }
 
-header.row {
+header {
     text-align: left;
     position: relative;
-}
-
-.row.title-row, .row.about-row {
-    padding-block-start: calc(0.125 * var(--base-length));
-    padding-block-end: calc(0.125 * var(--base-length));
+    box-sizing: border-box;
+    padding: calc(0.25 * var(--base-length));
 }
 
 .title {
@@ -48,6 +45,7 @@ header.row {
     border: 0;
     background: none;
     width: var(--base-length);
+    height: var(--base-length);
     margin-right: calc(0.25 * var(--base-length));
     box-shadow: 0 0 calc(0.15 * var(--base-length)) 0 transparent,
         0 0 calc(0.15 * var(--base-length)) 0 transparent;
@@ -71,11 +69,12 @@ a {
     font-weight: 600;
 }
 
-.row {
-    padding-inline: calc(0.125 * var(--base-length));
-    box-sizing: border-box;
-    width: 100vw;
-    text-align: center;
+.tiles {
+    padding: calc(0.25 * var(--base-length));
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc(0.25 * var(--base-length));
+    justify-content: center;
 }
 
 .hidden-site {
@@ -112,8 +111,7 @@ a {
     position: relative;
     z-index: 1;
     width: calc(3 * var(--base-length));
-    aspect-ratio: 1;
-    margin: calc(0.125 * var(--base-length));
+    height: calc(3 * var(--base-length));
     border-radius: calc(0.15 * var(--base-length));
     overflow: hidden;
     box-shadow: 0 0 calc(0.1 * var(--base-length)) 0 transparent,
@@ -156,15 +154,8 @@ a {
 }
 
 .tile.double-tile {
-    width: calc(6.5 * var(--base-length));
-    max-width: calc(100vw - 0.5 * var(--base-length));
+    width: calc(6.25 * var(--base-length));
     height: calc(3 * var(--base-length));
-}
-
-@media screen and (max-aspect-ratio: 1/1) {
-    .tile.double-tile {
-        width: calc(3 * var(--base-length));
-    }
 }
 
 .tile-img {

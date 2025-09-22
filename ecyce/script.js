@@ -1,7 +1,7 @@
-$(".title-row").css("animation","6s ease title");
+$("header").css("animation","6s ease title");
 
-$(".title-row").on("animationend", () => {
-    $(".title-row").css("animation","none");
+$("header").on("animationend", () => {
+    $("header").css("animation","none");
     $(":root").addClass("on");
 });
 
@@ -21,7 +21,7 @@ function togglePower() {
 
 var clicks = 0;
 function logo_click() {
-    $(".title-row").css("animation","none");
+    $("header").css("animation","none");
     $(":root").addClass("on");
     $(".logo, .bg").css("animation", "none");
     $(".logo, .bg").offset();
@@ -32,8 +32,8 @@ function logo_click() {
     if (clicks==6) {
         $("#logo-img").attr("src","img/cycarchivelogo.png");
         $(".bg").addClass("bg-archive");
-        $(".title-row-bg").addClass("bg-archive");
-        $(".rows").addClass("bg-archive");
+        $("header-bg").addClass("bg-archive");
+        $("main.tiles").addClass("bg-archive");
         return;
     }
     window.setTimeout(() => { if (clicks<6) clicks = 0; }, 1000);

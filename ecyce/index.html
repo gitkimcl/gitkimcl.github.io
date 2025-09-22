@@ -11,9 +11,9 @@
         <script src="script.js" defer></script>
     </head>
     <body>
-        <div id="main">
+        <div id="parallax">
             <div class="bg"></div>
-            <header class="row title-row">
+            <header>
                 <button class="tile logo" onclick="logo_click();" style="--glow0: rgb(from var(--c-ltext) r g b / 0.25);">
                     <img id="logo-img" class="tile-img pixel" src="img/cycarealogo.png">
                 </button>
@@ -22,7 +22,7 @@
                 <h1 class="title" id="title3">이끾끼 에리어</h1>
             </header>
             <div class="areatext"></div>
-            <section class="row about-row">
+            <section class="tiles about">
                 <a href="/" class="tile about-tile">
                     <div class="tile-img" style="background: #277AEA;"></div>
                     <div class="tile-flex">
@@ -44,82 +44,72 @@
                     </div>
                 </a>
             </section>
-            <main class="rows">
-                <div style="height: calc(0.25 * var(--base-length));"></div>
-                <div class="row row-start">
-                    <a href="https://docs.google.com/document/d/1LRkUSsMmdVSv3C44eqoVH8vy-Akz9FTCfsSYkYMwuFQ/edit?tab=t.e41fn347z50s" target="_blank" class="tile">
-                        <div class="tile-img" style="background: #F9FBFD;"></div>
-                        <img class="tile-icon" src="img/gdocs.svg">
-                        <div class="tile-flex" style="color: var(--c-dtext);">
-                            <div class="item-eyebrow gdocs">GOOGLE DOCS</div>
-                            <h2 class="item-headline gdocs">영어 수행평가 계획</h2>
-                            <div class="item-cta gdocs">이끾끼 디멘션은 최초의 이끾끼 에리어입니다.</div>
-                        </div>
-                    </a><!--
-                    --><a href="https://www.notion.so/246420eb286580dca036d2d001ca00f9" target="_blank" class="tile">
-                        <div class="tile-img" style="background: #191919;"></div>
-                        <div class="tile-icon notion" style="font-size: calc(1.2 * var(--base-length));">📔</div>
-                        <div class="tile-flex">
-                            <div class="item-eyebrow notion">NOTION</div>
-                            <h2 class="item-headline notion"><span class="notion-icon" style="background-image: url('img/rhdehd.webp');"></span> 공동일기구역</h2>
-                            <div class="item-cta"></div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="row">
-                    <a href="https://www.notion.so/2481ff5c232f80739ae3ffadd2717a29" target="_blank" class="tile">
-                        <div class="tile-img" style="background: #191919;"></div>
-                        <img class="tile-icon" src="img/Notion-logo.svg">
-                        <div class="tile-flex">
-                            <div class="item-eyebrow notion">NOTION</div>
-                            <h2 class="item-headline notion"><span class="notion-icon" style="background-image: url('img/sciencekimchi.png');"></span> 개인 노션</h2>
-                            <div class="item-cta"></div>
-                        </div>
-                    </a><!--
-                    --><a href="https://www.notion.so/2538f00ad6ba80588d83e43e30c6d9e5" target="_blank" class="tile">
-                        <div class="tile-img" style="background: #191919;"></div>
-                        <img class="tile-icon" src="img/cycrecord_text.svg">
-                        <div class="tile-flex">
-                            <div class="item-eyebrow notion">NOTION</div>
-                            <h2 class="item-headline notion"><span class="notion-icon" style="background-image: url('img/cycrecord_text.svg');"></span> 끾기록 디지털화</h2>
-                            <div class="item-cta"></div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="row">
-                    <a href="https://qpi.kro.kr/archive/ecyce.html" target="_blank" class="tile">
-                        <div class="tile-img" style="background: radial-gradient(circle at 50% 52%, rgb(from var(--c-bg) r g b / 20%) 0% 20%, transparent 70%), linear-gradient(150deg, #10004C 0%, #5F6584 100%);"></div>
-                        <img class="tile-icon" src="img/logo_dark.ico">
-                        <div class="tile-flex">
-                            <div class="item-eyebrow">QPI</div>
-                            <h2 class="item-headline">쿼터파이</h2>
-                            <div class="item-cta">더 알아보기 →</div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="row row-end">
-                    <a href="things/offline.html" target="_blank" class="tile">
-                        <div class="tile-img" style="background: #BBBBBB;"></div>
-                        <div class="tile-icon notion" style="font-size: calc(1.2 * var(--base-length));">⛓️‍💥</div>
-                        <div class="tile-flex" style="color: var(--c-dtext);">
-                            <div class="item-eyebrow">OFFLINE</div>
-                            <h2 class="item-headline">URL 없음</h2>
-                            <div class="item-cta"></div>
-                        </div>
-                    </a><!--
-                    --><a href="things/irl.html" target="_blank" class="tile">
-                        <div class="tile-img" style="background-color: #748330; background-image: url('img/grass_to_touch.jpeg'); background-size: cover;"></div>
-                        <div class="tile-icon notion" style="font-size: calc(1.2 * var(--base-length));">🌏</div>
-                        <div class="tile-flex" style="color: #edffaa;">
-                            <div class="item-eyebrow" style="opacity: 1;">IRL</div>
-                            <h2 class="item-headline">현실</h2>
-                            <div class="item-cta"></div>
-                        </div>
-                    </a>
-                </div>
+            <main class="tiles">
+                <div style="flex-basis: 100%; height: calc(0.25 * var(--base-length));"></div>
+                <a href="https://docs.google.com/document/d/1LRkUSsMmdVSv3C44eqoVH8vy-Akz9FTCfsSYkYMwuFQ/edit?tab=t.e41fn347z50s" target="_blank" class="tile">
+                    <div class="tile-img" style="background: #F9FBFD;"></div>
+                    <img class="tile-icon" src="img/gdocs.svg">
+                    <div class="tile-flex" style="color: var(--c-dtext);">
+                        <div class="item-eyebrow gdocs">GOOGLE DOCS</div>
+                        <h2 class="item-headline gdocs">영어 수행평가 계획</h2>
+                        <div class="item-cta gdocs">이끾끼 디멘션은 최초의 이끾끼 에리어입니다.</div>
+                    </div>
+                </a>
+                <a href="https://www.notion.so/246420eb286580dca036d2d001ca00f9" target="_blank" class="tile">
+                    <div class="tile-img" style="background: #191919;"></div>
+                    <div class="tile-icon notion" style="font-size: calc(1.2 * var(--base-length));">📔</div>
+                    <div class="tile-flex">
+                        <div class="item-eyebrow notion">NOTION</div>
+                        <h2 class="item-headline notion"><span class="notion-icon" style="background-image: url('img/rhdehd.webp');"></span> 공동일기구역</h2>
+                        <div class="item-cta"></div>
+                    </div>
+                </a>
+                <a href="https://www.notion.so/2481ff5c232f80739ae3ffadd2717a29" target="_blank" class="tile">
+                    <div class="tile-img" style="background: #191919;"></div>
+                    <img class="tile-icon" src="img/Notion-logo.svg">
+                    <div class="tile-flex">
+                        <div class="item-eyebrow notion">NOTION</div>
+                        <h2 class="item-headline notion"><span class="notion-icon" style="background-image: url('img/sciencekimchi.png');"></span> 개인 노션</h2>
+                        <div class="item-cta"></div>
+                    </div>
+                </a>
+                <a href="https://www.notion.so/2538f00ad6ba80588d83e43e30c6d9e5" target="_blank" class="tile">
+                    <div class="tile-img" style="background: #191919;"></div>
+                    <img class="tile-icon" src="img/cycrecord_text.svg">
+                    <div class="tile-flex">
+                        <div class="item-eyebrow notion">NOTION</div>
+                        <h2 class="item-headline notion"><span class="notion-icon" style="background-image: url('img/cycrecord_text.svg');"></span> 끾기록 디지털화</h2>
+                        <div class="item-cta"></div>
+                    </div>
+                </a>
+                <a href="https://qpi.kro.kr/archive/ecyce.html" target="_blank" class="tile">
+                    <div class="tile-img" style="background: radial-gradient(circle at 50% 52%, rgb(from var(--c-bg) r g b / 20%) 0% 20%, transparent 70%), linear-gradient(150deg, #10004C 0%, #5F6584 100%);"></div>
+                    <img class="tile-icon" src="img/logo_dark.ico">
+                    <div class="tile-flex">
+                        <div class="item-eyebrow">QPI</div>
+                        <h2 class="item-headline">쿼터파이</h2>
+                        <div class="item-cta">더 알아보기 →</div>
+                    </div>
+                </a>
+                <div style="flex-basis: 100%;"></div>
+                <a href="things/offline.html" target="_blank" class="tile">
+                    <div class="tile-img" style="background: #BBBBBB;"></div>
+                    <div class="tile-icon notion" style="font-size: calc(1.2 * var(--base-length));">⛓️‍💥</div>
+                    <div class="tile-flex" style="color: var(--c-dtext);">
+                        <div class="item-eyebrow">OFFLINE</div>
+                        <h2 class="item-headline">URL 없음</h2>
+                        <div class="item-cta"></div>
+                    </div>
+                </a>
+                <a href="things/irl.html" target="_blank" class="tile">
+                    <div class="tile-img" style="background-color: #748330; background-image: url('img/grass_to_touch.jpeg'); background-size: cover;"></div>
+                    <div class="tile-icon notion" style="font-size: calc(1.2 * var(--base-length));">🌏</div>
+                    <div class="tile-flex" style="color: #edffaa;">
+                        <div class="item-eyebrow" style="opacity: 1;">IRL</div>
+                        <h2 class="item-headline">현실</h2>
+                        <div class="item-cta"></div>
+                    </div>
+                </a>
             </main>
         </main>
     </body>

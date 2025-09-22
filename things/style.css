@@ -16,8 +16,9 @@ body {
     background-size: 100% 100%;
 }
 
-.row.title-row {
+header {
     position: absolute;
+    width: 100vw;
 }
 
 .title {
@@ -43,10 +44,11 @@ body {
     background-position: center;
 }
 
-.about-row {
-    position: absolute;
+.about {
+    position: relative;
     top: 100vh;
 }
+
 .about-tile {
     height: calc(1.8 * var(--base-length));
     box-shadow: none;
