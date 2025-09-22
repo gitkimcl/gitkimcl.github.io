@@ -45,7 +45,6 @@ header {
     border: 0;
     background: none;
     width: var(--base-length);
-    height: var(--base-length);
     margin-right: calc(0.25 * var(--base-length));
     box-shadow: 0 0 calc(0.15 * var(--base-length)) 0 transparent,
         0 0 calc(0.15 * var(--base-length)) 0 transparent;
@@ -111,7 +110,7 @@ a {
     position: relative;
     z-index: 1;
     width: calc(3 * var(--base-length));
-    height: calc(3 * var(--base-length));
+    aspect-ratio: 1;
     border-radius: calc(0.15 * var(--base-length));
     overflow: hidden;
     box-shadow: 0 0 calc(0.1 * var(--base-length)) 0 transparent,
