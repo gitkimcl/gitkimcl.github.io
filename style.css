@@ -4,7 +4,7 @@
 
 :root {
     --font: 'BR Cobane', 'Pretendard Variable', sans-serif;
-    --base-length: min(9rem, 28.571vw);
+    --base-length: min(8.8rem, 28.571vw);
 }
 
 @media screen and (max-width: 480px) {
@@ -107,6 +107,7 @@ a {
     
     transition: transform 0.2s, box-shadow 0.2s;
     display: inline-block;
+    vertical-align: top;
     position: relative;
     z-index: 1;
     width: calc(3 * var(--base-length));
