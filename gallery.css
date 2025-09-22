@@ -3,7 +3,7 @@
 body {
     background-color: var(--c-bg);
     color: var(--c-text);
-    font-family: system-ui, sans-serif;
+    font-family: ui-sans-serif, sans-serif, system-ui;
     padding-inline: 5vw;
 }
 

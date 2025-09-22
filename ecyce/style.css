@@ -308,6 +308,13 @@ header::before {
 }
 
 
+.emoji-icon {
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", ui-sans-serif, sans-serif;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+
 .notion {
     font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"
 }
