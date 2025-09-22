@@ -35,13 +35,13 @@
 
 :root {
     --off-filter: contrast(0) grayscale(1) brightness(195.3%);
-    --bg-filter: contrast(1) grayscale(0.9) brightness(180%) blur(calc(0.06 * var(--base-length)));
+    --bg-filter: contrast(1) grayscale(0.9) brightness(180%) blur(0.06rem);
 }
 
 @media screen and (prefers-color-scheme: dark) {
     :root {
         --off-filter: contrast(0) grayscale(1) brightness(27.3%);
-        --bg-filter: contrast(1) grayscale(0.75) brightness(60%) blur(calc(0.06 * var(--base-length)));
+        --bg-filter: contrast(1) grayscale(0.75) brightness(60%) blur(0.06rem);
     }
 }
 
@@ -74,7 +74,7 @@ body {
 .bg {
     position: absolute;
     inset: 0;
-    height: calc(100vh + 5 * var(--base-length));
+    height: calc(100vh + 5rem);
     z-index: -1;
     transform: translateZ(-3px) scale(4);
     background: url('img/area.png');
@@ -101,11 +101,9 @@ header {
     --opacity2: 0;
     transition: border-bottom-color 1s;
     transform: translateZ(0);
-    position: absolute;
-    width: 100vw;
     background: url('img/areablur.png');
-    background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
-    border-bottom: calc(0.03 * var(--base-length)) solid var(--c-bg);
+    background-size: 6rem 6rem;
+    border-bottom: 0.03rem solid var(--c-bg);
 }
 
 header::before {
@@ -139,10 +137,12 @@ header::before {
 }
 
 .title {
-    margin-right: calc(0.25 * var(--base-length));
-    font-size: calc(0.3 * var(--base-length));
+    font-size: 0.3rem;
     line-height: 115%;
     word-break: keep-all;
+    position: absolute;
+    transform: translate(0, -50%);
+    margin-right: 0.25rem;
 }
 
 #title1 {
@@ -156,7 +156,7 @@ header::before {
 #title3 {
     transition: opacity 1s;
     line-height: 100%;
-    font-size: calc(0.6 * var(--base-length));
+    font-size: 0.6rem;
     opacity: 0;
 }
 
@@ -166,12 +166,12 @@ header::before {
 
 .areatext {
     transition: opacity 1s;
-    width: calc(6.5 * var(--base-length));
-    max-width: calc(100vw - 0.5 * var(--base-length));
+    width: 6.5rem;
+    max-width: calc(100vw - 0.5rem);
     aspect-ratio: 3;
     position: absolute;
     left: 50%;
-    top: calc(50vh + 0.75 * var(--base-length));
+    top: calc(50vh + 0.75rem);
     transform: translate(-50%, -50%);
     margin: auto;
     background: url('img/areatext.png');
@@ -192,7 +192,7 @@ header::before {
 
 .about {
     transition: opacity 1s;
-    margin-top: 100vh;
+    margin-top: calc(100vh - 1.5rem);
     opacity: 0;
     mix-blend-mode: hard-light;
 }
@@ -206,7 +206,7 @@ header::before {
 }
 
 .about-tile {
-    height: calc(1.8 * var(--base-length));
+    height: 1.8rem;
     box-shadow: none;
 }
 
@@ -262,16 +262,16 @@ header::before {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: calc(0.2 * var(--base-length));
+    padding: 0.2rem;
     color: var(--c-ltext);
 }
 
 .item-eyebrow {
     margin: 0;
     opacity: 0.8;
-    margin-bottom: calc(0.057 * var(--base-length));
+    margin-bottom: 0.057rem;
 
-    font-size: calc(0.1 * var(--base-length));
+    font-size: 0.1rem;
     font-weight: 600;
     line-height: 1.28571;
     letter-spacing: .011em;
@@ -279,9 +279,9 @@ header::before {
 
 .item-headline {
     margin: 0;
-    margin-bottom: calc(0.086 * var(--base-length));
+    margin-bottom: 0.086rem;
 
-    font-size: calc(0.286 * var(--base-length));
+    font-size: 0.286rem;
     font-weight: 600;
     line-height: 1.1;
     letter-spacing: -.003em;
@@ -290,9 +290,9 @@ header::before {
 .item-description {
     opacity: 0.8;
     margin: 0;
-    margin-bottom: calc(0.171 * var(--base-length));
+    margin-bottom: 0.171rem;
 
-    font-size: calc(0.121 * var(--base-length));
+    font-size: 0.121rem;
     font-weight: 400;
     line-height: 1.47059;
     letter-spacing: -.022em;
@@ -301,7 +301,7 @@ header::before {
 .item-cta {
     margin-top: auto;
 
-    font-size: calc(0.121 * var(--base-length));
+    font-size: 0.121rem;
     font-weight: 400;
     line-height: 1.47059;
     letter-spacing: -.022em;
@@ -314,11 +314,11 @@ header::before {
 
 .notion-icon {
     display: inline-block;
-    height: calc(0.286*var(--base-length));
+    height: calc(0.286*1rem);
     aspect-ratio: 1;
     border-radius: 20%;
     position: relative;
-    top: calc(0.03*var(--base-length));
+    top: calc(0.03*1rem);
     background-size: cover;
 }
 
@@ -330,9 +330,9 @@ header::before {
 main.tiles {
     display: none;
     background: url('img/areablur.png');
-    background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
+    background-size: 6rem 6rem;
     position: relative;
-    border-top: calc(0.03 * var(--base-length)) solid var(--c-grayl2);
+    border-top: 0.03rem solid var(--c-grayl2);
 }
 
 main.tiles::before {

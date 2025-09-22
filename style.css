@@ -4,12 +4,12 @@
 
 :root {
     --font: 'BR Cobane', 'Pretendard Variable', sans-serif;
-    --base-length: min(8.8rem, 28.571vw);
+    font-size: 8.8rem;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 480px), screen and (max-width: 30.8rem) {
     :root {
-        --base-length: 28.571vw;
+        font-size: calc(100vw / 3.5);
     }
 }
 
@@ -23,37 +23,35 @@ body {
 }
 
 header {
-    text-align: left;
-    position: relative;
-    box-sizing: border-box;
-    padding: calc(0.25 * var(--base-length));
+    padding: 0.25rem;
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.25rem;
+    align-items: center;
+    justify-content: left;
 }
 
 .title {
-    display: inline-block;
+    display: block;
     color: var(--c-text);
-    font-size: calc(0.6 * var(--base-length));
+    font-size: 0.6rem;
     line-height: 80%;
     margin: 0;
-    position: absolute;
-    top: 50%;
-    transform: translate(0,-50%);
 }
 
 .tile.logo {
     padding: 0;
     border: 0;
     background: none;
-    width: var(--base-length);
-    margin-right: calc(0.25 * var(--base-length));
-    box-shadow: 0 0 calc(0.15 * var(--base-length)) 0 transparent,
-        0 0 calc(0.15 * var(--base-length)) 0 transparent;
+    width: 1rem;
+    box-shadow: 0 0 0.15rem 0 transparent,
+        0 0 0.15rem 0 transparent;
     touch-action: manipulation;
 }
 
 .tile.logo:hover {
-    box-shadow: 0 0 calc(0.15 * var(--base-length)) 0 var(--glow0),
-        0 0 calc(0.15 * var(--base-length)) 0 var(--glow0);
+    box-shadow: 0 0 0.15rem 0 var(--glow0),
+        0 0 0.15rem 0 var(--glow0);
 }
 
 #logo-img {
@@ -69,10 +67,10 @@ a {
 }
 
 .tiles {
-    padding: calc(0.25 * var(--base-length));
+    padding: 0.25rem;
     display: flex;
     flex-wrap: wrap;
-    gap: calc(0.25 * var(--base-length));
+    gap: 0.25rem;
     justify-content: center;
 }
 
@@ -81,11 +79,11 @@ a {
 }
 
 .row:first-child {
-    padding-block-start: calc(0.125 * var(--base-length));
+    padding-block-start: 0.125rem;
 }
 
 .row:last-child {
-    padding-block-end: calc(0.125 * var(--base-length));
+    padding-block-end: 0.125rem;
 }
 
 .tile {
@@ -106,19 +104,19 @@ a {
     --glow4: var(--lglow4);
     
     transition: transform 0.2s, box-shadow 0.2s;
-    display: inline-block;
-    vertical-align: top;
+    display: block;
+    flex-shrink: 0;
     position: relative;
     z-index: 1;
-    width: calc(3 * var(--base-length));
+    width: 3rem;
     aspect-ratio: 1;
-    border-radius: calc(0.15 * var(--base-length));
+    border-radius: 0.15rem;
     overflow: hidden;
-    box-shadow: 0 0 calc(0.1 * var(--base-length)) 0 transparent,
-        calc(-0.75 * var(--base-length)) calc(-0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) transparent,
-        calc(0.75 * var(--base-length)) calc(-0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) transparent,
-        calc(-0.75 * var(--base-length)) calc(0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) transparent,
-        calc(0.75 * var(--base-length)) calc(0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) transparent;
+    box-shadow: 0 0 0.1rem 0 transparent,
+        -0.75rem -0.75rem 0.1rem -0.75rem transparent,
+        0.75rem -0.75rem 0.1rem -0.75rem transparent,
+        -0.75rem 0.75rem 0.1rem -0.75rem transparent,
+        0.75rem 0.75rem 0.1rem -0.75rem transparent;
 }
 
 @media screen and (prefers-color-scheme: dark) {
@@ -135,17 +133,17 @@ a {
     content: '';
     position: absolute;
     inset: 0;
-    box-shadow: inset 0 0 calc(0.1 * var(--base-length)) var(--c-bg);
+    box-shadow: inset 0 0 0.1rem var(--c-bg);
     transition: transform 0.2s, box-shadow 0.2s;
     pointer-events: none;
 }
 
 .tile:hover {
-    box-shadow: 0 0 calc(0.15 * var(--base-length)) 0 var(--glow0),
-        calc(-0.75 * var(--base-length)) calc(-0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) var(--glow1),
-        calc(0.75 * var(--base-length)) calc(-0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) var(--glow2),
-        calc(-0.75 * var(--base-length)) calc(0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) var(--glow3),
-        calc(0.75 * var(--base-length)) calc(0.75 * var(--base-length)) calc(0.1 * var(--base-length)) calc(-0.75 * var(--base-length)) var(--glow4);
+    box-shadow: 0 0 0.15rem 0 var(--glow0),
+        -0.75rem -0.75rem 0.1rem -0.75rem var(--glow1),
+        0.75rem -0.75rem 0.1rem -0.75rem var(--glow2),
+        -0.75rem 0.75rem 0.1rem -0.75rem var(--glow3),
+        0.75rem 0.75rem 0.1rem -0.75rem var(--glow4);
     transform: scale(1.05);
 }
 
@@ -154,8 +152,8 @@ a {
 }
 
 .tile.double-tile {
-    width: calc(6.25 * var(--base-length));
-    height: calc(3 * var(--base-length));
+    width: 6.25rem;
+    height: 3rem;
 }
 
 .tile-img {
