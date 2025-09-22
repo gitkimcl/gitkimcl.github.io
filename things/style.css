@@ -1,5 +1,4 @@
 html {
-    overscroll-behavior: none;
     background-color: var(--c-bg);
 }
 
@@ -23,16 +22,16 @@ header {
 
 .title {
     color: var(--c-ltext);
-    margin-right: calc(0.25 * var(--base-length));
-    font-size: calc(0.6 * var(--base-length));
+    margin-right: 0.25rem;
+    font-size: 0.6rem;
     line-height: 100%;
     word-break: keep-all;
 }
 
 .areatext {
     transition: opacity 1s;
-    width: calc(6.5 * var(--base-length));
-    max-width: calc(100vw - 0.5 * var(--base-length));
+    width: 6.5rem;
+    max-width: calc(100vw - 0.5rem);
     aspect-ratio: 3;
     position: absolute;
     left: 50%;
@@ -50,7 +49,7 @@ header {
 }
 
 .about-tile {
-    height: calc(1.8 * var(--base-length));
+    height: 1.8rem;
     box-shadow: none;
 }
 
@@ -94,16 +93,16 @@ header {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: calc(0.2 * var(--base-length));
+    padding: 0.2rem;
     color: var(--c-ltext);
 }
 
 .item-eyebrow {
     margin: 0;
     opacity: 0.8;
-    margin-bottom: calc(0.057 * var(--base-length));
+    margin-bottom: 0.057rem;
 
-    font-size: calc(0.1 * var(--base-length));
+    font-size: 0.1rem;
     font-weight: 600;
     line-height: 1.28571;
     letter-spacing: .011em;
@@ -111,9 +110,9 @@ header {
 
 .item-headline {
     margin: 0;
-    margin-bottom: calc(0.086 * var(--base-length));
+    margin-bottom: 0.086rem;
 
-    font-size: calc(0.286 * var(--base-length));
+    font-size: 0.286rem;
     font-weight: 600;
     line-height: 1.1;
     letter-spacing: -.003em;
@@ -122,9 +121,9 @@ header {
 .item-description {
     opacity: 0.8;
     margin: 0;
-    margin-bottom: calc(0.171 * var(--base-length));
+    margin-bottom: 0.171rem;
 
-    font-size: calc(0.121 * var(--base-length));
+    font-size: 0.121rem;
     font-weight: 400;
     line-height: 1.47059;
     letter-spacing: -.022em;
@@ -133,7 +132,7 @@ header {
 .item-cta {
     margin-top: auto;
 
-    font-size: calc(0.121 * var(--base-length));
+    font-size: 0.121rem;
     font-weight: 400;
     line-height: 1.47059;
     letter-spacing: -.022em;
