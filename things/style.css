@@ -5,15 +5,7 @@ html {
 
 body {
     height: 100vh;
-    overscroll-behavior: none;
     background: none;
-    overflow: clip;
-}
-
-main {
-    position: relative;
-    height: 100%;
-    overflow: auto;
 }
 
 .bg {

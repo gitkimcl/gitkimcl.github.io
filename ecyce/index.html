@@ -11,18 +11,18 @@
         <script src="script.js" defer></script>
     </head>
     <body>
-        <main id="main">
+        <div id="main">
             <div class="bg"></div>
-            <div class="row row-start row-end title-row">
+            <header class="row title-row">
                 <button class="tile logo" onclick="logo_click();" style="--glow0: rgb(from var(--c-ltext) r g b / 0.25);">
                     <img id="logo-img" class="tile-img pixel" src="img/cycarealogo.png">
                 </button>
                 <h1 class="title" id="title1">안녕하세요 여러분.</h1>
                 <h1 class="title" id="title2">공간 사이의 공간에 오신 것을 환영합니다.</h1>
                 <h1 class="title" id="title3">이끾끼 에리어</h1>
-            </div>
+            </header>
             <div class="areatext"></div>
-            <div class="row row-start row-end about-row">
+            <section class="row about-row">
                 <a href="/" class="tile about-tile">
                     <div class="tile-img" style="background: #277AEA;"></div>
                     <div class="tile-flex">
@@ -43,9 +43,8 @@
                         <div class="item-cta" id="powercta2">힘 방출하기 →</div>
                     </div>
                 </a>
-            </div>
-
-            <div class="rows">
+            </section>
+            <main class="rows">
                 <div style="height: calc(0.25 * var(--base-length));"></div>
                 <div class="row row-start">
                     <a href="https://docs.google.com/document/d/1LRkUSsMmdVSv3C44eqoVH8vy-Akz9FTCfsSYkYMwuFQ/edit?tab=t.e41fn347z50s" target="_blank" class="tile">
@@ -57,7 +56,6 @@
                             <div class="item-cta gdocs">이끾끼 디멘션은 최초의 이끾끼 에리어입니다.</div>
                         </div>
                     </a><!--
-
                     --><a href="https://www.notion.so/246420eb286580dca036d2d001ca00f9" target="_blank" class="tile">
                         <div class="tile-img" style="background: #191919;"></div>
                         <div class="tile-icon notion" style="font-size: calc(1.2 * var(--base-length));">📔</div>
@@ -79,7 +77,6 @@
                             <div class="item-cta"></div>
                         </div>
                     </a><!--
-
                     --><a href="https://www.notion.so/2538f00ad6ba80588d83e43e30c6d9e5" target="_blank" class="tile">
                         <div class="tile-img" style="background: #191919;"></div>
                         <img class="tile-icon" src="img/cycrecord_text.svg">
@@ -113,7 +110,6 @@
                             <div class="item-cta"></div>
                         </div>
                     </a><!--
-                    
                     --><a href="things/irl.html" target="_blank" class="tile">
                         <div class="tile-img" style="background-color: #748330; background-image: url('img/grass_to_touch.jpeg'); background-size: cover;"></div>
                         <div class="tile-icon notion" style="font-size: calc(1.2 * var(--base-length));">🌏</div>
@@ -124,7 +120,7 @@
                         </div>
                     </a>
                 </div>
-            </div>
+            </main>
         </main>
     </body>
 </html>

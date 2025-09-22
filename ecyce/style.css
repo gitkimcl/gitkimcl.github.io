@@ -57,7 +57,7 @@ body {
     background: none;
 }
 
-main {
+#main {
     overscroll-behavior: none;
     overflow: clip;
     perspective: 1px;
@@ -67,7 +67,7 @@ main {
     contain: strict;
 }
 
-main.on {
+.on #main {
     overflow-y: auto;
 }
 
@@ -105,6 +105,8 @@ main.on {
     background: url('img/areablur.png');
     background-size: calc(6 * var(--base-length)) calc(6 * var(--base-length));
     border-bottom: calc(0.03 * var(--base-length)) solid var(--c-bg);
+    padding-block-start: calc(0.125 * var(--base-length));
+    padding-block-end: calc(0.125 * var(--base-length));
 }
 
 .title-row::before {
