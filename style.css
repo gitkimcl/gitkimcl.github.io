@@ -6,7 +6,6 @@
     --font: 'BR Cobane', 'Pretendard Variable', ui-sans-serif, sans-serif, system-ui;
     --kimclweb-1rem: 1rem;
     font-size: 8.8rem;
-    scrollbar-width: none;
 }
 
 @media screen and (max-width: 480px), screen and (max-width: 30.8rem) {
@@ -17,6 +16,7 @@
 
 * {
     font-family: var(--font);
+    scrollbar-width: none;
 }
 
 body {
