@@ -57,7 +57,7 @@ body {
     background: none;
 }
 
-#parallax {
+#wrapper {
     overscroll-behavior: none;
     overflow: clip;
     perspective: 1px;
@@ -67,7 +67,7 @@ body {
     contain: strict;
 }
 
-.on #parallax {
+.on #wrapper {
     overflow-y: auto;
 }
 
