@@ -6,6 +6,7 @@
     --font: 'BR Cobane', 'Pretendard Variable', ui-sans-serif, sans-serif, system-ui;
     --kimclweb-1rem: 1rem;
     font-size: 8.8rem;
+    scrollbar-color: #8b8b8b transparent; /* okay I know that Safari hasn't implemented this yet but this is for Windows anyways so I'll use it */
 }
 
 @media screen and (max-width: 480px), screen and (max-width: 30.8rem) {
