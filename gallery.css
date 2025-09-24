@@ -5,6 +5,7 @@ body {
     color: var(--c-text);
     font-family: ui-sans-serif, sans-serif, system-ui;
     padding-inline: 5vw;
+    scrollbar-color: #888 transparent;
 }
 
 img {
