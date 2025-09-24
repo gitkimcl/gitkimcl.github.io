@@ -1,26 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="style.css">
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    </head>
-    <body>
-        <h1>끼족 문자 생성기</h1>
-        <div id="symbol-size" style="display: none; width: var(--symbol-size);"></div>
-        <button id="mode2" onclick="switch2()">기존 끼족 문자</button>
-        <button id="mode1" onclick="switch1()">단순 끼족 문자</button>
-        <button id="mode3" onclick="switch3()">신형 끼족 문자</button>
-        <br>
-        <input type="range" id="result-size" min="8" max="30" value="20"/>
-        <label for="result-size" id="result-size-label">크기: x1</label>
-        <br>
-        <input type="range" id="result-width" min="6" max="50" value="25"/>
-        <label for="result-width" id="result-width-label">너비: 25개</label>
-        <br><br>
-        <div class="result-container"></div>
-        <br>
-        <textarea id="code"></textarea>
-        <script src="script.js"></script>
-    </body>
+<html lang="ko">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="style.css">
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="/kimclmenu.js" defer></script>
+</head>
+<body>
+	<slot id="k_menuslot"></slot>
+	<h1>끼족 문자 생성기</h1>
+	<div id="symbol-size" style="display: none; width: var(--symbol-size);"></div>
+	<button id="mode2" onclick="switch2()">기존 끼족 문자</button>
+	<button id="mode1" onclick="switch1()">단순 끼족 문자</button>
+	<button id="mode3" onclick="switch3()">신형 끼족 문자</button>
+	<br>
+	<input type="range" id="result-size" min="8" max="30" value="20"/>
+	<label for="result-size" id="result-size-label">크기: x1</label>
+	<br>
+	<input type="range" id="result-width" min="6" max="50" value="25"/>
+	<label for="result-width" id="result-width-label">너비: 25개</label>
+	<br><br>
+	<div class="result-container"></div>
+	<br>
+	<textarea id="code"></textarea>
+	<script src="script.js"></script>
+</body>
 </html>

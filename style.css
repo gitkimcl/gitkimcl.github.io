@@ -3,7 +3,8 @@
 @import "colors.css";
 
 :root {
-    --font: 'BR Cobane', 'Pretendard Variable', sans-serif;
+    --font: 'BR Cobane', 'Pretendard Variable', ui-sans-serif, sans-serif, system-ui;
+    --kimclweb-1rem: 1rem;
     font-size: 8.8rem;
 }
 
@@ -44,6 +45,7 @@ header {
     border: 0;
     background: none;
     width: 1rem;
+    flex-shrink: 0;
     box-shadow: 0 0 0.15rem 0 transparent,
         0 0 0.15rem 0 transparent;
     touch-action: manipulation;
@@ -92,11 +94,11 @@ a {
     --dglow2: var(--dglow0);
     --dglow3: var(--dglow0);
     --dglow4: var(--dglow0);
-    --lglow0: oklch(from var(--dglow0) 0.6 c h / 0.7);
-    --lglow1: oklch(from var(--dglow1) 0.6 c h / 0.7);
-    --lglow2: oklch(from var(--dglow2) 0.6 c h / 0.7);
-    --lglow3: oklch(from var(--dglow3) 0.6 c h / 0.7);
-    --lglow4: oklch(from var(--dglow4) 0.6 c h / 0.7);
+    --lglow0: oklch(from var(--dglow0) calc(1.2413 - l) c h / calc(0.7 * alpha)); /* 1.2413 = #FAFAFA + #232323 */
+    --lglow1: oklch(from var(--dglow1) calc(1.2413 - l) c h / calc(0.7 * alpha));
+    --lglow2: oklch(from var(--dglow2) calc(1.2413 - l) c h / calc(0.7 * alpha));
+    --lglow3: oklch(from var(--dglow3) calc(1.2413 - l) c h / calc(0.7 * alpha));
+    --lglow4: oklch(from var(--dglow4) calc(1.2413 - l) c h / calc(0.7 * alpha));
     --glow0: var(--lglow0);
     --glow1: var(--lglow1);
     --glow2: var(--lglow2);
@@ -105,7 +107,6 @@ a {
     
     transition: transform 0.2s, box-shadow 0.2s;
     display: block;
-    flex-shrink: 0;
     position: relative;
     z-index: 1;
     width: 3rem;
