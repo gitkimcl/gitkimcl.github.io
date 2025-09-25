@@ -7,6 +7,36 @@
 </head>
 <body>
 	<slot id="k_menuslot">
+		<nav id="k_menu">
+			<div id="k_menublur">
+				<div id="k_menulogo" onclick="e=document.getElementById('k_menu'); e.getAttribute('class')?e.removeAttribute('class'):e.setAttribute('class','k_active');"></div>
+			</div>
+			<div onclick="window.location.pathname='';" title="홈으로" id="k_btn1" class="k_menubtn" style="--xtrans: 0; --ytrans: -0.55em; background-color: oklab(0.7 0.2 0.2 / 60%);">
+				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
+					<circle class="k_menustroke" cx="175" cy="175" r="90"/>
+				</svg>
+			</div>
+			<div onclick="h=window.location.pathname; (/\/$/.test(h)||/\/index.html$/.test(h))?(h.includes('/things/')?window.location.pathname=h.replace(/\/things\/(?!things\/)(?!.*\/things\/).*/,'/'):window.location.href='..'):window.location.href='.';" title="돌아가기" id="k_btn2" class="k_menubtn" style="--xtrans: 0.55em; --ytrans: -0.55em; background-color: oklab(0.8 0 0.2 / 60%);">
+				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
+					<polygon class="k_menustroke" points="90,175 250,267.4 250,82.6"/>
+				</svg>
+			</div>
+			<div onclick="window.scrollBy(0,-window.scrollY); a=document.getElementById('wrapper'); if (a) a.scrollTop=0;" title="올라가기" id="k_btn3" class="k_menubtn" style="--xtrans: 0.55em; --ytrans: 0; background-color: oklab(0.7 -0.2 0.2 / 60%);">
+				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
+					<polygon class="k_menustroke" points="175,90 82.6,250 267.4,250"/>
+				</svg>
+			</div>
+			<div onclick="document.getElementById('k_menu').setAttribute('style','opacity: 0; display: none;');" title="숨기기" id="k_btn4" class="k_menubtn" style="--xtrans: 0.55em; --ytrans: 0.55em; background-color: oklab(0.7 -0.2 -0.2 / 60%);">
+				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
+					<polygon class="k_menustroke" points="175,260 267.4,100 82.6,100"/>
+				</svg>
+			</div>
+			<div onclick="k_startcmdinput();" title="?" id="k_btn5" class="k_menubtn" style="--xtrans: 0; --ytrans: 0.55em; background-color: oklab(0.7 0.2 -0.2 / 60%);">
+				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
+					<polygon class="k_menustroke" points="260,175 100,82.6 100,267.4"/>
+				</svg>
+			</div>
+		</nav>
 		<style>
 			#k_menu, #k_commands {
 				font-size: var(--kimclweb-1rem, 8.8rem);
@@ -60,6 +90,10 @@
 			
 			.k_active #k_menulogo {
 				opacity: 0.75;
+			}
+
+			#k_commands + .k_active #k_menulogo {
+				opacity: 0.9;
 			}
 			
 			#k_menulogo#k_menulogo:hover {
@@ -137,53 +171,23 @@
 			}
 
 			.k_cmdicon.k_active .k_menustroke {
-				fill: var(--stroke);
+				stroke: oklab(from var(--stroke) l a b / 100%);
+				fill: oklab(from var(--stroke) l a b / 100%);
 			}
 		</style>
-		<nav id="k_menu">
-			<div id="k_menublur">
-				<div id="k_menulogo" onclick="e=document.getElementById('k_menu'); e.getAttribute('class')?e.removeAttribute('class'):e.setAttribute('class','k_active');"></div>
-			</div>
-			<div onclick="window.location.pathname='';" title="홈으로" id="k_btn1" class="k_menubtn" style="--xtrans: 0; --ytrans: -0.55em; background-color: oklab(0.7 0.2 0.2 / 60%);">
-				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
-					<circle class="k_menustroke" cx="175" cy="175" r="90"/>
-				</svg>
-			</div>
-			<div onclick="h=window.location.pathname; (/\/$/.test(h)||/\/index.html$/.test(h))?(h.includes('/things/')?window.location.pathname=h.replace(/\/things\/(?!things\/)(?!.*\/things\/).*/,'/'):window.location.href='..'):window.location.href='.';" title="돌아가기" id="k_btn2" class="k_menubtn" style="--xtrans: 0.55em; --ytrans: -0.55em; background-color: oklab(0.8 0 0.2 / 60%);">
-				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
-					<polygon class="k_menustroke" points="90,175 250,267.4 250,82.6"/>
-				</svg>
-			</div>
-			<div onclick="window.scrollBy(0,-window.scrollY); a=document.getElementById('wrapper'); if (a) a.scrollTop=0;" title="올라가기" id="k_btn3" class="k_menubtn" style="--xtrans: 0.55em; --ytrans: 0; background-color: oklab(0.7 -0.2 0.2 / 60%);">
-				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
-					<polygon class="k_menustroke" points="175,90 82.6,250 267.4,250"/>
-				</svg>
-			</div>
-			<div onclick="document.getElementById('k_menu').setAttribute('style','opacity: 0; display: none;');" title="숨기기" id="k_btn4" class="k_menubtn" style="--xtrans: 0.55em; --ytrans: 0.55em; background-color: oklab(0.7 -0.2 -0.2 / 60%);">
-				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
-					<polygon class="k_menustroke" points="175,260 267.4,100 82.6,100"/>
-				</svg>
-			</div>
-			<div onclick="k_startcmdinput();" title="?" id="k_btn5" class="k_menubtn" style="--xtrans: 0; --ytrans: 0.55em; background-color: oklab(0.7 0.2 -0.2 / 60%);">
-				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
-					<polygon class="k_menustroke" points="260,175 100,82.6 100,267.4"/>
-				</svg>
-			</div>
-		</nav>
 		<script>
 			var k_cinput = false;
 			var k_command = [];
-			var k_cmdicns = [`<p>?</p>`,`<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 0.2 / 60%);">
-					<circle class="k_menustroke" cx="175" cy="175" r="90"/>
-				</svg>`,`<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.8 0 0.2 / 60%);">
-					<polygon class="k_menustroke" points="90,175 250,267.4 250,82.6"/>
-				</svg>`,`<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 -0.2 0.2 / 60%);">
-					<polygon class="k_menustroke" points="175,90 82.6,250 267.4,250"/>
-				</svg>`,`<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 -0.2 -0.2 / 60%);">
-					<polygon class="k_menustroke" points="175,260 267.4,100 82.6,100"/>
-				</svg>`,`<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 -0.2 / 60%);">
-					<polygon class="k_menustroke" points="260,175 100,82.6 100,267.4"/>
-				</svg>`]
+			var k_cmdicns = ['<p>?</p>',
+				'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 0.2 / 60%);"><circle class="k_menustroke" cx="175" cy="175" r="90"/></svg>',
+				'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.8 0 0.2 / 60%);"><polygon class="k_menustroke" points="90,175 250,267.4 250,82.6"/></svg>',
+				'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 -0.2 0.2 / 60%);"><polygon class="k_menustroke" points="175,90 82.6,250 267.4,250"/></svg>',
+				'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 -0.2 -0.2 / 60%);"><polygon class="k_menustroke" points="175,260 267.4,100 82.6,100"/></svg>',
+				'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 -0.2 / 60%);"><polygon class="k_menustroke" points="260,175 100,82.6 100,267.4"/></svg>',
+				'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.8 -0.2 0 / 60%);"><polygon class="k_menustroke" points="95,95 255,95 255,255 95,255"/></svg>',
+				'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.6 0 -0.2 / 60%);"><line class="k_menustroke" x1="95" y1="175" x2="255" y2="175"/><line class="k_menustroke" x1="175" y1="95" x2="175" y2="255"/></svg>',
+				'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 0 / 60%);"><line class="k_menustroke" x1="95" y1="95" x2="255" y2="255"/><line class="k_menustroke" x1="95" y1="255" x2="255" y2="95"/></svg>',
+				'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.8 0 0 / 60%);"><polygon class="k_menustroke" points="175,75 275,175 175,275 75,175"/></svg>'];
 			function k_startcmdinput() {
 				if (k_cinput) {
 					document.getElementById('k_menu').setAttribute('style','opacity: 0; display: none;');
@@ -200,14 +204,43 @@
 				document.getElementById("k_btn2").setAttribute("onclick","k_inputcmd(2)");
 				document.getElementById("k_btn3").setAttribute("onclick","k_inputcmd(3)");
 				document.getElementById("k_btn4").setAttribute("onclick","k_inputcmd(4)");
-				document.getElementById("k_menuslot").insertAdjacentHTML("beforeend",String.raw`<div id="k_commands">${k_cmdicns[5]}</div>`);
+				document.getElementById("k_menuslot").insertAdjacentHTML("afterbegin",'<div id="k_commands"></div>');
+		document.getElementById("k_commands").insertAdjacentHTML("beforeend",k_cmdicns[5]);
 				k_command = [5];
 			}
 			function k_inputcmd(num) {
 				if (num==2) {
 					let a = k_command.pop();
 					document.querySelector(".k_cmdicon:last-child").remove();
-					if (a==2) return;
+					switch (a) {
+						case 1:
+							k_command.push(6);
+							document.getElementById("k_commands").insertAdjacentHTML("beforeend",k_cmdicns[6]);
+							break;
+						case 2:
+							k_command.push(5);
+							document.getElementById("k_commands").insertAdjacentHTML("beforeend",k_cmdicns[5]);
+							break;
+						case 3:
+							k_command.push(7);
+							document.getElementById("k_commands").insertAdjacentHTML("beforeend",k_cmdicns[7]);
+							break;
+						case 4:
+							k_command.push(8);
+							document.getElementById("k_commands").insertAdjacentHTML("beforeend",k_cmdicns[8]);
+							break;
+						case 5:
+							k_command.push(9);
+							document.getElementById("k_commands").insertAdjacentHTML("beforeend",k_cmdicns[9]);
+							break;
+						case 6: case 7: case 8:
+							k_command.push(2);
+							document.getElementById("k_commands").insertAdjacentHTML("beforeend",k_cmdicns[2]);
+							break;
+						case 9:
+							break;
+					}
+					return;
 				}
 				k_command.push(num);
 				document.getElementById("k_commands").insertAdjacentHTML("beforeend",k_cmdicns[num]);
