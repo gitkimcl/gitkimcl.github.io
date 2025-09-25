@@ -50,6 +50,9 @@
 				transform: translate(0, -50%);
 				transition: opacity 0.2s, display 0.2s;
 				transition-behavior: allow-discrete;
+				user-select: none;
+			    -webkit-user-select: none;
+    			-webkit-user-drag: none;
 			}
 			
 			@media screen and (max-width: 480px), screen and (max-width: 30.8rem) {
@@ -119,9 +122,6 @@
 				box-sizing: border-box;
 				backdrop-filter: blur(0.025em);
 				cursor: pointer;
-				user-select: none;
-			    -webkit-user-select: none;
-    			-webkit-user-drag: none;
 				touch-action: manipulation;
 			}
 			
@@ -158,9 +158,6 @@
 				transform: translate(0,-50%);
 				line-height: 0px;
 				pointer-events: none;
-				user-select: none;
-			    -webkit-user-select: none;
-    			-webkit-user-drag: none;
 			}
 
 			.k_cmdicon {
