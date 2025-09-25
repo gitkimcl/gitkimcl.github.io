@@ -114,6 +114,7 @@ document.getElementById("k_menuslot").insertAdjacentHTML("afterbegin",String.raw
 		user-select: none;
 		-webkit-user-select: none;
 		-webkit-user-drag: none;
+		touch-action: manipulation;
 	}
 	
 	.k_active .k_menubtn {
