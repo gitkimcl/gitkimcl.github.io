@@ -4,24 +4,26 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="gallery.css">
-	<script src="/kimclmenu.js" defer></script>
 </head>
 <body>
-	<template id="dev">
+	<slot id="k_menuslot">
 		<style>
+			#k_menu, #k_commands {
+				font-size: var(--kimclweb-1rem, 8.8rem);
+				z-index: 3;
+			}
+
 			#k_menu {
 				position: fixed;
 				left: 0.05em;
 				top: 50%;
 				transform: translate(0, -50%);
-				font-size: var(--kimclweb-1rem, 8.8rem);
-				z-index: 3;
 				transition: opacity 0.2s, display 0.2s;
 				transition-behavior: allow-discrete;
 			}
 			
 			@media screen and (max-width: 480px), screen and (max-width: 30.8rem) {
-				#k_menu {
+				#k_menu, #k_commands {
 					font-size: var(--kimclweb-1rem, calc(100vw / 3.5));
 				}
 			}
@@ -65,7 +67,7 @@
 				box-shadow: inset 0 0 0.1em transparent;
 			}
 			
-			.k_menulinks {
+			.k_menubtn {
 				position: absolute;
 				top: 0.025em;
 				left: 0.025em;
@@ -85,7 +87,7 @@
 				cursor: pointer;
 			}
 			
-			.k_active .k_menulinks {
+			.k_active .k_menubtn {
 				scale: 1;
 				opacity: 1;
 				visibility: visible;
@@ -94,6 +96,7 @@
 			.k_menuicon {
 				position: absolute;
 				inset: 0;
+				shape-rendering: geometricPrecision;
 			}
 			
 			.k_menustroke {
@@ -104,39 +107,110 @@
 				stroke-width: 0.03em;
 				vector-effect: non-scaling-stroke;
 			}
+
+			#k_commands {
+				position: fixed;
+				top: 50%;
+				left: 0;
+				width: 100%;
+				padding-inline: max(5vw, calc(50% - 2.275em));
+				box-sizing: border-box;
+				text-align: center;
+				z-index: 4;
+				transform: translate(0,-50%);
+				line-height: 0px;
+				pointer-events: none;
+			}
+
+			.k_cmdicon {
+				width: 0.39em;
+				height: 0.39em;
+				margin: -0.05em;
+				shape-rendering: geometricPrecision;
+			}
+
+			.k_cmdicon .k_menustroke {
+				stroke: var(--stroke);
+			}
+
+			.k_cmdicon.k_active .k_menustroke {
+				fill: var(--stroke);
+			}
 		</style>
 		<nav id="k_menu">
 			<div id="k_menublur">
 				<div id="k_menulogo" onclick="e=document.getElementById('k_menu'); e.getAttribute('class')?e.removeAttribute('class'):e.setAttribute('class','k_active');"></div>
 			</div>
-			<a href="/" title="홈으로" class="k_menulinks" style="--xtrans: 0; --ytrans: -0.55em; background-color: oklab(0.7 0.2 0.2 / 60%);">
-				<svg role="img" class="k_menuicon" viewBox="0 0 350 350" shape-rendering="geometricPrecision">
+			<div onclick="window.location.pathname='';" title="홈으로" id="k_btn1" class="k_menubtn" style="--xtrans: 0; --ytrans: -0.55em; background-color: oklab(0.7 0.2 0.2 / 60%);">
+				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
 					<circle class="k_menustroke" cx="175" cy="175" r="90"/>
 				</svg>
-			</a>
-			<div onclick="h=window.location.pathname; (/\/$/.test(h)||/\/index.html$/.test(h))?(h.includes('/things/')?window.location.pathname=h.replace(/\/things\/(?!things\/)(?!.*\/things\/).*/,'/'):window.location.href='..'):window.location.href='.';" title="돌아가기" class="k_menulinks" style="--xtrans: 0.55em; --ytrans: -0.55em; background-color: oklab(0.8 0 0.2 / 60%);">
-				<svg role="img" class="k_menuicon" viewBox="0 0 350 350" shape-rendering="geometricPrecision">
+			</div>
+			<div onclick="h=window.location.pathname; (/\/$/.test(h)||/\/index.html$/.test(h))?(h.includes('/things/')?window.location.pathname=h.replace(/\/things\/(?!things\/)(?!.*\/things\/).*/,'/'):window.location.href='..'):window.location.href='.';" title="돌아가기" id="k_btn2" class="k_menubtn" style="--xtrans: 0.55em; --ytrans: -0.55em; background-color: oklab(0.8 0 0.2 / 60%);">
+				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
 					<polygon class="k_menustroke" points="90,175 250,267.4 250,82.6"/>
 				</svg>
 			</div>
-			<div onclick="window.scrollBy(0,-window.scrollY); document.getElementById('wrapper').scrollTop=0;" title="올라가기" class="k_menulinks" style="--xtrans: 0.55em; --ytrans: 0; background-color: oklab(0.7 -0.2 0.2 / 60%);">
-				<svg role="img" class="k_menuicon" viewBox="0 0 350 350" shape-rendering="geometricPrecision">
+			<div onclick="window.scrollBy(0,-window.scrollY); a=document.getElementById('wrapper'); if (a) a.scrollTop=0;" title="올라가기" id="k_btn3" class="k_menubtn" style="--xtrans: 0.55em; --ytrans: 0; background-color: oklab(0.7 -0.2 0.2 / 60%);">
+				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
 					<polygon class="k_menustroke" points="175,90 82.6,250 267.4,250"/>
 				</svg>
 			</div>
-			<div onclick="document.getElementById('k_menu').setAttribute('style','opacity: 0; display: none;')" title="숨기기" class="k_menulinks" style="--xtrans: 0.55em; --ytrans: 0.55em; background-color: oklab(0.7 -0.2 -0.2 / 60%);">
-				<svg role="img" class="k_menuicon" viewBox="0 0 350 350" shape-rendering="geometricPrecision">
+			<div onclick="document.getElementById('k_menu').setAttribute('style','opacity: 0; display: none;');" title="숨기기" id="k_btn4" class="k_menubtn" style="--xtrans: 0.55em; --ytrans: 0.55em; background-color: oklab(0.7 -0.2 -0.2 / 60%);">
+				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
 					<polygon class="k_menustroke" points="175,260 267.4,100 82.6,100"/>
 				</svg>
 			</div>
-			<div onclick="console.log('???');" title="엄" class="k_menulinks" style="--xtrans: 0; --ytrans: 0.55em; background-color: oklab(0.7 0.2 -0.2 / 60%);">
-				<svg role="img" class="k_menuicon" viewBox="0 0 350 350" shape-rendering="geometricPrecision">
+			<div onclick="console.log('엄');" oncontextmenu="k_startcmdinput();" title="엄" id="k_btn5" class="k_menubtn" style="--xtrans: 0; --ytrans: 0.55em; background-color: oklab(0.7 0.2 -0.2 / 60%);">
+				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
 					<polygon class="k_menustroke" points="260,175 100,82.6 100,267.4"/>
 				</svg>
 			</div>
 		</nav>
-	</template>
-	
-	<slot id="k_menuslot"></slot>
+		<script>
+			var k_cinput = false;
+			var k_command = [];
+			var k_cmdicns = [`<p>?</p>`,`<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 0.2 / 60%);">
+					<circle class="k_menustroke" cx="175" cy="175" r="90"/>
+				</svg>`,`<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.8 0 0.2 / 60%);">
+					<polygon class="k_menustroke" points="90,175 250,267.4 250,82.6"/>
+				</svg>`,`<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 -0.2 0.2 / 60%);">
+					<polygon class="k_menustroke" points="175,90 82.6,250 267.4,250"/>
+				</svg>`,`<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 -0.2 -0.2 / 60%);">
+					<polygon class="k_menustroke" points="175,260 267.4,100 82.6,100"/>
+				</svg>`,`<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 -0.2 / 60%);">
+					<polygon class="k_menustroke" points="260,175 100,82.6 100,267.4"/>
+				</svg>`]
+			function k_startcmdinput() {
+				if (k_cinput) {
+					document.getElementById('k_menu').setAttribute('style','opacity: 0; display: none;');
+					let a = document.getElementsByClassName("k_cmdicon");
+					for (e of a) {
+						console.log(e.className);
+						e.setAttribute("class","k_cmdicon k_active");
+					}
+					k_exec();
+					return;
+				}
+				k_cinput = true;
+				document.getElementById("k_btn1").setAttribute("onclick","k_inputcmd(1)");
+				document.getElementById("k_btn2").setAttribute("onclick","k_inputcmd(2)");
+				document.getElementById("k_btn3").setAttribute("onclick","k_inputcmd(3)");
+				document.getElementById("k_btn4").setAttribute("onclick","k_inputcmd(4)");
+				document.getElementById("k_btn5").setAttribute("onclick","k_inputcmd(5)");
+				document.getElementById("k_menuslot").insertAdjacentHTML("beforeend",String.raw`<div id="k_commands">${k_cmdicns[5]}</div>`);
+				k_command = [5];
+			}
+			function k_inputcmd(num) {
+				if (num==2) {
+					let a = k_command.pop();
+					document.querySelector(".k_cmdicon:last-child").remove();
+					if (a==2) return;
+				}
+				k_command.push(num);
+				document.getElementById("k_commands").insertAdjacentHTML("beforeend",k_cmdicns[num]);
+			}
+		</script>
+	</slot>
 </body>
 </html>
