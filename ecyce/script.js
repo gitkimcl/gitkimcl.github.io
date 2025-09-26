@@ -5,12 +5,12 @@ $("header").on("animationend", () => {
     $(":root").addClass("on");
 });
 
-if (localStorage.getItem("lesspower")=="1") {
+if (localStorage.getItem("lesspower")==="1") {
     $(":root").addClass("restricted");
 }
 
 function togglePower() {
-    if (localStorage.getItem("lesspower")=="1") {
+    if (localStorage.getItem("lesspower")==="1") {
         localStorage.setItem("lesspower","0");
         $(":root").removeClass("restricted");
     } else {
