@@ -1,0 +1,203 @@
+@font-face {
+    font-family: 'thatfont';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMDOHYEON.woff') format('woff');
+    font-weight: normal;
+    font-display: swap;
+}
+
+:root {
+    --test-background: transparent;
+    --background-color: white;
+    --dark-color: var(--background-color);
+    --darker-color: var(--background-color);
+    --darkest-color: var(--background-color);
+    /*--dark-color: #DBCFBF;
+    --darker-color: #C2B7A9;
+    --darkest-color: #403C38;*/
+    --base-width: min(90vw,180vh);
+    --base-height: min(30vw,60vh);
+}
+
+body {
+    background-color: var(--background-color);
+}
+
+#logo {
+    width: min(8vw, 8vh);
+    height: min(8vw, 8vh);
+}
+
+#name {
+    color: var(--dark-color);
+    font-weight: 600;
+    font-family: thatfont;
+    font-size: calc(var(--base-width) / 90);
+    margin: 0;
+}
+
+#middle-container {
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%,-50%);
+    width: var(--base-width);
+    height: var(--base-height);
+    background-color: white;
+    mix-blend-mode: screen;
+}
+
+#timer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 60%;
+    position: absolute;
+    top: 20%;
+}
+
+#day-display {
+    width: 33%;
+    height: 20%;
+    position: absolute;
+    left: 11.6%;
+    top: 12.5%;
+    color: black;
+}
+
+#hour-progress {
+    width: 43%;
+    height: 20%;
+    position: absolute;
+    right: 11.6%;
+    top: 8%;
+    background-color: var(--test-background);
+}
+
+#vacation-timer {
+    width: 33%;
+    height: 20%;
+    left: 10.95%;
+    bottom: 8%;
+    border-top: calc(var(--base-height) / 50) solid black;
+    padding-left: 1%;
+    position: absolute;
+    background-color: var(--test-background);;
+}
+
+#second-display {
+    width: 33%;
+    height: 20%;
+    bottom: 10%;
+    right: 10.95%;
+    position: absolute;
+    background-color: var(--test-background);
+}
+
+.timer-text-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10%;
+    height: 100%;
+    margin: 0;
+    background-color: var(--test-background);
+}
+
+.timer-colon-container {
+    width: 4%;
+}
+
+.timer-text {
+    width: 100%;
+    font-size: calc(var(--base-width) / 7);
+    font-family: thatfont;
+    text-align: center;
+    color: black;
+    transform: translate(0%,5%);
+}
+
+.timer-colon {
+    transform: none;
+}
+
+#day-display-text {
+    position: absolute;
+    bottom: 0%;
+    font-family: thatfont;
+    color: black;
+    font-size: calc(var(--base-width) / 20);
+    text-align: left;
+}
+
+#vacation-timer-text {
+    position: absolute;
+    top: 5%;
+    font-family: thatfont;
+    color: black;
+    font-size: calc(var(--base-width) / 20);
+    text-align: left;
+}
+
+#second-display-text {
+    position: absolute;
+    top: 5%;
+    right: 3%;
+    font-family: thatfont;
+    color: black;
+    font-size: calc(var(--base-width) / 20);
+    text-align: right;
+}
+
+#hour-progress-bg {
+    display: inline-block;
+    background-color: #AAAAAA;
+    width: 100%;
+    height: 10%;
+    position: absolute;
+    bottom: 3%;
+}
+
+#hour-progress-fg {
+    display: inline-block;
+    background-color: black;
+    height: 10%;
+    position: absolute;
+    bottom: 3%;
+}
+
+
+
+#top-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: calc(var(--base-width)/150);
+}
+
+#date-display {
+    font-family: thatfont;
+    font-size: calc(var(--base-width) / 25);
+    color: var(--dark-color);
+    margin: 0;
+    text-align: right;
+}
+
+#week-display {
+    font-family: thatfont;
+    font-size: calc(var(--base-width) / 25);
+    color: var(--dark-color);
+    margin: 0;
+    text-align: right;
+}
+
+#image {
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%,-50%);
+    width: calc(var(--base-width) * 0.99);
+    height: calc(var(--base-height) * 0.99);
+    background-image: url('bg3.png');
+    background-size: contain;
+    background-position: center;
+}

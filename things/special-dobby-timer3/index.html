@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dobby timer</title>
+	<link rel="icon" href="icon.png">
+	<link rel="stylesheet" href="style.css">
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="/kimclmenu.js" defer></script>
+</head>
+<body>
+	<slot id="k_menuslot"></slot>
+	<img src="logo.svg" id="logo">
+	<p id="name">311307</p>
+	<div id="top-container">
+		<p id="date-display"></p>
+		<p id="week-display"></p>
+	</div>
+	<div id="image"></div>
+	<div id="middle-container">
+		<div id="day-display">
+			<span id="day-display-text">5;00</span>
+		</div>
+		<div id="hour-progress">
+			<span id="hour-progress-bg"></span>
+			<span id="hour-progress-fg"></span>
+		</div>
+		<div id="timer">
+			<div class="timer-text-container">
+				<span class="timer-text" id="timer1">이</span>
+			</div>
+			<div class="timer-text-container">
+				<span class="timer-text" id="timer2">끾</span>
+			</div>
+			<div class="timer-text-container">
+				<span class="timer-text" id="timer3">끼</span>
+			</div>
+			<div class="timer-text-container timer-colon-container">
+				<span class="timer-text timer-colon">:</span>
+			</div>
+			<div class="timer-text-container">
+				<span class="timer-text" id="timer4"></span>
+			</div>
+			<div class="timer-text-container">
+				<span class="timer-text" id="timer5"></span>
+			</div>
+			<div class="timer-text-container timer-colon-container">
+				<span class="timer-text timer-colon">:</span>
+			</div>
+			<div class="timer-text-container">
+				<span class="timer-text" id="timer6"></span>
+			</div>
+			<div class="timer-text-container">
+				<span class="timer-text" id="timer7"></span>
+			</div>
+		</div>
+		<div id="vacation-timer">
+			<span id="vacation-timer-text">Very special</span>
+		</div>
+		<div id="second-display">
+			<span id="second-display-text">214748</span>
+		</div>
+	</div>
+	<script>
+		var x = window.setInterval(wait_for_exact,6);
+		function wait_for_exact() {
+			let a=(new Date().getMilliseconds())%100;
+			if (a>=2&&a<=10) {
+				window.setInterval(update,100);
+				window.setTimeout(load,105);
+				window.clearInterval(x);
+			}
+		}
+		
+		function load() {
+			$(":root").css("--dark-color","#DDDDDD");
+			$(":root").css("--darker-color","#CCCCCC");
+			$(":root").css("--darkest-color","#BBBBBB");
+		}
+		
+		function pad_zero(s,z) {
+			s=s.toString();
+			while (s.length<z) {
+				s="0"+s;
+			}
+			return s;
+		}
+		
+		var freedom_time=new Date(2025,7,13,13,50,0);
+		function update() {
+			let now = new Date();
+			let tar = Math.round((freedom_time-now)/100);
+			set_time(now, [Math.floor(tar/36000),Math.floor(tar/600)%60,(tar/10)%60]);
+		}
+		
+		function set_time(now, time) {
+			if (time[0]<0) {
+				time=[0,0,0];
+			}
+			
+			let seconds_left=time[0]*3600+time[1]*60+time[2];
+			$("#second-display-text").text(Math.floor(seconds_left));
+			$("#day-display-text").text(`${Math.floor(time[0]/24)};${time[0]%24}`)
+			$("#hour-progress-fg").css("width",`${100-(time[1]/60+time[2]/3600)*100}%`)
+			
+			for (i=3; i>0; i--) {
+				$(`#timer${i}`).text(Math.floor(time[0]%10));
+				time[0]/=10;
+			}
+			for (i=5; i>3; i--) {
+				$(`#timer${i}`).text(Math.floor(time[1]%10));
+				time[1]/=10;
+			}
+			for (i=7; i>5; i--) {
+				$(`#timer${i}`).text(Math.floor(time[2]%10));
+				time[2]/=10;
+			}
+			
+			$("#date-display").text(`${now.getFullYear()}-${pad_zero(now.getMonth()+1, 2)}-${pad_zero(now.getDate(), 2)}`);
+			$("#week-display").text(``)
+		}
+	</script>
+</body>
+</html>
