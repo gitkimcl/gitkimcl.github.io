@@ -144,16 +144,23 @@
 	#k_commands {
 		position: fixed;
 		top: 50%;
-		left: 0;
+		left: 50%;
+		transform: translate(-50%,-50%);
 		width: 100%;
-		padding-inline: max(5vw, calc(50% - 2.275em));
+		max-width: 4.55em;
 		box-sizing: border-box;
 		text-align: center;
 		z-index: 4;
-		transform: translate(0,-50%);
 		line-height: 0px;
 		pointer-events: none;
 		transition: opacity 0.5s;
+		backdrop-filter: grayscale(0.9) contrast(0.5) brightness(225%);
+	}
+
+	@media screen and (prefers-color-scheme: dark) {
+		#k_commands {
+			backdrop-filter: grayscale(0.9) invert(1) contrast(0.5) brightness(40%);
+		}
 	}
 
 	#k_commands.k_cmdfail, #k_commands.k_cmdsuccess {
@@ -161,24 +168,23 @@
 	}
 
 	.k_cmdicon {
+		display: inline-block;
 		width: 0.39em;
 		height: 0.39em;
 		margin: -0.05em;
+		position: relative;
 		shape-rendering: geometricPrecision;
 	}
 
 	.k_cmdicon .k_menustroke {
 		transition: stroke 0.2s, fill 0.2s;
 		stroke: var(--stroke);
-	}
-
-	.k_cmdsuccess .k_cmdicon .k_menustroke {
-		stroke: oklab(from var(--stroke) l a b / 100%);
-		fill: oklab(from var(--stroke) l a b / 100%);
+		fill: var(--stroke);
 	}
 
 	.k_cmdfail .k_cmdicon .k_menustroke {
-		stroke: oklab(from var(--stroke) 0 a b / alpha);
+		stroke: oklab(from var(--stroke) 0 a b);
+		fill: oklab(from var(--stroke) 0 a b);
 	}
 </style>
 <script id="script">
@@ -191,12 +197,12 @@
 	}
 
 	function k_onclick(id) {
-		if (k_cinput && 1<=id && id<=4) {
+		if (k_cinput && 0<=id && id<=4) {
 			function k_push(n) {
 				k_command.push(n);
 				sr.getElementById("k_commands").insertAdjacentHTML("beforeend",k_cmdicns[n]);
 			}
-			if (id==2) {
+			if (id==0) {
 				let a = k_command.pop();
 				sr.querySelector(".k_cmdicon:last-child").remove();
 				switch (a) {
@@ -204,10 +210,9 @@
 					case 2: k_push(5); break;
 					case 3: k_push(7); break;
 					case 4: k_push(8); break;
-					case 5: k_push(9); break;
-					case 6: case 7: case 8: k_push(2); break;
-					case 9: k_push(0); break;
-					case 0: break;
+					case 5: case 6: case 7: case 8: k_push(0); break;
+					case 0: k_push(9); break;
+					case 9: break;
 				}
 				return;
 			}
@@ -249,15 +254,15 @@
 	var k_cinput = false;
 	var k_command = [];
 	var k_cmdicns = ['<br class="k_cmdicon">',
-		'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 0.2 / 60%);"><circle class="k_menustroke" cx="175" cy="175" r="90"/></svg>',
-		'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.8 0 0.2 / 60%);"><polygon class="k_menustroke" points="90,175 250,267.4 250,82.6"/></svg>',
-		'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 -0.2 0.2 / 60%);"><polygon class="k_menustroke" points="175,90 82.6,250 267.4,250"/></svg>',
-		'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 -0.2 -0.2 / 60%);"><polygon class="k_menustroke" points="175,260 267.4,100 82.6,100"/></svg>',
-		'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 -0.2 / 60%);"><polygon class="k_menustroke" points="260,175 100,82.6 100,267.4"/></svg>',
-		'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.8 -0.2 0 / 60%);"><polygon class="k_menustroke" points="95,95 255,95 255,255 95,255"/></svg>',
-		'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.6 0 -0.2 / 60%);"><line class="k_menustroke" x1="95" y1="175" x2="255" y2="175"/><line class="k_menustroke" x1="175" y1="95" x2="175" y2="255"/></svg>',
-		'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 0 / 60%);"><line class="k_menustroke" x1="95" y1="95" x2="255" y2="255"/><line class="k_menustroke" x1="95" y1="255" x2="255" y2="95"/></svg>',
-		'<svg role="img" class="k_cmdicon" viewBox="0 0 350 350" style="--stroke: oklab(0.8 0 0 / 60%);"><polygon class="k_menustroke" points="175,75 275,175 175,275 75,175"/></svg>'];
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 0.2);"><circle class="k_menustroke" cx="175" cy="175" r="90"/></svg>',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.8 0 0.2);"><polygon class="k_menustroke" points="90,175 250,267.4 250,82.6"/></svg>',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.7 -0.2 0.2);"><polygon class="k_menustroke" points="175,90 82.6,250 267.4,250"/></svg>',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.7 -0.2 -0.2);"><polygon class="k_menustroke" points="175,260 267.4,100 82.6,100"/></svg>',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 -0.2);"><polygon class="k_menustroke" points="260,175 100,82.6 100,267.4"/></svg>',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.8 -0.2 0);"><polygon class="k_menustroke" points="95,95 255,95 255,255 95,255"/></svg>',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.6 0 -0.2);"><line class="k_menustroke" x1="95" y1="175" x2="255" y2="175"/><line class="k_menustroke" x1="175" y1="95" x2="175" y2="255"/></svg>',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 0);"><line class="k_menustroke" x1="95" y1="95" x2="255" y2="255"/><line class="k_menustroke" x1="95" y1="255" x2="255" y2="95"/></svg>',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.8 0 0);"><polygon class="k_menustroke" points="175,75 275,175 175,275 75,175"/></svg>'];
 
 	function k_startcmdinput() {
 		k_cinput = true;
