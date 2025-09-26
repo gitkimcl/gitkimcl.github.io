@@ -38,7 +38,7 @@
     --bg-filter: contrast(1) grayscale(0.9) brightness(180%) blur(0.06rem);
 }
 
-@media screen and (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
     :root {
         --off-filter: contrast(0) grayscale(1) brightness(27.3%);
         --bg-filter: contrast(1) grayscale(0.75) brightness(60%) blur(0.06rem);

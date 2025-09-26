@@ -121,7 +121,7 @@ a {
         0.75rem 0.75rem 0.1rem -0.75rem transparent;
 }
 
-@media screen and (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) {
     .tile {
         --glow0: var(--dglow0);
         --glow1: var(--dglow1);
