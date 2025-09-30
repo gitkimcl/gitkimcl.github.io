@@ -10,6 +10,7 @@ function logo_click() {
         $("#logo-img").removeClass("tilted");
         $("#title").text("rlachi web");
         $(".hidden-site").removeClass("hidden");
+        $(".hidden-site").removeAttr("hidden");
         return;
     }
     window.setTimeout(() => { if (clicks<6) clicks = 0; }, 1000);
