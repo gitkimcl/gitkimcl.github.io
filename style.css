@@ -17,6 +17,7 @@
 * {
     font-family: var(--font);
     scrollbar-width: none;
+    scroll-behavior: smooth;
 }
 
 body {
