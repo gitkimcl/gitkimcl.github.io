@@ -1,1 +1,359 @@
-<div id="k_commandslot"></div><div id="k_menu"><div id="k_menulogo" title="kimcl 메뉴" data-id="0"></div><div id="k_btn1" data-id="1" class="k_menubtn" style="--xtrans:0;--ytrans:-0.55em;background-color:oklab(.7 .2 .2 / 60%)" title="홈으로"><svg class="k_menuicon" role="img" viewBox="0 0 350 350"><circle class="k_menustroke" cx="175" cy="175" r="90"/></svg></div><div id="k_btn2" data-id="2" class="k_menubtn" style="--xtrans:0.55em;--ytrans:-0.55em;background-color:oklab(.8 0 .2 / 60%)" title="돌아가기"><svg class="k_menuicon" role="img" viewBox="0 0 350 350"><polygon class="k_menustroke" points="90,175 250,267.4 250,82.6"/></svg></div><div id="k_btn3" data-id="3" class="k_menubtn" style="--xtrans:0.55em;--ytrans:0;background-color:oklab(.7 -.2 .2 / 60%)" title="올라가기"><svg class="k_menuicon" role="img" viewBox="0 0 350 350"><polygon class="k_menustroke" points="175,90 82.6,250 267.4,250"/></svg></div><div id="k_btn4" data-id="4" class="k_menubtn" style="--xtrans:0.55em;--ytrans:0.55em;background-color:oklab(.7 -.2 -.2 / 60%)" title="숨기기"><svg class="k_menuicon" role="img" viewBox="0 0 350 350"><polygon class="k_menustroke" points="175,260 267.4,100 82.6,100"/></svg></div><div id="k_btn5" data-id="5" class="k_menubtn" style="--xtrans:0;--ytrans:0.55em;background-color:oklab(.7 .2 -.2 / 60%)" title="?"><svg class="k_menuicon" role="img" viewBox="0 0 350 350"><polygon class="k_menustroke" points="260,175 100,82.6 100,267.4"/></svg></div></div><style>#k_commands,#k_menu{font-size:var(--kimclweb-1rem, 8.8rem);z-index:10000}#k_menu{position:fixed;left:.05em;top:50%;transform:translate(0,-50%);transition:opacity .2s,display .2s;transition-behavior:allow-discrete}#k_menu *{-webkit-user-select:none;-webkit-user-drag:none;user-select:none}@media screen and (max-width:480px),screen and (max-width:30.8rem){#k_commands,#k_menu{font-size:var(--kimclweb-1rem, calc(100vw / 3.5))}}#k_menulogo{cursor:pointer;width:.5em;height:.5em;border-radius:.1em;overflow:hidden;transition:backdrop-filter .2s,box-shadow .2s;box-shadow:-.02em .02em .02em rgb(28 28 30 / 9%),-.03em .03em .04em rgb(28 28 30 / 3%)}#k_menulogo::before{content:'';position:absolute;inset:0;border-radius:inherit;background:url('/img/test_img.png');background-size:cover;image-rendering:pixelated;opacity:.3;transition:opacity .2s;cursor:pointer;box-shadow:inset -.02em .02em .02em rgb(250 250 250 / 30%)}.k_active #k_menulogo{backdrop-filter:blur(0.025em);box-shadow:-.02em .02em .02em rgb(28 28 30 / 18%),-.03em .03em .04em rgb(28 28 30 / 6%)}.k_active #k_menulogo::before{opacity:.6}#k_commands+.k_active #k_menulogo,#k_menulogo:hover{box-shadow:-.02em .02em .02em rgb(28 28 30 / 27%),-.03em .03em .04em rgb(28 28 30 / 9%)}#k_commands+.k_active #k_menulogo::before,#k_menulogo:hover::before{opacity:.9}.k_menubtn{position:absolute;top:.025em;left:.025em;transition:scale .2s,opacity .2s,visibility .2s;transition-behavior:allow-discrete;transform:translate(var(--xtrans),var(--ytrans));scale:0.5;opacity:0;visibility:hidden;width:.45em;height:.45em;border-radius:50%;background-origin:border-box;border:.03em solid rgb(0 0 0 / 30%);box-sizing:border-box;backdrop-filter:blur(0.025em);cursor:pointer;touch-action:manipulation}.k_active .k_menubtn{scale:1;opacity:1;visibility:visible}.k_menuicon{position:absolute;inset:0;shape-rendering:geometricPrecision}.k_menustroke{stroke-linecap:round;stroke-linejoin:round;fill:transparent;stroke:rgb(0 0 0 / 30%);stroke-width:.03em;vector-effect:non-scaling-stroke}#k_commands{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:100%;max-width:4.55em;box-sizing:border-box;text-align:center;z-index:10001;line-height:0;pointer-events:none;transition:opacity .5s;backdrop-filter:grayscale(0.9) invert(1) contrast(0.5) brightness(225%)}@media (prefers-color-scheme:dark){#k_commands{backdrop-filter:grayscale(0.9) invert(1) contrast(0.5) brightness(40%)}}#k_commands.k_cmdfail,#k_commands.k_cmdsuccess{opacity:0}.k_cmdicon{display:inline-block;width:.39em;height:.39em;margin:-.05em;position:relative;shape-rendering:geometricPrecision}.k_cmdicon .k_menustroke{transition:stroke .2s,fill .2s;stroke:var(--stroke);fill:var(--stroke)}.k_cmdfail .k_cmdicon .k_menustroke{stroke:oklab(from var(--stroke) 0 a b);fill:oklab(from var(--stroke) 0 a b)}</style><script id="script">function $(e,o){return(o=o??document).getElementById(e)}function $q(e,o){return(o=o??document).querySelector(e)}function attr(e,o,s){return void 0===s?e.getAttribute(o):null===s?e.removeAttribute(o):e.setAttribute(o,s)}let sr=$q("kimcl-menu").shadowRoot;for(let e=0;e<=5;e++)$q(`[data-id="${e}"]`,sr).onclick=o=>{k_onclick(e)};function k_onclick(e){if(k_cinput&&0<=e&&e<=4){function o(e){k_command.push(e),$("k_commands",sr).insertAdjacentHTML("beforeend",k_cmdicns[e])}if(0==e){let t=k_command.pop();switch($q(".k_cmdicon:last-child",sr).remove(),t){case 1:o(6);break;case 2:o(5);break;case 3:o(7);break;case 4:o(8);break;case 5:case 6:case 7:case 8:o(0);break;case 0:o(9)}return}return void o(e)}let s,n;switch(e){case 0:s=$("k_menu",sr),attr(s,"class")?attr(s,"class",null):attr(s,"class","k_active");break;case 1:window.location.pathname="";break;case 2:n=window.location.pathname,alert(n),/\/$/.test(n)||/\/index.html$/.test(n)?n.includes("/things")?window.location.pathname=n.replace(/\/things\/(?!things\/)(?!.*\/things\/).*/,"/"):window.location.href="..":window.location.href=".";break;case 3:window.scrollBy(0,-window.scrollY),s=$("wrapper"),s&&(s.scrollTop=0);break;case 4:attr($("k_menu",sr),"style","opacity: 0; display: none;");break;case 5:k_cinput?k_endcmdinput():k_startcmdinput()}}var k_cinput=!1,k_command=[],k_cmdicns=['<br class="k_cmdicon">','<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 0.2);"><circle class="k_menustroke" cx="175" cy="175" r="90"/></svg>','<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.8 0 0.2);"><polygon class="k_menustroke" points="90,175 250,267.4 250,82.6"/></svg>','<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.7 -0.2 0.2);"><polygon class="k_menustroke" points="175,90 82.6,250 267.4,250"/></svg>','<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.7 -0.2 -0.2);"><polygon class="k_menustroke" points="175,260 267.4,100 82.6,100"/></svg>','<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 -0.2);"><polygon class="k_menustroke" points="260,175 100,82.6 100,267.4"/></svg>','<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.8 -0.2 0);"><polygon class="k_menustroke" points="95,95 255,95 255,255 95,255"/></svg>','<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.6 0 -0.2);"><line class="k_menustroke" x1="95" y1="175" x2="255" y2="175"/><line class="k_menustroke" x1="175" y1="95" x2="175" y2="255"/></svg>','<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 0);"><line class="k_menustroke" x1="95" y1="95" x2="255" y2="255"/><line class="k_menustroke" x1="95" y1="255" x2="255" y2="95"/></svg>','<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.8 0 0);"><polygon class="k_menustroke" points="175,75 275,175 175,275 75,175"/></svg>'];function k_startcmdinput(){k_cinput=!0,$("k_commandslot",sr).id="k_commands",$("k_commands",sr).insertAdjacentHTML("beforeend",k_cmdicns[5]),k_command=[5]}function k_endcmdinput(){attr($("k_menu",sr),"style","opacity: 0; display: none;");let e=k_exec();attr($("k_commands",sr),"class",e?"k_cmdsuccess":"k_cmdfail")}function k_exec(){let e,o,s=k_command.join("").replace(/^0+/,"").replace(/0+$/,"");switch(console.log(s),s){case"":return window.close(),window.location.href="about:blank",setTimeout(()=>{},200),!0;case"9":return setTimeout(()=>{window.location.href="about:blank"},200),!0;case"5":return setTimeout(()=>{window.location.reload()},200),!0;case"51":return setTimeout(()=>{window.location.pathname=""},200),!0;case"52":return setTimeout(()=>{o=window.location.pathname,/\/$/.test(o)||/\/index.html$/.test(o)?o.includes("/things/")?window.location.pathname=o.replace(/\/things\/(?!things\/)(?!.*\/things\/).*/,"/"):window.location.href="..":window.location.href="."},200),!0;case"53":return setTimeout(()=>{window.scrollBy(0,-window.scrollY),a=$("wrapper"),a&&(a.scrollTop=0)},200),!0;case"54":return!0;case"55":for(let e=0;e<223;e++)$("k_commands",sr).insertAdjacentHTML("beforeend",k_cmdicns[5]);return!0;case"56":return window.open("/"),!0;case"577":window.open(window.location.href);case"57":return window.open(window.location.href),!0;case"58":return e=confirm("localStorage와 sessionStorage가 지워집니다. 이는 kimcl web에 있는 모든 사이트에 영향을 끼칩니다."),e?(localStorage.clear(),sessionStorage.clear(),!0):!1;case"59":window.open();case"2506369948599423065555755558011115":return e=confirm("->"),e?(e=confirm(","),!e&&(setTimeout(()=>{window.location.pathname="/ecyce/"},1500),!0)):!1;case"25099908015":return setTimeout(()=>{window.location.pathname="/404.html"},200),!0;default:return!1}return!1}</script>
+<div id="k_commandslot"></div>
+<div id="k_menu">
+	<div id="k_menulogo" title="kimcl 메뉴" data-id="0"></div>
+	<div data-id="1" title="홈으로" id="k_btn1" class="k_menubtn" style="--xtrans: 0; --ytrans: -0.55em; background-color: oklab(0.7 0.2 0.2 / 60%);">
+		<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
+			<circle class="k_menustroke" cx="175" cy="175" r="90"/>
+		</svg>
+	</div>
+	<div data-id="2" title="돌아가기" id="k_btn2" class="k_menubtn" style="--xtrans: 0.55em; --ytrans: -0.55em; background-color: oklab(0.8 0 0.2 / 60%);">
+		<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
+			<polygon class="k_menustroke" points="90,175 250,267.4 250,82.6"/>
+		</svg>
+	</div>
+	<div data-id="3" title="올라가기" id="k_btn3" class="k_menubtn" style="--xtrans: 0.55em; --ytrans: 0; background-color: oklab(0.7 -0.2 0.2 / 60%);">
+		<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
+			<polygon class="k_menustroke" points="175,90 82.6,250 267.4,250"/>
+		</svg>
+	</div>
+	<div data-id="4" title="숨기기" id="k_btn4" class="k_menubtn" style="--xtrans: 0.55em; --ytrans: 0.55em; background-color: oklab(0.7 -0.2 -0.2 / 60%);">
+		<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
+			<polygon class="k_menustroke" points="175,260 267.4,100 82.6,100"/>
+		</svg>
+	</div>
+	<div data-id="5" title="?" id="k_btn5" class="k_menubtn" style="--xtrans: 0; --ytrans: 0.55em; background-color: oklab(0.7 0.2 -0.2 / 60%);">
+		<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
+			<polygon class="k_menustroke" points="260,175 100,82.6 100,267.4"/>
+		</svg>
+	</div>
+</div>
+<style>
+	#k_menu, #k_commands {
+		font-size: var(--kimclweb-1rem, 8.8rem);
+		z-index: 10000;
+	}
+
+	#k_menu {
+		position: fixed;
+		left: 0.05em;
+		top: 50%;
+		transform: translate(0, -50%);
+		transition: opacity 0.2s, display 0.2s;
+		transition-behavior: allow-discrete;
+	}
+
+	#k_menu * {
+		-webkit-user-select: none;
+		-webkit-user-drag: none;
+		user-select: none;
+	}
+	
+	@media screen and (max-width: 480px), screen and (max-width: 30.8rem) {
+		#k_menu, #k_commands {
+			font-size: var(--kimclweb-1rem, calc(100vw / 3.5));
+		}
+	}
+	
+	#k_menulogo {
+		cursor: pointer;
+		width: 0.5em;
+		height: 0.5em;
+		border-radius: 0.1em;
+		overflow: hidden;
+		transition: backdrop-filter 0.2s, box-shadow 0.2s;
+		box-shadow: -0.02em 0.02em 0.02em rgb(28 28 30 / 9%),
+	        -0.03em 0.03em 0.04em rgb(28 28 30 / 3%);
+	}
+	
+	#k_menulogo::before {
+		content: '';
+		position: absolute;
+		inset: 0;
+		border-radius: inherit;
+		background: url('/img/test_img.png');
+		background-size: cover;
+		image-rendering: pixelated;
+		opacity: 0.3;
+		transition: opacity 0.2s;
+		cursor: pointer;
+		box-shadow: inset -0.02em 0.02em 0.02em rgb(250 250 250 / 30%);
+	}
+	
+	.k_active #k_menulogo {
+		backdrop-filter: blur(0.025em);
+		box-shadow: -0.02em 0.02em 0.02em rgb(28 28 30 / 18%),
+	        -0.03em 0.03em 0.04em rgb(28 28 30 / 6%);
+	}
+	
+	.k_active #k_menulogo::before {
+		opacity: 0.6;
+	}
+
+	#k_commands + .k_active #k_menulogo, #k_menulogo:hover {
+		box-shadow: -0.02em 0.02em 0.02em rgb(28 28 30 / 27%),
+	        -0.03em 0.03em 0.04em rgb(28 28 30 / 9%);
+	}
+	
+	#k_commands + .k_active #k_menulogo::before, #k_menulogo:hover::before {
+		opacity: 0.9;
+	}
+	
+	.k_menubtn {
+		position: absolute;
+		top: 0.025em;
+		left: 0.025em;
+		transition: scale 0.2s, opacity 0.2s, visibility 0.2s;
+		transition-behavior: allow-discrete;
+		transform: translate(var(--xtrans), var(--ytrans));
+		scale: 0.5;
+		opacity: 0;
+		visibility: hidden;
+		width: 0.45em;
+		height: 0.45em;
+		border-radius: 50%;
+		background-origin: border-box;
+		border: 0.03em solid rgb(0 0 0 / 30%);
+		box-sizing: border-box;
+		backdrop-filter: blur(0.025em);
+		cursor: pointer;
+		touch-action: manipulation;
+	}
+	
+	.k_active .k_menubtn {
+		scale: 1;
+		opacity: 1;
+		visibility: visible;
+	}
+	
+	.k_menuicon {
+		position: absolute;
+		inset: 0;
+		shape-rendering: geometricPrecision;
+	}
+	
+	.k_menustroke {
+		stroke-linecap: round;
+		stroke-linejoin: round;
+		fill: transparent;
+		stroke: rgb(0 0 0 / 30%);
+		stroke-width: 0.03em;
+		vector-effect: non-scaling-stroke;
+	}
+
+	#k_commands {
+		position: fixed;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%,-50%);
+		width: 100%;
+		max-width: 4.55em;
+		box-sizing: border-box;
+		text-align: center;
+		z-index: 10001;
+		line-height: 0px;
+		pointer-events: none;
+		transition: opacity 0.5s;
+		backdrop-filter: grayscale(0.9) invert(1) contrast(0.5) brightness(225%);
+	}
+
+	@media (prefers-color-scheme: dark) {
+		#k_commands {
+			backdrop-filter: grayscale(0.9) invert(1) contrast(0.5) brightness(40%);
+		}
+	}
+
+	#k_commands.k_cmdfail, #k_commands.k_cmdsuccess {
+		opacity: 0;
+	}
+
+	.k_cmdicon {
+		display: inline-block;
+		width: 0.39em;
+		height: 0.39em;
+		margin: -0.05em;
+		position: relative;
+		shape-rendering: geometricPrecision;
+	}
+
+	.k_cmdicon .k_menustroke {
+		transition: stroke 0.2s, fill 0.2s;
+		stroke: var(--stroke);
+		fill: var(--stroke);
+	}
+
+	.k_cmdfail .k_cmdicon .k_menustroke {
+		stroke: oklab(from var(--stroke) 0 a b);
+		fill: oklab(from var(--stroke) 0 a b);
+	}
+</style>
+<script id="script">
+	function $(id, el) { el=el??document; return el.getElementById(id); }
+	function $q(q, el) { el=el??document; return el.querySelector(q); }
+	function attr(el, at, value) { return value===undefined?el.getAttribute(at):(value===null?el.removeAttribute(at):el.setAttribute(at, value)); }
+
+	let sr = $q("kimcl-menu").shadowRoot;
+
+	for (let i=0; i<=5; i++) {
+		$q(`[data-id="${i}"]`,sr).onclick = (_) => {
+			k_onclick(i);
+		}
+	}
+
+	function k_onclick(id) {
+		if (k_cinput && 0<=id && id<=4) {
+			function k_push(n) {
+				k_command.push(n);
+				$("k_commands",sr).insertAdjacentHTML("beforeend",k_cmdicns[n]);
+			}
+			if (id==0) {
+				let a = k_command.pop();
+				$q(".k_cmdicon:last-child",sr).remove();
+				switch (a) {
+					case 1: k_push(6); break;
+					case 2: k_push(5); break;
+					case 3: k_push(7); break;
+					case 4: k_push(8); break;
+					case 5: case 6: case 7: case 8: k_push(0); break;
+					case 0: k_push(9); break;
+					case 9: break;
+				}
+				return;
+			}
+			k_push(id);
+			return;
+		}
+		let e, h;
+		switch (id) {
+			case 0:
+				e=$('k_menu',sr);
+				attr(e,'class')?attr(e,'class',null):attr(e,'class','k_active');
+				break;
+			case 1:
+				window.location.pathname='';
+				break;
+			case 2:
+				h=window.location.pathname;
+				alert(h);
+				if (!(/\/$/.test(h)) && !(/\/index.html$/.test(h))) {
+					window.location.href='.';
+				} else if (h.includes('/things')) {
+					alert(h.replace(/\/things\/(?!things\/)(?!.*\/things\/).*/,'/'));
+					window.location.pathname=h.replace(/\/things\/(?!things\/)(?!.*\/things\/).*/,'/');
+				} else {
+					window.location.href='..';
+				}
+				break;
+			case 3:
+				window.scrollBy(0,-window.scrollY);
+				e=$('wrapper');
+				e && (e.scrollTop=0);
+				break;
+			case 4:
+				attr($('k_menu',sr),'style','opacity: 0; display: none;');
+				break;
+			case 5:
+				k_cinput?k_endcmdinput():k_startcmdinput();
+		}
+	}
+
+	var k_cinput = false;
+	var k_command = [];
+	var k_cmdicns = ['<br class="k_cmdicon">',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 0.2);"><circle class="k_menustroke" cx="175" cy="175" r="90"/></svg>',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.8 0 0.2);"><polygon class="k_menustroke" points="90,175 250,267.4 250,82.6"/></svg>',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.7 -0.2 0.2);"><polygon class="k_menustroke" points="175,90 82.6,250 267.4,250"/></svg>',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.7 -0.2 -0.2);"><polygon class="k_menustroke" points="175,260 267.4,100 82.6,100"/></svg>',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 -0.2);"><polygon class="k_menustroke" points="260,175 100,82.6 100,267.4"/></svg>',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.8 -0.2 0);"><polygon class="k_menustroke" points="95,95 255,95 255,255 95,255"/></svg>',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.6 0 -0.2);"><line class="k_menustroke" x1="95" y1="175" x2="255" y2="175"/><line class="k_menustroke" x1="175" y1="95" x2="175" y2="255"/></svg>',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.7 0.2 0);"><line class="k_menustroke" x1="95" y1="95" x2="255" y2="255"/><line class="k_menustroke" x1="95" y1="255" x2="255" y2="95"/></svg>',
+		'<svg class="k_cmdicon" role="img" viewBox="0 0 350 350" style="--stroke: oklab(0.8 0 0);"><polygon class="k_menustroke" points="175,75 275,175 175,275 75,175"/></svg>'];
+
+	function k_startcmdinput() {
+		k_cinput = true;
+		$("k_commandslot",sr).id = "k_commands";
+		$("k_commands",sr).insertAdjacentHTML("beforeend",k_cmdicns[5]);
+		k_command = [5];
+	}
+
+	function k_endcmdinput() {
+		attr($('k_menu',sr),'style','opacity: 0; display: none;');
+		let success = k_exec();
+		attr($("k_commands",sr),"class",success?"k_cmdsuccess":"k_cmdfail");
+		return;
+	}
+
+	function k_exec() {
+		let cmdstr = k_command.join("").replace(/^0+/,"").replace(/0+$/,"");
+		console.log(cmdstr);
+		let c, h;
+		switch (cmdstr) {
+			// type 0
+			case "":
+				window.close();
+				window.location.href = "about:blank"; // close가 안 될 때가 있더라고
+				setTimeout(()=>{  }, 200);
+				return true;
+			case "9":
+				setTimeout(()=>{ window.location.href = "about:blank"; }, 200);
+				return true;
+			case "5":
+				setTimeout(()=>{ window.location.reload(); }, 200);
+				return true;
+			
+			// type 1
+			case "51":
+				setTimeout(()=>{ window.location.pathname=''; }, 200);
+				return true;
+			case "52":
+				setTimeout(()=>{ h=window.location.pathname; (/\/$/.test(h)||/\/index.html$/.test(h))?(h.includes('/things/')?window.location.pathname=h.replace(/\/things\/(?!things\/)(?!.*\/things\/).*/,'/'):window.location.href='..'):window.location.href='.'; }, 200);
+				return true;
+			case "53":
+				setTimeout(()=>{ window.scrollBy(0,-window.scrollY); a=$('wrapper'); if (a) a.scrollTop=0; }, 200);
+				return true;
+			case "54":
+				// duh
+				return true;
+			case "55":
+				for (let i=0; i<223; i++) $("k_commands",sr).insertAdjacentHTML("beforeend",k_cmdicns[5]);
+				return true;
+			case "56":
+				window.open('/');
+				return true;
+			case "577":
+			window.open(window.location.href);
+			case "57":
+				window.open(window.location.href);
+				return true;
+			case "58":
+				c = confirm("localStorage와 sessionStorage가 지워집니다. 이는 kimcl web에 있는 모든 사이트에 영향을 끼칩니다.");
+				if (!c) return false;
+				localStorage.clear();
+				sessionStorage.clear();
+				return true;
+			case "59":
+				window.open();
+			
+			// type 2
+			
+			// type 3
+
+			// type 4
+			case "2506369948599423065555755558011115":
+				c = confirm("->");
+				if (!c) return false;
+				c = confirm(",");
+				if (c) return false;
+				setTimeout(()=>{ window.location.pathname='/ecyce/'; }, 1500);
+				return true;
+			case "25099908015":
+				setTimeout(()=>{ window.location.pathname='/404.html'; }, 200);
+				return true;
+
+			// default
+			default:
+				return false;
+		}
+		return false; // ?
+	}
+</script>
