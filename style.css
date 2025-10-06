@@ -1,3 +1,7 @@
+.hidden-site {
+    background-color: var(--c-gray1);
+}
+
 .hidden {
     display: none;
 }

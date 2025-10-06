@@ -10,12 +10,12 @@ function save() {
 	} else {
 		store.zero = false;
 	}
-	localStorage.setItem("store", JSON.stringify(store));
+	localStorage.setItem("lstimer.store", JSON.stringify(store));
 }
 
 function load() {
 	let now = new Date();
-	if (localStorage.getItem("store")!=null) store = JSON.parse(localStorage.getItem("store"));
+	if (localStorage.getItem("lstimer.store")!=null) store = JSON.parse(localStorage.getItem("lstimer.store"));
 	if (store.zero || store.target==undefined || new Date(store.target)<now) {
 		store.target=now;
 		store.zero=true;
@@ -35,7 +35,7 @@ function load() {
 	reload_hue();
 
 	if (store.running) start_timer();
-	localStorage.setItem("store", JSON.stringify(store));
+	localStorage.setItem("lstimer.store", JSON.stringify(store));
 }
 
 function reload_date() {

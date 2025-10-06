@@ -68,9 +68,9 @@
 			if (diff<1) return;
 			target=new Date(today);
 			target.setHours(num*24,0,0,0);
-			localStorage.setItem("target",target);
+			localStorage.setItem("midnight.target",target);
 		}
-		var target=localStorage.getItem("target");
+		var target=localStorage.getItem("midnight.target");
 		if (target===null) {
 			target=new Date();
 			target.setHours(24,0,0,0);
@@ -80,7 +80,7 @@
 			target=new Date();
 			target.setHours(24,0,0,0);
 		}
-		localStorage.setItem("target",target);
+		localStorage.setItem("midnight.target",target);
 	</script>
 	<script>
 		function mixColor(c1,c2,ratio) {
