@@ -1,37 +1,37 @@
 :root {
-    --base-length: min(2.5vw,5vh);
-    --symbol-size: var(--base-length);
-    /*line-height: var(--symbol-size);*/
+	--base-length: min(2.5vw,5vh);
+	--symbol-size: var(--base-length);
+	/*line-height: var(--symbol-size);*/
 }
 
 #code {
-    display: block;
-    width: 50vw;
-    height: 20vh;
-    font-size: 1.5em;
-    margin-inline: auto;
+	display: block;
+	width: 50vw;
+	height: 20vh;
+	font-size: 1.5em;
+	margin-inline: auto;
 }
 
 .result-img {
-    display: inline-block;
-    height: var(--symbol-size);
-    aspect-ratio: 1;
-    position: relative;
+	display: inline-block;
+	height: var(--symbol-size);
+	aspect-ratio: 1;
+	position: relative;
 }
 
 .result-img::before {
-    content: var(--data);
-    height: 140%;
-    aspect-ratio: 1;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%,-50%);
+	content: var(--data);
+	height: 140%;
+	aspect-ratio: 1;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
 }
 
 #result-container {
-    border: 3.8px solid black;
-    width: calc(25 * var(--symbol-size));
-    padding: calc(0.5 * var(--symbol-size));
-    background-color: white;
+	border: 3.8px solid black;
+	width: calc(25 * var(--symbol-size));
+	padding: calc(0.5 * var(--symbol-size));
+	background-color: white;
 }

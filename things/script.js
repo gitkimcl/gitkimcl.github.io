@@ -1,15 +1,15 @@
 var clicks = 0;
 function logo_click() {
-    $("#logo-img").css("animation", "none");
-    $("#logo-img").offset();
-    $("#logo-img").css("animation", "1s test-rotate");
-    clicks++;
-    console.log(`ecyc ${clicks}`);
-    if (clicks>6) return;
-    if (clicks==6) {
-        $("#logo-img").attr("src","../img/area/area2.png");
-        $(".bg").css("background-image","url('../img/area/area2.png')");
-        return;
-    }
-    window.setTimeout(() => { if (clicks<6) clicks = 0; }, 1000);
+	$("#logo-img").css("animation", "none");
+	$("#logo-img").offset();
+	$("#logo-img").css("animation", "1s test-rotate");
+	clicks++;
+	console.log(`ecyc ${clicks}`);
+	if (clicks>6) return;
+	if (clicks==6) {
+		$("#logo-img").attr("src","../img/area/area2.png");
+		$(".bg").css("background-image","url('../img/area/area2.png')");
+		return;
+	}
+	window.setTimeout(() => { if (clicks<6) clicks = 0; }, 1000);
 }

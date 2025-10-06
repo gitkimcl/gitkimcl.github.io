@@ -1,11 +1,11 @@
 .hidden-site {
-    background-color: var(--c-gray1);
+	background-color: var(--c-gray1);
 }
 
 .hidden {
-    display: none;
+	display: none;
 }
 
 .transparent {
-    opacity: 0%;
+	opacity: 0%;
 }

@@ -1,363 +1,363 @@
 @property --opacity1 {
-    syntax: "<number>";
-    inherits: true;
-    initial-value: 0;
+	syntax: "<number>";
+	inherits: true;
+	initial-value: 0;
 }
 
 @property --opacity2 {
-    syntax: "<number>";
-    inherits: true;
-    initial-value: 0;
+	syntax: "<number>";
+	inherits: true;
+	initial-value: 0;
 }
 
 @keyframes title {
-    0% {
-        --opacity1: 0;
-        --opacity2: 0;
-    }
-    16.67%, 33.33% {
-        --opacity1: 1;
-        --opacity2: 0;
-    }
-    50% {
-        --opacity1: 0;
-        --opacity2: 0;
-    }
-    66.67%, 83.33% {
-        --opacity1: 0;
-        --opacity2: 1;
-    }
-    100% {
-        --opacity1: 0;
-        --opacity2: 0;
-    }
+	0% {
+		--opacity1: 0;
+		--opacity2: 0;
+	}
+	16.67%, 33.33% {
+		--opacity1: 1;
+		--opacity2: 0;
+	}
+	50% {
+		--opacity1: 0;
+		--opacity2: 0;
+	}
+	66.67%, 83.33% {
+		--opacity1: 0;
+		--opacity2: 1;
+	}
+	100% {
+		--opacity1: 0;
+		--opacity2: 0;
+	}
 }
 
 :root {
-    --off-filter: contrast(0) grayscale(1) brightness(195.3%);
-    --bg-filter: contrast(1) grayscale(0.9) brightness(180%) blur(0.06rem);
+	--off-filter: contrast(0) grayscale(1) brightness(195.3%);
+	--bg-filter: contrast(1) grayscale(0.9) brightness(180%) blur(0.06rem);
 }
 
 @media (prefers-color-scheme: dark) {
-    :root {
-        --off-filter: contrast(0) grayscale(1) brightness(27.3%);
-        --bg-filter: contrast(1) grayscale(0.75) brightness(60%) blur(0.06rem);
-    }
+	:root {
+		--off-filter: contrast(0) grayscale(1) brightness(27.3%);
+		--bg-filter: contrast(1) grayscale(0.75) brightness(60%) blur(0.06rem);
+	}
 }
 
 html {
-    overscroll-behavior: none;
-    background-color: var(--c-bg);
+	overscroll-behavior: none;
+	background-color: var(--c-bg);
 }
 
 body {
-    height: 100vh;
-    overscroll-behavior: none;
-    overflow: clip;
-    background: none;
+	height: 100vh;
+	overscroll-behavior: none;
+	overflow: clip;
+	background: none;
 }
 
 #wrapper {
-    overscroll-behavior: none;
-    overflow: clip;
-    perspective: 1px;
-    transform-style: preserve-3d;
-    width: 100%;
-    height: 100%;
-    contain: strict;
+	overscroll-behavior: none;
+	overflow: clip;
+	perspective: 1px;
+	transform-style: preserve-3d;
+	width: 100%;
+	height: 100%;
+	contain: strict;
 }
 
 .on #wrapper {
-    overflow-y: auto;
+	overflow-y: auto;
 }
 
 .bg {
-    position: absolute;
-    inset: 0;
-    height: calc(100vh + 5rem);
-    z-index: -1;
-    transform: translateZ(-3px) scale(4);
-    background: url('img/area.png');
-    background-size: cover;
+	position: absolute;
+	inset: 0;
+	height: calc(100vh + 5rem);
+	z-index: -1;
+	transform: translateZ(-3px) scale(4);
+	background: url('img/area.png');
+	background-size: cover;
 }
 
 .bg::before {
-    content: '';
-    transition: background-color 1s, display 1s;
-    transition-behavior: allow-discrete;
-    position: absolute;
-    inset: 0;
-    background: var(--c-bg);
-    overflow: hidden;
+	content: '';
+	transition: background-color 1s, display 1s;
+	transition-behavior: allow-discrete;
+	position: absolute;
+	inset: 0;
+	background: var(--c-bg);
+	overflow: hidden;
 }
 
 .on .bg::before {
-    background: none;
-    display: none;
+	background: none;
+	display: none;
 }
 
 header {
-    --opacity1: 0;
-    --opacity2: 0;
-    transition: border-bottom-color 1s;
-    transform: translateZ(0);
-    background: url('img/areablur.png');
-    background-size: 6rem 6rem;
-    border-bottom: 0.03rem solid var(--c-bg);
+	--opacity1: 0;
+	--opacity2: 0;
+	transition: border-bottom-color 1s;
+	transform: translateZ(0);
+	background: url('img/areablur.png');
+	background-size: 6rem 6rem;
+	border-bottom: 0.03rem solid var(--c-bg);
 }
 
 header::before {
-    content: '';
-    transition: background-color 1s;
-    position: absolute;
-    inset: 0;
-    backdrop-filter: var(--bg-filter);
-    background-color: var(--c-bg);
+	content: '';
+	transition: background-color 1s;
+	position: absolute;
+	inset: 0;
+	backdrop-filter: var(--bg-filter);
+	background-color: var(--c-bg);
 }
 
 .on header {
-    border-bottom-color: var(--c-grayl2);
+	border-bottom-color: var(--c-grayl2);
 }
 
 .on header::before {
-    background-color: rgb(from var(--c-bg) r g b / 40%);
+	background-color: rgb(from var(--c-bg) r g b / 40%);
 }
 
 .on .title-row-bg {
-    opacity: 1;
+	opacity: 1;
 }
 
 #logo-img {
-    transition: opacity 1s, filter 1s;
-    filter: grayscale(1);
+	transition: opacity 1s, filter 1s;
+	filter: grayscale(1);
 }
 
 .on #logo-img {
-    filter: none;
+	filter: none;
 }
 
 .title {
-    font-size: 0.3rem;
-    line-height: 115%;
-    word-break: keep-all;
-    position: absolute;
-    transform: translate(0, -50%);
-    margin-right: 0.25rem;
+	font-size: 0.3rem;
+	line-height: 115%;
+	word-break: keep-all;
+	position: absolute;
+	transform: translate(0, -50%);
+	margin-right: 0.25rem;
 }
 
 #title1 {
-    opacity: var(--opacity1);
+	opacity: var(--opacity1);
 }
 
 #title2 {
-    opacity: var(--opacity2);
+	opacity: var(--opacity2);
 }
 
 #title3 {
-    transition: opacity 1s;
-    line-height: 100%;
-    font-size: 0.6rem;
-    opacity: 0;
+	transition: opacity 1s;
+	line-height: 100%;
+	font-size: 0.6rem;
+	opacity: 0;
 }
 
 .on #title3 {
-    opacity: 1;
+	opacity: 1;
 }
 
 .areatext {
-    transition: opacity 1s;
-    width: 6.5rem;
-    max-width: calc(100vw - 0.5rem);
-    aspect-ratio: 3;
-    position: absolute;
-    left: 50%;
-    top: calc(50vh + 0.75rem);
-    transform: translate(-50%, -50%);
-    margin: auto;
-    background: url('img/areatext.png');
-    background-size: cover;
-    background-position: center;
-    opacity: 0;
-    mix-blend-mode: overlay;
+	transition: opacity 1s;
+	width: 6.5rem;
+	max-width: calc(100vw - 0.5rem);
+	aspect-ratio: 3;
+	position: absolute;
+	left: 50%;
+	top: calc(50vh + 0.75rem);
+	transform: translate(-50%, -50%);
+	margin: auto;
+	background: url('img/areatext.png');
+	background-size: cover;
+	background-position: center;
+	opacity: 0;
+	mix-blend-mode: overlay;
 }
 
 .on .areatext {
-    opacity: 1;
+	opacity: 1;
 }
 
 .on.restricted .areatext {
-    mix-blend-mode: normal;
-    opacity: 0.5;
+	mix-blend-mode: normal;
+	opacity: 0.5;
 }
 
 .about {
-    transition: opacity 1s;
-    margin-top: calc(100vh - 1.5rem);
-    opacity: 0;
-    mix-blend-mode: hard-light;
+	transition: opacity 1s;
+	margin-top: calc(100vh - 1.5rem);
+	opacity: 0;
+	mix-blend-mode: hard-light;
 }
 
 .on .about {
-    opacity: 1;
+	opacity: 1;
 }
 
 .restricted .about {
-    mix-blend-mode: normal;
+	mix-blend-mode: normal;
 }
 
 .about-tile {
-    height: 1.8rem;
-    box-shadow: none;
+	height: 1.8rem;
+	box-shadow: none;
 }
 
 .about-tile::after {
-    box-shadow: none;
+	box-shadow: none;
 }
 
 #powerdesc2, #powercta2 {
-    display: none;
+	display: none;
 }
 
 .restricted #powerdesc1, .restricted #powercta1 {
-    display: none;
+	display: none;
 }
 
 .restricted #powerdesc2, .restricted #powercta2 {
-    display: revert;
+	display: revert;
 }
 
 .tile {
-    --glow0: var(--c-text);
-    --glow1: transparent;
-    --glow2: transparent;
-    --glow3: transparent;
-    --glow4: transparent;
+	--glow0: var(--c-text);
+	--glow1: transparent;
+	--glow2: transparent;
+	--glow3: transparent;
+	--glow4: transparent;
 }
 
 .tile-img {
-    display: block;
-    position: absolute;
-    inset: 0;
+	display: block;
+	position: absolute;
+	inset: 0;
 }
 
 .tile-icon {
-    display: block;
-    position: absolute;
-    top: 27%;
-    left: 25%;
-    width: 50%;
-    height: 50%;
-    object-fit: contain;
-    object-position: center;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
+	display: block;
+	position: absolute;
+	top: 27%;
+	left: 25%;
+	width: 50%;
+	height: 50%;
+	object-fit: contain;
+	object-position: center;
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 .tile-flex {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 0.2rem;
-    color: var(--c-ltext);
+	position: absolute;
+	inset: 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	padding: 0.2rem;
+	color: var(--c-ltext);
 }
 
 .item-eyebrow {
-    margin: 0;
-    opacity: 0.8;
-    margin-bottom: 0.057rem;
-
-    font-size: 0.1rem;
-    font-weight: 600;
-    line-height: 1.28571;
-    letter-spacing: .011em;
+	margin: 0;
+	opacity: 0.8;
+	margin-bottom: 0.057rem;
+	
+	font-size: 0.1rem;
+	font-weight: 600;
+	line-height: 1.28571;
+	letter-spacing: .011em;
 }
 
 .item-headline {
-    margin: 0;
-    margin-bottom: 0.086rem;
-
-    font-size: 0.286rem;
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -.003em;
+	margin: 0;
+	margin-bottom: 0.086rem;
+	
+	font-size: 0.286rem;
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -.003em;
 }
 
 .item-description {
-    opacity: 0.8;
-    margin: 0;
-    margin-bottom: 0.171rem;
-
-    font-size: 0.121rem;
-    font-weight: 400;
-    line-height: 1.47059;
-    letter-spacing: -.022em;
+	opacity: 0.8;
+	margin: 0;
+	margin-bottom: 0.171rem;
+	
+	font-size: 0.121rem;
+	font-weight: 400;
+	line-height: 1.47059;
+	letter-spacing: -.022em;
 }
 
 .item-cta {
-    margin-top: auto;
-
-    font-size: 0.121rem;
-    font-weight: 400;
-    line-height: 1.47059;
-    letter-spacing: -.022em;
+	margin-top: auto;
+	
+	font-size: 0.121rem;
+	font-weight: 400;
+	line-height: 1.47059;
+	letter-spacing: -.022em;
 }
 
 
 .emoji-icon {
-    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", ui-sans-serif, sans-serif;
-    font-size: 1.2rem;
-    text-align: center;
+	font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", ui-sans-serif, sans-serif;
+	font-size: 1.2rem;
+	text-align: center;
 }
 
 
 .notion {
-    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"
+	font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"
 }
 
 .notion-icon {
-    display: inline-block;
-    height: calc(0.286*1rem);
-    aspect-ratio: 1;
-    border-radius: 20%;
-    position: relative;
-    top: calc(0.03*1rem);
-    background-size: cover;
+	display: inline-block;
+	height: calc(0.286*1rem);
+	aspect-ratio: 1;
+	border-radius: 20%;
+	position: relative;
+	top: calc(0.03*1rem);
+	background-size: cover;
 }
 
 
 .gdocs {
-    font-family: "Google Sans",Arial,sans-serif; /* Google Sans는 아쉽게도 라이선스상 사용이 안 된다고 하네요. */
+	font-family: "Google Sans",Arial,sans-serif; /* Google Sans는 아쉽게도 라이선스상 사용이 안 된다고 하네요. */
 }
 
 main.tiles {
-    display: none;
-    background: url('img/areablur.png');
-    background-size: 6rem 6rem;
-    position: relative;
-    border-top: 0.03rem solid var(--c-grayl2);
+	display: none;
+	background: url('img/areablur.png');
+	background-size: 6rem 6rem;
+	position: relative;
+	border-top: 0.03rem solid var(--c-grayl2);
 }
 
 main.tiles::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-color: rgb(from var(--c-bg) r g b / 40%);
-    backdrop-filter: var(--bg-filter);
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-color: rgb(from var(--c-bg) r g b / 40%);
+	backdrop-filter: var(--bg-filter);
 }
 
 .on main.tiles {
-    display: flex;
+	display: flex;
 }
 
 .bg.bg-archive {
-    background-image: url('img/archive.png');
+	background-image: url('img/archive.png');
 }
 
 .bg-archive {
-    background-image: url('img/archiveblur.png');
+	background-image: url('img/archiveblur.png');
 }

@@ -1,33 +1,33 @@
 @import "colors.css";
 
 * {
-    font-family: -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif
+	font-family: -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif
 }
 
 body {
-    background-color: var(--c-bg);
-    color: var(--c-text);
-    padding-inline: 5vw;
+	background-color: var(--c-bg);
+	color: var(--c-text);
+	padding-inline: 5vw;
 }
 
 img {
-    display: block;
-    margin-inline: auto;
-    max-width: 80vw;
+	display: block;
+	margin-inline: auto;
+	max-width: 80vw;
 }
 
 div, p, h1, h2, h3, h4, h5, h6, figure {
-    text-align: center;
+	text-align: center;
 }
 
 div {
-    margin-inline: auto;
+	margin-inline: auto;
 }
 
 a {
-    color: var(--c-blue);
+	color: var(--c-blue);
 }
 
 a:hover {
-    color: var(--c-blue-active);
+	color: var(--c-blue-active);
 }
