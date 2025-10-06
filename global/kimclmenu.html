@@ -233,11 +233,9 @@
 				break;
 			case 2:
 				h=window.location.pathname;
-				alert(h);
 				if (!(/\/$/.test(h)) && !(/\/index.html$/.test(h))) {
 					window.location.href='.';
 				} else if (h.includes('/things')) {
-					alert(h.replace(/\/things\/(?!things\/)(?!.*\/things\/).*/,'/'));
 					window.location.pathname=h.replace(/\/things\/(?!things\/)(?!.*\/things\/).*/,'/');
 				} else {
 					window.location.href='..';
