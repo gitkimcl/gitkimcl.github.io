@@ -207,11 +207,6 @@ header::before {
 
 .about-tile {
 	height: 1.8rem;
-	box-shadow: none;
-}
-
-.about-tile::after {
-	box-shadow: none;
 }
 
 #powerdesc2, #powercta2 {

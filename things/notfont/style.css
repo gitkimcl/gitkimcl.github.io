@@ -5,6 +5,7 @@
 }
 
 #code {
+	font-family: inherit;
 	display: block;
 	width: 50vw;
 	height: 20vh;

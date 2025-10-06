@@ -14,7 +14,6 @@
 }
 
 * {
-	font-family: var(--font);
 	scrollbar-width: none;
 	scroll-behavior: smooth;
 }
@@ -22,6 +21,7 @@
 body {
 	background-color: var(--c-bg);
 	margin: 0;
+	font-family: var(--font);
 }
 
 header {

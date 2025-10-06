@@ -8,19 +8,21 @@ class KimclMenuElement extends HTMLElement {
 	
 	connectedCallback() {
 		let xhttp = new XMLHttpRequest();
-		xhttp.open('GET', '/global/kimclmenu.html', false);
-		xhttp.send();
-		let status = xhttp.status;
-		if (status === 0 || (200 <= status && status < 400)) {
-			this.#sr.innerHTML = xhttp.responseText;
-			let sc = this.#sr.getElementById('script');
-			let nsc = document.createElement('script');
-			nsc.type = "module";
-			nsc.append(sc.innerHTML);
-			this.#sr.replaceChild(nsc, sc);
-			return;
+		xhttp.open('GET', '/global/kimclmenu.html', true);
+		xhttp.onload = (_) => {
+			let status = xhttp.status;
+			if (status === 0 || (200 <= status && status < 400)) {
+				this.#sr.innerHTML = xhttp.responseText;
+				let sc = this.#sr.getElementById('script');
+				let nsc = document.createElement('script');
+				nsc.type = "module";
+				nsc.append(sc.innerHTML);
+				this.#sr.replaceChild(nsc, sc);
+				return;
+			}
+			this.#sr.innerHTML = `error ${status}`;
 		}
-		this.#sr.innerHTML = `error ${status}`;
+		xhttp.send();
 	}
 }
 
