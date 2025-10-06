@@ -8,7 +8,7 @@ class KimclMenuElement extends HTMLElement {
 	
 	connectedCallback() {
 		let xhttp = new XMLHttpRequest();
-		xhttp.open('GET', '/kimclmenu.html', false);
+		xhttp.open('GET', '/global/kimclmenu.html', false);
 		xhttp.send();
 		let status = xhttp.status;
 		if (status === 0 || (200 <= status && status < 400)) {

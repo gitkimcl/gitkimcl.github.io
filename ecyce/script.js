@@ -25,7 +25,7 @@ function logo_click() {
     $(":root").addClass("on");
     $(".logo, .bg").css("animation", "none");
     $(".logo, .bg").offset();
-    $(".logo, .bg").css("animation", "1s test-rotate");
+    $(".logo, .bg").css("animation", "1s hue-rotate");
     clicks++;
     console.log(`ecyc ${clicks}`);
     if (clicks>6) return;
