@@ -3,6 +3,8 @@ $("header").css("animation","6s ease title");
 $("header").on("animationend", () => {
 	$("header").css("animation","none");
 	$(":root").addClass("on");
+	$("#title1").attr("hidden","hidden");
+	$("#title2").attr("hidden","hidden");
 });
 
 if (localStorage.getItem("kimclweb.lesspower")==="1") {
