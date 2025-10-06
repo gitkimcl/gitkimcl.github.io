@@ -18,8 +18,10 @@
 	<div id="wrapper">
 		<div class="bg"></div>
 		<header>
-			<button class="tile logo" title="이끾끼 에리어" onclick="logo_click();" style="--glow0: rgb(from var(--c-ltext) r g b / 0.25);">
-				<img id="logo-img" class="tile-img pixel" alt="이끾끼 에리어 로고" src="img/cycarealogo.png">
+			<button class="tile logo" title="이끾끼 에리어" onclick="logo_click();" style="--dglow1:oklab(0.7 -0.2 0.2);--dglow2:oklab(0.7 0.2 0.2);--dglow3:oklab(0.7 -0.2 -0.2);--dglow4:oklab(0.7 0.2 -0.2);">
+				<div class="tile-img-wrapper">
+					<img id="logo-img" class="tile-img pixel" alt="이끾끼 에리어 로고" src="img/cycarealogo.png">
+				</div>
 			</button>
 			<div class="titlegroup">
 				<h2 class="title" id="title1">안녕하세요 여러분.</h2>
@@ -30,7 +32,9 @@
 		<div class="areatext"></div>
 		<div class="tiles about">
 			<a href="/" class="tile about-tile">
-				<div class="tile-img" style="background: #277AEA;"></div>
+				<div class="tile-img-wrapper">
+					<div class="tile-img" style="background: #277AEA;"></div>
+				</div>
 				<div class="tile-flex">
 					<div class="item-eyebrow">ECYC E AREA</div>
 					<h2 class="item-headline">공간 사이의 공간</h2>
@@ -39,7 +43,9 @@
 				</div>
 			</a>
 			<a class="tile about-tile" onclick="togglePower();" style="cursor: pointer;">
-				<div class="tile-img" style="background: #277AEA;"></div>
+				<div class="tile-img-wrapper">
+					<div class="tile-img" style="background: #277AEA;"></div>
+				</div>
 				<div class="tile-flex">
 					<div class="item-eyebrow">POWER OF ECYC E</div>
 					<h2 class="item-headline">이끾끼의 힘</h2>
@@ -53,7 +59,9 @@
 		<main class="tiles">
 			<div style="flex-basis: 100%; height: 0.25rem;"></div>
 			<a href="https://docs.google.com/document/d/1LRkUSsMmdVSv3C44eqoVH8vy-Akz9FTCfsSYkYMwuFQ/edit?tab=t.e41fn347z50s" target="_blank" class="tile">
-				<div class="tile-img" style="background: #F9FBFD;"></div>
+				<div class="tile-img-wrapper">
+					<div class="tile-img" style="background: #F9FBFD;"></div>
+				</div>
 				<img class="tile-icon" src="img/gdocs.svg" alt="">
 				<div class="tile-flex" style="color: var(--c-dtext);">
 					<div class="item-eyebrow gdocs">GOOGLE DOCS</div>
@@ -62,7 +70,9 @@
 				</div>
 			</a>
 			<a href="https://www.notion.so/246420eb286580dca036d2d001ca00f9" target="_blank" class="tile">
-				<div class="tile-img" style="background: #191919;"></div>
+				<div class="tile-img-wrapper">
+					<div class="tile-img" style="background: #191919;"></div>
+				</div>
 				<div class="tile-icon emoji-icon">📔</div>
 				<div class="tile-flex">
 					<div class="item-eyebrow notion">NOTION</div>
@@ -71,7 +81,9 @@
 				</div>
 			</a>
 			<a href="https://www.notion.so/2481ff5c232f80739ae3ffadd2717a29" target="_blank" class="tile">
-				<div class="tile-img" style="background: #191919;"></div>
+				<div class="tile-img-wrapper">
+					<div class="tile-img" style="background: #191919;"></div>
+				</div>
 				<img class="tile-icon" src="img/Notion-logo.svg" alt="">
 				<div class="tile-flex">
 					<div class="item-eyebrow notion">NOTION</div>
@@ -80,7 +92,9 @@
 				</div>
 			</a>
 			<a href="https://www.notion.so/2538f00ad6ba80588d83e43e30c6d9e5" target="_blank" class="tile">
-				<div class="tile-img" style="background: #191919;"></div>
+				<div class="tile-img-wrapper">
+					<div class="tile-img" style="background: #191919;"></div>
+				</div>
 				<img class="tile-icon" src="img/cycrecord_text.svg" alt="">
 				<div class="tile-flex">
 					<div class="item-eyebrow notion">NOTION</div>
@@ -89,7 +103,9 @@
 				</div>
 			</a>
 			<a href="https://qpi.kro.kr/archive/ecyce.html" target="_blank" class="tile">
-				<div class="tile-img" style="background: radial-gradient(circle at 50% 52%, rgb(from var(--c-bg) r g b / 20%) 0% 20%, transparent 70%), linear-gradient(150deg, #10004C 0%, #5F6584 100%);"></div>
+				<div class="tile-img-wrapper">
+					<div class="tile-img" style="background: radial-gradient(circle at 50% 52%, rgb(from var(--c-bg) r g b / 20%) 0% 20%, transparent 70%), linear-gradient(150deg, #10004C 0%, #5F6584 100%);"></div>
+				</div>
 				<img class="tile-icon" src="img/logo_dark.ico" alt="">
 				<div class="tile-flex">
 					<div class="item-eyebrow">QPI</div>
@@ -99,7 +115,9 @@
 			</a>
 			<div style="flex-basis: 100%;"></div>
 			<a href="things/offline/" target="_blank" class="tile">
-				<div class="tile-img" style="background: #BBBBBB;"></div>
+				<div class="tile-img-wrapper">
+					<div class="tile-img" style="background: #BBBBBB;"></div>
+				</div>
 				<div class="tile-icon emoji-icon">⛓️‍💥</div>
 				<div class="tile-flex" style="color: var(--c-dtext);">
 					<div class="item-eyebrow">OFFLINE</div>
@@ -108,7 +126,9 @@
 				</div>
 			</a>
 			<a href="things/irl/" target="_blank" class="tile">
-				<div class="tile-img" style="background-color: #748330; background-image: url('img/some_grass_to_touch.jpeg'); background-size: cover;"></div>
+				<div class="tile-img-wrapper">
+					<div class="tile-img" style="background-color: #748330; background-image: url('img/some_grass_to_touch.jpeg'); background-size: cover;"></div>
+				</div>
 				<div class="tile-icon emoji-icon">🌏</div>
 				<div class="tile-flex" style="color: #edffaa;">
 					<div class="item-eyebrow" style="opacity: 1;">IRL</div>

@@ -17,15 +17,19 @@
 	<div id="wrapper">
 		<div class="bg"></div>
 		<header>
-			<button class="tile logo" title="에리어" onclick="logo_click();" style="--glow0: rgb(from var(--c-ltext) r g b / 0.25);">
-				<img id="logo-img" class="tile-img" alt="에리어 로고" src="../img/area/area_kimchi.png">
+			<button class="tile logo" title="에리어" onclick="logo_click();">
+				<div class="tile-img-wrapper">
+					<img id="logo-img" class="tile-img" alt="에리어 로고" src="../img/area/area_kimchi.png">
+				</div>
 			</button>
 			<h1 class="title">에리어</h1>
 		</header>
 		<div class="areatext"></div>
 		<div class="tiles about">
 			<a href="/" class="tile about-tile">
-				<div class="tile-img" style="background: #277AEA;"></div>
+				<div class="tile-img-wrapper">
+					<div class="tile-img" style="background: #277AEA;"></div>
+				</div>
 				<div class="tile-flex">
 					<div class="item-eyebrow">AREA</div>
 					<h2 class="item-headline">숨겨진 공간</h2>
@@ -34,7 +38,9 @@
 				</div>
 			</a>
 			<a href="../ecyce/" class="tile about-tile">
-				<div class="tile-img" style="background: #277AEA;"></div>
+				<div class="tile-img-wrapper">
+					<div class="tile-img" style="background: #277AEA;"></div>
+				</div>
 				<div class="tile-flex">
 					<div class="item-eyebrow">PORTAL</div>
 					<h2 class="item-headline">이끾끼 에리어로</h2>

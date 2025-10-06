@@ -71,21 +71,15 @@ a {
 }
 
 .tile {
-	--dglow0: rgb(from var(--c-ltext) r g b / 0.25);
-	--dglow1: var(--dglow0);
-	--dglow2: var(--dglow0);
-	--dglow3: var(--dglow0);
-	--dglow4: var(--dglow0);
-	--lglow0: oklch(from var(--dglow0) calc(1.2413 - l) c h / calc(0.7 * alpha)); /* 1.2413 = #FAFAFA + #232323 */
-	--lglow1: oklch(from var(--dglow1) calc(1.2413 - l) c h / calc(0.7 * alpha));
-	--lglow2: oklch(from var(--dglow2) calc(1.2413 - l) c h / calc(0.7 * alpha));
-	--lglow3: oklch(from var(--dglow3) calc(1.2413 - l) c h / calc(0.7 * alpha));
-	--lglow4: oklch(from var(--dglow4) calc(1.2413 - l) c h / calc(0.7 * alpha));
-	--glow0: var(--lglow0);
-	--glow1: var(--lglow1);
-	--glow2: var(--lglow2);
-	--glow3: var(--lglow3);
-	--glow4: var(--lglow4);
+	--dglow: rgb(from var(--c-ltext) r g b / 50%);
+	--dglow1: var(--dglow);
+	--dglow2: var(--dglow);
+	--dglow3: var(--dglow);
+	--dglow4: var(--dglow);
+	--glow1: light-dark(oklch(from var(--dglow1) calc(1.2413 - l) c h / calc(0.9 * alpha)),var(--dglow1)); /* 1.2413 = #FAFAFA + #232323 */
+	--glow2: light-dark(oklch(from var(--dglow2) calc(1.2413 - l) c h / calc(0.9 * alpha)),var(--dglow2));
+	--glow3: light-dark(oklch(from var(--dglow3) calc(1.2413 - l) c h / calc(0.9 * alpha)),var(--dglow3));
+	--glow4: light-dark(oklch(from var(--dglow4) calc(1.2413 - l) c h / calc(0.9 * alpha)),var(--dglow4));
 	
 	transition: transform 0.2s, box-shadow 0.2s;
 	display: block;
@@ -94,24 +88,19 @@ a {
 	width: 3rem;
 	aspect-ratio: 1;
 	border-radius: 0.15rem;
-	overflow: hidden;
-	box-shadow: -0.02rem 0.02rem 0.02rem color-mix(in srgb, var(--c-dtext) 30%, transparent),
-	-0.03rem 0.03rem 0.04rem color-mix(in srgb, var(--c-dtext) 10%, transparent);
-	/*box-shadow: 0 0 0.1rem 0 transparent,
-	-0.75rem -0.75rem 0.1rem -0.75rem transparent,
-	0.75rem -0.75rem 0.1rem -0.75rem transparent,
-	-0.75rem 0.75rem 0.1rem -0.75rem transparent,
-	0.75rem 0.75rem 0.1rem -0.75rem transparent;*/
+	box-shadow: -0.02rem 0.02rem 0.02rem rgb(from var(--c-dtext) r g b / 30%),
+		-0.03rem 0.03rem 0.04rem rgb(from var(--c-dtext) r g b / 10%);
 }
 
-@media (prefers-color-scheme: dark) {
-	.tile {
-		--glow0: var(--dglow0);
-		--glow1: var(--dglow1);
-		--glow2: var(--dglow2);
-		--glow3: var(--dglow3);
-		--glow4: var(--dglow4);
-	}
+.tile::before {
+	content: '';
+	position: absolute;
+	inset: -0.04rem;
+	border-radius: 0.19rem;
+	background: conic-gradient(from -45deg, var(--glow1), var(--glow2), var(--glow4), var(--glow3), var(--glow1));
+	opacity: 0;
+	filter: blur(0.02rem);
+	transition: opacity 0.2s;
 }
 
 .tile::after {
@@ -119,30 +108,35 @@ a {
 	position: absolute;
 	inset: 0;
 	border-radius: inherit;
-	box-shadow: inset -0.02rem 0.02rem 0.02rem color-mix(in srgb, var(--c-lbg) 30%, transparent);
+	box-shadow: inset -0.02rem 0.02rem 0.02rem rgb(from var(--c-lbg) r g b / 30%);
 	transition: transform 0.2s, box-shadow 0.2s;
 	pointer-events: none;
 }
 
 .tile:hover {
-	/*box-shadow: 0 0 0.15rem 0 var(--glow0),
-	-0.75rem -0.75rem 0.1rem -0.75rem var(--glow1),
-	0.75rem -0.75rem 0.1rem -0.75rem var(--glow2),
-	-0.75rem 0.75rem 0.1rem -0.75rem var(--glow3),
-	0.75rem 0.75rem 0.1rem -0.75rem var(--glow4);*/
-	box-shadow: -0.02rem 0.02rem 0.02rem color-mix(in srgb, var(--c-dbg) 50%, transparent),
-	-0.03rem 0.03rem 0.04rem color-mix(in srgb, var(--c-dbg) 20%, transparent);
+	box-shadow: -0.02rem 0.02rem 0.02rem rgb(from var(--c-dtext) r g b / 50%),
+		-0.03rem 0.03rem 0.04rem rgb(from var(--c-dtext) r g b / 20%);
 	transform: scale(1.02);
 }
 
+.tile:hover::before {
+	opacity: 1;	
+}
+
 .tile:hover::after {
-	box-shadow: inset -0.02rem 0.02rem 0.02rem color-mix(in srgb, var(--c-lbg) 50%, transparent);
-	/*box-shadow: inset 0 0 0 transparent;*/
+	box-shadow: inset -0.02rem 0.02rem 0.02rem rgb(from var(--c-lbg) r g b / 50%);
 }
 
 .tile.double-tile {
 	width: 6.25rem;
 	height: 3rem;
+}
+
+.tile-img-wrapper {
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	overflow: clip;
 }
 
 .tile-img {
@@ -153,11 +147,11 @@ a {
 	object-fit: cover;
 }
 
-.pixel {
+.tile-img.pixel {
 	image-rendering: pixelated;
 }
 
-.tilted {
+.tile-img.tilted {
 	transform: scale(1.6) rotate3d(-1,1,1,45deg);
 }
 

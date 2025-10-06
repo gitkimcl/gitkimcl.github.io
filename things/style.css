@@ -57,14 +57,6 @@ body {
 	height: 1.8rem;
 }
 
-.tile {
-	--glow0: var(--c-text);
-	--glow1: transparent;
-	--glow2: transparent;
-	--glow3: transparent;
-	--glow4: transparent;
-}
-
 .tile-img {
 	display: block;
 	position: absolute;
