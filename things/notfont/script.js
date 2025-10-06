@@ -28,21 +28,21 @@ cscode = ['','r','R','rt','s','sw','sg','e','E','f','fr','fa','fq','ft','fx','fv
 
 $("#code").on("input", update)
 
-$("#result-size").mousemove(function() {
+$("#result-size").on("input mousemove",function() {
     let news = `calc(${$("#result-size").val()/20} * var(--base-length))`
     $(":root").css("--symbol-size", news)
     $("#result-size-label").text(`크기: x${$("#result-size").val()/20}`)
 })
 
-$("#result-width").mousemove(function() {
+$("#result-width").on("input mousemove",function() {
     let neww = `calc(${$("#result-width").val()} * var(--symbol-size))`
-    $(".result-container").css("width", neww)
+    $("#result-container").css("width", neww)
     $("#result-width-label").text(`너비: ${$("#result-width").val()}개`)
     update_size_slider();
 })
 
 function update_size_slider() {
-    $("#result-width").attr("max",$("body").width() / $("#symbol-size").width() - 1)
+    $("#result-width").attr("max",Math.floor($("body").width() / $("#symbol-size").width() - 1))
 }
 
 function to_code(str) {
@@ -120,13 +120,13 @@ function update() {
     $(`.result-img:nth-child(n+${common+1})`).remove()
     for (ch of txt) {
         if (ch.f == '\n') {
-            $(".result-container").append(`<br class="result-img">`)
+            $("#result-container").append(`<br class="result-img">`)
             continue
         }
         if (ch.s) {
-            $(".result-container").append(`<div class="result-img" style="--data:url(img/${ch.f}.svg); aspect-ratio: 0.5;" />`)
+            $("#result-container").append(`<div class="result-img" style="--data:url(img/${ch.f}.svg); aspect-ratio: 0.5;" />`)
         } else {
-            $(".result-container").append(`<div class="result-img" style="--data:url(img/${ch.f}.svg);" />`)
+            $("#result-container").append(`<div class="result-img" style="--data:url(img/${ch.f}.svg);" />`)
         }
     }
 }

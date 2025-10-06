@@ -2,27 +2,38 @@
 <html lang="ko">
 <head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" href="/global/gallery.css">
 	<link rel="stylesheet" href="style.css">
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="/global/jquery_slim.js"></script>
+	<script src="script.js" defer></script>
 	<script src="/global/kimclmenu.js" defer></script>
 </head>
 <body>
 	<kimcl-menu></kimcl-menu>
 	<h1>끼족 문자 생성기</h1>
 	<div id="symbol-size" style="display: none; width: var(--symbol-size);"></div>
-	<button id="mode2" onclick="switch2()">기존 끼족 문자</button>
-	<button id="mode1" onclick="switch1()">단순 끼족 문자</button>
-	<button id="mode3" onclick="switch3()">신형 끼족 문자</button>
+	<div>
+		<button id="mode2" onclick="switch2()">기존 끼족 문자</button>
+		<button id="mode1" onclick="switch1()">단순 끼족 문자</button>
+		<button id="mode3" onclick="switch3()">신형 끼족 문자</button>
+	</div>
+	<div style="margin-top: 0.2em">
+		<button id="aleft" onclick="$('#result-container').css('text-align','left');">왼쪽 정렬</button>
+		<button id="acenter" onclick="$('#result-container').css('text-align','center');">가운데 정렬</button>
+		<button id="aright" onclick="$('#result-container').css('text-align','right');">오른쪽 정렬</button>
+	</div>
 	<br>
-	<input type="range" id="result-size" min="8" max="30" value="20"/>
-	<label for="result-size" id="result-size-label">크기: x1</label>
+	<div>
+		<input type="range" id="result-size" min="8" max="30" value="20"/>
+		<label for="result-size" id="result-size-label" style="display: inline-block; width: 4em; white-space: nowrap;">크기: x1</label>
+	</div>
+	<div>
+		<input type="range" id="result-width" min="6" max="50" value="25"/>
+		<label for="result-width" id="result-width-label" style="display: inline-block; width: 4em; white-space: nowrap;">너비: 25개</label>
+	</div>
 	<br>
-	<input type="range" id="result-width" min="6" max="50" value="25"/>
-	<label for="result-width" id="result-width-label">너비: 25개</label>
-	<br><br>
-	<div class="result-container"></div>
+	<div id="result-container"></div>
 	<br>
 	<textarea id="code"></textarea>
-	<script src="script.js"></script>
 </body>
 </html>

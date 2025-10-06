@@ -4,20 +4,20 @@
 :root {
     --base-length: min(2.5vw,5vh);
     --symbol-size: var(--base-length);
-    line-height: var(--symbol-size);
+    /*line-height: var(--symbol-size);*/
 }
 
 body {
-    background-color: #FAFAFA;
-    padding-inline: 5vw;
     font-family: 'BR Cobane', 'Pretendard Variable', sans-serif;
 }
 
 #code {
+    display: block;
     width: 50vw;
     height: 20vh;
     font-family: inherit;
     font-size: 1.5em;
+    margin-inline: auto;
 }
 
 .result-img {
@@ -37,7 +37,7 @@ body {
     transform: translate(-50%,-50%);
 }
 
-.result-container {
+#result-container {
     border: 3.8px solid black;
     width: calc(25 * var(--symbol-size));
     padding: calc(0.5 * var(--symbol-size));
