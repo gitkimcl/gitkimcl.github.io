@@ -1,9 +1,12 @@
 @import "colors.css";
 
+* {
+    font-family: -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif
+}
+
 body {
     background-color: var(--c-bg);
     color: var(--c-text);
-    font-family: ui-sans-serif, sans-serif, system-ui;
     padding-inline: 5vw;
 }
 
