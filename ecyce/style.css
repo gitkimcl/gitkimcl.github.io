@@ -88,7 +88,7 @@ body {
 	position: absolute;
 	inset: 0;
 	background: var(--c-bg);
-	overflow: hidden;
+	overflow: clip;
 }
 
 .on .bg::before {
