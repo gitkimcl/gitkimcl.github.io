@@ -76,10 +76,10 @@ a {
 	--dglow2: var(--dglow);
 	--dglow3: var(--dglow);
 	--dglow4: var(--dglow);
-	--glow1: light-dark(oklch(from var(--dglow1) calc(1.2413 - l) c h / calc(0.9 * alpha)),var(--dglow1)); /* 1.2413 = #FAFAFA + #232323 */
-	--glow2: light-dark(oklch(from var(--dglow2) calc(1.2413 - l) c h / calc(0.9 * alpha)),var(--dglow2));
-	--glow3: light-dark(oklch(from var(--dglow3) calc(1.2413 - l) c h / calc(0.9 * alpha)),var(--dglow3));
-	--glow4: light-dark(oklch(from var(--dglow4) calc(1.2413 - l) c h / calc(0.9 * alpha)),var(--dglow4));
+	--glow1: light-dark(oklch(from var(--dglow1) calc(1.185 - l) c h / calc(0.9 * alpha)),var(--dglow1)); /* 1.185 = 98.5% + 30% */
+	--glow2: light-dark(oklch(from var(--dglow2) calc(1.185 - l) c h / calc(0.9 * alpha)),var(--dglow2));
+	--glow3: light-dark(oklch(from var(--dglow3) calc(1.185 - l) c h / calc(0.9 * alpha)),var(--dglow3));
+	--glow4: light-dark(oklch(from var(--dglow4) calc(1.185 - l) c h / calc(0.9 * alpha)),var(--dglow4));
 	
 	transition: transform 0.2s;
 	display: block;
@@ -111,6 +111,7 @@ a {
 	box-shadow: -0.05rem 0.05rem 0.05rem rgb(from var(--c-dtext) r g b / 30%),
 		-0.1rem 0.1rem 0.1rem rgb(from var(--c-dtext) r g b / 10%),
 		inset -0.05rem 0.05rem 0.05rem rgb(from var(--c-lbg) r g b / 30%);
+	transition: box-shadow 0.2s;
 }
 
 .tile:hover {
@@ -119,6 +120,12 @@ a {
 
 .tile:hover::before {
 	opacity: 1;	
+}
+
+.tile:hover::after {
+	box-shadow: -0.05rem 0.05rem 0.05rem transparent,
+		-0.1rem 0.1rem 0.1rem transparent,
+		inset -0.05rem 0.05rem 0.05rem rgb(from var(--c-lbg) r g b / 30%);
 }
 
 .tile.double-tile {
