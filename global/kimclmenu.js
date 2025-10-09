@@ -12,7 +12,7 @@ class KimclMenuElement extends HTMLElement {
 				return res.text();
 			})
 			.then((text) => {
-				this.#sr.innerHTML = text;
+				this.#sr.innerHTML = text.match(/(?<=<template>).*?(?=<\/template>)/s);
 				let sc = this.#sr.getElementById('script');
 				let nsc = document.createElement('script');
 				nsc.type = "module";

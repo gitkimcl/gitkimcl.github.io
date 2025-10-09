@@ -81,20 +81,19 @@ a {
 	--glow3: light-dark(oklch(from var(--dglow3) calc(1.2413 - l) c h / calc(0.9 * alpha)),var(--dglow3));
 	--glow4: light-dark(oklch(from var(--dglow4) calc(1.2413 - l) c h / calc(0.9 * alpha)),var(--dglow4));
 	
-	transition: transform 0.2s, box-shadow 0.2s;
+	transition: transform 0.2s;
 	display: block;
 	position: relative;
 	z-index: 1;
 	width: 3rem;
 	aspect-ratio: 1;
 	border-radius: 0.15rem;
-	box-shadow: -0.02rem 0.02rem 0.02rem rgb(from var(--c-dtext) r g b / 30%),
-		-0.03rem 0.03rem 0.04rem rgb(from var(--c-dtext) r g b / 10%);
 }
 
 .tile::before {
 	content: '';
 	position: absolute;
+	pointer-events: none;
 	inset: -0.04rem;
 	border-radius: 0.19rem;
 	background: conic-gradient(from -45deg, var(--glow1), var(--glow2), var(--glow4), var(--glow3), var(--glow1));
@@ -106,25 +105,20 @@ a {
 .tile::after {
 	content: '';
 	position: absolute;
+	pointer-events: none;
 	inset: 0;
 	border-radius: inherit;
-	box-shadow: inset -0.02rem 0.02rem 0.02rem rgb(from var(--c-lbg) r g b / 30%);
-	transition: transform 0.2s, box-shadow 0.2s;
-	pointer-events: none;
+	box-shadow: -0.05rem 0.05rem 0.05rem rgb(from var(--c-dtext) r g b / 30%),
+		-0.1rem 0.1rem 0.1rem rgb(from var(--c-dtext) r g b / 10%),
+		inset -0.05rem 0.05rem 0.05rem rgb(from var(--c-lbg) r g b / 30%);
 }
 
 .tile:hover {
-	box-shadow: -0.02rem 0.02rem 0.02rem rgb(from var(--c-dtext) r g b / 50%),
-		-0.03rem 0.03rem 0.04rem rgb(from var(--c-dtext) r g b / 20%);
 	transform: scale(1.02);
 }
 
 .tile:hover::before {
 	opacity: 1;	
-}
-
-.tile:hover::after {
-	box-shadow: inset -0.02rem 0.02rem 0.02rem rgb(from var(--c-lbg) r g b / 50%);
 }
 
 .tile.double-tile {
@@ -137,6 +131,7 @@ a {
 	inset: 0;
 	border-radius: inherit;
 	overflow: clip;
+	pointer-events: none;
 }
 
 .tile-img {
