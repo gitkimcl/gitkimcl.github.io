@@ -4,7 +4,7 @@
 	--c-lbg: oklch(98.5% 0 0);
 	--c-dbg: oklch(30% 0 0);
 	--c-ltext: oklch(98.5% 0 0);
-	--c-dtext: oklch(20% 0 0);
+	--c-dtext: oklch(1.5% 0 0);
 	--c-grayl3: oklch(91.25% 0 0);
 	--c-grayl2: oklch(82.5% 0 0);
 	--c-grayl1: oklch(73.75% 0 0);
@@ -16,8 +16,8 @@
 	--c-lblue-active: oklch(0.6 0.225 260);
 	--c-dblue: oklch(0.575 0.25 260);
 	--c-dblue-active: oklch(0.625 0.225 260);
-	--c-black: oklch(0% 0 0);
-	--c-white: oklch(100% 0 0);
+	--c-black: black;
+	--c-white: white;
 
 	--c-bg: light-dark(var(--c-lbg),var(--c-dbg));
 	--c-antibg: light-dark(var(--c-dbg),var(--c-lbg));
@@ -40,11 +40,9 @@
 
 @media print {
 	:root {
-		--c-bg: light-dark(white,rgb(35 35 35));
-		--c-antibg: light-dark(rgb(35 35 35),white);
-		--c-text: light-dark(rgb(28 28 30),white);
-		--c-antitext: light-dark(white,rgb(28 28 30));
+		print-color-adjust: exact !important;
 		--c-lbg: white;
 		--c-ltext: white;
+		--c-dtext: black;
 	}
 }

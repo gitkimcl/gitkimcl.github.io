@@ -31,3 +31,8 @@ a {
 a:hover {
 	color: var(--c-blue-active);
 }
+
+figure {
+	margin-inline: 0;
+	break-inside: avoid-page;
+}

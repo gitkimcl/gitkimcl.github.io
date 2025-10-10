@@ -50,6 +50,17 @@ body:has(> #wrapper) {
 	contain: strict;
 }
 
+@media print {
+	body, #wrapper {
+		overflow: visible !important;
+		height: auto !important;
+	}
+
+	#wrapper {
+		contain: none !important;
+	}
+}
+
 header {
 	padding: 0.25rem;
 	display: flex;
@@ -122,6 +133,7 @@ a {
 	border-radius: 0.15rem;
 	box-shadow: -0.05rem 0.05rem 0.05rem rgb(from var(--c-dtext) r g b / 30%),
 		-0.1rem 0.1rem 0.1rem rgb(from var(--c-dtext) r g b / 10%);
+	break-inside: avoid-page;
 }
 
 .tile::before {

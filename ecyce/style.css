@@ -80,6 +80,17 @@
 	display: none;
 }
 
+@media print {
+	html {
+		background: url('img/area.png') !important;
+		background-size: cover !important;
+	}
+
+	.bg {
+		display: none;
+	}
+}
+
 header {
 	--opacity1: 0;
 	--opacity2: 0;
