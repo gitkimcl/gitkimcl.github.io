@@ -1,4 +1,4 @@
-@import "font/pretendardvariable.css";
+@import "font/pretendard.css";
 
 * {
 	transition: var(--default-trans);
@@ -145,7 +145,7 @@ body {
 	transform: var(--trans-center); 
 	color: var(--theme-solid);
 	font-size: calc(5 * var(--base-length));
-	font-family: 'Pretendard Variable', sans-serif;
+	font-family: 'Pretendard GOV Variable', sans-serif;
 	font-weight: 800;
 	font-variant-numeric: tabular-nums;
 	white-space: nowrap;
@@ -172,7 +172,7 @@ body {
 	display: inline-block;
 	text-align: center;
 	font-size: calc(5 * var(--base-length));
-	font-family: 'Pretendard Variable', sans-serif;
+	font-family: 'Pretendard GOV Variable', sans-serif;
 	font-weight: 700;
 	color: var(--theme-solid);
 	background-color: transparent;
@@ -200,7 +200,7 @@ body {
 	padding: 0;
 	text-align: center;
 	font-size: calc(2 * var(--base-length));
-	font-family: 'Pretendard Variable', sans-serif;
+	font-family: 'Pretendard GOV Variable', sans-serif;
 	color: var(--theme-solid);
 	background-color: rgb(from var(--theme-white) r g b / 30%);
 }
@@ -336,7 +336,7 @@ body {
 	top: 50%;
 	transform: translate(0, -50%);
 	color: var(--theme-solid);
-	font-family: 'Pretendard Variable', sans-serif;
+	font-family: 'Pretendard GOV Variable', sans-serif;
 	font-weight: 600;
 	font-variant-numeric: tabular-nums;
 	font-size: calc(2.5 * var(--base-length));
@@ -419,7 +419,7 @@ body {
 	top: 50%;
 	transform: var(--trans-center); 
 	margin: 0;
-	font-family: 'Pretendard Variable', sans-serif;
+	font-family: 'Pretendard GOV Variable', sans-serif;
 	font-weight: 500;
 	font-variant-numeric: tabular-nums;
 	font-size: calc(3.75 * var(--base-length));
