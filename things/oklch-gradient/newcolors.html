@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<title>colors.css</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/global/gallery.css">
+	<script src="/global/kimclmenu.js" defer></script>
+	<style>
+		.row {
+			border-collapse: separate;
+			border-spacing: 5px;
+		}
+
+		.tile {
+			width: 10vw;
+			height: 10vw;
+			border-radius: 2vw;
+			display: table-cell;
+			color: var(--c, var(--c-text));
+			background-color: var(--bg, transparent);
+			border: 2px solid var(--b, none);
+			vertical-align: middle;
+			margin: 5px;
+		}
+
+		.int { cursor: pointer; }
+
+		.white { --c: var(--c-w-text); }
+		.white.int:hover { text-decoration: underline; --c: var(--c-w-texth); }
+		.white.int:active { text-decoration: underline; --c: var(--c-w-texta); }
+		.blue { --c: var(--c-b-text); }
+		.blue.int:hover { text-decoration: underline; --c: var(--c-b-texth); }
+		.blue.int:active { text-decoration: underline; --c: var(--c-b-texta); }
+		.purple { --c: var(--c-p-text); }
+		.purple.int:hover { text-decoration: underline; --c: var(--c-p-texth); }
+		.purple.int:active { text-decoration: underline; --c: var(--c-p-texta); }
+		.red { --c: var(--c-r-text); }
+		.red.int:hover { text-decoration: underline; --c: var(--c-r-texth); }
+		.red.int:active { text-decoration: underline; --c: var(--c-r-texta); }
+		.yellow { --c: var(--c-y-text); }
+		.yellow.int:hover { text-decoration: underline; --c: var(--c-y-texth); }
+		.yellow.int:active { text-decoration: underline; --c: var(--c-y-texta); }
+		.green { --c: var(--c-g-text); }
+		.green.int:hover { text-decoration: underline; --c: var(--c-g-texth); }
+		.green.int:active { text-decoration: underline; --c: var(--c-g-texta); }
+		.orange { --c: var(--c-o-text); }
+		.orange.int:hover { text-decoration: underline; --c: var(--c-o-texth); }
+		.orange.int:active { text-decoration: underline; --c: var(--c-o-texta); }
+
+		.whitebox { --bg: var(--c-w-bg); --b: var(--c-w-border); }
+		.whitebox.int:hover { text-decoration: underline; --bg: var(--c-w-bgh); --b: var(--c-w-borderh); }
+		.whitebox.int:active { text-decoration: underline; --bg: var(--c-w-bga); --b: var(--c-w-bordera); }
+		.bluebox { --bg: var(--c-b-bg); --b: var(--c-b-border); }
+		.bluebox.int:hover { text-decoration: underline; --bg: var(--c-b-bgh); --b: var(--c-b-borderh); }
+		.bluebox.int:active { text-decoration: underline; --bg: var(--c-b-bga); --b: var(--c-b-bordera); }
+		.purplebox { --bg: var(--c-p-bg); --b: var(--c-p-border); }
+		.purplebox.int:hover { text-decoration: underline; --bg: var(--c-p-bgh); --b: var(--c-p-borderh); }
+		.purplebox.int:active { text-decoration: underline; --bg: var(--c-p-bga); --b: var(--c-p-bordera); }
+		.redbox { --bg: var(--c-r-bg); --b: var(--c-r-border); }
+		.redbox.int:hover { text-decoration: underline; --bg: var(--c-r-bgh); --b: var(--c-r-borderh); }
+		.redbox.int:active { text-decoration: underline; --bg: var(--c-r-bga); --b: var(--c-r-bordera); }
+		.yellowbox { --bg: var(--c-y-bg); --b: var(--c-y-border); }
+		.yellowbox.int:hover { text-decoration: underline; --bg: var(--c-y-bgh); --b: var(--c-y-borderh); }
+		.yellowbox.int:active { text-decoration: underline; --bg: var(--c-y-bga); --b: var(--c-y-bordera); }
+		.greenbox { --bg: var(--c-g-bg); --b: var(--c-g-border); }
+		.greenbox.int:hover { text-decoration: underline; --bg: var(--c-g-bgh); --b: var(--c-g-borderh); }
+		.greenbox.int:active { text-decoration: underline; --bg: var(--c-g-bga); --b: var(--c-g-bordera); }
+		.orangebox { --bg: var(--c-o-bg); --b: var(--c-o-border); }
+		.orangebox.int:hover { text-decoration: underline; --bg: var(--c-o-bgh); --b: var(--c-o-borderh); }
+		.orangebox.int:active { text-decoration: underline; --bg: var(--c-o-bga); --b: var(--c-o-bordera); }
+
+		.whiteboxinv { --c: var(--c-ltext); font-weight: bold; --bg: var(--c-w-invbg); --b: var(--c-w-border); }
+		.whiteboxinv.int:hover { text-decoration: underline; --bg: var(--c-w-invbgh); --b: var(--c-w-borderh); }
+		.whiteboxinv.int:active { text-decoration: underline; --bg: var(--c-w-invbga); --b: var(--c-w-bordera); }
+		.blueboxinv { --c: var(--c-ltext); font-weight: bold; --bg: var(--c-b-invbg); --b: var(--c-b-border); }
+		.blueboxinv.int:hover { text-decoration: underline; --bg: var(--c-b-invbgh); --b: var(--c-b-borderh); }
+		.blueboxinv.int:active { text-decoration: underline; --bg: var(--c-b-invbga); --b: var(--c-b-bordera); }
+		.purpleboxinv { --c: var(--c-ltext); font-weight: bold; --bg: var(--c-p-invbg); --b: var(--c-p-border); }
+		.purpleboxinv.int:hover { text-decoration: underline; --bg: var(--c-p-invbgh); --b: var(--c-p-borderh); }
+		.purpleboxinv.int:active { text-decoration: underline; --bg: var(--c-p-invbga); --b: var(--c-p-bordera); }
+		.redboxinv { --c: var(--c-ltext); font-weight: bold; --bg: var(--c-r-invbg); --b: var(--c-r-border); }
+		.redboxinv.int:hover { text-decoration: underline; --bg: var(--c-r-invbgh); --b: var(--c-r-borderh); }
+		.redboxinv.int:active { text-decoration: underline; --bg: var(--c-r-invbga); --b: var(--c-r-bordera); }
+		.yellowboxinv { --c: var(--c-ltext); font-weight: bold; --bg: var(--c-y-invbg); --b: var(--c-y-border); }
+		.yellowboxinv.int:hover { text-decoration: underline; --bg: var(--c-y-invbgh); --b: var(--c-y-borderh); }
+		.yellowboxinv.int:active { text-decoration: underline; --bg: var(--c-y-invbga); --b: var(--c-y-bordera); }
+		.greenboxinv { --c: var(--c-ltext); font-weight: bold; --bg: var(--c-g-invbg); --b: var(--c-g-border); }
+		.greenboxinv.int:hover { text-decoration: underline; --bg: var(--c-g-invbgh); --b: var(--c-g-borderh); }
+		.greenboxinv.int:active { text-decoration: underline; --bg: var(--c-g-invbga); --b: var(--c-g-bordera); }
+		.orangeboxinv { --c: var(--c-ltext); font-weight: bold; --bg: var(--c-o-invbg); --b: var(--c-o-border); }
+		.orangeboxinv.int:hover { text-decoration: underline; --bg: var(--c-o-invbgh); --b: var(--c-o-borderh); }
+		.orangeboxinv.int:active { text-decoration: underline; --bg: var(--c-o-invbga); --b: var(--c-o-bordera); }
+
+		.redbright { --c: var(--c-ltext); font-weight: bold; --bg: var(--c-r-bright); }
+		.redbright.int:hover { text-decoration: underline; --bg: var(--c-r-brighth); }
+		.redbright.int:active { text-decoration: underline; --bg: var(--c-r-brighta); }
+		.bluebright { --c: var(--c-ltext); font-weight: bold; --bg: var(--c-b-bright); }
+		.bluebright.int:hover { text-decoration: underline; --bg: var(--c-b-brighth); }
+		.bluebright.int:active { text-decoration: underline; --bg: var(--c-b-brighta); }
+		.yellowbright { --c: var(--c-ltext); font-weight: bold; --bg: var(--c-y-bright); }
+		.yellowbright.int:hover { text-decoration: underline; --bg: var(--c-y-brighth); }
+		.yellowbright.int:active { text-decoration: underline; --bg: var(--c-y-brighta); }
+		.greenbright { --c: var(--c-ltext); font-weight: bold; --bg: var(--c-g-bright); }
+		.greenbright.int:hover { text-decoration: underline; --bg: var(--c-g-brighth); }
+		.greenbright.int:active { text-decoration: underline; --bg: var(--c-g-brighta); }
+	</style>
+</head>
+<body>
+	<kimcl-menu></kimcl-menu>
+	<h1>kimcl web 색상 팔레트</h1>
+	<section>
+		<h2>파랑</h2>
+		<div>
+			<span class="row">
+				<div class="tile blue">파란색 글자</div>
+				<div class="tile blue int">클릭 가능 글자</div>
+				<div class="tile blue bluebox">파란색 상자</div>
+				<div class="tile blue bluebox int">클릭 가능 상자</div>
+				<div class="tile blueboxinv">파란색 버튼</div>
+				<div class="tile blueboxinv int">클릭 가능 버튼</div>
+			</span>
+		</div>
+	</section>
+	<section>
+		<h2>보라</h2>
+		<div>
+			<span class="row">
+				<div class="tile purple">보라색 글자</div>
+				<div class="tile purple int">클릭 가능 글자</div>
+				<div class="tile purple purplebox">보라색 상자</div>
+				<div class="tile purple purplebox int">클릭 가능 상자</div>
+				<div class="tile purpleboxinv">보라색 버튼</div>
+				<div class="tile purpleboxinv int">클릭 가능 버튼</div>
+			</span>
+		</div>
+	</section>
+	<section>
+		<h2>빨강</h2>
+		<div>
+			<span class="row">
+				<div class="tile red">빨간색 글자</div>
+				<div class="tile red int">클릭 가능 글자</div>
+				<div class="tile red redbox">빨간색 상자</div>
+				<div class="tile red redbox int">클릭 가능 상자</div>
+				<div class="tile redboxinv">빨간색 버튼</div>
+				<div class="tile redboxinv int">클릭 가능 버튼</div>
+			</span>
+		</div>
+	</section>
+	<section>
+		<h2>주황</h2>
+		<div>
+			<span class="row">
+				<div class="tile orange">주황색 글자</div>
+				<div class="tile orange int">클릭 가능 글자</div>
+				<div class="tile orange orangebox">주황색 상자</div>
+				<div class="tile orange orangebox int">클릭 가능 상자</div>
+				<div class="tile orangeboxinv">주황색 버튼</div>
+				<div class="tile orangeboxinv int">클릭 가능 버튼</div>
+			</span>
+		</div>
+	</section>
+	<section>
+		<h2>노랑</h2>
+		<div>
+			<span class="row">
+				<div class="tile yellow">노란색 글자</div>
+				<div class="tile yellow int">클릭 가능 글자</div>
+				<div class="tile yellow yellowbox">노란색 상자</div>
+				<div class="tile yellow yellowbox int">클릭 가능 상자</div>
+				<div class="tile yellowboxinv">노란색 버튼</div>
+				<div class="tile yellowboxinv int">클릭 가능 버튼</div>
+			</span>
+		</div>
+	</section>
+	<section>
+		<h2>초록</h2>
+		<div>
+			<span class="row">
+				<div class="tile green">초록색 글자</div>
+				<div class="tile green int">클릭 가능 글자</div>
+				<div class="tile green greenbox">초록색 상자</div>
+				<div class="tile green greenbox int">클릭 가능 상자</div>
+				<div class="tile greenboxinv">초록색 버튼</div>
+				<div class="tile greenboxinv int">클릭 가능 버튼</div>
+			</span>
+		</div>
+	</section>
+	<section>
+		<h2>회색</h2>
+		<div>
+			<span class="row">
+				<div class="tile white">회색 글자</div>
+				<div class="tile white int">클릭 가능 글자</div>
+				<div class="tile white whitebox">회색 상자</div>
+				<div class="tile white whitebox int">클릭 가능 상자</div>
+				<div class="tile whiteboxinv">회색 버튼</div>
+				<div class="tile whiteboxinv int">클릭 가능 버튼</div>
+			</span>
+		</div>
+	</section>
+	<section>
+		<h2>기타</h2>
+		<div>
+			<span class="row">
+				<div class="tile redboxinv">대조군</div>
+				<div class="tile redbright">빨강2</div>
+				<div class="tile redbright int">클릭 가능</div>
+			</span>
+		</div>
+		<div>
+			<span class="row">
+				<div class="tile blueboxinv">대조군</div>
+				<div class="tile bluebright">파랑2</div>
+				<div class="tile bluebright int">클릭 가능</div>
+			</span>
+		</div>
+		<div>
+			<span class="row">
+				<div class="tile yellowboxinv">대조군</div>
+				<div class="tile yellowbright">노랑2</div>
+				<div class="tile yellowbright int">클릭 가능</div>
+			</span>
+		</div>
+		<div>
+			<span class="row">
+				<div class="tile greenboxinv">대조군</div>
+				<div class="tile greenbright">초록2</div>
+				<div class="tile greenbright int">클릭 가능</div>
+			</span>
+		</div>
+		<div>
+			<del style="background-color: var(--c-del-bg); color: var(--c-del-text); padding: 0.1em 0; border-radius: 0.2em; text-decoration: none;">1234</del>
+			<ins style="background-color: var(--c-ins-bg); color: var(--c-ins-text); padding: 0.1em 0; border-radius: 0.2em; text-decoration: none;">1234</ins>
+		</div>
+	</section>
+</body>
+</html>

@@ -25,11 +25,18 @@ div {
 }
 
 a {
-	color: var(--c-blue);
+	color: var(--c-b-text);
+	text-decoration: none;
 }
 
 a:hover, a:focus {
-	color: var(--c-blue-active);
+	color: var(--c-b-texth);
+	text-decoration: underline;
+}
+
+a:active {
+	color: var(--c-b-texta);
+	text-decoration: underline;
 }
 
 figure {
