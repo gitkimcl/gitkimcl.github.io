@@ -20,7 +20,7 @@
 		<header>
 			<button class="tile logo" title="이끾끼 에리어" onclick="logo_click();" style="--dglow1:oklab(0.7 -0.2 0.2);--dglow2:oklab(0.7 0.2 0.2);--dglow3:oklab(0.7 -0.2 -0.2);--dglow4:oklab(0.7 0.2 -0.2);">
 				<div class="tile-img-wrapper">
-					<img id="logo-img" class="tile-img pixel" alt="이끾끼 에리어 로고" src="img/cycarealogo.png">
+					<img id="logo-img" class="tile-img pixel" alt="이끾끼 에리어 로고" src="img/cycarealogo.png" fetchpriority="high">
 				</div>
 			</button>
 			<div class="titlegroup">
@@ -42,7 +42,7 @@
 					<div class="item-cta">← 돌아가기</div>
 				</div>
 			</a>
-			<a class="tile about-tile" onclick="togglePower();" style="cursor: pointer;">
+			<div class="tile about-tile" onclick="togglePower();" style="cursor: pointer;">
 				<div class="tile-img-wrapper">
 					<div class="tile-img" style="background: #277AEA;"></div>
 				</div>
@@ -54,7 +54,7 @@
 					<div class="item-cta" id="powercta1">힘 제한하기 →</div>
 					<div class="item-cta" id="powercta2">힘 제한 풀기 →</div>
 				</div>
-			</a>
+			</div>
 		</div>
 		<main class="tiles">
 			<div style="flex-basis: 100%; height: 0.25rem;"></div>
