@@ -28,7 +28,7 @@ a {
 	color: var(--c-blue);
 }
 
-a:hover {
+a:hover, a:focus {
 	color: var(--c-blue-active);
 }
 

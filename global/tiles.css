@@ -158,7 +158,7 @@ a {
 	box-shadow: inset -0.05rem 0.05rem 0.05rem rgb(from var(--c-lbg) r g b / 30%);
 }
 
-.tile:hover {
+.tile:hover, .tile:focus {
 	transform: scale(1.02);
 }
 
