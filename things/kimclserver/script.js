@@ -28,7 +28,10 @@ function connect() {
 	$("serverhide").classList.add("invis");
 	connected = false;
 	if (url == null) {
-		alert(null);
+		$("statcolor").style.color = "var(--c-w-text)";
+		$("serverstatus").textContent = "서버 없음";
+		$("serverping").textContent = "---";
+		$("serverhide").classList.add("invis");
 	} else {
 		fetch(`${url}/ping`)
 		.then((res) => {
