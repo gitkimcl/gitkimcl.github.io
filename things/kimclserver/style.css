@@ -3,9 +3,61 @@
 }
 
 .hidden {
+	opacity: 0;
 	display: none;
+}
+
+.invis {
+	visibility: hidden;
 }
 
 .transparent {
 	opacity: 0%;
+}
+
+.connector {
+	width: 2rem;
+	height: 2rem;
+	position: fixed;
+	right: 0.3rem;
+	bottom: 0.3rem;
+	transition: opacity 0.2s, display 0.2s;
+	transition-behavior: allow-discrete;
+}
+
+.urlinput {
+	width: 1rem;
+	font-size: 0.121rem;
+	margin-right: 0.02rem;
+}
+
+.connector button, .connector input[type="submit"] {
+	padding: 1px 3px;
+	font-size: 0.121rem;
+}
+
+.middle {
+	line-height: 0;
+	vertical-align: middle;
+}
+
+.refresh {
+	vertical-align: middle;
+}
+
+#serverurl {
+	display: inline-block;
+	max-width: 1rem;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	vertical-align: middle;
+}
+
+#serverhide {
+	cursor: pointer;
+}
+
+#serverhide:hover {
+	text-decoration: underline;
 }

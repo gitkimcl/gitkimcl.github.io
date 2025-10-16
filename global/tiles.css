@@ -144,9 +144,11 @@ a {
 	inset: -0.04rem;
 	border-radius: 0.19rem;
 	background: conic-gradient(from -45deg, var(--glow1), var(--glow2), var(--glow4), var(--glow3), var(--glow1));
-	opacity: 0;
 	filter: blur(0.02rem);
-	transition: opacity 0.2s;
+	transition: opacity 0.2s, display 0.2s;
+	transition-behavior: allow-discrete;
+	display: none;
+	opacity: 0;
 }
 
 .tile::after {
@@ -163,7 +165,11 @@ a {
 }
 
 .tile:hover::before {
-	opacity: 1;	
+	display: block;
+	opacity: 1;
+	@starting-style {
+		opacity: 0;
+	}
 }
 
 .tile.double-tile {
