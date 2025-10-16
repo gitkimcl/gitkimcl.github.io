@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<title>kimcl server</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="kimcl server / 개발중">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="img/favicon.ico">
+	<link rel="preload" type="text/css" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-gov-dynamic-subset.min.css">
+	<link rel="stylesheet" type="text/css" href="/global/tiles.css">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="/global/jquery_slim.js"></script>
+	<script src="script.js" defer></script>
+	<script src="/global/kimclmenu.js" defer></script>
+</head>
+<body>
+	<kimcl-menu></kimcl-menu>
+	<header>
+		<button class="tile logo" title="kimcl server" onclick="logo_click();">
+			<div class="tile-img-wrapper">
+				<img id="logo-img" class="tile-img tilted pixel" alt="kimcl server 로고" src="img/test_img2.png" fetchpriority="high">
+			</div>
+		</button>
+		<h1 class="title" id="title">kimcl server</h1>
+	</header>
+	<main class="tiles">
+		<a class="tile" title="글 올리기(test-posts)" href="things/test-posts/" style="--dglow:rebeccapurple;">
+			<div class="tile-img-wrapper">
+				<img class="tile-img" src="none.png" alt="" fetchpriority="high">
+			</div>
+		</a>
+	</main>
+</body>
+</html>

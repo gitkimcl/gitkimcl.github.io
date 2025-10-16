@@ -1,0 +1,11 @@
+:root {
+	background-color: var(--c-gray1);
+}
+
+.hidden {
+	display: none;
+}
+
+.transparent {
+	opacity: 0%;
+}
