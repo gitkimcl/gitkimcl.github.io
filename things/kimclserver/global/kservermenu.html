@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<title>kserver menu</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="refresh" content="0;/404.html">
+</head>
+<body>
+	<template>
+		<style>
+			@import "/global/colors.css";
+
+			#ks_menu {
+				font-size: var(--tiles-1rem, 8.8rem);
+			}
+
+			@media screen and (max-width: 480px), screen and (max-width: 30.8rem) {
+				#ks_menu {
+					font-size: var(--tiles-1rem, calc(100vw / 3.5));
+				}
+			}
+
+			.tile {
+				--dglow: rgb(from var(--c-ltext) r g b / 50%);
+				--dglow1: var(--dglow);
+				--dglow2: var(--dglow);
+				--dglow3: var(--dglow);
+				--dglow4: var(--dglow);
+				--glow1: light-dark(oklch(from var(--dglow1) calc(1.185 - l) c h / calc(0.9 * alpha)),var(--dglow1)); /* 1.185 = 98.5% + 30% */
+				--glow2: light-dark(oklch(from var(--dglow2) calc(1.185 - l) c h / calc(0.9 * alpha)),var(--dglow2));
+				--glow3: light-dark(oklch(from var(--dglow3) calc(1.185 - l) c h / calc(0.9 * alpha)),var(--dglow3));
+				--glow4: light-dark(oklch(from var(--dglow4) calc(1.185 - l) c h / calc(0.9 * alpha)),var(--dglow4));
+				
+				transition: transform 0.2s;
+				display: block;
+				position: relative;
+				z-index: 1;
+				width: 3em;
+				aspect-ratio: 1;
+				border-radius: 0.15em;
+				box-shadow: -0.05em 0.05em 0.05em rgb(from var(--c-black) r g b / 30%),
+					-0.1em 0.1em 0.1em rgb(from var(--c-black) r g b / 10%);
+				break-inside: avoid-page;
+			}
+
+			.tile::before {
+				content: '';
+				position: absolute;
+				pointer-events: none;
+				inset: -0.04em;
+				border-radius: 0.19em;
+				background: conic-gradient(from -45deg, var(--glow1), var(--glow2), var(--glow4), var(--glow3), var(--glow1));
+				filter: blur(0.02em);
+				transition: opacity 0.2s, display 0.2s;
+				transition-behavior: allow-discrete;
+				display: none;
+				opacity: 0;
+			}
+
+			.tile::after {
+				content: '';
+				position: absolute;
+				pointer-events: none;
+				inset: 0;
+				border-radius: inherit;
+				box-shadow: inset -0.05em 0.05em 0.05em rgb(from var(--c-lbg) r g b / 30%);
+			}
+
+			.tile:hover, .tile:focus {
+				transform: scale(1.02);
+			}
+
+			.tile:hover::before {
+				display: block;
+				opacity: 1;
+				@starting-style {
+					opacity: 0;
+				}
+			}
+
+			.tile-img-wrapper {
+				position: absolute;
+				inset: 0;
+				border-radius: inherit;
+				overflow: clip;
+				pointer-events: none;
+			}
+
+			.tile-img {
+				position: relative;
+				display: inline-block;
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+
+			.tile-flex {
+				position: absolute;
+				inset: 0;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				text-align: center;
+				padding: 0.2em;
+				color: var(--c-ltext);
+			}
+
+			.item-headline {
+				margin: 0;
+				margin-bottom: 0.086em;
+				
+				font-size: 0.286em;
+				font-weight: 600;
+				line-height: 1.1;
+			}
+
+			.item-description {
+				opacity: 0.8;
+				margin: 0;
+				margin-bottom: 0.171em;
+				
+				font-size: 0.121em;
+				font-weight: 400;
+				line-height: 1.47059;
+			}
+
+			.item-cta {
+				margin-top: auto;
+				
+				font-size: 0.121em;
+				font-weight: 400;
+				line-height: 1.47059;
+			}
+
+			.connector {
+				width: 2em;
+				height: 2em;
+				position: fixed;
+				left: 0.3em;
+				bottom: 0.3em;
+				transition: opacity 0.2s, display 0.2s;
+				transition-behavior: allow-discrete;
+				opacity: 1;
+				display: block;
+				@starting-style {
+					opacity: 0;
+				}
+			}
+
+			.urlinput {
+				width: 8.26em;
+				font-size: 1em;
+				margin-right: 0.02em;
+			}
+
+			.connector button, .connector input[type="button"] {
+				padding: 1px 3px;
+				font-size: 1em;
+			}
+
+			.middle {
+				line-height: 0;
+				vertical-align: middle;
+			}
+
+			.refresh {
+				vertical-align: middle;
+			}
+
+			#serverurl {
+				display: inline-block;
+				max-width: 8.26em;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				vertical-align: middle;
+			}
+
+			#serverurl:hover {
+				overflow: visible;
+			}
+
+			#serverhide {
+				cursor: pointer;
+			}
+
+			#serverhide:hover {
+				text-decoration: underline;
+			}
+
+			#indicator {
+				position: fixed;
+				font-size: 1em;
+				border: none;
+				left: 0.05em;
+				bottom: 0.05em;
+				width: 0.08em;
+				height: 0.08em;
+				padding: 0;
+				border-radius: 0.04em;
+				background-color: var(--color);
+				opacity: 80%;
+				cursor: pointer;
+				transition: width 0.2s, height 0.2s;
+			}
+
+			#indicator:before {
+				content: '';
+				position: absolute;
+				left: 0;
+				bottom: 0;
+				width: 0.3em;
+				height: 0.3em;
+				border-radius: inherit;
+			}
+
+			#indicator:hover {
+				width: 0.3em;
+				height: 0.3em;
+			}
+
+			.hidden {
+				opacity: 0;
+				display: none;
+			}
+
+			.invis {
+				visibility: hidden;
+			}
+		</style>
+		<div id="ks_menu" style="--color: var(--c-w-text);">
+			<div id="connector" class="tile connector hidden">
+				<div class="tile-img-wrapper">
+					<div class="tile-img" style="background: var(--c-bg);"></div>
+				</div>
+				<div class="tile-flex" style="color: var(--c-text);">
+					<h2 class="item-headline">서버 연결</h2>
+					<p class="item-description" style="margin-bottom: 0.02em;">서버 주소 입력:</p>
+					<form style="font-size: 0.121em;">
+						<input id="newurl" class="urlinput" type="url" placeholder="http://localhost:8000" value="http://localhost:8000">
+						<input id="newurlsubmit" class="connect" type="button" value="연결">
+					</form>
+					<p class="item-description" style="margin-top: 0.04em; margin-bottom: 0.02em">서버 현황</p>
+					<p class="item-description" style="margin-top: -0.02em; margin-bottom: -0.01em; opacity: 1;"><span style="opacity: 0.8;">주소: </span><span id="serverurl"></span></p>
+					<div style="font-size: 0.121em; line-height: 0; color: var(--color);">
+						<span class="item-description middle" style="font-size: 1em;"><span id="serverstatus">연결중</span> · 핑 <span id="serverping">---</span></span>
+						<button type="submit" id="refresh" class="refresh">새로고침</button>
+					</div>
+					<div id="serverhide" class="item-cta invis">닫기 ✕</div>
+				</div>
+			</div>
+			<button id="indicator" type="button" title="서버 주소 선택"></button>
+		</div>
+		<script id="script">
+			function $(id, el) { el=el??document; return el.getElementById(id); }
+			function $q(q, el) { el=el??document; return el.querySelector(q); }
+			function attr(el, at, value) { return value===undefined?el.getAttribute(at):(value===null?el.removeAttribute(at):el.setAttribute(at, value)); }
+
+			let sr = $q("kserver-menu").shadowRoot;
+			console.log(sr);
+
+			$("indicator",sr).onclick = (_) => {
+				$('connector',sr).classList.toggle('hidden');
+			}
+			$("newurlsubmit",sr).onclick = changeurl;
+			$("refresh",sr).onclick = connect;
+			$("serverhide",sr).onclick = (_) => {
+				(connected) && $('connector',sr).classList.add('hidden');
+			}
+
+			let connected = false;
+
+			function connect(init) {
+				let url = localStorage.getItem("server.url");
+				$("serverurl",sr).textContent = (!url)?"[없음]":url;
+				$("serverurl",sr).setAttribute("title", (!url)?"[없음]":url);
+				$("ks_menu",sr).style.setProperty('--color',"var(--c-o-text)");
+				$("serverstatus",sr).textContent = "연결중";
+				$("serverping",sr).textContent = "---";
+				$("serverhide",sr).classList.add("invis");
+				connected = false;
+				if (url == null) {
+					$("ks_menu",sr).style.setProperty('--color',"var(--c-w-text)");
+					$("serverstatus",sr).textContent = "서버 없음";
+					$("serverping",sr).textContent = "---";
+					$("serverhide",sr).classList.add("invis");
+				} else {
+					fetch(`${url}/ping`)
+					.then((res) => {
+						return res.text();
+					}).then((re) => {
+						let data = JSON.parse(re);
+						if (data['ecyc'] !== 'e') {
+							throw SyntaxError("fail");
+						}
+						$("ks_menu",sr).style.setProperty('--color',"var(--c-g-text)");
+						$("serverstatus",sr).textContent = "연결됨";
+						$("serverping",sr).textContent = `${Math.round(Date.now() - data['time']*1000)}ms`;
+						$("serverhide",sr).classList.remove("invis");
+						connected = true;
+					}).catch((e) => {
+						$("ks_menu",sr).style.setProperty('--color',"var(--c-r-text)");
+						$("serverstatus",sr).textContent = "연결 실패";
+						$("serverping",sr).textContent = "---";
+						console.error(e);
+						if (init) {
+							$('connector',sr).classList.remove('hidden')
+						}
+					});
+				}
+			}
+
+			function changeurl() {
+				let newurl = $("newurl",sr).value;
+				if (!newurl) {
+					alert("url이 비어 있습니다.");
+					return;
+				}
+				localStorage.setItem("server.url", newurl);
+				connect();
+			}
+
+			connect(true);
+		</script>
+	</template>
+</body>
+</html>

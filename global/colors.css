@@ -1,4 +1,4 @@
-:root {
+:root, :host {
 	color-scheme: light dark;
 
 	--c-lbg: oklch(98.5% 0 0);
@@ -97,17 +97,17 @@
 	--c-p-borderh: light-dark(var(--c-purple),var(--c-purplel2));
 	--c-p-bordera: light-dark(var(--c-purpled1),var(--c-purplel3));
 
-	--c-redd3: oklch(26% 0.05 30);
-	--c-redd2: oklch(34% 0.08 30);
-	--c-redd1: oklch(47% 0.14 30);
-	--c-red: oklch(53% 0.17 30);
-	--c-redl0: oklch(58% 0.18 30);
-	--c-redl1: oklch(63% 0.2 30);
-	--c-redl2: oklch(71.5% 0.16 30);
-	--c-redl3: oklch(80% 0.12 30);
-	--c-redl4: oklch(87.5% 0.065 30);
-	--c-redl5: oklch(91.5% 0.04 30);
-	--c-redl6: oklch(95.5% 0.02 30);
+	--c-redd3: oklch(26% 0.05 25);
+	--c-redd2: oklch(34% 0.08 25);
+	--c-redd1: oklch(47% 0.14 25);
+	--c-red: oklch(53% 0.17 25);
+	--c-redl0: oklch(58% 0.18 25);
+	--c-redl1: oklch(63% 0.2 25);
+	--c-redl2: oklch(71.5% 0.16 25);
+	--c-redl3: oklch(80% 0.12 25);
+	--c-redl4: oklch(87.5% 0.065 25);
+	--c-redl5: oklch(91.5% 0.04 25);
+	--c-redl6: oklch(95.5% 0.02 25);
 	--c-r-text: light-dark(var(--c-red),var(--c-redl2));
 	--c-r-texth: light-dark(var(--c-redd1),var(--c-redl3));
 	--c-r-texta: light-dark(var(--c-redd2),var(--c-redl4));
@@ -206,7 +206,7 @@
 }
 
 @media print {
-	:root {
+	:root, :host {
 		print-color-adjust: exact !important;
 		--c-lbg: white;
 		--c-ltext: white;
