@@ -9,7 +9,7 @@
 <body>
 	<template>
 		<style>
-			@import "/global/colors.css";
+			@import "/global/colors/full.css";
 
 			#ks_menu {
 				font-size: var(--tiles-1rem, 8.8rem);
@@ -83,11 +83,6 @@
 				transform: scale(1.02);
 			}
 
-			#ks_main.hidden {
-				opacity: 0;
-				display: none;
-			}
-
 			#ks_flex {
 				display: flex;
 				flex-direction: column;
@@ -154,6 +149,7 @@
 				margin-top: auto;
 				padding: 0;
 				border: none;
+				background: none;
 				font-size: 0.121em;
 				font-weight: 400;
 				line-height: 1.47059;
@@ -166,6 +162,11 @@
 
 			#ks_hide.invis {
 				visibility: hidden;
+			}
+
+			#ks_main.hidden, #ks_main .hidden {
+				opacity: 0;
+				display: none;
 			}
 		</style>
 		<div id="ks_menu" style="--color: var(--c-w-text); --colorh: var(--c-w-texth); --colora: var(--c-w-texta);">
@@ -185,11 +186,27 @@
 						<button type="button" id="ks_refresh" style="vertical-align: middle;">새로고침</button>
 					</div>
 					<p class="ks_gap"></p>
+					<h2 id="ks_title">로그인</h2>
+					<p class="ks_text" style="max-width: 15em; word-break: keep-all;">계정명이 guest로 시작하는 계정은 임시 계정으로, 비밀번호를 아무거나 입력해도 로그인할 수 있습니다.</p>
+					<form id="ks_loginf" class="ks_line" style="display: flex;" action="javascript:void(0);">
+						<div>
+							<input id="ks_name" type="text" name="id" placeholder="계정명 입력" required><br>
+							<input id="ks_pw" type="password" name="pw" placeholder="비밀번호 입력" required>
+						</div>
+						<input id="ks_login" type="submit" value="로그인">
+					</form>
+					<p class="ks_text" style="opacity: 1;">
+						<span style="opacity: 0.8; display: inline-block; vertical-align: top;">로그인된 계정:</span>
+						<span id="ks_url" style="vertical-align: top;"></span>
+						<button type="button" id="ks_logout" class="hidden" style="vertical-align: middle;">로그아웃</button>
+					</p>
 					<button id="ks_hide" class="invis">닫기 ✕</div>
 				</div>
 			</div>
 		</div>
-		<script id="script">
+		<script id="script" type="module">
+			import { SHA256 } from "/global/sha256.js"
+
 			function $(id, el) { el=el??document; return el.getElementById(id); }
 			function $q(q, el) { el=el??document; return el.querySelector(q); }
 			function attr(el, at, value) { return value===undefined?el.getAttribute(at):(value===null?el.removeAttribute(at):el.setAttribute(at, value)); }
@@ -204,6 +221,7 @@
 			$("ks_hide",sr).onclick = (_) => {
 				(connected) && $('ks_main',sr).classList.add('hidden');
 			}
+			$("ks_loginf",sr).onsubmit = login;
 
 			let connected = false;
 
@@ -229,13 +247,13 @@
 					$("ks_status",sr).textContent = "서버 없음";
 					$("ks_ping",sr).textContent = "---";
 					$("ks_hide",sr).classList.add("invis");
+					$('ks_main',sr).classList.remove('hidden');
 				} else {
 					let start_time = Date.now();
 					fetch(`${url}/ping`)
 					.then((res) => {
-						return res.text();
-					}).then((re) => {
-						let data = JSON.parse(re);
+						return res.json();
+					}).then((data) => {
 						if (data['ecyc'] !== 'e') {
 							throw SyntaxError("fail");
 						}
@@ -264,6 +282,23 @@
 				let newurl = $("ks_nurl",sr).value;
 				localStorage.setItem("server.url", newurl);
 				connect(false);
+			}
+
+			function login() {
+				fetch(`${localStorage.getItem("server.url")}/login`, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({id: $("ks_name",sr).value, pw: SHA256(`${$("ks_name",sr).value}ecyce${$("ks_pw",sr).value}`)})
+				})
+				.then((res) => {
+					return res.json();
+				}).then((data) => {
+					console.log(data);
+				}).catch((e) => {
+					console.error(e);
+				});
 			}
 
 			if (localStorage.getItem("server.url")) $("ks_nurl",sr).value = localStorage.getItem("server.url");

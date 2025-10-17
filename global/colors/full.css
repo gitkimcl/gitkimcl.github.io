@@ -1,39 +1,6 @@
+@import "essential.css";
+
 :root, :host {
-	color-scheme: light dark;
-
-	--c-lbg: oklch(98.5% 0 0);
-	--c-dbg: oklch(30% 0 0);
-	--c-ltext: oklch(98.5% 0 0);
-	--c-dtext: oklch(20% 0 0);
-	--c-grayl4: oklch(95.5% 0 0);
-	--c-grayl3: oklch(91.25% 0 0);
-	--c-grayl2: oklch(82.5% 0 0);
-	--c-grayl1: oklch(73.75% 0 0);
-	--c-gray: oklch(65% 0 0);
-	--c-grayd1: oklch(56.25% 0 0);
-	--c-grayd2: oklch(47.5% 0 0);
-	--c-grayd3: oklch(38.75% 0 0);
-	--c-grayd4: oklch(33.5% 0 0);
-	--c-black: black;
-	--c-white: white;
-
-	--c-bg: light-dark(var(--c-lbg),var(--c-dbg));
-	--c-antibg: light-dark(var(--c-dbg),var(--c-lbg));
-	--c-text: light-dark(var(--c-dtext),var(--c-ltext));
-	--c-antitext: light-dark(var(--c-ltext),var(--c-dtext));
-	--c-gray0: light-dark(var(--c-grayl4),var(--c-grayd4));
-	--c-gray1: light-dark(var(--c-grayl3),var(--c-grayd3));
-	--c-gray2: light-dark(var(--c-grayl2),var(--c-grayd2));
-	--c-gray3: light-dark(var(--c-grayl1),var(--c-grayd1));
-	--c-gray4: light-dark(var(--c-gray),var(--c-gray));
-	--c-gray5: light-dark(var(--c-grayd1),var(--c-grayl1));
-	--c-gray6: light-dark(var(--c-grayd2),var(--c-grayl2));
-	--c-gray7: light-dark(var(--c-grayd3),var(--c-grayl3));
-	--c-gray8: light-dark(var(--c-grayd4),var(--c-grayl4));
-	--c-extreme: light-dark(var(--c-white),var(--c-black));
-	--c-antiextreme: light-dark(var(--c-black),var(--c-white));
-
-
 	/* Colors modified from Wikipedia */
 	--c-w-text: var(--c-gray5);
 	--c-w-texth: var(--c-gray6);

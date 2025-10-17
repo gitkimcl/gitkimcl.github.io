@@ -55,10 +55,9 @@ const url = () => localStorage.getItem("server.url");
 function update_posts() {
 	fetch(`${url()}/test-posts`)
 	.then((res) => {
-		return res.text();
+		return res.json();
 	})
-	.then((text) => {
-		const data = JSON.parse(text);
+	.then((data) => {
 		show_data(data);
 	});
 }
@@ -92,10 +91,9 @@ function post() {
 		body: JSON.stringify(data)
 	})
 	.then((res) => {
-		return res.text();
+		return res.json();
 	})
-	.then((text) => {
-		const data = JSON.parse(text);
+	.then((data) => {
 		show_data(data);
 		$("#log").css("color","var(--c-g-text)");
 		$("#log").text("작업 성공: 글 추가됨");
@@ -115,10 +113,9 @@ function delete_post(id) {
 		body: JSON.stringify({id: id})
 	})
 	.then((res) => {
-		return res.text();
+		return res.json();
 	})
-	.then((text) => {
-		const data = JSON.parse(text);
+	.then((data) => {
 		show_data(data);
 		$("#log").css("color","var(--c-r-text)");
 		$("#log").text("작업 성공: 글 삭제됨");

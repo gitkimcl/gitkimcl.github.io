@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<title>계정 관리</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/global/gallery.css">
+	<link rel="stylesheet" href="/global/colors/full.css">
+	<link rel="stylesheet" href="style.css">
+	<script src="/global/jquery_slim.js"></script>
+	<script src="script.js" type="module"></script>
+	<script src="/global/kimclmenu.js" type="module"></script>
+	<script src="/things/kimclserver/global/kservermenu.js" type="module"></script>
+</head>
+<body>
+	<kimcl-menu></kimcl-menu>
+	<kserver-menu></kserver-menu>
+	<h1>계정 관리</h1>
+	<section style="color: var(--c-g-text);">
+		<h2>계정 만들기</h2>
+		<form id="create" action="javascript:void(0);">
+			<input type="text" placeholder="계정명" name="id" required><br>
+			<input type="password" placeholder="비밀번호" name="pw" required minlength="4" oninvalid="if (this.validity.tooShort) this.setCustomValidity('아무리 그래도 4글자도 안 넘으면 느낌이 안 나잖아요');" oninput="this.setCustomValidity(this.validity.tooShort ? '4글자 이상의 비밀번호를 입력하세요.' : '');"><br>
+			<input type="submit" value="계정 생성">
+		</form>
+		<p id="makelog">&nbsp;</p>
+	</section>
+	<section style="color: var(--c-r-text);">
+		<h2>계정 삭제</h2>
+		<form id="delete" action="javascript:void(0);">
+			<input type="text" placeholder="계정명" name="id" required><br>
+			<input type="password" placeholder="비밀번호" name="pw" required minlength="4" oninvalid="if (this.validity.tooShort) this.setCustomValidity('비밀번호는 4글자 이상입니다.');" oninput="this.setCustomValidity(this.validity.tooShort ? '비밀번호는 4글자 이상입니다.' : '');"><br>
+			<input type="submit" value="계정 삭제">
+		</form>
+		<p id="deletelog">&nbsp;</p>
+	</section>
+</body>
+</html>

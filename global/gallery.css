@@ -1,4 +1,4 @@
-@import "colors.css";
+@import "colors/essential.css";
 
 html {
 	background-color: var(--c-bg);
@@ -16,8 +16,17 @@ img {
 	max-width: 80vw;
 }
 
-div, p, h1, h2, h3, h4, h5, h6, figure {
+div, p, h1, h2, h3, h4, h5, h6, figure, form {
 	text-align: center;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin-block-start: 1em;
+	margin-block-end: 0.25em;
+}
+
+p {
+	margin-block: 0.5em;
 }
 
 div {
@@ -25,17 +34,17 @@ div {
 }
 
 a {
-	color: var(--c-b-text);
+	color: var(--c-link);
 	text-decoration: none;
 }
 
 a:hover, a:focus {
-	color: var(--c-b-texth);
+	color: var(--c-linkh);
 	text-decoration: underline;
 }
 
 a:active {
-	color: var(--c-b-texta);
+	color: var(--c-linka);
 	text-decoration: underline;
 }
 

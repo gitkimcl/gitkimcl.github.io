@@ -1,0 +1,10 @@
+input {
+	font-size: 1em;
+	margin: 0.2em;
+	color: inherit;
+}
+
+input::placeholder {
+	color: inherit;
+	opacity: 0.6;
+}
