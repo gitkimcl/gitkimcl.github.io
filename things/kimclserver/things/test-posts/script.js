@@ -12,16 +12,15 @@ class PostElement extends HTMLElement {
 	}
 }
 
-document.getElementById("titleinput").oninput = (_) => {
+$("#titleinput").on("input", (_) => {
 	document.querySelectorAll("#titleinput br").forEach((e) => e.remove());
-};
-
-document.getElementById("contentinput").oninput = (_) => {
+});
+$("#contentinput").on("input", (_) => {
 	document.querySelectorAll("#contentinput br").forEach((e) => e.remove());
-};
+});
 
 function changeColor(c) {
-	document.getElementById("newpost").setAttribute("data-color",c);
+	$("#newpost").attr("data-color",c);
 }
 
 customElements.define('test-post', PostElement);
@@ -37,31 +36,16 @@ const options = {
 };
 
 function show_data(data) {
-	document.getElementById("temp-posts").innerHTML = '';
+	$("#temp-posts").empty();
 	for (e of data) {
-		let ne = document.createElement('test-post');
-		ne.classList.add("int");
-		ne.setAttribute('data-color', e.color ?? 0);
-		ne.setAttribute('onclick', `delete_post(${e.id})`);
-		let title = document.createElement('span');
-		title.classList.add("noactive");
-		title.setAttribute('slot','title');
-		title.textContent = e.title;
-		let content = document.createElement('span');
-		content.classList.add("noactive");
-		content.setAttribute('slot','content');
-		content.textContent = e.content;
-		let info = document.createElement('span');
-		info.classList.add("noactive");
-		info.classList.add("dateid");
-		info.setAttribute('slot','info');
-		info.textContent = `#${e.id} · ${new Date(e.date*1000).toLocaleString('ko-KR',options)}`;
-		ne.appendChild(title);
-		if (e.content) ne.appendChild(content);
-		ne.appendChild(info);
-		document.getElementById('temp-posts').prepend(ne);
+		let ne = $(`<test-post class="int" data-color="${e.color ?? 0}">`)
+		let title = $(`<span slot="title" class="noactive">`).text(e.title);
+		let content = $(`<span slot="content" class="noactive">`).text(e.content);
+		let info = $(`<span slot="info" class="noactive dateid">`).text(`#${e.id} · ${new Date(e.date*1000).toLocaleString('ko-KR',options)}`);
+		(e.content) ? ne.append(title).append(content).append(info) : ne.append(title).append(info);
+		$("#temp-posts").prepend(ne);
 	}
-	document.getElementById('posts').innerHTML = document.getElementById('temp-posts').innerHTML;
+	$('#posts').html($('#temp-posts').html());
 }
 
 const url = () => localStorage.getItem("server.url");
@@ -80,11 +64,11 @@ function refresh() {
 	try {
 		update_posts();
 	} catch (e) {
-		document.getElementById("log").style.color = "var(--c-r-bright)";
-		document.getElementById("log").textContent = `작업 실패: ${e}`;
+		$("#log").css("color","var(--c-r-bright)");
+		$("#log").text(`작업 실패: ${e}`);
 	}
-	document.getElementById("log").style.color = "var(--c-g-text)";
-	document.getElementById("log").textContent = "작업 성공: 새로고침 완료";
+	$("#log").css("color","var(--c-g-text)");
+	$("#log").text("작업 성공: 새로고침 완료");
 }
 
 function post() {
@@ -92,8 +76,8 @@ function post() {
 	let content = document.getElementById("contentinput").textContent;
 	let color = document.getElementById("newpost").getAttribute("data-color");
 	if (!title) {
-		document.getElementById("log").style.color = "var(--c-r-bright)";
-		document.getElementById("log").textContent = "작업 실패: 제목 없음";
+		$("#log").css("color","var(--c-r-bright)");
+		$("#log").text("작업 실패: 제목 없음");
 		return;
 	}
 	let data = {title: title, content: content, color: color};
@@ -110,12 +94,12 @@ function post() {
 	.then((text) => {
 		const data = JSON.parse(text);
 		show_data(data);
-		document.getElementById("log").style.color = "var(--c-g-text)";
-		document.getElementById("log").textContent = "작업 성공: 글 추가됨";
+		$("#log").css("color","var(--c-g-text)");
+		$("#log").text("작업 성공: 글 추가됨");
 	})
 	.catch((e) => {
-		document.getElementById("log").style.color = "var(--c-r-bright)";
-		document.getElementById("log").textContent = `작업 실패: ${e}`;
+		$("#log").css("color","var(--c-r-bright)");
+		$("#log").text(`작업 실패: ${e}`);
 	});
 }
 
@@ -133,11 +117,11 @@ function delete_post(id) {
 	.then((text) => {
 		const data = JSON.parse(text);
 		show_data(data);
-		document.getElementById("log").style.color = "var(--c-r-text)";
-		document.getElementById("log").textContent = "작업 성공: 글 삭제됨";
+		$("#log").css("color","var(--c-r-text)");
+		$("#log").text("작업 성공: 글 삭제됨");
 	}).catch((e) => {
-		document.getElementById("log").style.color = "var(--c-r-bright)";
-		document.getElementById("log").textContent = `작업 실패: ${e}`;
+		$("#log").css("color","var(--c-r-bright)");
+		$("#log").text(`작업 실패: ${e}`);
 	});;
 }
 

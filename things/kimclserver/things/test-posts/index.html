@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/global/gallery.css">
 	<link rel="stylesheet" href="style.css">
+	<script src="/global/jquery_slim.js"></script>
 	<script src="script.js" defer></script>
 	<script src="/global/kimclmenu.js" defer></script>
 	<script src="/things/kimclserver/global/kservermenu.js" defer></script>
@@ -63,13 +64,13 @@
 		<span id="titleinput" class="input noactive" slot="title" contenteditable="true" onclick="event.stopPropagation();"></span>
 		<span id="contentinput" class="input noactive" slot="content" contenteditable="true" onclick="event.stopPropagation();"></span>
 		<div id="colorinput" class="noactive" slot="info" onclick="event.stopPropagation();">
-			<input type="radio" class="colorradio" onclick="changeColor(0)" name="color" value="0" style="--bg: var(--c-w-bgh); --bgh: var(--c-w-bga); --bga: color-mix(in oklch, var(--c-w-text) 30%, var(--c-w-bga)); --sel: var(--c-w-texta);" checked>
-			<input type="radio" class="colorradio" onclick="changeColor(1)" name="color" value="1" style="--bg: var(--c-b-bgh); --bgh: var(--c-b-bga); --bga: color-mix(in oklch, var(--c-b-text) 30%, var(--c-b-bga)); --sel: var(--c-b-texta);">
-			<input type="radio" class="colorradio" onclick="changeColor(2)" name="color" value="2" style="--bg: var(--c-p-bgh); --bgh: var(--c-p-bga); --bga: color-mix(in oklch, var(--c-p-text) 30%, var(--c-p-bga)); --sel: var(--c-p-texta);">
-			<input type="radio" class="colorradio" onclick="changeColor(3)" name="color" value="3" style="--bg: var(--c-r-bgh); --bgh: var(--c-r-bga); --bga: color-mix(in oklch, var(--c-r-text) 30%, var(--c-r-bga)); --sel: var(--c-r-texta);">
-			<input type="radio" class="colorradio" onclick="changeColor(4)" name="color" value="4" style="--bg: var(--c-o-bgh); --bgh: var(--c-o-bga); --bga: color-mix(in oklch, var(--c-o-text) 30%, var(--c-o-bga)); --sel: var(--c-o-texta);">
-			<input type="radio" class="colorradio" onclick="changeColor(5)" name="color" value="5" style="--bg: var(--c-y-bgh); --bgh: var(--c-y-bga); --bga: color-mix(in oklch, var(--c-y-text) 30%, var(--c-y-bga)); --sel: var(--c-y-texta);">
-			<input type="radio" class="colorradio" onclick="changeColor(6)" name="color" value="6" style="--bg: var(--c-g-bgh); --bgh: var(--c-g-bga); --bga: color-mix(in oklch, var(--c-g-text) 30%, var(--c-g-bga)); --sel: var(--c-g-texta);">
+			<input type="radio" class="colorradio" onclick="changeColor(0)" name="color" value="0" style="--bg: var(--c-w-bga); --bgh: color-mix(in oklch, var(--c-w-text) 20%, var(--c-w-bga)); --bga: color-mix(in oklch, var(--c-w-text) 40%, var(--c-w-bga)); --sel: var(--c-w-texta);" checked>
+			<input type="radio" class="colorradio" onclick="changeColor(1)" name="color" value="1" style="--bg: var(--c-b-bga); --bgh: color-mix(in oklch, var(--c-b-text) 20%, var(--c-b-bga)); --bga: color-mix(in oklch, var(--c-b-text) 40%, var(--c-b-bga)); --sel: var(--c-b-texta);">
+			<input type="radio" class="colorradio" onclick="changeColor(2)" name="color" value="2" style="--bg: var(--c-p-bga); --bgh: color-mix(in oklch, var(--c-p-text) 20%, var(--c-p-bga)); --bga: color-mix(in oklch, var(--c-p-text) 40%, var(--c-p-bga)); --sel: var(--c-p-texta);">
+			<input type="radio" class="colorradio" onclick="changeColor(3)" name="color" value="3" style="--bg: var(--c-r-bga); --bgh: color-mix(in oklch, var(--c-r-text) 20%, var(--c-r-bga)); --bga: color-mix(in oklch, var(--c-r-text) 40%, var(--c-r-bga)); --sel: var(--c-r-texta);">
+			<input type="radio" class="colorradio" onclick="changeColor(4)" name="color" value="4" style="--bg: var(--c-o-bga); --bgh: color-mix(in oklch, var(--c-o-text) 20%, var(--c-o-bga)); --bga: color-mix(in oklch, var(--c-o-text) 40%, var(--c-o-bga)); --sel: var(--c-o-texta);">
+			<input type="radio" class="colorradio" onclick="changeColor(5)" name="color" value="5" style="--bg: var(--c-y-bga); --bgh: color-mix(in oklch, var(--c-y-text) 20%, var(--c-y-bga)); --bga: color-mix(in oklch, var(--c-y-text) 40%, var(--c-y-bga)); --sel: var(--c-y-texta);">
+			<input type="radio" class="colorradio" onclick="changeColor(6)" name="color" value="6" style="--bg: var(--c-g-bga); --bgh: color-mix(in oklch, var(--c-g-text) 20%, var(--c-g-bga)); --bga: color-mix(in oklch, var(--c-g-text) 40%, var(--c-g-bga)); --sel: var(--c-g-texta);">
 		</div>
 	</test-post>
 	<main id="posts"></main>
