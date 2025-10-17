@@ -5,74 +5,74 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/global/gallery.css">
+	<link rel="stylesheet" href="style.css">
 	<script src="script.js" defer></script>
 	<script src="/global/kimclmenu.js" defer></script>
 	<script src="/things/kimclserver/global/kservermenu.js" defer></script>
-	<style>
-		test-post {
-			display: block;
-			margin-block: 1em;
-		}
-	</style>
 </head>
 <body>
 	<kimcl-menu></kimcl-menu>
+	<kserver-menu></kserver-menu>
 	<template id="post-template">
 		<style>
 			#article {
-				width: min(100%, 60em);
+				width: 100%;
 				box-sizing: border-box;
 				margin-inline: auto;
 				padding: 1.25em;
-				padding-top: 1.05em;
+				padding-top: 1.2em;
 				border-radius: 1em;
 				background-color: var(--bg);
 				border: 0.01em solid var(--b);
 				color: var(--c);
+				position: relative;
 			}
 
-			:host(*[data-color="0"]) > #article { --bg: var(--c-w-bg); --b: var(--c-w-border); --c: var(--c-w-text); }
-			:host(*[data-color="0"]) > #article:hover { text-decoration: underline; --bg: var(--c-w-bgh); --b: var(--c-w-borderh); }
-			:host(*[data-color="0"]) > #article:active { text-decoration: underline; --bg: var(--c-w-bga); --b: var(--c-w-bordera); }
-			:host(*[data-color="1"]) > #article { --bg: var(--c-b-bg); --b: var(--c-b-border); --c: var(--c-b-text); }
-			:host(*[data-color="1"]) > #article:hover { text-decoration: underline; --bg: var(--c-b-bgh); --b: var(--c-b-borderh); }
-			:host(*[data-color="1"]) > #article:active { text-decoration: underline; --bg: var(--c-b-bga); --b: var(--c-b-bordera); }
-			:host(*[data-color="2"]) > #article { --bg: var(--c-p-bg); --b: var(--c-p-border); --c: var(--c-p-text); }
-			:host(*[data-color="2"]) > #article:hover { text-decoration: underline; --bg: var(--c-p-bgh); --b: var(--c-p-borderh); }
-			:host(*[data-color="2"]) > #article:active { text-decoration: underline; --bg: var(--c-p-bga); --b: var(--c-p-bordera); }
-			:host(*[data-color="3"]) > #article { --bg: var(--c-r-bg); --b: var(--c-r-border); --c: var(--c-r-text); }
-			:host(*[data-color="3"]) > #article:hover { text-decoration: underline; --bg: var(--c-r-bgh); --b: var(--c-r-borderh); }
-			:host(*[data-color="3"]) > #article:active { text-decoration: underline; --bg: var(--c-r-bga); --b: var(--c-r-bordera); }
-			:host(*[data-color="4"]) > #article { --bg: var(--c-o-bg); --b: var(--c-o-border); --c: var(--c-o-text); }
-			:host(*[data-color="4"]) > #article:hover { text-decoration: underline; --bg: var(--c-o-bgh); --b: var(--c-o-borderh); }
-			:host(*[data-color="4"]) > #article:active { text-decoration: underline; --bg: var(--c-o-bga); --b: var(--c-o-bordera); }
-			:host(*[data-color="5"]) > #article { --bg: var(--c-y-bg); --b: var(--c-y-border); --c: var(--c-y-text); }
-			:host(*[data-color="5"]) > #article:hover { text-decoration: underline; --bg: var(--c-y-bgh); --b: var(--c-y-borderh); }
-			:host(*[data-color="5"]) > #article:active { text-decoration: underline; --bg: var(--c-y-bga); --b: var(--c-y-bordera); }
-			:host(*[data-color="6"]) > #article { --bg: var(--c-g-bg); --b: var(--c-g-border); --c: var(--c-g-text); }
-			:host(*[data-color="6"]) > #article:hover { text-decoration: underline; --bg: var(--c-g-bgh); --b: var(--c-g-borderh); }
-			:host(*[data-color="6"]) > #article:active { text-decoration: underline; --bg: var(--c-g-bga); --b: var(--c-g-bordera); }
+			:host(#newpost) > #article {
+				background-color: color-mix(in oklch, var(--bg) 40%, transparent);
+				border: 0.01em solid color-mix(in oklch, var(--b) 40%, transparent);
+			}
 
-			.title, .content {
+			.title, .content, .info {
 				margin-block: 0;
 			}
 
-			.title ::slotted(*) {
-				display: block;
-				margin-block-end: 0.2em;
+			.info {
+				float: right;
+			}
+
+			.content ::slotted(*) {
+				display: inline-block;
+				padding-top: 0.2em;
+			}
+
+			.info ::slotted(.dateid) {
+				opacity: 0.6;
 			}
 		</style>
 		<article id="article">
+			<p class="info"><slot name="info"></slot></p>
 			<h3 class="title"><slot name="title"></slot></h3>
 			<p class="content"><slot name="content"></slot></p>
 		</article>
 	</template>
 	<h1>글 올리기</h1>
-	<div><button>새로고침</button></div>
-	<test-post data-color="0">
-		<span slot="title">aefawefwfaw</span>
-		<span slot="content">awefaewfawfeeaw</span>
+	<div><button onclick="refresh();">새로고침</button></div>
+	<p id="log">&nbsp;</p>
+	<test-post id="newpost" class="int" data-color="0" onclick="post();">
+		<span id="titleinput" class="input noactive" slot="title" contenteditable="true" onclick="event.stopPropagation();"></span>
+		<span id="contentinput" class="input noactive" slot="content" contenteditable="true" onclick="event.stopPropagation();"></span>
+		<div id="colorinput" class="noactive" slot="info" onclick="event.stopPropagation();">
+			<input type="radio" class="colorradio" onclick="changeColor(0)" name="color" value="0" style="--bg: var(--c-w-bgh); --bgh: var(--c-w-bga); --bga: color-mix(in oklch, var(--c-w-text) 30%, var(--c-w-bga)); --sel: var(--c-w-texta);" checked>
+			<input type="radio" class="colorradio" onclick="changeColor(1)" name="color" value="1" style="--bg: var(--c-b-bgh); --bgh: var(--c-b-bga); --bga: color-mix(in oklch, var(--c-b-text) 30%, var(--c-b-bga)); --sel: var(--c-b-texta);">
+			<input type="radio" class="colorradio" onclick="changeColor(2)" name="color" value="2" style="--bg: var(--c-p-bgh); --bgh: var(--c-p-bga); --bga: color-mix(in oklch, var(--c-p-text) 30%, var(--c-p-bga)); --sel: var(--c-p-texta);">
+			<input type="radio" class="colorradio" onclick="changeColor(3)" name="color" value="3" style="--bg: var(--c-r-bgh); --bgh: var(--c-r-bga); --bga: color-mix(in oklch, var(--c-r-text) 30%, var(--c-r-bga)); --sel: var(--c-r-texta);">
+			<input type="radio" class="colorradio" onclick="changeColor(4)" name="color" value="4" style="--bg: var(--c-o-bgh); --bgh: var(--c-o-bga); --bga: color-mix(in oklch, var(--c-o-text) 30%, var(--c-o-bga)); --sel: var(--c-o-texta);">
+			<input type="radio" class="colorradio" onclick="changeColor(5)" name="color" value="5" style="--bg: var(--c-y-bgh); --bgh: var(--c-y-bga); --bga: color-mix(in oklch, var(--c-y-text) 30%, var(--c-y-bga)); --sel: var(--c-y-texta);">
+			<input type="radio" class="colorradio" onclick="changeColor(6)" name="color" value="6" style="--bg: var(--c-g-bgh); --bgh: var(--c-g-bga); --bga: color-mix(in oklch, var(--c-g-text) 30%, var(--c-g-bga)); --sel: var(--c-g-texta);">
+		</div>
 	</test-post>
-	<kserver-menu></kserver-menu>
+	<main id="posts"></main>
+	<div id="temp-posts" hidden></div>
 </body>
 </html>

@@ -186,7 +186,7 @@
 						<button type="button" id="ks_refresh" style="vertical-align: middle;">새로고침</button>
 					</div>
 					<p class="ks_gap"></p>
-					<button id="ks_hide" class="invis" tabindex="0">닫기 ✕</div>
+					<button id="ks_hide" class="invis">닫기 ✕</div>
 				</div>
 			</div>
 		</div>
@@ -251,11 +251,12 @@
 						$("ks_hide",sr).classList.remove("invis");
 						connected = true;
 					}).catch((e) => {
+						// console.error(e);
 						setColor("r");
 						$("ks_status",sr).textContent = "연결 실패";
 						$("ks_ping",sr).textContent = "---";
-						console.error(e);
-						$('ks_main',sr).classList.remove('hidden')
+						$("ks_hide",sr).classList.add("invis");
+						$('ks_main',sr).classList.remove('hidden');
 					});
 				}
 			}
