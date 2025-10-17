@@ -41,9 +41,9 @@
 	--c-w-bg: var(--c-gray0);
 	--c-w-bgh: var(--c-gray1);
 	--c-w-bga: var(--c-gray2);
-	--c-w-invbg: light-dark(var(--c-grayd1),var(--c-gray));
-	--c-w-invbgh: light-dark(var(--c-grayd2),var(--c-grayl1));
-	--c-w-invbga: light-dark(var(--c-grayd3),var(--c-grayl2));
+	--c-w-invbg: var(--c-grayd1);
+	--c-w-invbgh: var(--c-grayd2);
+	--c-w-invbga: var(--c-grayd3);
 	--c-w-border: var(--c-gray4);
 	--c-w-borderh: var(--c-gray5);
 	--c-w-bordera: var(--c-gray6);
