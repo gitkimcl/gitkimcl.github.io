@@ -38,11 +38,14 @@ const options = {
 function show_data(data) {
 	$("#temp-posts").empty();
 	for (e of data) {
-		let ne = $(`<test-post class="int" data-color="${e.color ?? 0}">`)
-		let title = $(`<span slot="title" class="noactive">`).text(e.title);
-		let content = $(`<span slot="content" class="noactive">`).text(e.content);
-		let info = $(`<span slot="info" class="noactive dateid">`).text(`#${e.id} · ${new Date(e.date*1000).toLocaleString('ko-KR',options)}`);
-		(e.content) ? ne.append(title).append(content).append(info) : ne.append(title).append(info);
+		let ne = $(`<article class="test-post int" data-color="${e.color ?? 0}" onclick="delete_post(${e.id});">
+			<div class="info"></div>
+			<h3 class="title"></h3>
+			<p class="content"></p>
+		</article>`);
+		$(".title",ne).append($(`<span slot="title" class="noactive">`).text(e.title));
+		if (e.content) $(".content",ne).append($(`<span slot="content" class="noactive">`).text(e.content));
+		$(".info",ne).append($(`<span slot="info" class="noactive dateid">`).text(`#${e.id} · ${new Date(e.date*1000).toLocaleString('ko-KR',options)}`));
 		$("#temp-posts").prepend(ne);
 	}
 	$('#posts').html($('#temp-posts').html());
