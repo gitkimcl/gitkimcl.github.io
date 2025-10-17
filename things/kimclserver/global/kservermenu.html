@@ -21,176 +21,7 @@
 				}
 			}
 
-			.tile {
-				--dglow: rgb(from var(--c-ltext) r g b / 50%);
-				--dglow1: var(--dglow);
-				--dglow2: var(--dglow);
-				--dglow3: var(--dglow);
-				--dglow4: var(--dglow);
-				--glow1: light-dark(oklch(from var(--dglow1) calc(1.185 - l) c h / calc(0.9 * alpha)),var(--dglow1)); /* 1.185 = 98.5% + 30% */
-				--glow2: light-dark(oklch(from var(--dglow2) calc(1.185 - l) c h / calc(0.9 * alpha)),var(--dglow2));
-				--glow3: light-dark(oklch(from var(--dglow3) calc(1.185 - l) c h / calc(0.9 * alpha)),var(--dglow3));
-				--glow4: light-dark(oklch(from var(--dglow4) calc(1.185 - l) c h / calc(0.9 * alpha)),var(--dglow4));
-				
-				transition: transform 0.2s;
-				display: block;
-				position: relative;
-				z-index: 1;
-				width: 3em;
-				aspect-ratio: 1;
-				border-radius: 0.15em;
-				box-shadow: -0.05em 0.05em 0.05em rgb(from var(--c-black) r g b / 30%),
-					-0.1em 0.1em 0.1em rgb(from var(--c-black) r g b / 10%);
-				break-inside: avoid-page;
-			}
-
-			.tile::before {
-				content: '';
-				position: absolute;
-				pointer-events: none;
-				inset: -0.04em;
-				border-radius: 0.19em;
-				background: conic-gradient(from -45deg, var(--glow1), var(--glow2), var(--glow4), var(--glow3), var(--glow1));
-				filter: blur(0.02em);
-				transition: opacity 0.2s, display 0.2s;
-				transition-behavior: allow-discrete;
-				display: none;
-				opacity: 0;
-			}
-
-			.tile::after {
-				content: '';
-				position: absolute;
-				pointer-events: none;
-				inset: 0;
-				border-radius: inherit;
-				box-shadow: inset -0.05em 0.05em 0.05em rgb(from var(--c-lbg) r g b / 30%);
-			}
-
-			.tile:hover, .tile:focus {
-				transform: scale(1.02);
-			}
-
-			.tile:hover::before {
-				display: block;
-				opacity: 1;
-				@starting-style {
-					opacity: 0;
-				}
-			}
-
-			.tile-img-wrapper {
-				position: absolute;
-				inset: 0;
-				border-radius: inherit;
-				overflow: clip;
-				pointer-events: none;
-			}
-
-			.tile-img {
-				position: relative;
-				display: inline-block;
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
-			}
-
-			.tile-flex {
-				position: absolute;
-				inset: 0;
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-				align-items: center;
-				text-align: center;
-				padding: 0.2em;
-				color: var(--c-ltext);
-			}
-
-			.item-headline {
-				margin: 0;
-				margin-bottom: 0.086em;
-				
-				font-size: 0.286em;
-				font-weight: 600;
-				line-height: 1.1;
-			}
-
-			.item-description {
-				opacity: 0.8;
-				margin: 0;
-				margin-bottom: 0.171em;
-				
-				font-size: 0.121em;
-				font-weight: 400;
-				line-height: 1.47059;
-			}
-
-			.item-cta {
-				margin-top: auto;
-				
-				font-size: 0.121em;
-				font-weight: 400;
-				line-height: 1.47059;
-			}
-
-			.connector {
-				width: 2em;
-				height: 2em;
-				position: fixed;
-				left: 0.3em;
-				bottom: 0.3em;
-				transition: opacity 0.2s, display 0.2s;
-				transition-behavior: allow-discrete;
-				opacity: 1;
-				display: block;
-				@starting-style {
-					opacity: 0;
-				}
-			}
-
-			.urlinput {
-				width: 8.26em;
-				font-size: 1em;
-				margin-right: 0.02em;
-			}
-
-			.connector button, .connector input[type="button"] {
-				padding: 1px 3px;
-				font-size: 1em;
-			}
-
-			.middle {
-				line-height: 0;
-				vertical-align: middle;
-			}
-
-			.refresh {
-				vertical-align: middle;
-			}
-
-			#serverurl {
-				display: inline-block;
-				max-width: 8.26em;
-				overflow: hidden;
-				white-space: nowrap;
-				text-overflow: ellipsis;
-				vertical-align: middle;
-			}
-
-			#serverurl:hover {
-				overflow: visible;
-			}
-
-			#serverhide {
-				cursor: pointer;
-			}
-
-			#serverhide:hover {
-				text-decoration: underline;
-			}
-
-			#indicator {
+			#ks_button {
 				position: fixed;
 				font-size: 1em;
 				border: none;
@@ -203,10 +34,10 @@
 				background-color: var(--color);
 				opacity: 80%;
 				cursor: pointer;
-				transition: width 0.2s, height 0.2s;
+				transition: width 0.2s, height 0.2s, background-color 0.2s;
 			}
 
-			#indicator:before {
+			#ks_button:before {
 				content: '';
 				position: absolute;
 				left: 0;
@@ -216,42 +47,148 @@
 				border-radius: inherit;
 			}
 
-			#indicator:hover {
+			#ks_button:hover, #ks_button:focus {
 				width: 0.3em;
 				height: 0.3em;
 			}
 
-			.hidden {
+			#ks_button:hover {
+				background-color: var(--colorh);
+			}
+
+			#ks_button:active {
+				background-color: var(--colora);
+				transition: width 0.2s, height 0.2s;
+			}
+
+			#ks_main {
+				position: fixed;
+				z-index: 20000;
+				left: 0.3em;
+				bottom: 0.3em;
+				border-radius: 0.15em;
+				box-shadow: -0.05em 0.05em 0.05em rgb(from var(--c-black) r g b / 30%),
+					-0.1em 0.1em 0.1em rgb(from var(--c-black) r g b / 10%),
+					inset -0.05em 0.05em 0.05em rgb(from var(--c-lbg) r g b / 30%);
+				transition: opacity 0.2s, display 0.2s, transform 0.2s;
+				transition-behavior: allow-discrete;
+				background-color: var(--c-gray0);
+				opacity: 1;
+				display: block;
+				@starting-style {
+					opacity: 0;
+				}
+			}
+
+			#ks_main:hover, #ks_main:focus {
+				transform: scale(1.02);
+			}
+
+			#ks_main.hidden {
 				opacity: 0;
 				display: none;
 			}
 
-			.invis {
+			#ks_flex {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				text-align: center;
+				padding: 0.2em;
+				color: var(--c-text);
+				position: relative;
+				z-index: 20002;
+			}
+
+			#ks_title {
+				margin: 0;
+				margin-bottom: 0.2em;
+				font-size: 0.286em;
+				font-weight: 600;
+				line-height: 1.1;
+			}
+
+			.ks_text {
+				opacity: 0.8;
+				margin: 0;
+				margin-bottom: 0em;
+				font-size: 0.121em;
+				font-weight: 400;
+				line-height: 1.47059;
+			}
+
+			.ks_gap {
+				margin: 0;
+				margin-bottom: 0.1em;
+			}
+
+			.ks_line {
+				font-size: 0.121em;
+				line-height: 0;
+				white-space: nowrap;
+			}
+
+			#ks_main button, #ks_main input {
+				display: inline-block;
+				font-size: 1em;
+			}
+
+			#ks_nurl {
+				font-size: 1em;
+				margin-right: 0.02em;
+			}
+
+			#ks_url {
+				display: inline-block;
+				max-width: 15em;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
+
+			#ks_url:hover {
+				overflow: visible;
+			}
+
+			button#ks_hide {
+				margin-top: auto;
+				padding: 0;
+				border: none;
+				font-size: 0.121em;
+				font-weight: 400;
+				line-height: 1.47059;
+				cursor: pointer;
+			}
+
+			#ks_hide:hover {
+				text-decoration: underline;
+			}
+
+			#ks_hide.invis {
 				visibility: hidden;
 			}
 		</style>
-		<div id="ks_menu" style="--color: var(--c-w-text);">
-			<div id="connector" class="tile connector hidden">
-				<div class="tile-img-wrapper">
-					<div class="tile-img" style="background: var(--c-bg);"></div>
-				</div>
-				<div class="tile-flex" style="color: var(--c-text);">
-					<h2 class="item-headline">서버 연결</h2>
-					<p class="item-description" style="margin-bottom: 0.02em;">서버 주소 입력:</p>
-					<form style="font-size: 0.121em;">
-						<input id="newurl" class="urlinput" type="url" placeholder="http://localhost:8000" value="http://localhost:8000">
-						<input id="newurlsubmit" class="connect" type="button" value="연결">
+		<div id="ks_menu" style="--color: var(--c-w-text); --colorh: var(--c-w-texth); --colora: var(--c-w-texta);">
+			<button id="ks_button" type="button" title="서버 연결 상태 보기"></button>
+			<div id="ks_main" class="hidden">
+				<div id="ks_flex">
+					<h2 id="ks_title">서버 연결</h2>
+					<p class="ks_text">서버 주소 입력:</p>
+					<form id="ks_nurlf" class="ks_line">
+						<input id="ks_nurl" type="url" placeholder="http://localhost:8000" value="http://localhost:8000" required>
+						<input id="ks_nurls" type="submit" formaction="javascript:void(0)" value="연결">
 					</form>
-					<p class="item-description" style="margin-top: 0.04em; margin-bottom: 0.02em">서버 현황</p>
-					<p class="item-description" style="margin-top: -0.02em; margin-bottom: -0.01em; opacity: 1;"><span style="opacity: 0.8;">주소: </span><span id="serverurl"></span></p>
-					<div style="font-size: 0.121em; line-height: 0; color: var(--color);">
-						<span class="item-description middle" style="font-size: 1em;"><span id="serverstatus">연결중</span> · 핑 <span id="serverping">---</span></span>
-						<button type="submit" id="refresh" class="refresh">새로고침</button>
+					<p class="ks_gap"></p>
+					<p class="ks_text" style="opacity: 1;"><span style="opacity: 0.8; display: inline-block; vertical-align: top;">주소:</span> <span id="ks_url" style="vertical-align: top;"></span></p>
+					<div class="ks_line"  style="color: var(--color);">
+						<span class="ks_text" style="font-size: 1em; vertical-align: middle;"><span id="ks_status">연결중</span> · 핑 <span id="ks_ping">---</span></span>
+						<button type="button" id="ks_refresh" style="vertical-align: middle;">새로고침</button>
 					</div>
-					<div id="serverhide" class="item-cta invis">닫기 ✕</div>
+					<p class="ks_gap"></p>
+					<button id="ks_hide" class="invis" tabindex="0">닫기 ✕</div>
 				</div>
 			</div>
-			<button id="indicator" type="button" title="서버 주소 선택"></button>
 		</div>
 		<script id="script">
 			function $(id, el) { el=el??document; return el.getElementById(id); }
@@ -259,34 +196,42 @@
 			function attr(el, at, value) { return value===undefined?el.getAttribute(at):(value===null?el.removeAttribute(at):el.setAttribute(at, value)); }
 
 			let sr = $q("kserver-menu").shadowRoot;
-			console.log(sr);
 
-			$("indicator",sr).onclick = (_) => {
-				$('connector',sr).classList.toggle('hidden');
+			$("ks_button",sr).onclick = (_) => {
+				if (connected || $q('#ks_main.hidden',sr)) $('ks_main',sr).classList.toggle('hidden');
 			}
-			$("newurlsubmit",sr).onclick = changeurl;
-			$("refresh",sr).onclick = connect;
-			$("serverhide",sr).onclick = (_) => {
-				(connected) && $('connector',sr).classList.add('hidden');
+			$("ks_nurlf",sr).onsubmit = changeurl;
+			$("ks_refresh",sr).onclick = (_) => { connect(false); };
+			$("ks_hide",sr).onclick = (_) => {
+				(connected) && $('ks_main',sr).classList.add('hidden');
 			}
 
 			let connected = false;
 
+			function setColor(c) {
+				$("ks_menu",sr).style.setProperty('--color',`var(--c-${c}-text)`);
+				$("ks_menu",sr).style.setProperty('--colorh',`var(--c-${c}-texth)`);
+				$("ks_menu",sr).style.setProperty('--colora',`var(--c-${c}-texta)`);
+			}
+
 			function connect(init) {
 				let url = localStorage.getItem("server.url");
-				$("serverurl",sr).textContent = (!url)?"[없음]":url;
-				$("serverurl",sr).setAttribute("title", (!url)?"[없음]":url);
-				$("ks_menu",sr).style.setProperty('--color',"var(--c-o-text)");
-				$("serverstatus",sr).textContent = "연결중";
-				$("serverping",sr).textContent = "---";
-				$("serverhide",sr).classList.add("invis");
+				$("ks_url",sr).textContent = (!url)?"[없음]":url;
+				$("ks_url",sr).setAttribute("title", (!url)?"[없음]":url);
+				if (init) {
+					setColor("o");
+					$("ks_status",sr).textContent = "연결중";
+					$("ks_ping",sr).textContent = "---";
+					$("ks_hide",sr).classList.add("invis");
+				}
 				connected = false;
 				if (url == null) {
-					$("ks_menu",sr).style.setProperty('--color',"var(--c-w-text)");
-					$("serverstatus",sr).textContent = "서버 없음";
-					$("serverping",sr).textContent = "---";
-					$("serverhide",sr).classList.add("invis");
+					setColor("w");
+					$("ks_status",sr).textContent = "서버 없음";
+					$("ks_ping",sr).textContent = "---";
+					$("ks_hide",sr).classList.add("invis");
 				} else {
+					let start_time = Date.now();
 					fetch(`${url}/ping`)
 					.then((res) => {
 						return res.text();
@@ -295,34 +240,35 @@
 						if (data['ecyc'] !== 'e') {
 							throw SyntaxError("fail");
 						}
-						$("ks_menu",sr).style.setProperty('--color',"var(--c-g-text)");
-						$("serverstatus",sr).textContent = "연결됨";
-						$("serverping",sr).textContent = `${Math.round(Date.now() - data['time']*1000)}ms`;
-						$("serverhide",sr).classList.remove("invis");
+						$("ks_status",sr).textContent = "연결됨";
+						let ping = Math.round(Date.now() - start_time);
+						if (ping <= 500) {
+							setColor("g");
+						} else {
+							setColor("y");
+						}
+						$("ks_ping",sr).textContent = `${ping}ms`;
+						$("ks_hide",sr).classList.remove("invis");
 						connected = true;
 					}).catch((e) => {
-						$("ks_menu",sr).style.setProperty('--color',"var(--c-r-text)");
-						$("serverstatus",sr).textContent = "연결 실패";
-						$("serverping",sr).textContent = "---";
+						setColor("r");
+						$("ks_status",sr).textContent = "연결 실패";
+						$("ks_ping",sr).textContent = "---";
 						console.error(e);
-						if (init) {
-							$('connector',sr).classList.remove('hidden')
-						}
+						$('ks_main',sr).classList.remove('hidden')
 					});
 				}
 			}
 
 			function changeurl() {
-				let newurl = $("newurl",sr).value;
-				if (!newurl) {
-					alert("url이 비어 있습니다.");
-					return;
-				}
+				let newurl = $("ks_nurl",sr).value;
 				localStorage.setItem("server.url", newurl);
-				connect();
+				connect(false);
 			}
 
+			if (localStorage.getItem("server.url")) $("ks_nurl",sr).value = localStorage.getItem("server.url");
 			connect(true);
+			window.setInterval(connect, 3000);
 		</script>
 	</template>
 </body>
