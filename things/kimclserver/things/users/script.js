@@ -3,7 +3,7 @@ import { SHA256 } from "../../../../global/sha256.js";
 const url = () => localStorage.getItem("server.url");
 
 export function create_account() {
-	let data = {id: $("#createid").value(), pw: $("#createpw").value()};
+	let data = {id: $("#createid").val(), pw: $("#createpw").val()};
 	data['pw'] = SHA256(`${data['id']}ecyce${data['pw']}`);
 	fetch(`${url()}/create-account`, {
 		method: "POST",
@@ -24,7 +24,7 @@ export function create_account() {
 $("#create").on("submit", create_account);
 
 export function delete_account() {
-	let data = {id: $("#deleteid").value(), pw: $("#deleteid").value()};
+	let data = {id: $("#deleteid").val(), pw: $("#deleteid").val()};
 	data['pw'] = SHA256(`${data['id']}ecyce${data['pw']}`);
 	fetch(`${url()}/delete-account`, {
 		method: "POST",
