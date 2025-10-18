@@ -49,8 +49,12 @@
 	float: right;
 }
 
-.content:not(:empty) {
-	margin-top: 0.2em;
+.title *, .content * {
+	display: inline-block;
+}
+
+.content * {
+	padding-top: 0.2em;
 }
 
 .info.dateid {

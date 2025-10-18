@@ -1,29 +1,15 @@
-class PostElement extends HTMLElement {
-	#sr = null;
-	
-	constructor() {
-		super();
-		this.#sr = this.attachShadow({mode:'open'});
-	}
-	
-	connectedCallback() {
-		const template = document.getElementById('post-template').content;
-		this.#sr.appendChild(template.cloneNode(true));
-	}
-}
+import { showmsg, fetchget, fetchbody } from "../../global/util.js";
 
 $("#titleinput").on("input", (_) => {
-	document.querySelectorAll("#titleinput br").forEach((e) => e.remove());
+	$("#titleinput br").remove();
 });
 $("#contentinput").on("input", (_) => {
-	document.querySelectorAll("#contentinput br").forEach((e) => e.remove());
+	$("#contentinput br").remove();
 });
 
-function changeColor(c) {
+window.change_color = function changeColor(c) {
 	$("#newpost").attr("data-color",c);
 }
-
-customElements.define('test-post', PostElement);
 
 const options = {
   hour12: false,
@@ -35,9 +21,9 @@ const options = {
   second: '2-digit'
 };
 
-function show_data(data) {
+window.show_data = function show_data(data) {
 	$("#temp-posts").empty();
-	for (e of data) {
+	for (let e of data) {
 		let ne = $(`<article class="test-post int" data-color="${e.color ?? 0}" onclick="delete_post(${e.id});">
 			<div class="info"></div>
 			<h3 class="title"></h3>
@@ -51,74 +37,48 @@ function show_data(data) {
 	$('#posts').html($('#temp-posts').html());
 }
 
-const url = () => localStorage.getItem("server.url");
 function update_posts() {
-	fetch(`${url()}/test-posts`)
-	.then((res) => {
-		return res.json();
-	})
-	.then((data) => {
-		show_data(data);
-	});
+	fetchget("/test-posts/")
+	.then((data) => show_data(data));
 }
 
-function refresh() {
+window.get_data = function get_data() {
 	try {
 		update_posts();
 	} catch (e) {
-		$("#log").css("color","var(--c-r-bright)");
-		$("#log").text(`작업 실패: ${e}`);
+		showmsg("log", `작업 실패: ${e}`, "r-bright");
+		return;
 	}
-	$("#log").css("color","var(--c-g-text)");
-	$("#log").text("작업 성공: 새로고침 완료");
+	showmsg("log", "작업 성공: 새로고침 완료", "g-text");
 }
 
-function post() {
+window.post = function post() {
 	let title = $("#titleinput").text();
 	let content = $("#contentinput").text();
 	let color = $("#newpost").attr("data-color");
 	if (!title) {
-		$("#log").css("color","var(--c-r-bright)");
-		$("#log").text("작업 실패: 제목 없음");
+		showmsg("log", "작업 실패: 제목 없음", "r-bright");
 		return;
 	}
-	fetch(`${url()}/test-posts`, {
-		method: "POST",
-		headers: {
-            "Content-Type": "application/json",
-        },
-		body: JSON.stringify({title: title, content: content, color: color})
-	})
-	.then((res) => res.json())
+	fetchbody("/test-posts/", "POST", {title: title, content: content, color: color})
 	.then((data) => {
 		show_data(data);
-		$("#log").css("color","var(--c-g-text)");
-		$("#log").text("작업 성공: 글 추가됨");
+		showmsg("log", "작업 성공: 글 추가됨", "g-text");
 	})
 	.catch((e) => {
-		$("#log").css("color","var(--c-r-bright)");
-		$("#log").text(`작업 실패: ${e}`);
+		showmsg("log", `작업 실패: ${e}`, "r-bright");
 	});
 }
 
-function delete_post(id) {
-	fetch(`${url()}/test-posts`, {
-		method: "DELETE",
-		headers: {
-            "Content-Type": "application/json",
-        },
-		body: JSON.stringify({id: id})
-	})
-	.then((res) => res.json())
+window.delete_post = function delete_post(id) {
+	fetchbody("/test-posts/", "DELETE", {id: id})
 	.then((data) => {
 		show_data(data);
-		$("#log").css("color","var(--c-r-text)");
-		$("#log").text("작업 성공: 글 삭제됨");
+		showmsg("log", "작업 성공: 글 삭제됨", "r-text");
 	}).catch((e) => {
-		$("#log").css("color","var(--c-r-bright)");
-		$("#log").text(`작업 실패: ${e}`);
-	});;
+		showmsg("log", `작업 실패: ${e}`, "r-bright");
+	});
 }
 
 update_posts();
-window.setInterval(update_posts, 1000);
+//window.setInterval(update_posts, 1000);
