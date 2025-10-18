@@ -220,7 +220,10 @@
 					ping = Math.round(Date.now() - start_time);
 					connected = true;
 				}).catch((_) => {})
-				.finally((_) => updatestate());
+				.finally((_) => {
+					checklogin();
+					updatestate();
+				});
 			}
 
 			function setColor(c) {
@@ -313,7 +316,6 @@
 
 			if (localStorage.getItem("server.url")) $("ks_nurl",sr).value = localStorage.getItem("server.url");
 			connect();
-			checklogin();
 			window.setInterval(connect, 3000);
 		</script>
 	</template>
