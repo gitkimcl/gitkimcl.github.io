@@ -10,5 +10,5 @@ input::placeholder {
 }
 
 input[type=submit] {
-	color: unset;
+	color: revert;
 }
