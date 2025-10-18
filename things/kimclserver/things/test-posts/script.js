@@ -81,4 +81,4 @@ window.delete_post = function delete_post(id) {
 }
 
 update_posts();
-//window.setInterval(update_posts, 1000);
+window.setInterval(update_posts, 1000);
