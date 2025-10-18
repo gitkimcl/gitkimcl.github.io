@@ -12,3 +12,9 @@ input::placeholder {
 input[type=submit] {
 	color: revert;
 }
+
+input[type=checkbox] {
+	width: 1em;
+	height: 1em;
+	vertical-align: middle;
+}
