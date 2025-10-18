@@ -9,20 +9,13 @@
 <body>
 	<template>
 		<style>
-			#k_menu, #k_commands {
-				font-size: var(--tiles-1rem, 8.8rem);
-			}
-
+			#k_menu, #k_commands { font-size: var(--tiles-1rem, 8.8rem); }
 			@media screen and (max-width: 480px), screen and (max-width: 30.8rem) {
-				#k_menu, #k_commands {
-					font-size: var(--tiles-1rem, calc(100vw / 3.5));
-				}
+				#k_menu, #k_commands { font-size: var(--tiles-1rem, calc(100vw / 3.5)); }
 			}
 
 			@media print {
-				#k_menu, #k_commands {
-					display: none;
-				}
+				#k_menu, #k_commands { display: none; }
 			}
 
 			#k_menu {
@@ -63,6 +56,7 @@
 				border-radius: inherit;
 				transition: backdrop-filter 0.2s;
 			}
+			.k_active #k_menublur { backdrop-filter: blur(0.025em); }
 
 			#k_menulogoimg {
 				position: absolute;
@@ -77,18 +71,8 @@
 				opacity: 0.3;
 				transition: opacity 0.2s;
 			}
-
-			.k_active #k_menulogoimg {
-				opacity: 0.6;
-			}
-
-			.k_active #k_menublur {
-				backdrop-filter: blur(0.025em);
-			}
-
-			#k_commands + .k_active #k_menulogoimg, #k_menulogo:hover #k_menulogoimg {
-				opacity: 0.9;
-			}
+			.k_active #k_menulogoimg { opacity: 0.6; }
+			#k_commands + .k_active #k_menulogoimg, #k_menulogo:hover #k_menulogoimg { opacity: 0.9; }
 			
 			.k_menubtn {
 				transition: scale 0.2s, opacity 0.2s, visibility 0.2s;
@@ -110,7 +94,7 @@
 				cursor: pointer;
 				touch-action: manipulation;
 			}
-			
+
 			.k_active .k_menubtn {
 				visibility: visible;
 				opacity: 1;
@@ -147,15 +131,9 @@
 				transition: opacity 0.5s;
 				backdrop-filter: grayscale(0.9) invert(1) contrast(0.5) brightness(350%);
 			}
-
+			#k_commands.k_cmdfail, #k_commands.k_cmdsuccess { opacity: 0; }
 			@media (prefers-color-scheme: dark) {
-				#k_commands {
-					backdrop-filter: grayscale(0.9) invert(1) contrast(0.5) brightness(40%);
-				}
-			}
-
-			#k_commands.k_cmdfail, #k_commands.k_cmdsuccess {
-				opacity: 0;
+				#k_commands { backdrop-filter: grayscale(0.9) invert(1) contrast(0.5) brightness(40%); }
 			}
 
 			.k_cmdicon {
@@ -171,14 +149,8 @@
 				transition: stroke 0.2s, fill 0.2s;
 				stroke: var(--stroke);
 			}
-
-			.k_cmdfail .k_cmdicon .k_menustroke {
-				stroke: oklab(from var(--stroke) l 0 0);
-			}
-
-			.k_cmdsuccess .k_cmdicon .k_menustroke {
-				fill: var(--stroke);
-			}
+			.k_cmdfail .k_cmdicon .k_menustroke { stroke: oklab(from var(--stroke) l 0 0); }
+			.k_cmdsuccess .k_cmdicon .k_menustroke { fill: var(--stroke); }
 		</style>
 		<div id="k_commandslot"></div>
 		<div id="k_menu" role="menu">
