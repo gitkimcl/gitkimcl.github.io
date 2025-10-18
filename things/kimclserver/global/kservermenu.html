@@ -99,16 +99,13 @@
 				margin: 0;
 				margin-bottom: 0.2em;
 				font-size: 0.286em;
-				font-weight: 600;
 				line-height: 1.1;
 			}
 
 			.ks_text {
 				opacity: 0.8;
 				margin: 0;
-				margin-bottom: 0em;
 				font-size: 0.121em;
-				font-weight: 400;
 				line-height: 1.47059;
 			}
 
@@ -119,8 +116,12 @@
 
 			.ks_line {
 				font-size: 0.121em;
-				line-height: 0;
+				line-height: 1.47059;
 				white-space: nowrap;
+			}
+
+			.ks_line * {
+				vertical-align: middle;
 			}
 
 			#ks_main button, #ks_main input {
@@ -129,7 +130,6 @@
 			}
 
 			#ks_nurl {
-				font-size: 1em;
 				margin-right: 0.02em;
 			}
 
@@ -175,19 +175,24 @@
 				<div id="ks_flex">
 					<h2 id="ks_title">서버 연결</h2>
 					<p class="ks_text">서버 주소 입력:</p>
-					<form id="ks_nurlf" class="ks_line">
-						<input id="ks_nurl" type="url" placeholder="http://localhost:8000" value="http://localhost:8000" required>
-						<input id="ks_nurls" type="submit" formaction="javascript:void(0)" value="연결">
+					<form id="ks_nurlf" class="ks_line" action="javascript:void(0)">
+						<input id="ks_nurl" type="url" placeholder="주소 입력" value="http://localhost:8000" required>
+						<input id="ks_nurls" type="submit" value="연결">
 					</form>
-					<p class="ks_gap"></p>
-					<p class="ks_text" style="opacity: 1;"><span style="opacity: 0.8; display: inline-block; vertical-align: top;">주소:</span> <span id="ks_url" style="vertical-align: top;"></span></p>
-					<div class="ks_line"  style="color: var(--color);">
-						<span class="ks_text" style="font-size: 1em; vertical-align: middle;"><span id="ks_status">연결중</span> · 핑 <span id="ks_ping">---</span></span>
-						<button type="button" id="ks_refresh" style="vertical-align: middle;">새로고침</button>
+					<div class="ks_gap"></div>
+					<div class="ks_line">
+						<span class="ks_text">주소:</span>
+						<span id="ks_url"></span>
 					</div>
-					<p class="ks_gap"></p>
+					<div class="ks_line"  style="color: var(--color);">
+						<span class="ks_text"><span id="ks_status">연결중</span> · 핑 <span id="ks_ping">---</span></span>
+						<button type="submit" id="ks_refresh">새로고침</button>
+					</div>
+					<div class="ks_gap"></div>
 					<h2 id="ks_title">로그인</h2>
-					<p class="ks_text" style="max-width: 15em; word-break: keep-all;">계정명이 guest로 시작하는 계정은 임시 계정으로, 비밀번호를 아무거나 입력해도 로그인할 수 있습니다.</p>
+					<p class="ks_text" style="max-width: 15em; word-break: keep-all;">
+						계정명이 guest로 시작하는 계정은 임시 계정으로, 비밀번호를 아무거나 입력해도 로그인할 수 있습니다.
+					</p>
 					<form id="ks_loginf" class="ks_line" style="display: flex;" action="javascript:void(0);">
 						<div>
 							<input id="ks_name" type="text" name="id" placeholder="계정명 입력" required><br>
@@ -195,11 +200,11 @@
 						</div>
 						<input id="ks_login" type="submit" value="로그인">
 					</form>
-					<p class="ks_text" style="opacity: 1;">
-						<span style="opacity: 0.8; display: inline-block; vertical-align: top;">로그인된 계정:</span>
-						<span id="ks_url" style="vertical-align: top;"></span>
-						<button type="button" id="ks_logout" class="hidden" style="vertical-align: middle;">로그아웃</button>
-					</p>
+					<div class="ks_line">
+						<span class="ks_text">로그인된 계정:</span>
+						<span id="ks_account">[없음]</span>
+						<button type="button" id="ks_logout" class="hidden">로그아웃</button>
+					</div>
 					<button id="ks_hide" class="invis">닫기 ✕</div>
 				</div>
 			</div>
@@ -234,7 +239,7 @@
 			function connect(init) {
 				let url = localStorage.getItem("server.url");
 				$("ks_url",sr).textContent = (!url)?"[없음]":url;
-				$("ks_url",sr).setAttribute("title", (!url)?"[없음]":url);
+				attr($("ks_url",sr), "title", (!url)?"[없음]":url);
 				if (init) {
 					setColor("o");
 					$("ks_status",sr).textContent = "연결중";
@@ -259,11 +264,7 @@
 						}
 						$("ks_status",sr).textContent = "연결됨";
 						let ping = Math.round(Date.now() - start_time);
-						if (ping <= 500) {
-							setColor("g");
-						} else {
-							setColor("y");
-						}
+						setColor((ping<=500)?"g":"y");
 						$("ks_ping",sr).textContent = `${ping}ms`;
 						$("ks_hide",sr).classList.remove("invis");
 						connected = true;
@@ -292,9 +293,8 @@
 					},
 					body: JSON.stringify({id: $("ks_name",sr).value, pw: SHA256(`${$("ks_name",sr).value}ecyce${$("ks_pw",sr).value}`)})
 				})
-				.then((res) => {
-					return res.json();
-				}).then((data) => {
+				.then((res) => res.json())
+				.then((data) => {
 					console.log(data);
 				}).catch((e) => {
 					console.error(e);

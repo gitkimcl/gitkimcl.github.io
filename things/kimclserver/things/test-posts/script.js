@@ -43,9 +43,9 @@ function show_data(data) {
 			<h3 class="title"></h3>
 			<p class="content"></p>
 		</article>`);
-		$(".title",ne).append($(`<span slot="title" class="noactive">`).text(e.title));
-		if (e.content) $(".content",ne).append($(`<span slot="content" class="noactive">`).text(e.content));
-		$(".info",ne).append($(`<span slot="info" class="noactive dateid">`).text(`#${e.id} · ${new Date(e.date*1000).toLocaleString('ko-KR',options)}`));
+		$(".title",ne).append($(`<span slot="title" class="noactive" onclick="event.stopPropagation();">`).text(e.title));
+		if (e.content) $(".content",ne).append($(`<span slot="content" class="noactive" onclick="event.stopPropagation();">`).text(e.content));
+		$(".info",ne).append($(`<span slot="info" class="noactive dateid" onclick="event.stopPropagation();">`).text(`#${e.id} · ${new Date(e.date*1000).toLocaleString('ko-KR',options)}`));
 		$("#temp-posts").prepend(ne);
 	}
 	$('#posts').html($('#temp-posts').html());
@@ -74,25 +74,22 @@ function refresh() {
 }
 
 function post() {
-	let title = document.getElementById("titleinput").textContent;
-	let content = document.getElementById("contentinput").textContent;
-	let color = document.getElementById("newpost").getAttribute("data-color");
+	let title = $("#titleinput").text();
+	let content = $("#contentinput").text();
+	let color = $("#newpost").attr("data-color");
 	if (!title) {
 		$("#log").css("color","var(--c-r-bright)");
 		$("#log").text("작업 실패: 제목 없음");
 		return;
 	}
-	let data = {title: title, content: content, color: color};
 	fetch(`${url()}/test-posts`, {
 		method: "POST",
 		headers: {
             "Content-Type": "application/json",
         },
-		body: JSON.stringify(data)
+		body: JSON.stringify({title: title, content: content, color: color})
 	})
-	.then((res) => {
-		return res.json();
-	})
+	.then((res) => res.json())
 	.then((data) => {
 		show_data(data);
 		$("#log").css("color","var(--c-g-text)");
@@ -112,9 +109,7 @@ function delete_post(id) {
         },
 		body: JSON.stringify({id: id})
 	})
-	.then((res) => {
-		return res.json();
-	})
+	.then((res) => res.json())
 	.then((data) => {
 		show_data(data);
 		$("#log").css("color","var(--c-r-text)");

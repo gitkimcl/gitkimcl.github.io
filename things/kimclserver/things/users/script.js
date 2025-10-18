@@ -1,12 +1,11 @@
 import { SHA256 } from "../../../../global/sha256.js";
 
+const url = () => localStorage.getItem("server.url");
+
 export function create_account() {
-	let data = {};
-	$.map($("#create").serializeArray(), (e,_) => {
-		data[e['name']] = e['value'];
-	});
+	let data = {id: $("#createid").value(), pw: $("#createpw").value()};
 	data['pw'] = SHA256(`${data['id']}ecyce${data['pw']}`);
-	fetch(`${localStorage.getItem("server.url")}/create-account`, {
+	fetch(`${url()}/create-account`, {
 		method: "POST",
 		headers: {
             "Content-Type": "application/json",
@@ -16,20 +15,17 @@ export function create_account() {
 	.then((res) => {
 		return res.json();
 	}).then((data) => {
-		console.log(data);
+		$("#makelog").text(data);
 	}).catch((e) => {
-		console.error(e);
+		$("#makelog").text(e);
 	});
 }
 $("#create").on("submit", create_account);
 
 export function delete_account() {
-	let data = {};
-	$.map($("#delete").serializeArray(), (e,_) => {
-		data[e['name']] = e['value'];
-	});
+	let data = {id: $("#deleteid").value(), pw: $("#deleteid").value()};
 	data['pw'] = SHA256(`${data['id']}ecyce${data['pw']}`);
-	fetch(`${localStorage.getItem("server.url")}/delete-account`, {
+	fetch(`${url()}/delete-account`, {
 		method: "POST",
 		headers: {
             "Content-Type": "application/json",
@@ -39,9 +35,9 @@ export function delete_account() {
 	.then((res) => {
 		return res.json();
 	}).then((data) => {
-		console.log(data);
+		$("#deletelog").text(data);
 	}).catch((e) => {
-		console.error(e);
+		$("#deletelog").text(e);
 	});
 }
 $("#delete").on("submit", delete_account);
