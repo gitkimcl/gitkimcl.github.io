@@ -116,16 +116,11 @@
 
 			.ks_line {
 				font-size: 0.121em;
-				line-height: 0;
+				line-height: 1.47059;
 				white-space: nowrap;
 			}
 
 			.ks_line.ks_line * {
-				font-size: 1em;
-				vertical-align: top;
-			}
-
-			.ks_line.ks_line :is(button, input[type=button], input[type=submit]) {
 				vertical-align: middle;
 			}
 
@@ -186,11 +181,11 @@
 					</form>
 					<div class="ks_gap"></div>
 					<div class="ks_line">
-						<span class="ks_text">주소:</span>
+						<span style="opacity: 0.8;">주소:</span>
 						<span id="ks_url"></span>
 					</div>
 					<div class="ks_line"  style="color: var(--color);">
-						<span class="ks_text"><span id="ks_status">연결중</span> · 핑 <span id="ks_ping">---</span></span>
+						<span style="opacity: 0.8;"><span id="ks_status">연결중</span> · 핑 <span id="ks_ping">---</span></span>
 						<button type="submit" id="ks_refresh">새로고침</button>
 					</div>
 					<div class="ks_gap"></div>
@@ -206,7 +201,7 @@
 						<input id="ks_login" type="submit" value="로그인">
 					</form>
 					<div class="ks_line">
-						<span class="ks_text">로그인된 계정:</span>
+						<span style="opacity: 0.8;">로그인된 계정:</span>
 						<span id="ks_account">[없음]</span>
 						<button type="button" id="ks_logout" class="hidden">로그아웃</button>
 					</div>
