@@ -17,7 +17,7 @@
 	<kserver-menu></kserver-menu>
 	<h1>계정 관리</h1>
 	<section style="color: var(--c-g-text);">
-		<h2>계정 만들기</h2>
+		<h2>계정 생성</h2>
 		<form id="create" action="javascript:void(0);">
 			<input type="text" id="createid" placeholder="계정명" name="id" required><br>
 			<input type="password" id="createpw" placeholder="비밀번호" name="pw" required minlength="4" oninvalid="if (this.validity.tooShort) this.setCustomValidity('아무리 그래도 4글자도 안 넘으면 느낌이 안 나잖아요');" oninput="this.setCustomValidity(this.validity.tooShort ? '4글자 이상의 비밀번호를 입력하세요.' : '');"><br>
