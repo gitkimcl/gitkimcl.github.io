@@ -17,7 +17,8 @@ export function create_account() {
 	}).then((data) => {
 		$("#makelog").text(data);
 	}).catch((e) => {
-		$("#makelog").text(e);
+		//console.error(e);
+		$("#makelog").text(`작업 실패: ${e}`);
 	});
 }
 $("#create").on("submit", create_account);
@@ -37,7 +38,8 @@ export function delete_account() {
 	}).then((data) => {
 		$("#deletelog").text(data);
 	}).catch((e) => {
-		$("#deletelog").text(e);
+		//console.error(e);
+		$("#deletelog").text(`작업 실패: ${e}`);
 	});
 }
 $("#delete").on("submit", delete_account);

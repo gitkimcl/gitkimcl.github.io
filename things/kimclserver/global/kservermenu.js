@@ -21,7 +21,7 @@ class KServerMenuElement extends HTMLElement {
 				return;
 			})
 			.catch((err) => {
-				console.log(err);
+				console.error(err);
 				this.#sr.innerHTML = `error lol`;
 			});
 	}
