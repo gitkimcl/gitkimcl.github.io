@@ -170,7 +170,7 @@ header::before {
 
 	.title {
 		text-align: center;
-		position: unset;
+		position: relative;
 		transform: unset;
 		margin-right: unset;
 	}
