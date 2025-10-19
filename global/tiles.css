@@ -3,12 +3,8 @@
 
 :root {
 	--font: "Pretendard GOV Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-	--tiles-1rem: 1rem;
-	font-size: 8.8rem;
-}
-
-@media screen and (max-width: 480px), screen and (max-width: 30.8rem) {
-	:root { font-size: calc(100vw / 3.5); }
+	/*--tiles-1rem: 1rem;
+	font-size: 8.8rem;*/
 }
 
 * { scrollbar-width: none; scroll-behavior: smooth; }
@@ -45,16 +41,16 @@ body:has(> #wrapper) {
 }
 
 header {
-	padding: 0.25rem;
+	padding: 35px;
 	display: flex;
 	flex-wrap: nowrap;
-	gap: 0.25rem;
+	gap: 35px;
 	align-items: center;
 	justify-content: left;
 }
 
 .title {
-	font-size: 0.6rem;
+	font-size: 6rem;
 	line-height: 80%;
 	margin: 0;
 	word-break: keep-all;
@@ -64,9 +60,24 @@ header {
 	padding: 0;
 	border: 0;
 	background: none;
-	width: 1rem;
+	width: 140px;
 	flex-shrink: 0;
 	touch-action: manipulation;
+}
+
+@media screen and (max-width: 640px) {
+	header {
+		flex-direction: column;
+	}
+
+	.tile.logo {
+		margin-inline: auto;
+		width: 175px;
+	}
+
+	.title {
+		text-align: center;
+	}
 }
 
 #logo-img {
@@ -75,17 +86,17 @@ header {
 	user-select: none;
 }
 
-.about { margin-top: calc(100vh - 1.5rem); }
+.about { margin-top: calc(100vh - 210px); }
 
-.about-tile { height: 1.8rem; }
+.about-tile { height: 252px; }
 
 a { text-decoration: none; font-weight: 600; }
 
 .tiles {
-	padding: 0.25rem;
+	padding: 35px;
 	display: flex;
 	flex-wrap: wrap;
-	gap: 0.25rem;
+	gap: 35px;
 	justify-content: center;
 }
 
@@ -104,11 +115,11 @@ a { text-decoration: none; font-weight: 600; }
 	display: block;
 	position: relative;
 	z-index: 1;
-	width: 3rem;
+	width: 350px;
 	aspect-ratio: 1;
-	border-radius: 0.15rem;
-	box-shadow: -0.05rem 0.05rem 0.05rem rgb(from var(--c-black) r g b / 30%),
-		-0.1rem 0.1rem 0.1rem rgb(from var(--c-black) r g b / 10%);
+	border-radius: 21px;
+	box-shadow: -7px 7px 7px rgb(from var(--c-black) r g b / 30%),
+		-14px 14px 14px rgb(from var(--c-black) r g b / 10%);
 	break-inside: avoid-page;
 }
 .tile:hover, .tile:focus { transform: scale(1.02); }
@@ -117,10 +128,10 @@ a { text-decoration: none; font-weight: 600; }
 	content: '';
 	position: absolute;
 	pointer-events: none;
-	inset: -0.04rem;
-	border-radius: 0.19rem;
+	inset: -5.6px;
+	border-radius: 26.6px;
 	background: conic-gradient(from -45deg, var(--glow1), var(--glow2), var(--glow4), var(--glow3), var(--glow1));
-	filter: blur(0.02rem);
+	filter: blur(2.8px);
 	transition: opacity 0.2s, display 0.2s;
 	transition-behavior: allow-discrete;
 	display: none;
@@ -141,10 +152,10 @@ a { text-decoration: none; font-weight: 600; }
 	pointer-events: none;
 	inset: 0;
 	border-radius: inherit;
-	box-shadow: inset -0.05rem 0.05rem 0.05rem rgb(from var(--c-lbg) r g b / 30%);
+	box-shadow: inset -7px 7px 7px rgb(from var(--c-lbg) r g b / 30%);
 }
 
-.tile.double-tile { width: 6.25rem; height: 3rem; }
+.tile.double-tile { width: 735px; height: 350px; }
 
 .tile-img-wrapper {
 	position: absolute;
@@ -186,15 +197,15 @@ a { text-decoration: none; font-weight: 600; }
 	justify-content: center;
 	align-items: center;
 	text-align: center;
-	padding: 0.2rem;
+	padding: 28px;
 	color: var(--c-ltext);
 }
 
 .item-eyebrow {
 	margin: 0;
 	opacity: 0.8;
-	margin-bottom: 0.057rem;
-	font-size: 0.1rem;
+	margin-bottom: 0.8px;
+	font-size: 0.875rem;
 	font-weight: 600;
 	line-height: 1.28571;
 	letter-spacing: .011em;
@@ -202,8 +213,8 @@ a { text-decoration: none; font-weight: 600; }
 
 .item-headline {
 	margin: 0;
-	margin-bottom: 0.086rem;
-	font-size: 0.286rem;
+	margin-bottom: 12px;
+	font-size: 2.5rem;
 	font-weight: 600;
 	line-height: 1.1;
 	letter-spacing: -.003em;
@@ -212,8 +223,8 @@ a { text-decoration: none; font-weight: 600; }
 .item-description {
 	opacity: 0.8;
 	margin: 0;
-	margin-bottom: 0.171rem;
-	font-size: 0.121rem;
+	margin-bottom: 24px;
+	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.47059;
 	letter-spacing: -.022em;
@@ -221,7 +232,7 @@ a { text-decoration: none; font-weight: 600; }
 
 .item-cta {
 	margin-top: auto;
-	font-size: 0.121rem;
+	font-size: 1rem;
 	font-weight: 400;
 	line-height: 1.47059;
 	letter-spacing: -.022em;
