@@ -88,8 +88,6 @@ header {
 
 .about { margin-top: calc(100vh - 210px); }
 
-.about-tile { width: 450px; height: 250px; }
-
 a { text-decoration: none; font-weight: 600; }
 
 .tiles {
@@ -156,6 +154,7 @@ a { text-decoration: none; font-weight: 600; }
 }
 
 .tile.double-tile { width: 735px; height: 350px; }
+.tile.about-tile { width: 450px; height: 256px; }
 
 .tile-img-wrapper {
 	position: absolute;
