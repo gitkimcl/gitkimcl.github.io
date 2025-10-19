@@ -1,11 +1,11 @@
 .test-post {
 	display: block;
 	margin-block: 1em;
-	width: min(100%, 60em);
+	inline-size: min(100%, 60em);
 	box-sizing: border-box;
 	margin-inline: auto;
 	padding: 1.25em;
-	padding-top: 1.2em;
+	padding-block-start: 1.2em;
 	border-radius: 1em;
 	background-color: var(--bg);
 	border: 0.01em solid var(--b);
@@ -46,7 +46,7 @@
 }
 
 .info {
-	float: right;
+	float: inline-end;
 }
 
 .title *, .content * {
@@ -54,7 +54,7 @@
 }
 
 .content * {
-	padding-top: 0.2em;
+	padding-block-start: 0.2em;
 }
 
 .info.dateid {
@@ -63,7 +63,7 @@
 
 .input {
 	display: block;
-	text-align: left;
+	text-align: start;
 }
 
 .input br {

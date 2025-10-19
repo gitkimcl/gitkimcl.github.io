@@ -1,5 +1,5 @@
 :root {
-	--base-length: min(2.5vw,5vh);
+	--base-length: min(2.5vi,5vb);
 	--symbol-size: var(--base-length);
 	/*line-height: var(--symbol-size);*/
 }
@@ -7,32 +7,32 @@
 #code {
 	font-family: inherit;
 	display: block;
-	width: 50vw;
-	height: 20vh;
+	inline-size: 50vi;
+	block-size: 20vb;
 	font-size: 1.5em;
 	margin-inline: auto;
 }
 
 .result-img {
 	display: inline-block;
-	height: var(--symbol-size);
+	block-size: var(--symbol-size);
 	aspect-ratio: 1;
 	position: relative;
 }
 
 .result-img::before {
 	content: var(--data);
-	height: 140%;
+	block-size: 140%;
 	aspect-ratio: 1;
 	position: absolute;
-	left: 50%;
-	top: 50%;
+	inset-inline-start: 50%;
+	inset-block-start: 50%;
 	transform: translate(-50%,-50%);
 }
 
 #result-container {
 	border: 3.8px solid black;
-	width: calc(25 * var(--symbol-size));
+	inline-size: calc(25 * var(--symbol-size));
 	padding: calc(0.5 * var(--symbol-size));
 	background-color: white;
 }

@@ -27,8 +27,8 @@ body:has(> #wrapper) {
 	width: 100%;
 	height: 100vh;
 	overscroll-behavior: none;
-	overflow-inline: clip;
-	overflow-block: auto;
+	overflow-x: clip;
+	overflow-y: auto;
 	contain: strict;
 }
 
@@ -71,7 +71,8 @@ header {
 
 	.tile.logo {
 		width: 175px;
-		margin-inline: auto;
+		margin-left: auto;
+		margin-right: auto;
 	}
 
 	.title {

@@ -4,14 +4,14 @@ html { background-color: var(--c-bg); }
 
 body {
 	color: var(--c-text);
-	padding-inline: 5vw;
+	padding-inline: 5vi;
 	font-family: -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
 img {
 	display: block;
 	margin-inline: auto;
-	max-width: 80vw;
+	max-inline-size: 80vi;
 }
 
 h1, h2, h3, h4, h5, h6 { margin-block-start: 1em; margin-block-end: 0.25em; }
