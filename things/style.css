@@ -12,8 +12,8 @@
 
 .areatext {
 	transition: opacity 1s;
-	width: 6.5rem;
-	max-width: calc(100vw - 0.5rem);
+	width: 910px;
+	max-width: calc(100vw - 70px);
 	aspect-ratio: 3;
 	position: absolute;
 	left: 50%;

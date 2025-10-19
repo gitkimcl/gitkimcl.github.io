@@ -35,13 +35,13 @@
 
 :root {
 	--off-filter: contrast(0) grayscale(1) brightness(195.3%);
-	--bg-filter: contrast(1) grayscale(0.9) brightness(180%) blur(0.06rem);
+	--bg-filter: contrast(1) grayscale(0.9) brightness(180%) blur(8.4px);
 }
 
 @media (prefers-color-scheme: dark) {
 	:root {
 		--off-filter: contrast(0) grayscale(1) brightness(27.3%);
-		--bg-filter: contrast(1) grayscale(0.75) brightness(60%) blur(0.06rem);
+		--bg-filter: contrast(1) grayscale(0.75) brightness(60%) blur(8.4px);
 	}
 }
 
@@ -58,7 +58,7 @@
 .bg {
 	position: absolute;
 	inset: 0;
-	height: calc(100vh + 5rem);
+	height: calc(100vh + 252px + 70px);
 	z-index: -1;
 	transform: translateZ(-3px) scale(4);
 	background: url('img/area.png');
@@ -97,8 +97,8 @@ header {
 	transition: border-bottom-color 1s;
 	transform: translateZ(0);
 	background: url('img/areablur.png');
-	background-size: 6rem 6rem;
-	border-bottom: 0.03rem solid var(--c-bg);
+	background-size: 840px 840px;
+	border-bottom: 4.2px solid var(--c-bg);
 }
 
 header::before {
@@ -132,11 +132,11 @@ header::before {
 }
 
 .title {
-	font-size: 0.3rem;
+	font-size: 3rem;
 	line-height: 115%;
 	position: absolute;
 	transform: translate(0, -50%);
-	margin-right: 0.25rem;
+	margin-right: 35px;
 }
 
 #title1 {
@@ -150,7 +150,7 @@ header::before {
 #title3 {
 	transition: opacity 1s;
 	line-height: 100%;
-	font-size: 0.6rem;
+	font-size: 6rem;
 	opacity: 0;
 }
 
@@ -160,12 +160,12 @@ header::before {
 
 .areatext {
 	transition: opacity 1s;
-	width: 6.5rem;
-	max-width: calc(100vw - 0.5rem);
+	width: 910px;
+	max-width: calc(100vw - 75px);
 	aspect-ratio: 3;
 	position: absolute;
 	left: 50%;
-	top: calc(50vh + 0.75rem);
+	top: calc(50vh + 105px);
 	transform: translate(-50%, -50%);
 	margin: auto;
 	background: url('img/areatext.png');
@@ -213,7 +213,7 @@ header::before {
 
 .emoji-icon {
 	font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", ui-sans-serif, sans-serif;
-	font-size: 1.2rem;
+	font-size: 168px;
 	text-align: center;
 }
 
@@ -224,11 +224,11 @@ header::before {
 
 .notion-icon {
 	display: inline-block;
-	height: calc(0.286*1rem);
+	height: 2.5rem;
 	aspect-ratio: 1;
 	border-radius: 20%;
 	position: relative;
-	top: calc(0.03*1rem);
+	top: 0.25rem;
 	background-size: cover;
 }
 
@@ -240,9 +240,9 @@ header::before {
 main.tiles {
 	display: none;
 	background: url('img/areablur.png');
-	background-size: 6rem 6rem;
+	background-size: 840px 840px;
 	position: relative;
-	border-top: 0.03rem solid var(--c-grayl2);
+	border-top: 4.2px solid var(--c-grayl2);
 }
 
 main.tiles::before {
