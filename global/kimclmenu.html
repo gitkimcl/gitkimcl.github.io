@@ -9,11 +9,6 @@
 <body>
 	<template>
 		<style>
-			#k_menu, #k_commands { font-size: var(--tiles-1rem, 8.8rem); }
-			@media screen and (max-width: 480px), screen and (max-width: 30.8rem) {
-				#k_menu, #k_commands { font-size: var(--tiles-1rem, calc(100vw / 3.5)); }
-			}
-
 			@media print {
 				#k_menu, #k_commands { display: none; }
 			}
@@ -21,7 +16,7 @@
 			#k_menu {
 				z-index: 10000;
 				position: fixed;
-				left: 0.05em;
+				left: 7px;
 				top: 50%;
 				transform: translate(0, -50%);
 				transition: opacity 0.2s, display 0.2s;
@@ -36,7 +31,6 @@
 
 			button {
 				display: block;
-				font-size: 1em;
 				padding: 0;
 				background: none;
 				border: none;
@@ -45,9 +39,9 @@
 			#k_menulogo {
 				cursor: pointer;
 				position: relative;
-				width: 0.5em;
-				height: 0.5em;
-				border-radius: 0.1em;
+				width: 70px;
+				height: 70px;
+				border-radius: 14px;
 			}
 			
 			#k_menublur {
@@ -56,7 +50,7 @@
 				border-radius: inherit;
 				transition: backdrop-filter 0.2s;
 			}
-			.k_active #k_menublur { backdrop-filter: blur(0.025em); }
+			.k_active #k_menublur { backdrop-filter: blur(3.5px); }
 
 			#k_menulogoimg {
 				position: absolute;
@@ -65,9 +59,9 @@
 				background: url('/img/test_img.png');
 				background-size: cover;
 				image-rendering: pixelated;
-				box-shadow: -0.03em 0.03em 0.03em rgb(28 28 30 / 30%),
-					-0.06em 0.06em 0.06em rgb(28 28 30 / 10%),
-					inset -0.03em 0.03em 0.03em rgb(250 250 250 / 30%);
+				box-shadow: -4.2px 4.2px 4.2px rgb(28 28 30 / 30%),
+					-8.4px 8.4px 8.4px rgb(28 28 30 / 10%),
+					inset -4.2px 4.2px 4.2px rgb(250 250 250 / 30%);
 				opacity: 0.3;
 				transition: opacity 0.2s;
 			}
@@ -78,10 +72,10 @@
 				transition: scale 0.2s, opacity 0.2s, visibility 0.2s;
 				transition-behavior: allow-discrete;
 				position: absolute;
-				top: 0.025em;
-				left: 0.025em;
-				width: 0.45em;
-				height: 0.45em;
+				top: 3.5px;
+				left: 3.5px;
+				width: 63px;
+				height: 63px;
 				border-radius: 50%;
 				transform: translate(var(--xtrans), var(--ytrans));
 				scale: 0.5;
@@ -89,8 +83,8 @@
 				opacity: 0;
 				box-sizing: border-box;
 				background-origin: border-box;
-				border: 0.03em solid rgb(0 0 0 / 30%);
-				backdrop-filter: blur(0.025em);
+				border: 4.2px solid rgb(0 0 0 / 30%);
+				backdrop-filter: blur(3.5px);
 				cursor: pointer;
 				touch-action: manipulation;
 			}
@@ -112,7 +106,7 @@
 				stroke-linejoin: round;
 				fill: transparent;
 				stroke: rgb(0 0 0 / 30%);
-				stroke-width: 0.03em;
+				stroke-width: 4.2px;
 				vector-effect: non-scaling-stroke;
 			}
 
@@ -122,7 +116,7 @@
 				left: 50%;
 				transform: translate(-50%,-50%);
 				width: 100%;
-				max-width: 4.55em;
+				max-width: 637px;
 				box-sizing: border-box;
 				text-align: center;
 				z-index: 10001;
@@ -138,9 +132,9 @@
 
 			.k_cmdicon {
 				display: inline-block;
-				width: 0.39em;
-				height: 0.39em;
-				margin: -0.05em;
+				width: 54.6px;
+				height: 54.6px;
+				margin: -7px;
 				position: relative;
 				shape-rendering: geometricPrecision;
 			}
@@ -158,27 +152,27 @@
 				<div id="k_menublur"></div>
 				<div id="k_menulogoimg"></div>
 			</button>
-			<button data-id="1" title="홈으로" role="menuitem" type="button" id="k_btn1" class="k_menubtn" style="--xtrans: 0; --ytrans: -0.55em; background-color: oklab(0.7 0.2 0.2 / 60%);">
+			<button data-id="1" title="홈으로" role="menuitem" type="button" id="k_btn1" class="k_menubtn" style="--xtrans: 0; --ytrans: -77px; background-color: oklab(0.7 0.2 0.2 / 60%);">
 				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
 					<circle class="k_menustroke" cx="175" cy="175" r="90"/>
 				</svg>
 			</button>
-			<button data-id="2" title="돌아가기" role="menuitem" type="button" id="k_btn2" class="k_menubtn" style="--xtrans: 0.55em; --ytrans: -0.55em; background-color: oklab(0.8 0 0.2 / 60%);">
+			<button data-id="2" title="돌아가기" role="menuitem" type="button" id="k_btn2" class="k_menubtn" style="--xtrans: 77px; --ytrans: -77px; background-color: oklab(0.8 0 0.2 / 60%);">
 				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
 					<polygon class="k_menustroke" points="90,175 250,267.4 250,82.6"/>
 				</svg>
 			</button>
-			<button data-id="3" title="올라가기" role="menuitem" type="button" id="k_btn3" class="k_menubtn" style="--xtrans: 0.55em; --ytrans: 0; background-color: oklab(0.7 -0.2 0.2 / 60%);">
+			<button data-id="3" title="올라가기" role="menuitem" type="button" id="k_btn3" class="k_menubtn" style="--xtrans: 77px; --ytrans: 0; background-color: oklab(0.7 -0.2 0.2 / 60%);">
 				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
 					<polygon class="k_menustroke" points="175,90 82.6,250 267.4,250"/>
 				</svg>
 			</button>
-			<button data-id="4" title="숨기기" role="menuitem" type="button" id="k_btn4" class="k_menubtn" style="--xtrans: 0.55em; --ytrans: 0.55em; background-color: oklab(0.7 -0.2 -0.2 / 60%);">
+			<button data-id="4" title="숨기기" role="menuitem" type="button" id="k_btn4" class="k_menubtn" style="--xtrans: 77px; --ytrans: 77px; background-color: oklab(0.7 -0.2 -0.2 / 60%);">
 				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
 					<polygon class="k_menustroke" points="175,260 267.4,100 82.6,100"/>
 				</svg>
 			</button>
-			<button data-id="5" title="?" role="menuitem" type="button" id="k_btn5" class="k_menubtn" style="--xtrans: 0; --ytrans: 0.55em; background-color: oklab(0.7 0.2 -0.2 / 60%);">
+			<button data-id="5" title="?" role="menuitem" type="button" id="k_btn5" class="k_menubtn" style="--xtrans: 0; --ytrans: 77px; background-color: oklab(0.7 0.2 -0.2 / 60%);">
 				<svg role="img" class="k_menuicon" viewBox="0 0 350 350">
 					<polygon class="k_menustroke" points="260,175 100,82.6 100,267.4"/>
 				</svg>
