@@ -158,6 +158,24 @@ header::before {
 	opacity: 1;
 }
 
+@media screen and (max-width: 480px) {
+	header {
+		flex-direction: column;
+	}
+
+	.tile.logo {
+		margin-inline: auto;
+		width: 210px;
+	}
+
+	.title {
+		text-align: center;
+		position: unset;
+		transform: unset;
+		margin-right: unset;
+	}
+}
+
 .areatext {
 	transition: opacity 1s;
 	width: 910px;
