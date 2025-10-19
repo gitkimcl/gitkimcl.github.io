@@ -154,7 +154,7 @@ a { text-decoration: none; font-weight: 600; }
 }
 
 .tile.double-tile { width: 735px; height: 350px; }
-.tile.about-tile { width: 400px; height: 250px; }
+.tile.about-tile { width: 400px; height: 225px; }
 
 .tile-img-wrapper {
 	position: absolute;
