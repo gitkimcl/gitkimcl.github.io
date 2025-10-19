@@ -65,12 +65,13 @@ header {
 
 @media screen and (max-width: 480px) {
 	header {
+		padding-top: 70px;
 		flex-direction: column;
 	}
 
 	.tile.logo {
-		margin-inline: auto;
 		width: 175px;
+		margin-inline: auto;
 	}
 
 	.title {
