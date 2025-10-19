@@ -3,8 +3,7 @@ $("header").css("animation","6s ease title");
 $("header").on("animationend", () => {
 	$("header").css("animation","none");
 	$(":root").addClass("on");
-	$("#title1").attr("hidden","hidden");
-	$("#title2").attr("hidden","hidden");
+	$("#titlewrapper").attr("hidden","hidden");
 });
 
 if (localStorage.getItem("kimclweb.lesspower")==="1") {
@@ -25,6 +24,7 @@ var clicks = 0;
 function logo_click() {
 	$("header").css("animation","none");
 	$(":root").addClass("on");
+	$("#titlewrapper").attr("hidden","hidden");
 	$(".logo, .bg").css("animation", "none");
 	$(".logo, .bg").offset();
 	$(".logo, .bg").css("animation", "1s hue-rotate");

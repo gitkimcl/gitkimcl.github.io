@@ -134,6 +134,9 @@ header::before {
 .title {
 	font-size: 3rem;
 	line-height: 115%;
+}
+
+#title1, #title2 {
 	position: absolute;
 	transform: translate(0, -50%);
 	margin-right: 35px;
@@ -148,6 +151,7 @@ header::before {
 }
 
 #title3 {
+	position: relative;
 	transition: opacity 1s;
 	line-height: 100%;
 	font-size: 6rem;
@@ -170,7 +174,6 @@ header::before {
 
 	.title {
 		text-align: center;
-		position: relative;
 		transform: unset;
 		margin-right: unset;
 	}
@@ -261,6 +264,7 @@ main.tiles {
 	background-size: 840px 840px;
 	position: relative;
 	border-top: 4.2px solid var(--c-grayl2);
+	backdrop-filter: grayscale(0); /* 이거 안 넣으면 가끔씩 .bg가 .tiles 위로 침범함 */
 }
 
 main.tiles::before {
