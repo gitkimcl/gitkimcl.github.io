@@ -36,6 +36,10 @@ function logo_click() {
 		$(".bg").addClass("bg-archive");
 		$("header-bg").addClass("bg-archive");
 		$("main.tiles").addClass("bg-archive");
+		$(".archivetile").attr("href", function () { return $(this).attr("data-archive"); });
+		$(".intro-normal").css("display","none");
+		$(".intro-archive").css("display","unset");
+		$("#about1").attr("href", ".");
 		return;
 	}
 	window.setTimeout(() => { if (clicks<6) clicks = 0; }, 1000);

@@ -27,7 +27,14 @@ a { color: var(--c-link); text-decoration: none; }
 a:hover, a:focus { color: var(--c-linkh); text-decoration: underline; }
 a:active { color: var(--c-linka); text-decoration: underline; }
 
+figcaption {
+	margin-block-end: 0.25em;
+}
+
 figure {
-	margin-inline: 0;
+	margin-inline: auto;
+	margin-block-end: 2em;
+	overflow: hidden;
 	break-inside: avoid-page;
+	max-inline-size: 80vi;
 }

@@ -61,7 +61,7 @@
 	height: calc(100vh + 252px + 70px);
 	z-index: -1;
 	transform: translateZ(-3px) scale(4);
-	background: url('img/area.png');
+	background-image: url('img/area.png');
 	background-size: cover;
 }
 
@@ -82,7 +82,7 @@
 
 @media print {
 	html {
-		background: url('img/area.png') !important;
+		background-image: url('img/area.png') !important;
 		background-size: cover !important;
 	}
 
@@ -217,6 +217,10 @@ header::before {
 
 .restricted .about {
 	mix-blend-mode: normal;
+}
+
+.intro-archive {
+	display: none;
 }
 
 #powerdesc2, #powercta2 {
