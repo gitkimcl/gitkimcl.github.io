@@ -1,5 +1,5 @@
 :root {
-	--base-length: min(2.5vi,5vb);
+	--base-length: 36px;
 	--symbol-size: var(--base-length);
 	/*line-height: var(--symbol-size);*/
 }
