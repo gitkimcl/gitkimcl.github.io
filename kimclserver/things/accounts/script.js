@@ -1,4 +1,4 @@
-import { SHA256 } from "../../../../global/sha256.js";
+import { SHA256 } from "../../../global/sha256.js";
 import { showmsg, fetchbody } from "../../global/util.js";
 
 const url = () => localStorage.getItem("server.url");

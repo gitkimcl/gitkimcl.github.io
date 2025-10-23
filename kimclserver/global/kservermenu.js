@@ -7,7 +7,7 @@ class KServerMenuElement extends HTMLElement {
 	}
 	
 	connectedCallback() {
-		fetch('/things/kimclserver/global/kservermenu.html')
+		fetch('/kimclserver/global/kservermenu.html')
 			.then((res) => {
 				return res.text();
 			})
