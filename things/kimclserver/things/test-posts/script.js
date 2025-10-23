@@ -1,4 +1,4 @@
-import { showmsg, fetchget, fetchbody } from "../../global/util.js";
+import { showmsg, fetchget, fetchbody, authinfo } from "../../global/util.js";
 
 $("#titleinput").on("input", (_) => {
 	$("#titleinput br").remove();
@@ -31,7 +31,7 @@ window.show_data = function show_data(data) {
 		</article>`);
 		$(".title",ne).append($(`<span slot="title" class="noactive" onclick="event.stopPropagation();">`).text(e.title));
 		if (e.content) $(".content",ne).append($(`<span slot="content" class="noactive" onclick="event.stopPropagation();">`).text(e.content));
-		$(".info",ne).append($(`<span slot="info" class="noactive dateid" onclick="event.stopPropagation();">`).text(`#${e.id} · ${new Date(e.date*1000).toLocaleString('ko-KR',options)}`));
+		$(".info",ne).append($(`<span slot="info" class="noactive dateid" onclick="event.stopPropagation();">`).text(`${e.op ? e.op+" · " : ""}#${e.id} · ${new Date(e.date*1000).toLocaleString('ko-KR',options)}`));
 		$("#temp-posts").prepend(ne);
 	}
 	$('#posts').html($('#temp-posts').html());
@@ -60,7 +60,7 @@ window.post = function post() {
 		showmsg("log", "작업 실패: 제목 없음", "r-bright");
 		return;
 	}
-	fetchbody("/test-posts/", "POST", {title: title, content: content, color: color})
+	fetchbody("/test-posts/", "POST", {title: title, content: content, color: color, auth: authinfo()})
 	.then((data) => {
 		show_data(data);
 		showmsg("log", "작업 성공: 글 추가됨", "g-text");
@@ -71,7 +71,7 @@ window.post = function post() {
 }
 
 window.delete_post = function delete_post(id) {
-	fetchbody("/test-posts/", "DELETE", {id: id})
+	fetchbody("/test-posts/", "DELETE", {id: id, auth: authinfo()})
 	.then((data) => {
 		show_data(data);
 		showmsg("log", "작업 성공: 글 삭제됨", "r-text");
@@ -81,4 +81,4 @@ window.delete_post = function delete_post(id) {
 }
 
 update_posts();
-window.setInterval(update_posts, 1000);
+window.setInterval(update_posts, 1500);
