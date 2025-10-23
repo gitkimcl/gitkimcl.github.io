@@ -1,6 +1,7 @@
 export const url = () => localStorage.getItem("server.url");
 
-export function logininfo() {
+export function authinfo() {
+	if (!localStorage.getItem("server.loginid")) return null;
 	return {id: localStorage.getItem("server.loginid"), time: localStorage.getItem("server.logintime"), hash: localStorage.getItem("server.loginhash")};
 }
 
@@ -26,6 +27,9 @@ export async function fetchbody(path, method, body) {
 		},
 		body: JSON.stringify(body)
 	});
-	if (!res.ok) res.json().then((data) => { throw `${res.status};;${data.detail??''}`; });
+	if (!res.ok) {
+		const data = await res.json();
+		throw `${res.status};;${data.detail??''}`;
+	}
 	return await res.json();
 }

@@ -152,6 +152,14 @@ a { text-decoration: none; font-weight: 600; }
 .tile.double-tile { width: 735px; height: 350px; }
 .tile.about-tile { width: 400px; height: 225px; }
 
+@media screen and (min-width: 1280px) and (min-aspect-ratio: 16 / 9) {
+	.tile {
+		width: 390px;
+	}
+
+	.tile.double-tile { width: 815px; height: 350px; }
+}
+
 .tile-img-wrapper {
 	position: absolute;
 	inset: 0;

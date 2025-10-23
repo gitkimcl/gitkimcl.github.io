@@ -177,7 +177,7 @@
 		</div>
 		<script id="script" type="module">
 			import { SHA256 } from "/global/sha256.js";
-			import { url, fetchget, fetchbody, logininfo } from "/things/kimclserver/global/util.js";
+			import { url, fetchget, fetchbody, authinfo } from "/things/kimclserver/global/util.js";
 
 			function $(id, el) { el=el??document; return el.getElementById(id); }
 			function $q(q, el) { el=el??document; return el.querySelector(q); }
@@ -271,8 +271,8 @@
 					$("ks_login",sr).setAttribute("disabled","true");
 					return;
 				}
-				if (logininfo().id) {
-					fetchbody("/auth", "POST", logininfo())
+				if (authinfo()) {
+					fetchbody("/auth", "POST", authinfo())
 					.then((data) => {
 						$("ks_account",sr).textContent = localStorage.getItem("server.loginid");
 						$("ks_logout",sr).classList.remove("hidden");
