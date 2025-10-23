@@ -1,0 +1,144 @@
+@import "/global/colors/full.css";
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-gov-dynamic-subset.min.css");
+
+body {
+	font-family: "Pretendard GOV Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+
+img {
+	max-inline-size: 50rem;
+}
+
+figure {
+	max-inline-size: 50rem;
+}
+
+h2, h3, h4, h5, h6 {
+	max-inline-size: 50rem;
+	margin-inline: auto;
+	text-align: start;
+}
+
+p {
+	max-inline-size: 50rem;
+	margin-inline: auto;
+	text-align: justify;
+	text-indent: 1ic;
+	margin-block: 0.2lh;
+}
+
+hr {
+	border-color: transparent;
+}
+
+a {
+	--bg: transparent;
+	--bd: var(--c-text);
+	--c: var(--c-text);
+	--ch: var(--c-text);
+	--ca: var(--c-text);
+	border-radius: 0.2em;
+	background-color: var(--bg);
+	border: 1px solid var(--bd);
+	color: var(--c);
+	padding-inline: 0.25em;
+	padding-inline-end: 0.3em;
+	position: relative;
+	top: 0.04em;
+	text-decoration-color: var(--c);
+}
+a:hover { color: var(--c); text-decoration: none; }
+
+a::before {
+	content: '#';
+	text-indent: 0;
+	margin-right: 0.05em;
+	opacity: 0.85;
+}
+
+:is(a.w, a.add) { --bg: var(--c-w-bg); --bd: var(--c-w-border); --c: var(--c-w-text); }
+:is(a.w, a.add):hover { --bg: var(--c-w-bgh); --bd: var(--c-w-borderh); --c: var(--c-w-texth); }
+:is(a.w, a.add):active { --bg: var(--c-w-bga); --bd: var(--c-w-bordera); --c: var(--c-w-texta); }
+a.b { --bg: var(--c-b-bg); --bd: var(--c-b-border); --c: var(--c-b-text); }
+a.b:hover { --bg: var(--c-b-bgh); --bd: var(--c-b-borderh); --c: var(--c-b-texth); }
+a.b:active { --bg: var(--c-b-bga); --bd: var(--c-b-bordera); --c: var(--c-b-texta); }
+a.p { --bg: var(--c-p-bg); --bd: var(--c-p-border); --c: var(--c-p-text); }
+a.p:hover { --bg: var(--c-p-bgh); --bd: var(--c-p-borderh); --c: var(--c-p-texth); }
+a.p:active { --bg: var(--c-p-bga); --bd: var(--c-p-bordera); --c: var(--c-p-texta); }
+a.r { --bg: var(--c-r-bg); --bd: var(--c-r-border); --c: var(--c-r-text); }
+a.r:hover { --bg: var(--c-r-bgh); --bd: var(--c-r-borderh); --c: var(--c-r-texth); }
+a.r:active { --bg: var(--c-r-bga); --bd: var(--c-r-bordera); --c: var(--c-r-texta); }
+a.o { --bg: var(--c-o-bg); --bd: var(--c-o-border); --c: var(--c-o-text); }
+a.o:hover { --bg: var(--c-o-bgh); --bd: var(--c-o-borderh); --c: var(--c-o-texth); }
+a.o:active { --bg: var(--c-o-bga); --bd: var(--c-o-bordera); --c: var(--c-o-texta); }
+a.y { --bg: var(--c-y-bg); --bd: var(--c-y-border); --c: var(--c-y-text); }
+a.y:hover { --bg: var(--c-y-bgh); --bd: var(--c-y-borderh); --c: var(--c-y-texth); }
+a.y:active { --bg: var(--c-y-bga); --bd: var(--c-y-bordera); --c: var(--c-y-texta); }
+a.g { --bg: var(--c-g-bg); --bd: var(--c-g-border); --c: var(--c-g-text); }
+a.g:hover { --bg: var(--c-g-bgh); --bd: var(--c-g-borderh); --c: var(--c-g-texth); }
+a.g:active { --bg: var(--c-g-bga); --bd: var(--c-g-bordera); --c: var(--c-g-texta); }
+
+a.ref::before {
+	content: 'ref.#';
+}
+
+a.add::before {
+	content: 'Add';
+	opacity: 1;
+}
+
+a.add.add1::before {
+	content: 'Add1';
+}
+
+a.add.add3::before {
+	content: 'Add3';
+}
+
+b.star { font-weight: inherit; }
+b.star::before, b.star::after { content: '★'; }
+em { text-decoration: underline; font-style: inherit; }
+
+q::before, q::after { content: '\''; }
+q.exact::before, q.exact::after { content: '"'; }
+q.star::before, q.star::after { content: '★'; }
+
+span.ref.paren::before { content: '('; }
+span.ref.paren::after { padding-inline-start: 0.1em; content: ')'; }
+
+s.namu::after { content: '(...)'; }
+s.namu:empty { text-decoration: none; }
+
+data.placeholder {
+	font-family: monospace;
+	background: var(--c-w-bg);
+	border: 1px solid var(--c-text);
+	padding-inline: 0.4em;
+	padding-block: 0.05em;
+	position: relative;
+	bottom: 0.1em;
+	border-radius: 0.2em;
+}
+
+data:hover, time:hover {
+	text-decoration: dotted underline;
+	cursor: help;
+}
+
+span.ref:has(a.ref:hover, a.add:hover) :is(span.reftext, a.ref, a.add) {
+	text-decoration: underline;
+}
+
+sup {
+	position: relative;
+	top: 0.2em;
+	font-size: 0.7em;
+	font-weight: 550;
+}
+
+sub {
+	position: relative;
+	bottom: 0.2em;
+	font-size: 0.7em;
+	font-weight: 550;
+}
