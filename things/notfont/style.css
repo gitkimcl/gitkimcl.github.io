@@ -21,13 +21,47 @@
 }
 
 .result-img::before {
-	content: var(--data);
+	content: '';
+	background-image: var(--data);
+	background-size: 100% 100%;
 	block-size: 140%;
 	aspect-ratio: 1;
 	position: absolute;
 	inset-inline-start: 50%;
 	inset-block-start: 50%;
 	transform: translate(-50%,-50%);
+}
+
+.compressed .result-img {
+	inline-size: calc(0.5 * var(--symbol-size));
+	block-size: var(--symbol-size);
+	margin-inline-start: calc(-0.5 * var(--symbol-size));
+}
+
+.compressed .result-img::before {
+	block-size: 70%;
+	inset-block-start: 76%;
+}
+
+.compressed .result-img.top, .compressed .result-img.bottom {
+	margin-inline-start: 0;
+}
+
+.compressed .result-img.top::before {
+	inset-block-start: 24%;
+}
+
+.compressed .result-img.full {
+	inline-size: calc(0.25 * var(--symbol-size));
+	block-size: var(--symbol-size);
+	margin-inline-start: 0;
+}
+
+.compressed .result-img.full::before {
+	block-size: 140%;
+	inline-size: 280%;
+	object-fit: fill;
+	inset-block-start: 50%;
 }
 
 #result-container {

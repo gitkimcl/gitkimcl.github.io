@@ -1,15 +1,30 @@
+var compressed = false;
+
 function switch1() {
 	code = JSON.parse(`{ "r":[{"f":"ㄱ"}], "s":[{"f":"ㄴ"}], "e":[{"f":"mod1"},{"f":"ㄴ"}], "f":[{"f":"ㄹ"}], "a":[{"f":"ㅁ"}], "q":[{"f":"mod1"},{"f":"ㅁ"}], "t":[{"f":"ㅅ"}], "d":[{"f":"ㅇ"}], "w":[{"f":"mod1"},{"f":"ㅅ"}], "c":[{"f":"mod0"},{"f":"ㅅ"}], "z":[{"f":"mod1"},{"f":"ㄱ"}], "x":[{"f":"mod0"},{"f":"ㄴ"}], "v":[{"f":"mod0"},{"f":"ㅁ"}], "g":[{"f":"mod1"},{"f":"ㅇ"}], "R":[{"f":"mod2"},{"f":"ㄱ"}], "E":[{"f":"mod3"},{"f":"ㄴ"}], "Q":[{"f":"mod3"},{"f":"ㅁ"}], "T":[{"f":"mod2"},{"f":"ㅅ"}], "W":[{"f":"mod3"},{"f":"ㅅ"}], "k":[{"f":"ㅏ"}], "i":[{"f":"mod2"},{"f":"ㅏ"}], "j":[{"f":"ㅓ"}], "u":[{"f":"mod2"},{"f":"ㅓ"}], "h":[{"f":"ㅗ"}], "y":[{"f":"mod2"},{"f":"ㅗ"}], "n":[{"f":"ㅜ"}], "b":[{"f":"mod2"},{"f":"ㅜ"}], "m":[{"f":"ㅡ"}], "l":[{"f":"ㅣ"}], "o":[{"f":"ㅐ"}], "O":[{"f":"mod2"},{"f":"ㅐ"}], "p":[{"f":"ㅔ"}], "P":[{"f":"mod2"},{"f":"ㅔ"}], "H":[{"f":"ㅚ"}], "N":[{"f":"ㅟ"}], "M":[{"f":"ㅢ"}], "K":[{"f":"mod0"},{"f":"ㅏ"}], "Y":[{"f":"mod0"},{"f":"ㅐ"}], "J":[{"f":"mod0"},{"f":"ㅓ"}], "B":[{"f":"mod0"},{"f":"ㅔ"}], " ":[{"f":"sp","s":true}], ",":[{"f":"comma","s":true}], ".":[{"f":"period","s":true}], "?":[{"f":"que","s":true}], "!":[{"f":"exc","s":true}] }`)
+	$("#result-container").removeClass("compressed");
+	compressed = false;
 	refresh();
 }
 
 function switch2() {
 	code = JSON.parse(`{ "r":[{"f":"ㄱ"}], "s":[{"f":"ㄴ"}], "e":[{"f":"ㄷ"}], "f":[{"f":"ㄹ"}], "a":[{"f":"ㅁ"}], "q":[{"f":"ㅂ"}], "t":[{"f":"ㅅ"}], "d":[{"f":"ㅇ"}], "w":[{"f":"ㅈ"}], "c":[{"f":"ㅊ"}], "z":[{"f":"ㅋ"}], "x":[{"f":"ㅌ"}], "v":[{"f":"ㅍ"}], "g":[{"f":"ㅎ"}], "R":[{"f":"ㄲ"}], "E":[{"f":"ㄸ"}], "Q":[{"f":"ㅃ"}], "T":[{"f":"ㅆ"}], "W":[{"f":"ㅉ"}], "k":[{"f":"ㅏ"}], "i":[{"f":"mod2"},{"f":"ㅏ"}], "j":[{"f":"ㅓ"}], "u":[{"f":"mod2"},{"f":"ㅓ"}], "h":[{"f":"ㅗ"}], "y":[{"f":"mod2"},{"f":"ㅗ"}], "n":[{"f":"ㅜ"}], "b":[{"f":"mod2"},{"f":"ㅜ"}], "m":[{"f":"ㅡ"}], "l":[{"f":"ㅣ"}], "o":[{"f":"ㅐ"}], "O":[{"f":"mod2"},{"f":"ㅐ"}], "p":[{"f":"ㅔ"}], "P":[{"f":"mod2"},{"f":"ㅔ"}], "H":[{"f":"ㅚ"}], "N":[{"f":"ㅟ"}], "M":[{"f":"ㅢ"}], "K":[{"f":"mod0"},{"f":"ㅏ"}], "Y":[{"f":"mod0"},{"f":"ㅐ"}], "J":[{"f":"mod0"},{"f":"ㅓ"}], "B":[{"f":"mod0"},{"f":"ㅔ"}], " ":[{"f":"sp","s":true}], ",":[{"f":"comma","s":true}], ".":[{"f":"period","s":true}], "?":[{"f":"que","s":true}], "!":[{"f":"exc","s":true}] }`)
+	$("#result-container").removeClass("compressed");
+	compressed = false;
 	refresh();
 }
 
 function switch3() {
 	code = JSON.parse(`{ "r":[{"f":"ㄱ"}], "s":[{"f":"ㄴ"}], "e":[{"f":"ㄷ"}], "f":[{"f":"ㄹ"}], "a":[{"f":"ㅁ"}], "q":[{"f":"ㅂ"}], "t":[{"f":"ㅅ"}], "d":[{"f":"ㅇ"}], "w":[{"f":"ㅈ"}], "c":[{"f":"ㅊ2"}], "z":[{"f":"ㅋ"}], "x":[{"f":"ㅌ2"}], "v":[{"f":"ㅍ2"}], "g":[{"f":"ㅎ"}], "R":[{"f":"ㄲ2"}], "E":[{"f":"ㄸ2"}], "Q":[{"f":"ㅃ2"}], "T":[{"f":"ㅆ2"}], "W":[{"f":"ㅉ2"}], "k":[{"f":"ㅏ"}], "i":[{"f":"mod2"},{"f":"ㅏ"}], "j":[{"f":"ㅓ"}], "u":[{"f":"mod2"},{"f":"ㅓ"}], "h":[{"f":"ㅗ"}], "y":[{"f":"mod2"},{"f":"ㅗ"}], "n":[{"f":"ㅜ"}], "b":[{"f":"mod2"},{"f":"ㅜ"}], "m":[{"f":"ㅡ"}], "l":[{"f":"ㅣ"}], "o":[{"f":"ㅐ"}], "O":[{"f":"mod2"},{"f":"ㅐ"}], "p":[{"f":"ㅔ"}], "P":[{"f":"mod2"},{"f":"ㅔ"}], "H":[{"f":"ㅚ"}], "N":[{"f":"ㅟ"}], "M":[{"f":"ㅢ"}], "K":[{"f":"mod0"},{"f":"ㅏ"}], "Y":[{"f":"mod0"},{"f":"ㅐ"}], "J":[{"f":"mod0"},{"f":"ㅓ"}], "B":[{"f":"mod0"},{"f":"ㅔ"}], " ":[{"f":"sp","s":true}], ",":[{"f":"comma","s":true}], ".":[{"f":"period","s":true}], "?":[{"f":"que","s":true}], "!":[{"f":"exc","s":true}] }`)
+	$("#result-container").removeClass("compressed");
+	compressed = false;
+	refresh();
+}
+
+function switch4() {
+	code = JSON.parse(`{ "r":[{"f":"ㄱ"}], "s":[{"f":"ㄴ"}], "e":[{"f":"ㄷ"}], "f":[{"f":"ㄹ"}], "a":[{"f":"ㅁ"}], "q":[{"f":"ㅂ"}], "t":[{"f":"ㅅ"}], "d":[{"f":"ㅇ"}], "w":[{"f":"ㅈ"}], "c":[{"f":"ㅊ2"}], "z":[{"f":"ㅋ"}], "x":[{"f":"ㅌ2"}], "v":[{"f":"ㅍ2"}], "g":[{"f":"ㅎ"}], "R":[{"f":"ㄲ2"}], "E":[{"f":"ㄸ2"}], "Q":[{"f":"ㅃ2"}], "T":[{"f":"ㅆ2"}], "W":[{"f":"ㅉ2"}], "k":[{"f":"ㅏ"}], "i":[{"f":"mod2"},{"f":"ㅏ"}], "j":[{"f":"ㅓ"}], "u":[{"f":"mod2"},{"f":"ㅓ"}], "h":[{"f":"ㅗ"}], "y":[{"f":"mod2"},{"f":"ㅗ"}], "n":[{"f":"ㅜ"}], "b":[{"f":"mod2"},{"f":"ㅜ"}], "m":[{"f":"ㅡ"}], "l":[{"f":"ㅣ"}], "o":[{"f":"ㅐ"}], "O":[{"f":"mod2"},{"f":"ㅐ"}], "p":[{"f":"ㅔ"}], "P":[{"f":"mod2"},{"f":"ㅔ"}], "H":[{"f":"ㅚ"}], "N":[{"f":"ㅟ"}], "M":[{"f":"ㅢ"}], "K":[{"f":"mod0"},{"f":"ㅏ"}], "Y":[{"f":"mod0"},{"f":"ㅐ"}], "J":[{"f":"mod0"},{"f":"ㅓ"}], "B":[{"f":"mod0"},{"f":"ㅔ"}], " ":[{"f":"sp","s":true}], ",":[{"f":"comma","s":true}], ".":[{"f":"period","s":true}], "?":[{"f":"que","s":true}], "!":[{"f":"exc","s":true}] }`) // 3과 동일
+	$("#result-container").addClass("compressed");
+	compressed = true;
 	refresh();
 }
 
@@ -62,6 +77,10 @@ function to_code(str) {
 		}
 		if (0x11a8 <= c && c <= 0x11c2) {
 			c -= 0x11a7
+			if (compressed) {
+				res2 += jocode[c].slice(0,-1)+"ㅈ"+jocode[c].slice(-1);
+				continue;
+			}
 			res2 += jocode[c]
 			continue
 		}
@@ -82,13 +101,23 @@ function to_code(str) {
 			let joidx = c%28
 			res2 += chcode[chidx]
 			res2 += jucode[juidx]
+			if (joidx===0) continue;
+			if (compressed) {
+				res2 += jocode[joidx].slice(0,-1)+"ㅈ"+jocode[joidx].slice(-1);
+				continue;
+			}
 			res2 += jocode[joidx]
-			continue
+			continue;
 		}
 		res2 += ch
 	}
 	res3 = []
+	let joflag = false;
 	for (ch of res2) {
+		if (ch === "ㅈ") {
+			joflag = true;
+			continue;
+		}
 		if (ch == '\n') {
 			res3 = res3.concat([{'f':'\n'}])
 			continue
@@ -101,7 +130,11 @@ function to_code(str) {
 			res3 = res3.concat([{'f':'!'}])
 			continue
 		}
-		res3 = res3.concat(code[ch])
+		res3 = res3.concat(JSON.parse(JSON.stringify(code[ch])));
+		if (joflag) {
+			res3[res3.length - 1].jo = true;
+		}
+		joflag = false;
 	}
 	return res3
 }
@@ -123,10 +156,14 @@ function update() {
 			$("#result-container").append(`<br class="result-img">`)
 			continue
 		}
+		let top = false;
+		if (compressed) {
+			top = !$("#result-container *").last().hasClass("top")
+		}
 		if (ch.s) {
-			$("#result-container").append(`<div class="result-img" style="--data:url(img/${ch.f}.svg); aspect-ratio: 0.5;" />`)
+			$("#result-container").append(`<div class="result-img${compressed?" full":""}" style="--data:url(img/${ch.f}.svg); aspect-ratio: 0.5;">`)
 		} else {
-			$("#result-container").append(`<div class="result-img" style="--data:url(img/${ch.f}.svg);" />`)
+			$("#result-container").append(`<div class="result-img${!ch.jo&&top?" top":""}${ch.jo&&top?" bottom":""}" style="--data:url(img/${ch.f}.svg);">`)
 		}
 	}
 }
