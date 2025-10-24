@@ -62,8 +62,8 @@ function move_to(el, clicky) {
 function actually_move(x, y) {
 	let vx = window.innerWidth;
 	let dw = $("#dialog").innerWidth();
-	if (x < dw/2) x = dw/2 + 4;
-	if (x > vx-dw/2) x = vx-dw/2 - 4;
+	if (x < dw/2) x = dw/2 + 12;
+	if (x > vx-dw/2) x = vx-dw/2 - 12;
 	console.log(`${x}`);
 	$("#dialog").css("left", `${x}px`).css("top",`${y}px`);
 }
