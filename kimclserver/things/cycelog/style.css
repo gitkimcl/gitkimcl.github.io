@@ -134,7 +134,7 @@ hgroup p {
 }
 
 span.weekspan {
-	background-color: hsl(from mark h s calc(l * 0.98) / 90%);
+	background-color: light-dark(hsl(from mark h s calc(l * 0.98) / 90%),hsl(from mark h s calc(l * 0.98) / 30%));
 }
 
 time.weekwrite {
@@ -142,11 +142,11 @@ time.weekwrite {
 }
 
 data.weekcode {
-	background-color: hsl(from mark calc(h + 60) s calc(l * 0.98) / 90%);
+	background-color: light-dark(hsl(from mark calc(h + 60) s calc(l * 0.98) / 90%),hsl(from mark calc(h + 60) s calc(l * 0.98) / 30%));
 }
 
 span.weekend {
-	background-color: hsl(from mark calc(h + 60) s calc(l * 0.98) / 90%);
+	background-color: light-dark(hsl(from mark calc(h + 60) s calc(l * 0.98) / 90%),hsl(from mark calc(h + 60) s calc(l * 0.98) / 30%));
 }
 
 data:hover, time:hover, span.qm:hover {
