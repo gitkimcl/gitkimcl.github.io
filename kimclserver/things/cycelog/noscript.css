@@ -25,7 +25,7 @@ s.namu::after, span.namu::after { content: '(...)'; }
 
 span.idk::after { content: '?'; }
 
-data:hover, time:hover, span.idk:hover {
+data, time, span.idk {
 	text-decoration: unset;
 	cursor: text;
 }

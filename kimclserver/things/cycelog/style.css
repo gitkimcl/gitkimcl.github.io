@@ -44,15 +44,16 @@ a {
 	--c: var(--c-text);
 	border-radius: 0.2em;
 	background-color: var(--bg);
-	border: 1px solid var(--bd);
+	--cbd: var(--bd);
+	box-shadow: inset 0 0 0 1px var(--cbd);
 	color: var(--c);
+	line-height: 0.5;
 	padding-inline: 0.25em;
-	position: relative;
-	inset-block-start: 0.04em;
+	text-indent: 0;
 	text-decoration-color: var(--c);
 }
-a:hover { background-color: var(--bgh); border-color: var(--bdc); color: var(--ch); text-decoration: none; }
-a:active { background-color: var(--bga); border-color: var(--bda); color: var(--ca); text-decoration: none; }
+a:hover, a:focus { background-color: var(--bgh); --cbd: var(--bdh); color: var(--ch); text-decoration: none; }
+a:active { background-color: var(--bga); --cbd: var(--bda); color: var(--ca); text-decoration: none; }
 
 a > .before {
 	text-indent: 0;
@@ -97,7 +98,7 @@ data.placeholder {
 	font-family: monospace;
 	background: var(--c-w-bg);
 	--bg: var(--c-w-bg);
-	border: 1px solid var(--c-text);
+	box-shadow: inset 0 0 0 1px var(--c-text);
 	padding-inline: 0.4em;
 	padding-block: 0.05em;
 	position: relative;
@@ -150,8 +151,17 @@ span.weekend {
 }
 
 data:hover, time:hover, span.qm:hover {
-	text-decoration: dotted underline;
+	text-decoration: underline;
+	text-decoration-style: dotted;
 	cursor: help;
+}
+
+@media screen and (max-width: 480px) {
+	data, time, span.qm {
+		text-decoration: underline;
+		text-decoration-style: dotted;
+		cursor: help;
+	}
 }
 
 span.idk:has(span.qm:hover) {
@@ -167,10 +177,10 @@ dialog {
 	--bgh: var(--c-w-bg);
 	--bga: var(--c-w-bgh);
 	color: var(--c);
-	inline-size: 80vw;
-	max-width: max-content;
-	box-sizing: border-box;
+	inline-size: max-content;
+	max-inline-size: 60vi;
 	word-break: keep-all;
+	box-sizing: border-box;
 	border-width: 1.5px;
 	border-color: var(--bd);
 	background-color: var(--bg);
@@ -188,20 +198,23 @@ dialog {
 dialog button {
 	color: inherit;
 	background-color: inherit;
-	border: 1.5px solid;
+	border: none;
 	border-radius: 4px;
-	border-color: inherit;
+	box-shadow: inset 0 0 0 1.5px var(--bd);
+	line-height: 1;
+	padding-block: 0.2em;
 	margin-inline-end: 2px;
+	font-size: 1em;
 }
 
 dialog button:hover {
 	color: var(--ch, var(--c));
 	background-color: var(--bgh, var(--bg));
-	border-color: var(--bdh, var(--bd));
+	--bd: var(--bdh, var(--bd));
 }
 
 dialog button:active {
 	color: var(--ca, var(--c));
 	background-color: var(--bga, var(--bg));
-	border-color: var(--bda, var(--bd));
+	--bd: var(--bda, var(--bd));
 }
