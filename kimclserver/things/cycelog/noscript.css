@@ -1,0 +1,31 @@
+a {
+	margin-inline-start: 0.05em;
+}
+a::before {
+	content: '#';
+	text-indent: 0;
+	margin-right: 0.05em;
+	opacity: 0.85;
+}
+a.ref::before { content: 'ref. #'; }
+a.add::before { content: 'Add'; opacity: 1; }
+a.add.add1::before { content: 'Add1'; }
+a.add.add3::before { content: 'Add3'; }
+
+b.star::before, b.star::after { content: '★'; }
+
+q::before, q::after { content: '\''; }
+q.exact::before, q.exact::after { content: '"'; }
+q.star::before, q.star::after { content: '★'; }
+
+span.ref.paren::before { content: '('; }
+span.ref.paren::after { padding-inline-start: 0.1em; content: ')'; }
+
+s.namu::after, span.namu::after { content: '(...)'; }
+
+span.idk::after { content: '?'; }
+
+data:hover, time:hover, span.idk:hover {
+	text-decoration: unset;
+	cursor: text;
+}
