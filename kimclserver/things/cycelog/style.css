@@ -3,7 +3,7 @@
 
 body {
 	font-family: "Pretendard GOV Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-	margin-bottom: 10em;
+	margin-block-end: 10em;
 }
 
 img {
@@ -42,50 +42,49 @@ a {
 	--bg: transparent;
 	--bd: var(--c-text);
 	--c: var(--c-text);
-	--ch: var(--c-text);
-	--ca: var(--c-text);
 	border-radius: 0.2em;
 	background-color: var(--bg);
 	border: 1px solid var(--bd);
 	color: var(--c);
 	padding-inline: 0.25em;
 	position: relative;
-	top: 0.04em;
+	inset-block-start: 0.04em;
 	text-decoration-color: var(--c);
 }
-a:hover { color: var(--c); text-decoration: none; }
+a:hover { background-color: var(--bgh); border-color: var(--bdc); color: var(--ch); text-decoration: none; }
+a:active { background-color: var(--bga); border-color: var(--bda); color: var(--ca); text-decoration: none; }
 
 a > .before {
 	text-indent: 0;
-	margin-right: 0.05em;
+	margin-inline-end: 0.05em;
 	opacity: 0.85;
 }
 
-a.add { --bg: var(--c-w-bg); --bd: var(--c-w-border); --c: var(--c-w-text); }
-a.add:hover { --bg: var(--c-w-bgh); --bd: var(--c-w-borderh); --c: var(--c-w-texth); }
-a.add:active { --bg: var(--c-w-bga); --bd: var(--c-w-bordera); --c: var(--c-w-texta); }
-a.w { --bg: var(--c-b-bg); --bd: var(--c-b-border); --c: var(--c-b-text); }
-a.w:hover { --bg: var(--c-b-bgh); --bd: var(--c-b-borderh); --c: var(--c-b-texth); }
-a.w:active { --bg: var(--c-b-bga); --bd: var(--c-b-bordera); --c: var(--c-b-texta); }
-a.d { --bg: var(--c-p-bg); --bd: var(--c-p-border); --c: var(--c-p-text); }
-a.d:hover { --bg: var(--c-p-bgh); --bd: var(--c-p-borderh); --c: var(--c-p-texth); }
-a.d:active { --bg: var(--c-p-bga); --bd: var(--c-p-bordera); --c: var(--c-p-texta); }
-a.s { --bg: var(--c-r-bg); --bd: var(--c-r-border); --c: var(--c-r-text); }
-a.s:hover { --bg: var(--c-r-bgh); --bd: var(--c-r-borderh); --c: var(--c-r-texth); }
-a.s:active { --bg: var(--c-r-bga); --bd: var(--c-r-bordera); --c: var(--c-r-texta); }
-a.i { --bg: var(--c-o-bg); --bd: var(--c-o-border); --c: var(--c-o-text); }
-a.i:hover { --bg: var(--c-o-bgh); --bd: var(--c-o-borderh); --c: var(--c-o-texth); }
-a.i:active { --bg: var(--c-o-bga); --bd: var(--c-o-bordera); --c: var(--c-o-texta); }
-a.t { --bg: var(--c-y-bg); --bd: var(--c-y-border); --c: var(--c-y-text); }
-a.t:hover { --bg: var(--c-y-bgh); --bd: var(--c-y-borderh); --c: var(--c-y-texth); }
-a.t:active { --bg: var(--c-y-bga); --bd: var(--c-y-bordera); --c: var(--c-y-texta); }
-a.g { --bg: var(--c-g-bg); --bd: var(--c-g-border); --c: var(--c-g-text); }
-a.g:hover { --bg: var(--c-g-bgh); --bd: var(--c-g-borderh); --c: var(--c-g-texth); }
-a.g:active { --bg: var(--c-g-bga); --bd: var(--c-g-bordera); --c: var(--c-g-texta); }
+a.add { --bg: var(--c-w-bg); --bd: var(--c-w-border); --c: var(--c-w-text);
+	--bgh: var(--c-w-bgh); --bdh: var(--c-w-borderh); --ch: var(--c-w-texth);
+	--bga: var(--c-w-bga); --bda: var(--c-w-bordera); --ca: var(--c-w-texta); }
+a.w { --bg: var(--c-b-bg); --bd: var(--c-b-border); --c: var(--c-b-text);
+	--bgh: var(--c-b-bgh); --bdh: var(--c-b-borderh); --ch: var(--c-b-texth);
+	--bga: var(--c-b-bga); --bda: var(--c-b-bordera); --ca: var(--c-b-texta); }
+a.d { --bg: var(--c-p-bg); --bd: var(--c-p-border); --c: var(--c-p-text);
+	--bgh: var(--c-p-bgh); --bdh: var(--c-p-borderh); --ch: var(--c-p-texth);
+	--bga: var(--c-p-bga); --bda: var(--c-p-bordera); --ca: var(--c-p-texta); }
+a.s { --bg: var(--c-r-bg); --bd: var(--c-r-border); --c: var(--c-r-text);
+	--bgh: var(--c-r-bgh); --bdh: var(--c-r-borderh); --ch: var(--c-r-texth);
+	--bga: var(--c-r-bga); --bda: var(--c-r-bordera); --ca: var(--c-r-texta); }
+a.i { --bg: var(--c-o-bg); --bd: var(--c-o-border); --c: var(--c-o-text);
+	--bgh: var(--c-o-bgh); --bdh: var(--c-o-borderh); --ch: var(--c-o-texth);
+	--bga: var(--c-o-bga); --bda: var(--c-o-bordera); --ca: var(--c-o-texta); }
+a.t { --bg: var(--c-y-bg); --bd: var(--c-y-border); --c: var(--c-y-text);
+	--bgh: var(--c-y-bgh); --bdh: var(--c-y-borderh); --ch: var(--c-y-texth);
+	--bga: var(--c-y-bga); --bda: var(--c-y-bordera); --ca: var(--c-y-texta); }
+a.g { --bg: var(--c-g-bg); --bd: var(--c-g-border); --c: var(--c-g-text);
+	--bgh: var(--c-g-bgh); --bdh: var(--c-g-borderh); --ch: var(--c-g-texth);
+	--bga: var(--c-g-bga); --bda: var(--c-g-bordera); --ca: var(--c-g-texta); }
 
 a.add > .before {
 	opacity: 1;
-	margin-right: 0;
+	margin-inline-end: 0;
 }
 
 b.star { font-weight: inherit; }
@@ -97,6 +96,7 @@ q::before, q::after { content: none; }
 data.placeholder {
 	font-family: monospace;
 	background: var(--c-w-bg);
+	--bg: var(--c-w-bg);
 	border: 1px solid var(--c-text);
 	padding-inline: 0.4em;
 	padding-block: 0.05em;
@@ -149,11 +149,54 @@ span.weekend {
 	background-color: hsl(from mark calc(h + 60) s calc(l * 0.98) / 90%);
 }
 
-data:hover, time:hover, span.idk:hover {
+data:hover, time:hover, span.qm:hover {
 	text-decoration: dotted underline;
 	cursor: help;
 }
 
 span.idk:has(span.qm:hover) {
 	text-decoration: underline;
+}
+
+dialog {
+	padding: 0.5em;
+	margin: 0;
+	--c: var(--c-text);
+	--bd: var(--c-text);
+	--bg: var(--c-bg);
+	--bgh: var(--c-w-bg);
+	--bga: var(--c-w-bgh);
+	color: var(--c);
+	border-color: var(--bd);
+	background-color: var(--bg);
+	position: absolute;
+	transform: translate(-50%, 0);
+	transition: opacity 0.2s ease-out;
+	display: block;
+	text-align: center;
+	opacity: 1;
+	@starting-style {
+		opacity: 0;
+	}
+}
+
+dialog button {
+	color: inherit;
+	background-color: inherit;
+	border: 1.5px solid;
+	border-radius: 4px;
+	border-color: inherit;
+	margin-inline-end: 2px;
+}
+
+dialog button:hover {
+	color: var(--ch, var(--c));
+	background-color: var(--bgh, var(--bg));
+	border-color: var(--bdh, var(--bd));
+}
+
+dialog button:active {
+	color: var(--ca, var(--c));
+	background-color: var(--bga, var(--bg));
+	border-color: var(--bda, var(--bd));
 }
