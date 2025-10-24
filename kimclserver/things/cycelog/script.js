@@ -45,7 +45,7 @@ function move_to(el, clicky) {
 	let x = window.scrollX + rect.x + rect.width/2;
 	let y = window.scrollY + rect.bottom + 4;
 	create_dialog(el);
-	$("#dialog").css("left", `${x}px`).css("top",`${y}px`);
+	actually_move(x, y);
 	$("#dialog").css({
 		'--c': $(el).css('--c'),
 		'--ch': $(el).css('--ch'),
@@ -57,6 +57,15 @@ function move_to(el, clicky) {
 		'--bgh': $(el).css('--bgh'),
 		'--bga': $(el).css('--bga')
 	});
+}
+
+function actually_move(x, y) {
+	let vx = window.innerWidth;
+	let dw = $("#dialog").innerWidth();
+	if (x < dw/2) x = dw/2 + 4;
+	if (x > vx-dw/2) x = vx-dw/2 - 4;
+	console.log(`${x}`);
+	$("#dialog").css("left", `${x}px`).css("top",`${y}px`);
 }
 
 function create_dialog(e) {
@@ -117,5 +126,10 @@ $("a, data, time, span.qm").on("click", (e) => {
 });
 
 $(window).on("resize", () => {
-	if (cur_el) move_to(cur_el);
+	if (!cur_el) return;
+	let rects = cur_el.getClientRects();
+	let rect = rects[cur_box ?? 0];
+	let x = window.scrollX + rect.x + rect.width/2;
+	let y = window.scrollY + rect.bottom + 4;
+	actually_move(x, y);
 });

@@ -167,6 +167,11 @@ dialog {
 	--bgh: var(--c-w-bg);
 	--bga: var(--c-w-bgh);
 	color: var(--c);
+	inline-size: 80vw;
+	max-width: max-content;
+	box-sizing: border-box;
+	word-break: keep-all;
+	border-width: 1.5px;
 	border-color: var(--bd);
 	background-color: var(--bg);
 	position: absolute;
