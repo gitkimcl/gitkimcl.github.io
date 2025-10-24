@@ -20,27 +20,21 @@ function togglePower() {
 	}
 }
 
-var clicks = 0;
-function logo_click() {
+function logo_click(e) {
 	$("header").css("animation","none");
 	$(":root").addClass("on");
 	$("#titlewrapper").attr("hidden","hidden");
 	$(".logo, .bg").css("animation", "none");
 	$(".logo, .bg").offset();
 	$(".logo, .bg").css("animation", "1s hue-rotate");
-	clicks++;
-	console.log(`ecyc ${clicks}`);
-	if (clicks>6) return;
-	if (clicks==6) {
-		$("#logo-img").attr("src","img/cycarchivelogo.png");
-		$(".bg").addClass("bg-archive");
-		$("header-bg").addClass("bg-archive");
-		$("main.tiles").addClass("bg-archive");
-		$(".archivetile").attr("href", function () { return $(this).attr("data-archive"); });
-		$(".intro-normal").css("display","none");
-		$(".intro-archive").css("display","unset");
-		$("#about1").attr("href", ".");
-		return;
-	}
-	window.setTimeout(() => { if (clicks<6) clicks = 0; }, 1000);
+	console.log(`ecyc ${e.detail}`);
+	if (e.detail<6) return;
+	$("#logo-img").attr("src","img/cycarchivelogo.png");
+	$(".bg").addClass("bg-archive");
+	$("header-bg").addClass("bg-archive");
+	$("main.tiles").addClass("bg-archive");
+	$(".archivetile").attr("href", function () { return $(this).attr("data-archive"); });
+	$(".intro-normal").css("display","none");
+	$(".intro-archive").css("display","unset");
+	$("#about1").attr("href", ".");
 }
