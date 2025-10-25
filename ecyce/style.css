@@ -151,6 +151,12 @@ header::before {
 	opacity: 0.5;
 }
 
+@media screen and (max-width: 480px) {
+	.areatext {
+		top: calc(12rem + 315px);
+	}
+}
+
 .about {
 	transition: opacity 1s;
 	opacity: 0;

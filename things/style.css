@@ -6,7 +6,7 @@
 	background-size: 100% 100%;
 }
 
-.title { color: var(--c-ltext); }
+.title { color: var(--c-ltext); line-height: 100%; }
 
 .areatext {
 	transition: opacity 1s;
@@ -19,4 +19,10 @@
 	background: url('../img/area/areatext.png');
 	background-size: cover;
 	background-position: center;
+}
+
+@media screen and (max-width: 480px) {
+	.areatext {
+		top: calc(4.8rem + 315px);
+	}
 }

@@ -6,7 +6,7 @@
 .bg {
 	position: absolute;
 	inset: 0;
-	height: 5000px;
+	height: 999999px;
 	z-index: -1;
 	background-color: #277AEA;
 	background-size: 840px 840px;

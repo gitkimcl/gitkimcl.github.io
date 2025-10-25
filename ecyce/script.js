@@ -19,17 +19,19 @@ function togglePower() {
 function anim_end() {
 	$("header").css("animation","none");
 	$(":root").addClass("on");
-	$("#titlewrapper").attr("hidden","hidden");
+	$("#title1, #title2").attr("hidden","hidden");
 	calc_fillers();
 }
 
+var clicks = 0;
 function logo_click(e) {
 	$(".logo, .bg").css("animation", "none");
 	anim_end();
 	$(".logo, .bg").offset();
 	$(".logo, .bg").css("animation", "1s hue-rotate");
-	console.log(`ecyc ${e.detail}`);
-	if (e.detail<6) return;
+	clicks++;
+	window.setTimeout(() => { if (clicks<6) clicks=0; }, 1000);
+	if (clicks<6) return;
 	$("#logo-img").attr("src","img/cycarchivelogo.png");
 	$(".archivetile").attr("href", function() { return $(this).attr("data-archive"); });
 	$("#about1").attr("href", ".");
