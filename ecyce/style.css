@@ -132,26 +132,15 @@ header::before {
 }
 
 .title {
+	position: relative;
 	font-size: 3rem;
 	line-height: 115%;
 }
 
-#title1, #title2 {
-	position: absolute;
-	transform: translate(0, -50%);
-	margin-right: 35px;
-}
-
-#title1 {
-	opacity: var(--opacity1);
-}
-
-#title2 {
-	opacity: var(--opacity2);
-}
+#title1 { opacity: var(--opacity1); }
+#title2 { opacity: var(--opacity2); }
 
 #title3 {
-	position: relative;
 	transition: opacity 1s;
 	line-height: 100%;
 	font-size: 6rem;
@@ -269,6 +258,7 @@ main.tiles {
 	position: relative;
 	border-top: 4.2px solid var(--c-grayl2);
 	backdrop-filter: grayscale(0); /* 이거 안 넣으면 가끔씩 .bg가 .tiles 위로 침범함 */
+	padding-top: 70px;
 }
 
 main.tiles::before {
@@ -280,7 +270,7 @@ main.tiles::before {
 }
 
 .on main.tiles {
-	display: flex;
+	display: grid;
 }
 
 .bg.bg-archive {
