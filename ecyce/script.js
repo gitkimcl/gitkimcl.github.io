@@ -1,5 +1,4 @@
 $("header").css("animation","6s ease title");
-
 $("header").on("animationend", anim_end);
 
 if (localStorage.getItem("kimclweb.lesspower")==="1") {
@@ -31,11 +30,11 @@ function logo_click(e) {
 	console.log(`ecyc ${e.detail}`);
 	if (e.detail<6) return;
 	$("#logo-img").attr("src","img/cycarchivelogo.png");
-	$(".bg, .header-bg, main.tiles").addClass("bg-archive");
 	$(".archivetile").attr("href", function() { return $(this).attr("data-archive"); });
-	$(".intro-normal").css("display","none");
-	$(".intro-archive").css("display","unset");
 	$("#about1").attr("href", ".");
+	$("#about2").attr("href", "javascript:void(0)");
+	$("#about2").on("click", () => (window.location.href="beyond/"));
+	$(":root").addClass("archive");
 }
 
 $(window).on("resize", calc_fillers);
@@ -54,7 +53,6 @@ function calc_fillers() {
 		case 4:
 			fillers = [3,0,0,0]; break;
 	}
-	console.log(fillers);
 	$(`.tile.filler-tile`).slice(0,fillers[0]).css("display","block");
 	$(`.tile.filler-tile`).slice(fillers[0]).css("display","none");
 	$(`.tile.filler-wide`).slice(0,fillers[1]).css("display","block");

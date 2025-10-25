@@ -1,16 +1,5 @@
-:root {
-	background-color: var(--c-gray1);
-}
+:root { background-color: var(--c-gray1); }
 
-.hidden {
-	opacity: 0;
-	display: none;
-}
-
-.invis {
-	visibility: hidden;
-}
-
-.transparent {
-	opacity: 0%;
-}
+.hidden { opacity: 0; display: none; }
+.invis { visibility: hidden; }
+.transparent { opacity: 0; }

@@ -6,9 +6,7 @@
 	background-size: 100% 100%;
 }
 
-.title {
-	color: var(--c-ltext);
-}
+.title { color: var(--c-ltext); }
 
 .areatext {
 	transition: opacity 1s;
@@ -16,9 +14,7 @@
 	max-width: calc(100vw - 70px);
 	aspect-ratio: 3;
 	position: absolute;
-	left: 50%;
-	top: 50vh;
-	transform: translate(-50%, -50%);
+	inset: 0;
 	margin: auto;
 	background: url('../img/area/areatext.png');
 	background-size: cover;

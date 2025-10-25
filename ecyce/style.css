@@ -50,10 +50,7 @@
 	transform-style: preserve-3d;
 	perspective: 1px;
 }
-
-.on #wrapper {
-	overflow-y: auto;
-}
+.on #wrapper { overflow-y: auto; }
 
 .bg {
 	position: absolute;
@@ -64,6 +61,7 @@
 	background-image: url('img/area.png');
 	background-size: cover;
 }
+.archive .bg { background-image: url('img/archive.png'); }
 
 .bg::before {
 	content: '';
@@ -74,7 +72,6 @@
 	background: var(--c-bg);
 	overflow: clip;
 }
-
 .on .bg::before {
 	background: none;
 	display: none;
@@ -86,9 +83,7 @@
 		background-size: cover !important;
 	}
 
-	.bg {
-		display: none;
-	}
+	.bg { display: none; }
 }
 
 header {
@@ -100,6 +95,7 @@ header {
 	background-size: 840px 840px;
 	border-bottom: 4.2px solid var(--c-bg);
 }
+.on header { border-bottom-color: var(--c-grayl2); }
 
 header::before {
 	content: '';
@@ -109,27 +105,13 @@ header::before {
 	backdrop-filter: var(--bg-filter);
 	background-color: var(--c-bg);
 }
-
-.on header {
-	border-bottom-color: var(--c-grayl2);
-}
-
-.on header::before {
-	background-color: rgb(from var(--c-bg) r g b / 40%);
-}
-
-.on .title-row-bg {
-	opacity: 1;
-}
+.on header::before { background-color: rgb(from var(--c-bg) r g b / 40%); }
 
 #logo-img {
 	transition: opacity 1s, filter 1s;
 	filter: grayscale(1);
 }
-
-.on #logo-img {
-	filter: none;
-}
+.on #logo-img { filter: none; }
 
 .title {
 	position: relative;
@@ -146,27 +128,7 @@ header::before {
 	font-size: 6rem;
 	opacity: 0;
 }
-
-.on #title3 {
-	opacity: 1;
-}
-
-@media screen and (max-width: 480px) {
-	header {
-		flex-direction: column;
-	}
-
-	.tile.logo {
-		margin-inline: auto;
-		width: 210px;
-	}
-
-	.title {
-		text-align: center;
-		transform: unset;
-		margin-right: unset;
-	}
-}
+.on #title3 { opacity: 1; }
 
 .areatext {
 	transition: opacity 1s;
@@ -174,9 +136,8 @@ header::before {
 	max-width: calc(100vw - 75px);
 	aspect-ratio: 3;
 	position: absolute;
-	left: 50%;
-	top: calc(50vh + 105px);
-	transform: translate(-50%, -50%);
+	inset: 0;
+	top: 210px;
 	margin: auto;
 	background: url('img/areatext.png');
 	background-size: cover;
@@ -184,11 +145,7 @@ header::before {
 	opacity: 0;
 	mix-blend-mode: overlay;
 }
-
-.on .areatext {
-	opacity: 1;
-}
-
+.on .areatext { opacity: 1; }
 .on.restricted .areatext {
 	mix-blend-mode: normal;
 	opacity: 0.5;
@@ -199,29 +156,35 @@ header::before {
 	opacity: 0;
 	mix-blend-mode: hard-light;
 }
+.on .about { opacity: 1; }
+.restricted .about { mix-blend-mode: normal; }
 
-.on .about {
-	opacity: 1;
-}
+.power-restricted { display: none; }
+.restricted .power-normal { display: none; }
+.restricted .power-restricted { display: revert; }
 
-.restricted .about {
-	mix-blend-mode: normal;
-}
+.about-archive { display: none; }
+.archive .about-normal { display: none; }
+.archive .about-archive { display: revert; }
 
-.intro-archive {
+main.tiles {
 	display: none;
+	background: url('img/areablur.png');
+	background-size: 840px 840px;
+	position: relative;
+	border-top: 4.2px solid var(--c-grayl2);
+	transform: translateZ(0);
+	padding-top: 70px;
 }
+.on main.tiles { display: grid; }
+.archive main.tiles { background-image: url('img/archiveblur.png'); }
 
-#powerdesc2, #powercta2 {
-	display: none;
-}
-
-.restricted #powerdesc1, .restricted #powercta1 {
-	display: none;
-}
-
-.restricted #powerdesc2, .restricted #powercta2 {
-	display: revert;
+main.tiles::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background-color: rgb(from var(--c-bg) r g b / 40%);
+	backdrop-filter: var(--bg-filter);
 }
 
 
@@ -231,10 +194,7 @@ header::before {
 	text-align: center;
 }
 
-
-.notion {
-	font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"
-}
+.notion { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
 
 .notion-icon {
 	display: inline-block;
@@ -246,37 +206,4 @@ header::before {
 	background-size: cover;
 }
 
-
-.gdocs {
-	font-family: "Google Sans",Arial,sans-serif; /* Google Sans는 아쉽게도 라이선스상 사용이 안 된다고 하네요. */
-}
-
-main.tiles {
-	display: none;
-	background: url('img/areablur.png');
-	background-size: 840px 840px;
-	position: relative;
-	border-top: 4.2px solid var(--c-grayl2);
-	backdrop-filter: grayscale(0); /* 이거 안 넣으면 가끔씩 .bg가 .tiles 위로 침범함 */
-	padding-top: 70px;
-}
-
-main.tiles::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	background-color: rgb(from var(--c-bg) r g b / 40%);
-	backdrop-filter: var(--bg-filter);
-}
-
-.on main.tiles {
-	display: grid;
-}
-
-.bg.bg-archive {
-	background-image: url('img/archive.png');
-}
-
-.bg-archive {
-	background-image: url('img/archiveblur.png');
-}
+.gdocs { font-family: "Google Sans",Arial,sans-serif; /* Google Sans는 아쉽게도 라이선스상 사용이 안 된다고 하네요. */ }
