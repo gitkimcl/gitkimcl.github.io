@@ -4,6 +4,7 @@ $("header").on("animationend", anim_end);
 if (localStorage.getItem("kimclweb.lesspower")==="1") {
 	$(":root").addClass("restricted");
 }
+localStorage.setItem("kimclweb.archive", null);
 
 function togglePower() {
 	if (localStorage.getItem("kimclweb.lesspower")==="1") {
@@ -35,6 +36,7 @@ function logo_click(e) {
 	$("#about2").attr("href", "javascript:void(0)");
 	$("#about2").on("click", () => (window.location.href="beyond/"));
 	$(":root").addClass("archive");
+	localStorage.setItem("kimclweb.archive", true);
 }
 
 $(window).on("resize", calc_fillers);

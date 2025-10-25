@@ -1,0 +1,1 @@
+if (localStorage.getItem("kimclweb.lesspower")==="1") $(":root").addClass("restricted");
