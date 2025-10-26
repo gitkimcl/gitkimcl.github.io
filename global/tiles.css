@@ -16,13 +16,7 @@ body {
 	color: var(--c-text);
 }
 body:has(> #wrapper) {
-	height: 0;
-	/*
-	position: fixed;
-	inset: 0;
 	overscroll-behavior: none;
-	overflow: clip;
-	*/
 }
 
 #wrapper {
@@ -31,6 +25,7 @@ body:has(> #wrapper) {
 	overflow-y: auto;
 	overflow-x: clip;
 	contain: strict;
+	overscroll-behavior: contain;
 }
 
 @media print {
