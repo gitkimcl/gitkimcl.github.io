@@ -3,10 +3,13 @@
 	perspective: 1px;
 }
 
+#wrapper2 {
+	position: relative;
+}
+
 .bg {
 	position: absolute;
 	inset: 0;
-	height: 999999px;
 	z-index: -1;
 	background-color: #277AEA;
 	background-size: 840px 840px;
