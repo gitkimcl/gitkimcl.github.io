@@ -36,7 +36,7 @@ function logo_click(e) {
 	$(".archivetile").attr("href", function() { return $(this).attr("data-archive"); });
 	$("#about1").attr("href", ".");
 	$("#about2").attr("href", "javascript:void(0)");
-	$("#about2").on("click", () => (window.location.href="beyond/"));
+	$("#about2").on("click", () => (window.location.href=(localStorage.getItem("kimclweb.lesspower")==="1")?"beyond/restricted.html":"beyond/"));
 	$(":root").addClass("archive");
 	localStorage.setItem("kimclweb.archive", true);
 }
