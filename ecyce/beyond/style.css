@@ -5,6 +5,7 @@
 
 #wrapper2 {
 	position: relative;
+	transform-style: preserve-3d;
 }
 
 .bg {
