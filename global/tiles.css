@@ -11,7 +11,6 @@ html { height: 100%; background-color: var(--c-bg); }
 html:has(#wrapper) { height: 100vh; overscroll-behavior: none; }
 
 body {
-	height: 100%;
 	margin: 0;
 	font-family: var(--font);
 	color: var(--c-text);
