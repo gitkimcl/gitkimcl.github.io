@@ -47,6 +47,7 @@
 
 #wrapper {
 	overflow-y: clip;
+	overscroll-behavior: none;
 	transform-style: preserve-3d;
 	perspective: 1px;
 }
