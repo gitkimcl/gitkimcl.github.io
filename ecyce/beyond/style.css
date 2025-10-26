@@ -51,7 +51,9 @@
 	.bg { display: none; }
 }
 
-.restricted .rbg { position: fixed; inset: 0; background-image: url('pure.png'); background-size: 840px 840px; animation: infinite linear 30s forwards bgscroll1; }
+.restricted #wrapper { transform-style: flat; perspective: none; overscroll-behavior: none; }
+.restricted #wrapper:before { content: ''; position: absolute; inset: 0; background-image: url('pure.png'); height: var(--h); background-size: 840px 840px;  animation: infinite linear 30s forwards bgscroll1; }
+.restricted :is(#bg1, #bg2) { transform: none; display: none; }
 
 ecyce-ocean { display: block; height: 1777px; }
 ecyce-shore { display: block; height: 577px; background-image: linear-gradient(transparent, rgb(255 255 255 / 10%) 30%, white); mix-blend-mode: overlay; opacity: 0.8; }
