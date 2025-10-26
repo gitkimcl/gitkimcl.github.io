@@ -1,3 +1,7 @@
+:root {
+	background-color: #277AEA;
+}
+
 #wrapper {
 	transform-style: preserve-3d;
 	perspective: 1px;
@@ -11,8 +15,8 @@
 .bg {
 	position: absolute;
 	inset: 0;
+	height: 100%;
 	z-index: -1;
-	background-color: #277AEA;
 	background-size: 840px 840px;
 	background-repeat: repeat;
 }
