@@ -185,14 +185,20 @@ dialog {
 	border-color: var(--bd);
 	background-color: var(--bg);
 	position: absolute;
+	outline-offset: 4px;
 	transform: translate(-50%, 0);
-	transition: opacity 0.2s ease-out;
-	display: block;
+	transition: opacity 0.2s ease-out, visibility 0.2s;
+	transition-behavior: allow-discrete;
 	text-align: center;
 	opacity: 1;
 	@starting-style {
 		opacity: 0;
 	}
+}
+
+dialog:not(:popover-open) {
+	display: initial;
+	visibility: hidden;
 }
 
 dialog button {

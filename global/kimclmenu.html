@@ -19,7 +19,7 @@
 				left: 7px;
 				top: 50%;
 				transform: translate(0, -50%);
-				transition: opacity 0.2s, display 0.2s;
+				transition: opacity 0.2s, visibility 0.2s;
 				transition-behavior: allow-discrete;
 			}
 
@@ -240,7 +240,7 @@
 						e && (e.scrollTop=0);
 						break;
 					case 4:
-						attr($('k_menu',sr),'style','opacity: 0; display: none;');
+						attr($('k_menu',sr),'style','opacity: 0; visibility: hidden;');
 						break;
 					case 5:
 						k_cinput?k_endcmdinput():k_startcmdinput();

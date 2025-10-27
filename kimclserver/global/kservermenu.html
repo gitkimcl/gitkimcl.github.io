@@ -48,7 +48,7 @@
 				box-shadow: -7px 7px 7px rgb(from var(--c-black) r g b / 30%),
 					-14px 14px 14px rgb(from var(--c-black) r g b / 10%),
 					inset -7px 7px 7px rgb(from var(--c-lbg) r g b / 30%);
-				transition: opacity 0.2s, display 0.2s, transform 0.2s;
+				transition: opacity 0.2s, visibility 0.2s, transform 0.2s;
 				transition-behavior: allow-discrete;
 				background-color: var(--c-gray0);
 				opacity: 0.8;
@@ -133,7 +133,7 @@
 			#ks_hide:hover { text-decoration: underline; }
 			#ks_hide.invis { visibility: hidden; }
 
-			#ks_main.hidden, #ks_main .hidden { opacity: 0; display: none; }
+			#ks_main.hidden, #ks_main .hidden { opacity: 0; visibility: hidden; }
 		</style>
 		<div id="ks_menu" role="menu" style="--color: var(--c-o-text); --colorh: var(--c-o-texth); --colora: var(--c-o-texta);">
 			<button id="ks_button" role="menuitem" type="button" title="서버 메뉴 열기"></button>

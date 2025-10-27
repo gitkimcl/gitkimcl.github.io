@@ -66,7 +66,7 @@
 
 .bg::before {
 	content: '';
-	transition: background-color 1s, display 1s;
+	transition: background-color 1s, visibility 1s;
 	transition-behavior: allow-discrete;
 	position: absolute;
 	inset: 0;
@@ -75,7 +75,7 @@
 }
 .on .bg::before {
 	background: none;
-	display: none;
+	visibility: hidden;
 }
 
 @media print {

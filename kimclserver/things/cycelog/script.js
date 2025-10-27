@@ -50,6 +50,7 @@ function move_to(el, clicky) {
 	cur_el = el;
 	create_dialog();
 	actually_move();
+	document.getElementById("dialog").showPopover({'source':cur_el});
 	$("#dialog").css($(el).css(['--c','--ch','--ca','--bd','--bdh','--bda','--bg','--bgh','--bga']));
 }
 
@@ -65,7 +66,15 @@ function actually_move() {
 }
 
 function dialog_base() {
-	return $(`<dialog id="dialog" open onclick="event.stopPropagation();" ontransitionend="on_trans(this);"></dialog>`);
+	let d = $(`<dialog id="dialog" popover></dialog>`);
+	d.on("toggle", function (e) {
+		if (e.originalEvent.newState === "closed") {
+			remove_dialog(this);
+		}
+	}).on("transitionend", function () {
+		if (this.classList.contains("closing")) this.remove();
+	});
+	return d;
 }
 
 function create_dialog() {
@@ -103,17 +112,13 @@ function create_dialog() {
 	return;
 }
 
-$("body").on("click", (_) => {
+/*$("body").on("click", (_) => {
 	if (!document.getElementById("dialog")) return;
 	remove_dialog(document.getElementById("dialog"));
-})
+})*/
 
 function remove_dialog(e) {
 	if (e.id !== "dialog") return;
 	$(e).css("opacity",0).addClass("closing").removeAttr("id");
 	cur_el = cur_box = null;
-}
-
-function on_trans(e) {
-	if (e.classList.contains("closing")) e.remove();
 }
