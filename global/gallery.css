@@ -34,7 +34,10 @@ figcaption {
 figure {
 	margin-inline: auto;
 	margin-block-end: 2em;
-	overflow: hidden;
 	break-inside: avoid-page;
 	max-inline-size: 80vi;
+}
+
+figure > * {
+	max-width: 100%;
 }

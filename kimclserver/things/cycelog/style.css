@@ -51,6 +51,7 @@ a {
 	padding-inline: 0.25em;
 	text-indent: 0;
 	text-decoration-color: var(--c);
+	scroll-margin-block-start: 10em;
 }
 a:hover, a:focus { background-color: var(--bgh); --cbd: var(--bdh); color: var(--ch); text-decoration: none; }
 a:active { background-color: var(--bga); --cbd: var(--bda); color: var(--ca); text-decoration: none; }
@@ -135,7 +136,7 @@ hgroup p {
 }
 
 span.weekspan {
-	background-color: light-dark(hsl(from mark h s calc(l * 0.98) / 90%),hsl(from mark h s calc(l * 0.98) / 30%));
+	background-color: light-dark(rgb(255 255 0 / 90%),rgb(255 255 0 / 30%));
 }
 
 time.weekwrite {
@@ -143,11 +144,11 @@ time.weekwrite {
 }
 
 data.weekcode {
-	background-color: light-dark(hsl(from mark calc(h + 60) s calc(l * 0.98) / 90%),hsl(from mark calc(h + 60) s calc(l * 0.98) / 30%));
+	background-color: light-dark(rgb(0 255 0 / 90%),rgb(0 255 0 / 30%));
 }
 
 span.weekend {
-	background-color: light-dark(hsl(from mark calc(h + 60) s calc(l * 0.98) / 90%),hsl(from mark calc(h + 60) s calc(l * 0.98) / 30%));
+	background-color: light-dark(rgb(0 255 0 / 90%),rgb(0 255 0 / 30%));
 }
 
 data:hover, time:hover, span.qm:hover {
@@ -223,4 +224,19 @@ dialog button:active {
 	color: var(--ca, var(--c));
 	background-color: var(--bga, var(--bg));
 	--bd: var(--bda, var(--bd));
+}
+
+*:has( > a:target) {
+	border-radius: 0.25em;
+	animation: bg-flash 0.5s ease-out;
+}
+
+@keyframes bg-flash {
+	from { box-shadow: 0 0 0 0.75em rgb(255 185 0 / 50%); background-color: rgb(255 185 0 / 50%); }
+	to { box-shadow: 0 0 0 0.75em transparent; background-color: transparent; }
+}
+
+span.error {
+	color: var(--c-r-text);
+	background-color: var(--c-r-bg);
 }
