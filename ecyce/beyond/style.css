@@ -52,7 +52,7 @@
 }
 
 .restricted #wrapper { transform-style: flat; perspective: none; overscroll-behavior: none; contain: none; }
-.restricted #wrapper:before { content: ''; position: fixed; inset: 0; background-image: url('pure.png'); background-size: 840px 840px;  animation: infinite linear 30s forwards bgscroll1; }
+.restricted #wrapper:before { content: ''; position: fixed; inset: 0; background-image: url('pure.png'); background-size: 840px 840px;  animation: infinite linear 30s forwards bgscroll1; pointer-events: none; }
 .restricted :is(#bg1, #bg2) { transform: none; display: none; }
 
 ecyce-ocean { display: block; height: 1777px; }
@@ -62,13 +62,14 @@ ecyce-shore { display: block; height: 577px; background-image: linear-gradient(t
 
 :root:not(.restricted) .tile.logo:before { inset: -5.6px; border-radius: 26.6px; opacity: 1; }
 
-header { transform: translateZ(0); }
+header { transform: translateZ(0); color: var(--c-ltext); }
 main.tiles { transform: translateZ(0); -webkit-mask-image: linear-gradient(black, black 10%, rgb(0 0 0 / 20%)); mask-image: linear-gradient(black, black 10%, rgb(0 0 0 / 20%)); }
 
 .tile.filler-tile, .tile.filler-wide, .tile.filler-tall, .tile.filler-big { display: block; }
 .tile.filler-big { width: 100%; height: 100%; }
 .tile svg {  stroke: rgb(0 0 0 / 30%); stroke-width: 16px; fill: transparent; stroke-linecap: round; stroke-linejoin: round; }
 .tile.filler-big svg { stroke-width: 8px; }
+@media screen and (max-width: 480px) { .tile.filler-big svg { stroke-width: 16px; } }
 
 /* 02 */
 
