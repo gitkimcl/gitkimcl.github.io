@@ -272,7 +272,10 @@ cmd:if (e.originalEvent.key === "Tab") {
 				n = n.previousSibling;
 			}
 		} else {
-			if (s.anchorOffset === 0) break cmd;
+			if (s.anchorOffset === 0) {
+				error();
+				break cmd;
+			}
 			n = n.childNodes[s.anchorOffset - 1];
 		}
 		if (!t.includes("{")) {
@@ -288,7 +291,10 @@ cmd:if (e.originalEvent.key === "Tab") {
 				n = n.previousSibling;
 			}
 		}
-		if (!t.includes("{")) break cmd;
+		if (!t.includes("{")) {
+			error();
+			break cmd;
+		}
 		bef = t.slice(0,t.length - t.match(/\{[^\{]*$/).at(0).length);
 		t = t.match(/\{[^\{]*$/).at(0);
 		console.log(n);
@@ -296,16 +302,19 @@ cmd:if (e.originalEvent.key === "Tab") {
 		console.log(`bef = ${bef}`);
 		console.log(`aft = ${aft}`);
 
-		if (!t) break cmd;
+		if (!t) {
+			error();
+			break cmd;
+		}
 		let cmd1 = k2e(t.split("/")[0]).toLowerCase().trim();
 		if (cmd1.includes("&elem;")) {
-			alert("오류"); // TODO: 알림창 만들기
+			error();
 			break cmd;
 		}
 		let cmd2 = t.split("/").slice(1);
 		if (cmd2.at(-1)==="") cmd2 = cmd2.slice(0,-1);
 		if (cmd2.length > 1) {
-			alert("오류"); // TODO: 알림창 만들기
+			error();
 			break cmd;
 		}
 		cmd2 = cmd2.length?(cmd2[0].split("&elem;")):[];
@@ -406,7 +415,7 @@ cmds: 	if (cmd1.startsWith("{#")) {
 		} else if (cmd1 === "{.." || cmd1 === "{namu") {
 			type = 0;
 			ins = $(`<span class="namu">`);
-		} else if (cmd1.startsWith("/ec")) { // "ㄷㅊ(대체라는 뜻)"
+		} else if (cmd1.startsWith("{ec")) { // "ㄷㅊ(대체라는 뜻)"
 			type = 2;
 			let data = cmd1.slice(3);
 			// TODO: 데이터 가공
@@ -414,18 +423,24 @@ cmds: 	if (cmd1.startsWith("{#")) {
 			put(ins, cmd2, els);
 		}
 		if (type === -1) {
-			alert("오류"); // TODO: 알림창 만들기
+			error();
 			break cmd;
 		}
 		n.textContent = bef;
 		ins.attr("contenteditable", false);
 		if (type === 1 || type === 2) ins.addClass("editable");
 		$(n).after(ins);
-		let after = document.createTextNode(aft);
-		ins.after(after);
+		if (aft) {
+			let after = document.createTextNode(aft);
+			ins.after(after);
+			if (type === 2 && !cmd2.length) edit_inside(ins.get(0));
+			else s.setPosition(after,0);
+		} else {
+			let p = ins.get(0).parentElement;
+			if (type === 2 && !cmd2.length) edit_inside(ins.get(0));
+			else s.setPosition(p, Array.prototype.indexOf.call(p.childNodes,ins.get(0))+1);
+		}
 		for (let e of remove) e.remove();
-		if (type === 2 && !cmd2.length) edit_inside(ins.get(0));
-		else s.setPosition(after,0);
 		d$("new").normalize();
 		cursor();
 		return;
@@ -433,9 +448,9 @@ cmds: 	if (cmd1.startsWith("{#")) {
 });
 
 function cursor() {
-	/*console.log(s.anchorNode);
+	console.log(s.anchorNode);
 	console.log(s.anchorOffset);
-	console.log(s.focusOffset);*/
+	console.log(s.focusOffset);
 	$(".cbefore").removeClass("cbefore");
 	$(".cafter").removeClass("cafter");
 	if (!s.anchorNode || !d$("new").contains(s.anchorNode)) return;
@@ -522,6 +537,9 @@ $("#new").on("click", (e) => {
 	}
 });
 
+// sorry safari but I don't think I can support you
+
+// at least safari supports this
 function add() {
 	let np = $("#new").clone();
 	np.attr("contenteditable", null);
@@ -536,4 +554,10 @@ function add() {
 	$("#new").before(np);
 	deco(np);
 	$("#new").empty();
+}
+
+function error() {
+	$("#new").css("animation", "none");
+	$("#new").offset();
+	$("#new").css("animation", "error-flash 0.5s ease-out");
 }

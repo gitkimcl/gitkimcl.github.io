@@ -243,6 +243,7 @@ dialog button:active {
 #new {
 	outline-offset: 0.5em;
 	opacity: 0.8;
+	border-radius: 0.25em;
 }
 
 span.error {
@@ -283,13 +284,11 @@ span.error {
 }
 
 .cbefore {
-	color: var(--c-r-text);
-	outline: 1px dotted var(--c-r-border);
+	outline: 1px dotted var(--c-text);
 }
 
 .cafter {
-	color: var(--c-g-text);
-	outline: 1px dotted var(--c-g-border);
+	outline: 1px dotted var(--c-text);
 }
 
 .edit-inside {
@@ -312,4 +311,9 @@ span.error {
 	margin-inline: auto;
 	margin-block-start: 1em;
 	display: block;
+}
+
+@keyframes error-flash {
+	from { box-shadow: 0 0 0 0.75em oklch(from var(--c-r-bga) l c h / 50%); background-color: oklch(from var(--c-r-bga) l c h / 50%); }
+	to { box-shadow: 0 0 0 0.75em transparent; background-color: transparent; }
 }
