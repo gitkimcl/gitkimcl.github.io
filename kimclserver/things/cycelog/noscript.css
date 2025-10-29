@@ -18,7 +18,7 @@ q::before, q::after { content: '\''; }
 q.exact::before, q.exact::after { content: '"'; }
 q.star::before, q.star::after { content: '★'; }
 
-s.namu::after, span.namu::after { content: '(...)'; }
+span.namu::after { content: '(...)'; }
 
 span.qm::after { content: '?'; }
 

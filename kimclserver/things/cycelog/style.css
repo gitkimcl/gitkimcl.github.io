@@ -272,7 +272,7 @@ span.error {
 #new q.exact::before, #new q.exact::after { content: '"'; }
 #new q.star::before, #new q.star::after { content: '★'; }
 
-#new s.namu::after, #new span.namu::after { content: '(...)'; }
+#new span.namu::after { content: '(...)'; }
 
 #new span.qm::after { content: '?'; }
 

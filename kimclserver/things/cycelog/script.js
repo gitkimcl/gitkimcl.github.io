@@ -18,7 +18,7 @@ function deco(el) {
 	$("q.exact", el).prepend("\"").append("\"");;
 	$("q.star", el).prepend("★").append("★");;
 	$("span.wrapper.paren", el).prepend("(").append(" )"); // hair space
-	$("s.namu, span.namu", el).append("(...)");
+	$("span.namu", el).append("(...)");
 	$("span.qm", el).text("?");
 	$("a, data, time, span.qm", el).on("click", (e) => {
 		attach_dialog(e.currentTarget, e.clientY);
@@ -155,6 +155,13 @@ function sani(str) {
 	return str.replaceAll("&","&amp;").replaceAll("\"","&quot;").replaceAll("<","&lt;").replaceAll(">","&gt;");
 }
 
+function put(el, arr, els) {
+	for (let i in arr) {
+		el.append(arr[i]);
+		if (els[i]) el.append(els[i].cloneNode(true));
+	}
+}
+
 // edit
 const s = window.getSelection();
 $("#new").on("keydown", (e) => {
@@ -250,26 +257,71 @@ cmd:if (e.originalEvent.key === "Tab") {
 			s.collapseToEnd();
 			return;
 		}
-		let idx = s.anchorOffset;
-		let t = s.anchorNode.textContent;
-		let cmd = t.slice(0,idx).match(/\/[^\/]*$/)?.at(0);
-		if (!cmd) break cmd;
-		let cmd1 = k2e(cmd.split(";")[0]).toLowerCase().trim();
-		let cmd2 = cmd.split(";").slice(1);
+
+		let n = s.anchorNode;
+		let t = "";
+		let bef = null;
+		let aft = null;
+		let remove = [];
+		let els = [];
+		if (n.nodeType === Node.TEXT_NODE) {
+			t = n.textContent.slice(0,s.anchorOffset);
+			aft = n.textContent.slice(s.anchorOffset);
+			if (!t.includes("{")) {
+				remove.push(n);
+				n = n.previousSibling;
+			}
+		} else {
+			if (s.anchorOffset === 0) break cmd;
+			n = n.childNodes[s.anchorOffset - 1];
+		}
+		if (!t.includes("{")) {
+			while (n) {
+				if (n.nodeType === Node.TEXT_NODE) {
+					t = n.textContent + t;
+					if (n.textContent.includes("{")) break;
+				} else {
+					t = "&elem;" + t;
+					els.unshift(n);
+				}
+				remove.push(n);
+				n = n.previousSibling;
+			}
+		}
+		if (!t.includes("{")) break cmd;
+		bef = t.slice(0,t.length - t.match(/\{[^\{]*$/).at(0).length);
+		t = t.match(/\{[^\{]*$/).at(0);
+		console.log(n);
+		console.log(`t = ${t}`);
+		console.log(`bef = ${bef}`);
+		console.log(`aft = ${aft}`);
+
+		if (!t) break cmd;
+		let cmd1 = k2e(t.split("/")[0]).toLowerCase().trim();
+		if (cmd1.includes("&elem;")) {
+			alert("오류"); // TODO: 알림창 만들기
+			break cmd;
+		}
+		let cmd2 = t.split("/").slice(1);
 		if (cmd2.at(-1)==="") cmd2 = cmd2.slice(0,-1);
-		console.log(`cmd: ${cmd1} ; [${cmd2}]`);
-		let del = t.slice(0,idx).replace(/\/[^\/]*$/,"");
+		if (cmd2.length > 1) {
+			alert("오류"); // TODO: 알림창 만들기
+			break cmd;
+		}
+		cmd2 = cmd2.length?(cmd2[0].split("&elem;")):[];
+		console.log(`cmd: ${cmd1} ' [${cmd2}]`);
 		let ins = $(`<span class="error">오류</span>`);
-		let type = 0;
-cmds: 	if (cmd1.startsWith("/#")) {
+		let type = -1;
+cmds: 	if (cmd1.startsWith("{#")) {
 			type = 1;
 			// anchor
 			let kind = cmd1.charAt(2);
 			let id = cmd1.slice(3);
 			if ("s d t g w i".split(' ').indexOf(kind) !== -1 && parseInt(id) == id) {
-				ins = $(`<a id="a${id}" class="${kind}" data-for="${id}">${id}${cmd2[0]?(' '+cmd2[0]):''}</a>`);
-			} else type = 0;
-		} else if (cmd1.startsWith("/r#")) {
+				ins = $(`<a id="a${id}" class="${kind}" data-for="${id}">${id}${cmd2.length?' ':''}</a>`);
+				put(ins, cmd2, els);
+			} else type = -1;
+		} else if (cmd1.startsWith("{r#")) {
 			type = 1;
 			// reference
 			let kind = cmd1.charAt(3);
@@ -279,89 +331,100 @@ cmds: 	if (cmd1.startsWith("/#")) {
 					if (d$(`a${id}`)) {
 						let cls = d$(`a${id}`).classList;
 						kind = (cls.contains('s'))?'s':((cls.contains('d'))?'d':((cls.contains('t'))?'t':((cls.contains('g'))?'g':((cls.contains('w'))?'w':((cls.contains('i'))?'i':'x')))));
-						if (kind != 'x') ins = $(`<a class="ref ${kind}" data-for="${id}">${id}${cmd2[0]?(' '+cmd2[0]):''}</a>`);
-						else type = 0;
+						if (kind != 'x') {
+							ins = $(`<a class="ref ${kind}" data-for="${id}">${id}${cmd2.length?' ':''}</a>`);
+							put(ins, cmd2, els);
+						}
+						else type = -1;
 					}
 				} else {
-					ins = $(`<a class="ref ${kind}" data-for="${id}">${id}${cmd2[0]?(' '+cmd2[0]):''}</a>`);
+					ins = $(`<a class="ref ${kind}" data-for="${id}">${id}${cmd2.length?' ':''}</a>`);
+					put(ins, cmd2, els);
 				}
-			} else type = 0;
-		} else if (cmd1.startsWith("/a#")) {
+			} else type = -1;
+		} else if (cmd1.startsWith("{a#")) {
 			type = 1;
 			// add
-			if (cmd1 === "/a#") ins = $(`<a class="add"></a>`);
-			else if (cmd1 === "/a#1") ins = $(`<a class="add add1"></a>`);
-			else if (cmd1 === "/a#3") ins = $(`<a class="add add3"></a>`);
+			if (cmd1 === "{a#") ins = $(`<a class="add"></a>`);
+			else if (cmd1 === "{a#1") ins = $(`<a class="add add1"></a>`);
+			else if (cmd1 === "{a#3") ins = $(`<a class="add add3"></a>`);
 			else type = 0;
-		} else if (cmd1 === "/?") {
-			if (cmd2.length > 1) break cmds;
-			ins = $(`<span class="qm"${cmd2[0]?` data-why="${sani(cmd2[0])}"`:''}>`);
-		} else if (cmd1.startsWith("/t")) {
-			if (cmd2.length > 1) break cmds;
+		} else if (cmd1 === "{?") {
+			type = 0;
+			ins = $(`<span class="qm"${cmd2.length?` data-why="${sani(cmd2[0])}"`:''}>`);
+		} else if (cmd1.startsWith("{t")) {
 			type = 1;
 			let data = cmd1.slice(2);
 			// TODO: 데이터 가공
-			ins = $(`<time data-time="${data}">${cmd2[0]?sani(cmd2[0]):data}</time>`);
-		} else if (cmd1.startsWith("/p")) {
-			if (cmd2.length > 1) break cmds;
+			ins = $(`<time data-time="${data}">${cmd2.length?'':data}</time>`);
+			put(ins, cmd2, els);
+		} else if (cmd1.startsWith("{p")) {
 			type = 1;
 			let data = cmd1.slice(2);
 			// TODO: 데이터 가공
-			ins = $(`<data class="person" value="${data}">${cmd2[0]?sani(cmd2[0]):data}</data>`);
-		} else if (cmd1 === "/st") {
-			if (cmd2.length > 1) break cmds;
+			ins = $(`<data class="person" value="${data}">${cmd2.length?'':data}</data>`);
+			put(ins, cmd2, els);
+		} else if (cmd1 === "{st") {
 			type = 2;
-			ins = $(`<b class="star">${cmd2[0]?sani(cmd2[0]):''}</b>`);
-		} else if (cmd1 === "/s") {
-			if (cmd2.length > 1) break cmds;
+			ins = $(`<b class="star"></b>`);
+			put(ins, cmd2, els);
+		} else if (cmd1 === "{s") {
 			type = 2;
-			if (!cmd2[0]) ins = $(`<s>`);
-			else if (cmd2[0].endsWith("(...)")) ins = $(`<s class="namu">${cmd2[0].slice(0,-5)}</s>`);
-			else if (cmd2[0].endsWith("..")) ins = $(`<s class="namu">${cmd2[0].slice(0,-2)}</s>`);
-			else ins = $(`<s>${cmd2[0]}</s>`);
-		} else if (cmd1 === "/b" || cmd1 === "/str") {
-			if (cmd2.length > 1) break cmds;
+			ins = $(`<s></s>`);
+			put(ins, cmd2, els);
+		} else if (cmd1 === "{b" || cmd1 === "{str") {
 			type = 2;
-			ins = $(`<strong>${cmd2[0]?cmd2[0]:''}</strong>`);
-		} else if (cmd1 === "/u" || cmd1 === "/em") {
-			if (cmd2.length > 1) break cmds;
+			ins = $(`<strong></strong>`);
+			put(ins, cmd2, els);
+		} else if (cmd1 === "{u" || cmd1 === "{em") {
 			type = 2;
-			ins = $(`<em>${cmd2[0]?cmd2[0]:''}</em>`);
-		} else if (cmd1 === "/(" || cmd1 === "/[" || cmd1 === "/") {
-			if (cmd2.length > 1) break cmds;
+			ins = $(`<em></em>`);
+			put(ins, cmd2, els);
+		} else if (cmd1 === "{") {
 			// wrap
 			type = 2;
-			ins = $(`<span class="wrapper">${cmd2[0]?cmd2[0]:''}</span>`);
-		} else if (cmd1.startsWith("/q")) {
+			ins = $(`<span class="wrapper"></span>`);
+			put(ins, cmd2, els);
+		} else if (cmd1.startsWith("{q")) {
 			type = 2;
-			if (cmd1 === "/q") ins = $(`<q></q>`);
-			else if (cmd1 === "/q\"") ins = $(`<q class="exact"></a>`);
-			else if (cmd1 === "/qst") ins = $(`<q class="star"></a>`);
-			else type = 0;
-		} else if (cmd1 === "/^" || cmd1 === "/sup") {
-			if (cmd2.length > 1) break cmds;
+			if (cmd1 === "{q") ins = $(`<q></q>`);
+			else if (cmd1 === "{q\"") ins = $(`<q class="exact"></a>`);
+			else if (cmd1 === "{qst") ins = $(`<q class="star"></a>`);
+			else {
+				type = -1;
+				break cmds;
+			}
+			put(ins, cmd2, els);
+		} else if (cmd1 === "{^" || cmd1 === "{sup") {
 			type = 2;
-			ins = $(`<sup>${cmd2[0]?cmd2[0]:''}</sup>`);
-		} else if (cmd1 === "/_" || cmd1 === "/sub") {
-			if (cmd2.length > 1) break cmds;
+			ins = $(`<sup></sup>`);
+			put(ins, cmd2, els);
+		} else if (cmd1 === "{_" || cmd1 === "{sub") {
 			type = 2;
-			ins = $(`<sub>${cmd2[0]?cmd2[0]:''}</sub>`);
-		} else if (cmd1 === "/.." || cmd1 === "/namu") {
+			ins = $(`<sub></sub>`);
+			put(ins, cmd2, els);
+		} else if (cmd1 === "{.." || cmd1 === "{namu") {
+			type = 0;
 			ins = $(`<span class="namu">`);
 		} else if (cmd1.startsWith("/ec")) { // "ㄷㅊ(대체라는 뜻)"
-			if (cmd2.length > 1) break cmds;
 			type = 2;
 			let data = cmd1.slice(3);
 			// TODO: 데이터 가공
-			ins = $(`<data class="placeholder" value="${data}">${cmd2[0]?cmd2[0]:data}</data>`);
+			ins = $(`<data class="placeholder" value="${data}">${cmd2.length?'':data}</data>`);
+			put(ins, cmd2, els);
 		}
-		s.anchorNode.textContent = del;
+		if (type === -1) {
+			alert("오류"); // TODO: 알림창 만들기
+			break cmd;
+		}
+		n.textContent = bef;
 		ins.attr("contenteditable", false);
 		if (type === 1 || type === 2) ins.addClass("editable");
-		$(s.anchorNode).after(ins);
-		let after = document.createTextNode(t.slice(idx));
+		$(n).after(ins);
+		let after = document.createTextNode(aft);
 		ins.after(after);
-		if (type === 2 && !cmd2[0]) edit_inside(ins.get(0));
+		for (let e of remove) e.remove();
+		if (type === 2 && !cmd2.length) edit_inside(ins.get(0));
 		else s.setPosition(after,0);
 		d$("new").normalize();
 		cursor();
