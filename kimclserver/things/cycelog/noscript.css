@@ -18,12 +18,9 @@ q::before, q::after { content: '\''; }
 q.exact::before, q.exact::after { content: '"'; }
 q.star::before, q.star::after { content: '★'; }
 
-span.ref.paren::before { content: '('; }
-span.ref.paren::after { padding-inline-start: 0.1em; content: ')'; }
-
 s.namu::after, span.namu::after { content: '(...)'; }
 
-span.idk::after { content: '?'; }
+span.qm::after { content: '?'; }
 
 data, time, span.idk {
 	text-decoration: unset;

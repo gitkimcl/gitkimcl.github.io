@@ -1,58 +1,43 @@
 "use strict";
 
-if (!document.querySelector(window.location.hash)) {
+if (window.location.hash && !document.querySelector(window.location.hash)) {
 	/* TODO: 서버에서 내용 가져오기 */
 	console.log("업서요");
 }
 
 // selectable text
-$("a").before(" "); // hair space
-$("a").prepend($(`<span class="before">#</span>`));
-$("a.ref > .before").text("ref. #"); // 6-per-em space
-$("a.add > .before").text("Add");
-$("a.add1 > .before").text("Add1");
-$("a.add3 > .before").text("Add3");
-$("b.star").prepend("★").append("★");
-$("q:not(.exact, .star)").prepend("'").append("'");
-$("q.exact").prepend("\"").append("\"");;
-$("q.star").prepend("★").append("★");;
-$("span.ref.paren").prepend("(").append(" )"); // 6-per-em space
-$("s.namu, span.namu").append("(...)");
-$("span.qm").text("?");
+function deco(el) {
+	$("a", el).before(" "); // hair space
+	$("a", el).prepend($(`<span class="before">#</span>`));
+	$("a.ref > .before", el).text("ref. #"); // 6-per-em space
+	$("a.add > .before", el).text("Add");
+	$("a.add1 > .before", el).text("Add1");
+	$("a.add3 > .before", el).text("Add3");
+	$("b.star", el).prepend("★").append("★");
+	$("q:not(.exact, .star)", el).prepend("'").append("'");
+	$("q.exact", el).prepend("\"").append("\"");;
+	$("q.star", el).prepend("★").append("★");;
+	$("span.wrapper.paren", el).prepend("(").append(" )"); // hair space
+	$("s.namu, span.namu", el).append("(...)");
+	$("span.qm", el).text("?");
+	$("a, data, time, span.qm", el).on("click", (e) => {
+		attach_dialog(e.currentTarget, e.clientY);
+		e.stopPropagation();
+	}); // dialog
+}
+deco(undefined);
 
 const d$ = (q) => document.getElementById(q);
 
-function deco_new() {
-	$("a:not(.deco)",$("#new")).before(" "); // hair space
-	$("a:not(.deco)",$("#new")).prepend($(`<span class="before">#</span>`));
-	$("a:not(.deco).ref > .before",$("#new")).text("ref. #"); // 6-per-em space
-	$("a:not(.deco).add > .before",$("#new")).text("Add");
-	$("a:not(.deco).add1 > .before",$("#new")).text("Add1");
-	$("a:not(.deco).add3 > .before",$("#new")).text("Add3");
-	$("b:not(.deco).star",$("#new")).prepend("★").append("★");
-	$("q:not(.deco, .exact, .star)",$("#new")).prepend("'").append("'");
-	$("q:not(.deco).exact",$("#new")).prepend("\"").append("\"");;
-	$("q:not(.deco).star",$("#new")).prepend("★").append("★");;
-	$("span:not(.deco).ref.paren",$("#new")).prepend("(").append(" )"); // 6-per-em space
-	$("s:not(.deco).namu, span:not(.deco).namu",$("#new")).append("(...)");
-	$("span:not(.deco).qm",$("#new")).text("?");
-	$("*",$("#new")).addClass("deco");
-}
-
-// dialog
-$("a, data, time, span.qm").on("click", (e) => {
-	e.stopPropagation();
-	move_to(e.currentTarget, e.clientY);
-});
 
 $(window).on("resize", () => {
 	if (!cur_el) return;
-	actually_move();
+	move_dialog();
 });
 
 var cur_el = null;
 var cur_box = null;
-function move_to(el, clicky) {
+function attach_dialog(el, clicky) {
 	$("#dialog").css("opacity",0).addClass("closing").removeAttr("id");
 	let rects = el.getClientRects();
 	if (clicky != null) {
@@ -66,19 +51,22 @@ function move_to(el, clicky) {
 		}
 		if (cur_el === el && cur_box === new_box) {
 			$("#dialog").css("opacity",0).addClass("closing").removeAttr("id");
+			$(".selected").removeClass("selected");
 			cur_el = cur_box = null;
 			return;
 		}
 		cur_box = new_box;
 	}
+	$(".selected").removeClass("selected");
+	$(el).addClass("selected");
 	cur_el = el;
 	create_dialog();
-	actually_move();
+	move_dialog();
 	d$("dialog").showPopover({'source':cur_el});
 	$("#dialog").css($(el).css(['--c','--ch','--ca','--bd','--bdh','--bda','--bg','--bgh','--bga']));
 }
 
-function actually_move() {
+function move_dialog() {
 	let rect = cur_el.getClientRects()[cur_box ?? 0];
 	let x = window.scrollX + rect.x + rect.width/2;
 	let y = window.scrollY + rect.bottom + 4;
@@ -140,8 +128,10 @@ function create_dialog() {
 function remove_dialog(e) {
 	if (e.id !== "dialog") return;
 	$(e).css("opacity",0).addClass("closing").removeAttr("id");
+	$(".selected").removeClass("selected");
 	cur_el = cur_box = null;
 }
+
 
 function anchor(to) {
 	if (d$(`a${to}`)) {
@@ -159,59 +149,328 @@ function anchor(to) {
 	console.log("업서요");
 }
 
+function sani(str) {
+	// 실수를 막는 거지 보안용은 아님
+	// 이거 개인 프로젝트임
+	return str.replaceAll("&","&amp;").replaceAll("\"","&quot;").replaceAll("<","&lt;").replaceAll(">","&gt;");
+}
+
 // edit
+const s = window.getSelection();
 $("#new").on("keydown", (e) => {
-	if (e.originalEvent.key !== "Tab") return;
-	d$("new").normalize();
-	e.preventDefault();
-	let s = window.getSelection();
-	s.collapseToEnd();
-	let idx = s.anchorOffset;
-	let t = s.anchorNode.textContent;
-	let cmd = t.slice(0,idx).match(/ ?\{[^\{]*$/)?.at(0)?.toLowerCase()?.trim();
-	if (!cmd) return;
-	let cmd1 = k2e(cmd.split("/")[0]);
-	let cmd2 = cmd.split("/").slice(1).join("/");
-	if (cmd2.at(-1)==="/") cmd2 = cmd2.slice(0,-1);
-	console.log(`cmd: ${cmd1} / ${cmd2}`);
-	let del = t.slice(0,idx).replace(/ ?\{[^\{]*$/,"");
-	let ins = $(`<span class="error">오류</span>`);
-	if (cmd1.startsWith("{#")) {
-		// anchor
-		let kind = cmd1.charAt(2);
-		let id = cmd1.slice(3);
-		if ("s d t g w i".split(' ').indexOf(kind) !== -1 && parseInt(id) == id) {
-			ins = $(`<a id="a${id}" class="${kind}" data-for="${id}">${id}${cmd2&&' ' + cmd2}</a>`);
-		}
-	} else if (cmd1.startsWith("{r#")) {
-		// reference
-		let kind = cmd1.charAt(3);
-		let id = cmd1.slice(4);
-		if ("s d t g w i r".split(' ').indexOf(kind) !== -1 && parseInt(id) == id) {
-			if (kind === 'r') {
-				if (d$(`a${id}`)) {
-					let cls = d$(`a${id}`).classList;
-					kind = (cls.contains('s'))?'s':((cls.contains('d'))?'d':((cls.contains('t'))?'t':((cls.contains('g'))?'g':((cls.contains('w'))?'w':((cls.contains('i'))?'i':'x')))));
-					if (kind != 'x') ins = $(`<a class="ref ${kind}" data-for="${id}">${id}${cmd2&&' ' + cmd2}</a>`);
-				}
+	/*console.log(e.originalEvent.key);
+	console.log(s.anchorNode);
+	console.log(s.anchorOffset);
+	console.log(s.focusOffset);*/
+	if (e.originalEvent.key === "Backspace" && $(".edit-inside").get(0) && $(".edit-inside").get(0).innerHTML.length === 0) {
+		$(".edit-inside").off("blur");
+		$(".edit-inside").get(0).blur();
+		$("#new").html($("#new").html().replace("&nbsp;"," "));
+		s.removeAllRanges();
+		$("#new").attr("contenteditable", "true");
+		s.setPosition(d$("new"),Array.prototype.indexOf.call(d$("new").childNodes,$(".edit-inside").get(0))+1);
+		$(".edit-inside").remove();
+		e.preventDefault();
+		return;
+	}
+eend:if (e.originalEvent.key === "Enter" || e.originalEvent.key === "ArrowRight") {
+		if (!e.originalEvent.target.classList.contains("editable")) break eend;
+		if (e.originalEvent.key === "ArrowRight") {
+			let n = s.anchorNode;
+			if (n.nodeType === Node.TEXT_NODE) {
+				if (n !== n.parentElement.lastChild || s.anchorOffset !== n.textContent.length) break eend;
 			} else {
-				ins = $(`<a class="ref ${kind}" data-for="${id}">${id}${cmd2&&' ' + cmd2}</a>`);
+				if (s.anchorOffset !== n.childNodes.length) break eend;
 			}
 		}
-	} else if (cmd1.startsWith("{a#")) {
-		// add
-		if (cmd1 === "{a#") ins = $(`<a class="add"></a>`);
-		else if (cmd1 === "{a#1") ins = $(`<a class="add add1"></a>`);
-		else if (cmd1 === "{a#3") ins = $(`<a class="add add3"></a>`);
+		if (e.originalEvent.isComposing) return;
+		cancel_edit_inside(true,true);
+		e.preventDefault();
+		return;
 	}
-	s.anchorNode.textContent = del;
-	ins.attr("contenteditable", false);
-	$(s.anchorNode).after(ins);
-	let after = document.createTextNode(t.slice(idx));
-	ins.after(after);
-	s.selectAllChildren(after);
-	s.collapseToStart
-	s.collapseToEnd();
-	deco_new();
-	d$("new").normalize();
+estt:if (e.originalEvent.key === "Escape" || e.originalEvent.key === "ArrowLeft") {
+		if (!e.originalEvent.target.classList.contains("editable")) break estt;
+		if (e.originalEvent.key === "ArrowLeft") {
+			let n = s.anchorNode;
+			if (n.nodeType === Node.TEXT_NODE) {
+				if (n !== n.parentElement.firstChild || s.anchorOffset !== 0) break estt;
+			} else {
+				if (s.anchorOffset !== 0) break estt;
+			}
+		}
+		if (e.originalEvent.isComposing) return;
+		cancel_edit_inside(true,false);
+		e.preventDefault();
+		return;
+	}
+editr:if (e.originalEvent.key === "Tab" || e.originalEvent.key === "ArrowRight") {
+		if (s.anchorNode.nodeType !== Node.TEXT_NODE || s.anchorOffset === s.anchorNode.textContent.length) {
+			let n = s.anchorNode;
+			if (n.nodeType === Node.TEXT_NODE) {
+				if (s.anchorOffset !== n.textContent.length) break editr;
+				n = n.nextSibling;
+			} else {
+				if (s.anchorOffset === n.childNodes.length) break editr;
+				n = n.childNodes[s.anchorOffset];
+			}
+			if (!n) break editr;
+			if (!n.classList?.contains("editable")) break editr;
+			edit_inside(n);
+			s.selectAllChildren(n);
+			s.collapseToStart();
+			e.preventDefault();
+			return;
+		}
+	}
+editl:if (e.originalEvent.key === "Tab" || e.originalEvent.key === "ArrowLeft") {
+		if (s.anchorNode.nodeType !== Node.TEXT_NODE || s.anchorOffset === 0) {
+			let n = s.anchorNode;
+			if (n.nodeType === Node.TEXT_NODE) {
+				if (s.anchorOffset !== 0) break editl;
+				n = n.previousSibling;
+			} else {
+				if (s.anchorOffset === 0) break editl;
+				n = n.childNodes[s.anchorOffset-1];
+			}
+			if (!n) break editl;
+			if (!n.classList?.contains("editable")) break editl;
+			edit_inside(n);
+			s.selectAllChildren(n);
+			s.collapseToEnd();
+			e.preventDefault();
+			return;
+		}
+	}
+cmd:if (e.originalEvent.key === "Tab") {
+		if (e.originalEvent.isComposing) return;
+		d$("new").normalize();
+		e.preventDefault();
+		if (!s.isCollapsed) {
+			// TODO: 선택 어쩌고 구현
+			s.collapseToEnd();
+			return;
+		}
+		let idx = s.anchorOffset;
+		let t = s.anchorNode.textContent;
+		let cmd = t.slice(0,idx).match(/\/[^\/]*$/)?.at(0);
+		if (!cmd) break cmd;
+		let cmd1 = k2e(cmd.split(";")[0]).toLowerCase().trim();
+		let cmd2 = cmd.split(";").slice(1);
+		if (cmd2.at(-1)==="") cmd2 = cmd2.slice(0,-1);
+		console.log(`cmd: ${cmd1} ; [${cmd2}]`);
+		let del = t.slice(0,idx).replace(/\/[^\/]*$/,"");
+		let ins = $(`<span class="error">오류</span>`);
+		let type = 0;
+cmds: 	if (cmd1.startsWith("/#")) {
+			type = 1;
+			// anchor
+			let kind = cmd1.charAt(2);
+			let id = cmd1.slice(3);
+			if ("s d t g w i".split(' ').indexOf(kind) !== -1 && parseInt(id) == id) {
+				ins = $(`<a id="a${id}" class="${kind}" data-for="${id}">${id}${cmd2[0]?(' '+cmd2[0]):''}</a>`);
+			} else type = 0;
+		} else if (cmd1.startsWith("/r#")) {
+			type = 1;
+			// reference
+			let kind = cmd1.charAt(3);
+			let id = cmd1.slice(4);
+			if ("s d t g w i r".split(' ').indexOf(kind) !== -1 && parseInt(id) == id) {
+				if (kind === 'r') {
+					if (d$(`a${id}`)) {
+						let cls = d$(`a${id}`).classList;
+						kind = (cls.contains('s'))?'s':((cls.contains('d'))?'d':((cls.contains('t'))?'t':((cls.contains('g'))?'g':((cls.contains('w'))?'w':((cls.contains('i'))?'i':'x')))));
+						if (kind != 'x') ins = $(`<a class="ref ${kind}" data-for="${id}">${id}${cmd2[0]?(' '+cmd2[0]):''}</a>`);
+						else type = 0;
+					}
+				} else {
+					ins = $(`<a class="ref ${kind}" data-for="${id}">${id}${cmd2[0]?(' '+cmd2[0]):''}</a>`);
+				}
+			} else type = 0;
+		} else if (cmd1.startsWith("/a#")) {
+			type = 1;
+			// add
+			if (cmd1 === "/a#") ins = $(`<a class="add"></a>`);
+			else if (cmd1 === "/a#1") ins = $(`<a class="add add1"></a>`);
+			else if (cmd1 === "/a#3") ins = $(`<a class="add add3"></a>`);
+			else type = 0;
+		} else if (cmd1 === "/?") {
+			if (cmd2.length > 1) break cmds;
+			ins = $(`<span class="qm"${cmd2[0]?` data-why="${sani(cmd2[0])}"`:''}>`);
+		} else if (cmd1.startsWith("/t")) {
+			if (cmd2.length > 1) break cmds;
+			type = 1;
+			let data = cmd1.slice(2);
+			// TODO: 데이터 가공
+			ins = $(`<time data-time="${data}">${cmd2[0]?sani(cmd2[0]):data}</time>`);
+		} else if (cmd1.startsWith("/p")) {
+			if (cmd2.length > 1) break cmds;
+			type = 1;
+			let data = cmd1.slice(2);
+			// TODO: 데이터 가공
+			ins = $(`<data class="person" value="${data}">${cmd2[0]?sani(cmd2[0]):data}</data>`);
+		} else if (cmd1 === "/st") {
+			if (cmd2.length > 1) break cmds;
+			type = 2;
+			ins = $(`<b class="star">${cmd2[0]?sani(cmd2[0]):''}</b>`);
+		} else if (cmd1 === "/s") {
+			if (cmd2.length > 1) break cmds;
+			type = 2;
+			if (!cmd2[0]) ins = $(`<s>`);
+			else if (cmd2[0].endsWith("(...)")) ins = $(`<s class="namu">${cmd2[0].slice(0,-5)}</s>`);
+			else if (cmd2[0].endsWith("..")) ins = $(`<s class="namu">${cmd2[0].slice(0,-2)}</s>`);
+			else ins = $(`<s>${cmd2[0]}</s>`);
+		} else if (cmd1 === "/b" || cmd1 === "/str") {
+			if (cmd2.length > 1) break cmds;
+			type = 2;
+			ins = $(`<strong>${cmd2[0]?cmd2[0]:''}</strong>`);
+		} else if (cmd1 === "/u" || cmd1 === "/em") {
+			if (cmd2.length > 1) break cmds;
+			type = 2;
+			ins = $(`<em>${cmd2[0]?cmd2[0]:''}</em>`);
+		} else if (cmd1 === "/(" || cmd1 === "/[" || cmd1 === "/") {
+			if (cmd2.length > 1) break cmds;
+			// wrap
+			type = 2;
+			ins = $(`<span class="wrapper">${cmd2[0]?cmd2[0]:''}</span>`);
+		} else if (cmd1.startsWith("/q")) {
+			type = 2;
+			if (cmd1 === "/q") ins = $(`<q></q>`);
+			else if (cmd1 === "/q\"") ins = $(`<q class="exact"></a>`);
+			else if (cmd1 === "/qst") ins = $(`<q class="star"></a>`);
+			else type = 0;
+		} else if (cmd1 === "/^" || cmd1 === "/sup") {
+			if (cmd2.length > 1) break cmds;
+			type = 2;
+			ins = $(`<sup>${cmd2[0]?cmd2[0]:''}</sup>`);
+		} else if (cmd1 === "/_" || cmd1 === "/sub") {
+			if (cmd2.length > 1) break cmds;
+			type = 2;
+			ins = $(`<sub>${cmd2[0]?cmd2[0]:''}</sub>`);
+		} else if (cmd1 === "/.." || cmd1 === "/namu") {
+			ins = $(`<span class="namu">`);
+		} else if (cmd1.startsWith("/ec")) { // "ㄷㅊ(대체라는 뜻)"
+			if (cmd2.length > 1) break cmds;
+			type = 2;
+			let data = cmd1.slice(3);
+			// TODO: 데이터 가공
+			ins = $(`<data class="placeholder" value="${data}">${cmd2[0]?cmd2[0]:data}</data>`);
+		}
+		s.anchorNode.textContent = del;
+		ins.attr("contenteditable", false);
+		if (type === 1 || type === 2) ins.addClass("editable");
+		$(s.anchorNode).after(ins);
+		let after = document.createTextNode(t.slice(idx));
+		ins.after(after);
+		if (type === 2 && !cmd2[0]) edit_inside(ins.get(0));
+		else s.setPosition(after,0);
+		d$("new").normalize();
+		cursor();
+		return;
+	}
 });
+
+function cursor() {
+	/*console.log(s.anchorNode);
+	console.log(s.anchorOffset);
+	console.log(s.focusOffset);*/
+	$(".cbefore").removeClass("cbefore");
+	$(".cafter").removeClass("cafter");
+	if (!s.anchorNode || !d$("new").contains(s.anchorNode)) return;
+sel:{ // firefox
+		let n = s.anchorNode;
+		let right = 1;
+		if (s.anchorNode.nodeType === Node.TEXT_NODE) {
+			if (s.anchorOffset === 0) right = 0;
+			n = n.parentElement;
+		}
+		if (n.isContentEditable) break sel;
+		s.setPosition(n.parentElement,Array.prototype.indexOf.call(n.parentElement.childNodes,n)+right);
+		n.parentElement.focus();
+	}
+bef:if (s.anchorNode.nodeType !== Node.TEXT_NODE || s.anchorOffset === s.anchorNode.textContent.length) {
+		let n = s.anchorNode;
+		if (n.nodeType === Node.TEXT_NODE) n = n.nextSibling;
+		else n = n.childNodes[s.anchorOffset];
+		if (!n) break bef;
+		if (!n.classList?.contains("editable")) break bef;
+		$(n).addClass("cbefore");
+	}
+aft:if (s.anchorNode.nodeType !== Node.TEXT_NODE || s.anchorOffset === 0) {
+		let n = s.anchorNode;
+		if (n.nodeType === Node.TEXT_NODE) n = n.previousSibling;
+		else n = n.childNodes[s.anchorOffset-1];
+		if (!n) break aft;
+		if (!n.classList?.contains("editable")) break aft;
+		$(n).addClass("cafter");
+	}
+	$("#new br").remove(); // 강제 개행 ㄴㄴ염 + <br> 때매 생기는 버그가 좀 있음
+	$("#new div").remove(); // div가 왜 생김????
+	$("#new *[style], #new font").each(function () { // chrome -- 복붙하면 스타일도 적용됨
+		let le = this.lastChild;
+		$(this).replaceWith($(this).contents());
+		s.removeAllRanges();
+		s.setPosition(le,(le.nodeType === Node.TEXT_NODE) ? le.textContent.length : le.childNodes.length);
+	});
+}
+$(document).on("selectionchange", cursor);
+$("#new").on("focus", cursor);
+$("#new").on("blur", () => s.removeAllRanges());
+
+function edit_inside(e) {
+	$("#new").attr("contenteditable", "false");
+	$(".edit-inside").off("blur");
+	$(".edit-inside").attr("contenteditable", "false");
+	$(".edit-inside").removeClass("edit-inside");
+	$(e).attr("contenteditable", "true");
+	$(e).addClass("edit-inside");
+	$(e).on("blur", ()=>cancel_edit_inside(false));
+	e.focus();
+}
+
+function cancel_edit_inside(parent,right) {
+	$(".edit-inside").off("blur");
+	$(".edit-inside").attr("contenteditable", "false");
+	$(".edit-inside").get(0).blur();
+	$("#new").html($("#new").html().replace("&nbsp;"," "));
+	s.removeAllRanges();
+	if (parent) {
+		let p = $(".edit-inside").get(0).parentNode;
+		s.setPosition(p,Array.prototype.indexOf.call(p.childNodes,$(".edit-inside").get(0))+(right?1:0));
+		console.log(s.anchorNode);
+		console.log(s.anchorOffset);
+		$(".edit-inside").removeClass("edit-inside");
+		if (p.id === "new") {
+			$("#new").attr("contenteditable", "true");
+			p.focus();
+			return;
+		}
+		edit_inside(p);
+	} else {
+		$("#new").attr("contenteditable", "true");
+		s.setPosition(d$("new"),Array.prototype.indexOf.call(d$("new").childNodes,$(".edit-inside").get(0))+1);
+		$(".edit-inside").removeClass("edit-inside");
+	}
+}
+
+$("#new").on("click", (e) => {
+	if ($(".edit-inside").get(0) && !e.originalEvent.target.classList.contains("edit-inside")) cancel_edit_inside(false);
+	if (e.originalEvent.target.classList.contains("editable")) {
+		edit_inside(e.originalEvent.target);
+	}
+});
+
+function add() {
+	let np = $("#new").clone();
+	np.attr("contenteditable", null);
+	$("*", np).attr("contenteditable", null);
+	$("*", np).removeClass("editable").removeClass("edit-inside");
+	$("*", np).removeClass("cbefore").removeClass("cafter");
+	$("*[class=\"\"]", np).attr("class", null);
+	$(".noclass", np).each(function () { $(this).replaceWith($(this).contents()); });
+	np.attr('id', null);
+	np.html($(np).html().replace("&nbsp;"," "));
+	np.get(0).normalize();
+	$("#new").before(np);
+	deco(np);
+	$("#new").empty();
+}

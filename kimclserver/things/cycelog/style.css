@@ -107,8 +107,16 @@ data.placeholder {
 	border-radius: 0.2em;
 }
 
-span.ref:has(a.ref:hover, a.add:hover) :is(span.reftext, a.ref, a.add) {
-	text-decoration: underline;
+span.wrapper {
+	border-radius: 0.2em;
+	padding: 0.05em;
+	margin: -0.05em;
+}
+
+span.wrapper:has( > :is(a.ref,a.add,span.qm):is(:hover, .selected)) {
+	color: var(--c-b-text);
+	background-color: var(--c-b-bg);
+	outline: 1px solid var(--c-b-border);
 }
 
 sup {
@@ -136,7 +144,7 @@ hgroup p {
 }
 
 span.weekspan {
-	background-color: light-dark(rgb(255 255 0 / 90%),rgb(255 255 0 / 30%));
+	background-color: light-dark(rgb(255, 255, 0),rgb(110, 90, 0));
 }
 
 time.weekwrite {
@@ -144,11 +152,11 @@ time.weekwrite {
 }
 
 data.weekcode {
-	background-color: light-dark(rgb(0 255 0 / 90%),rgb(0 255 0 / 30%));
+	background-color: light-dark(rgb(0 255 0),rgb(0, 100, 0));
 }
 
 span.weekend {
-	background-color: light-dark(rgb(0 255 0 / 90%),rgb(0 255 0 / 30%));
+	background-color: light-dark(rgb(0 255 0),rgb(0, 100, 0));
 }
 
 data:hover, time:hover, span.qm:hover {
@@ -163,10 +171,6 @@ data:hover, time:hover, span.qm:hover {
 		text-decoration-style: dotted;
 		cursor: help;
 	}
-}
-
-span.idk:has(span.qm:hover) {
-	text-decoration: underline;
 }
 
 dialog {
@@ -236,7 +240,76 @@ dialog button:active {
 	to { box-shadow: 0 0 0 0.75em transparent; background-color: transparent; }
 }
 
+#new {
+	outline-offset: 0.5em;
+	opacity: 0.8;
+}
+
 span.error {
 	color: var(--c-r-text);
 	background-color: var(--c-r-bg);
+}
+
+
+
+#new a {
+	margin-inline-start: 0.05em;
+}
+#new a::before {
+	content: '#';
+	text-indent: 0;
+	margin-right: 0.05em;
+	opacity: 0.85;
+}
+#new a.ref::before { content: 'ref. #'; }
+#new a.add::before { content: 'Add'; opacity: 1; }
+#new a.add.add1::before { content: 'Add1'; }
+#new a.add.add3::before { content: 'Add3'; }
+
+#new b.star::before, #new b.star::after { content: '★'; }
+
+#new q::before, #new q::after { content: '\''; }
+#new q.exact::before, #new q.exact::after { content: '"'; }
+#new q.star::before, #new q.star::after { content: '★'; }
+
+#new s.namu::after, #new span.namu::after { content: '(...)'; }
+
+#new span.qm::after { content: '?'; }
+
+:is(.cbefore, .cafter, .edit-inside):not(a) {
+	border-radius: 0.2em;
+	padding: 0.05em;
+	margin: -0.05em;
+}
+
+.cbefore {
+	color: var(--c-r-text);
+	outline: 1px dotted var(--c-r-border);
+}
+
+.cafter {
+	color: var(--c-g-text);
+	outline: 1px dotted var(--c-g-border);
+}
+
+.edit-inside {
+	color: var(--c-y-text);
+	background-color: var(--c-y-bg);
+	outline: 1px solid var(--c-y-border);
+}
+
+.wrapper.edit-inside {
+	color: var(--c-b-text);
+	background-color: var(--c-b-bg);
+	outline: 1px solid var(--c-b-border);
+}
+
+#new:has( .edit-inside) {
+	outline-style: auto;
+}
+
+#addnew {
+	margin-inline: auto;
+	margin-block-start: 1em;
+	display: block;
 }
