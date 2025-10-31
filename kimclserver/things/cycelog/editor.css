@@ -1,0 +1,102 @@
+.new {
+	outline-offset: 0.5em;
+	opacity: 0.8;
+	border-radius: 0.25em;
+	margin-block: 0.75em;
+}
+
+#new {
+	background-color: oklch(from var(--c-w-bga) l c h / 50%);
+	box-shadow: 0 0 0 0.5em oklch(from var(--c-w-bga) l c h / 50%);
+}
+#new:has( .edit-inside) { outline-style: auto; }
+
+#new a { margin-inline-start: 0.05em; }
+#new a::before {
+	content: '#';
+	text-indent: 0;
+	margin-right: 0.05em;
+	opacity: 0.85;
+}
+#new a.ref::before { content: 'ref. #'; }
+#new a.add::before { content: 'Add'; opacity: 1; }
+#new a.add.add1::before { content: 'Add1'; }
+#new a.add.add3::before { content: 'Add3'; }
+#new b.star::before, #new b.star::after { content: '★'; }
+#new q::before, #new q::after { content: '\''; }
+#new q.exact::before, #new q.exact::after { content: '"'; }
+#new q.star::before, #new q.star::after { content: '★'; }
+#new span.namu::after { content: '(...)'; }
+#new span.qm::after { content: '?'; }
+
+span.error {
+	color: var(--c-r-text);
+	background-color: var(--c-r-bg);
+}
+
+:is(.cbefore, .cafter, .edit-inside):not(a) {
+	border-radius: 0.2em;
+	padding: 0.05em;
+	margin: -0.05em;
+}
+
+.cbefore { outline: 1px dotted var(--c-text); }
+.cafter { outline: 1px dotted var(--c-text); }
+
+.edit-inside {
+	color: var(--c-y-text);
+	background-color: var(--c-y-bg);
+	outline: 1px solid var(--c-y-border);
+}
+
+.wrapper.edit-inside {
+	color: var(--c-b-text);
+	background-color: var(--c-b-bg);
+	outline: 1px solid var(--c-b-border);
+}
+
+@keyframes error-flash {
+	from { box-shadow: 0 0 0 0.5em oklch(from var(--c-r-bga) l c h / 50%); background-color: oklch(from var(--c-r-bga) l c h / 50%); }
+	to { box-shadow: 0 0 0 0.5em oklch(from var(--c-w-bga) l c h / 50%); background-color: oklch(from var(--c-w-bga) l c h / 50%); }
+}
+
+.makebefore, .makeafter { --cbd: var(--c-g-border); }
+:is(.makebefore, .makeafter):hover { --cbd: var(--c-g-borderh); }
+:is(.makebefore, .makeafter):active { --cbd: var(--c-g-bordera); }
+
+.makebefore, .makeafter {
+	display: none;
+}
+
+.loadnothing + :is(.makebefore, .makeafter) {
+	display: unset;
+}
+
+:is(.makebefore, .makeafter)::before {
+	clip-path: polygon(42% 100%, 58% 100%, 58% 58%, 100% 58%, 100% 42%, 58% 42%, 58% 0%, 42% 0%, 42% 42%, 0% 42%, 0% 58%, 42% 58%);
+}
+
+h2, .p {
+	position: relative;
+}
+
+.delete {
+	font-size: 1em;
+	width: 1ic;
+	height: 1ic;
+	padding: 0;
+	position: absolute;
+	left: -1.2ic;
+	top: 0ic;
+	border: none;
+	background: none;
+	--cbd: var(--c-w-bgh);
+}
+.delete:hover { --cbd: var(--c-r-border); }
+.delete:active { --cbd: var(--c-r-bordera); }
+
+.delete svg {
+	width: 100%;
+	height: 100%;
+	--bd: var(--cbd);
+}

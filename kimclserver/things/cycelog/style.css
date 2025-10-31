@@ -4,16 +4,13 @@
 body {
 	font-family: "Pretendard GOV Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 	margin-block-end: 10em;
-}
-
-img {
 	max-inline-size: 55rem;
+	margin-inline: auto;
 }
 
 figure {
 	margin-block-start: 0.5lh;
 	margin-block-end: 1lh;
-	max-inline-size: 55rem;
 }
 
 figcaption {
@@ -21,17 +18,15 @@ figcaption {
 }
 
 h2, h3, h4, h5, h6 {
-	max-inline-size: 55rem;
-	margin-inline: auto;
 	text-align: start;
 }
 
 p {
-	max-inline-size: 55rem;
-	margin-inline: auto;
 	text-align: justify;
 	text-indent: 1ic;
 	margin-block: 0.2lh;
+	border-radius: 0.25em;
+	scroll-margin-block-start: 10rem;
 }
 
 hr {
@@ -51,7 +46,6 @@ a {
 	padding-inline: 0.25em;
 	text-indent: 0;
 	text-decoration-color: var(--c);
-	scroll-margin-block-start: 10em;
 }
 a:hover, a:focus { background-color: var(--bgh); --cbd: var(--bdh); color: var(--ch); text-decoration: none; }
 a:active { background-color: var(--bga); --cbd: var(--bda); color: var(--ca); text-decoration: none; }
@@ -145,6 +139,7 @@ hgroup p {
 
 span.weekspan {
 	background-color: light-dark(rgb(255, 255, 0),rgb(110, 90, 0));
+	--bg: light-dark(color-mix(in srgb, rgb(255, 255, 0) 30%, var(--c-bg)),color-mix(in srgb, rgb(110, 90, 0) 30%, var(--c-bg)));
 }
 
 time.weekwrite {
@@ -153,6 +148,7 @@ time.weekwrite {
 
 data.weekcode {
 	background-color: light-dark(rgb(0 255 0),rgb(0, 100, 0));
+	--bg: light-dark(color-mix(in srgb, rgb(0 255 0) 30%, var(--c-bg)),color-mix(in srgb, rgb(0, 100, 0) 30%, var(--c-bg)));
 }
 
 span.weekend {
@@ -221,18 +217,13 @@ dialog button {
 dialog button:hover {
 	color: var(--ch, var(--c));
 	background-color: var(--bgh, var(--bg));
-	--bd: var(--bdh, var(--bd));
+	box-shadow: inset 0 0 0 1.5px var(--bdh, var(--bd));
 }
 
 dialog button:active {
 	color: var(--ca, var(--c));
 	background-color: var(--bga, var(--bg));
-	--bd: var(--bda, var(--bd));
-}
-
-*:has( > a:target) {
-	border-radius: 0.25em;
-	animation: bg-flash 0.5s ease-out;
+	box-shadow: inset 0 0 0 1.5px var(--bda, var(--bd));
 }
 
 @keyframes bg-flash {
@@ -240,80 +231,76 @@ dialog button:active {
 	to { box-shadow: 0 0 0 0.75em transparent; background-color: transparent; }
 }
 
-#new {
-	outline-offset: 0.5em;
-	opacity: 0.8;
+.cr_buttons { margin-block: 2.5rem; }
+
+.cr_button {
+	aspect-ratio: 1;
+	width: 4rem;
+	border-radius: 2rem;
+	--cbd: var(--c-b-border);
+	border: 4px solid var(--cbd);
+	background: none;
+	position: relative;
+}
+.cr_button:hover { --cbd: var(--c-b-borderh); }
+.cr_button:active { --cbd: var(--c-b-bordera); }
+
+.cr_button::before {
+	content: '';
+	position: absolute;
+	width: 25px;
+	height: 25px;
+	inset: 0;
+	margin: auto;
+	background-color: var(--cbd);
+}
+
+.loadbefore::before {
+	clip-path: polygon(42% 100%, 42% 30.62%, 11.31% 61.31%, 0 50%, 50% 0, 100% 50%, 88.69% 61.31%, 58% 30.62%, 58% 100%);
+}
+
+.loadafter::before {
+	clip-path: polygon(42% 0%, 42% 69.38%, 11.31% 38.69%, 0 50%, 50% 100%, 100% 50%, 88.69% 38.69%, 58% 69.38%, 58% 0);
+}
+
+.loadbetween::before {
+	/*clip-path: polygon(50% 0, 100% 50%, 88.69% 61.31%, 50% 22.62%, 22.62% 50%, 50% 77.38%, 77.38% 50%, 88.69% 61.31%, 50% 100%, 0 50%);*/
+	/*clip-path: polygon(11.31% 26%, 88.69% 26%, 88.69% 42%, 11.31% 42%, 11.31% 58%, 88.69% 58%, 88.69% 74%, 11.31% 74%);*/
+	clip-path: polygon(25% 0, 75% 0, 75% 16%, 58% 16%, 58% 84%, 75% 84%, 75% 100%, 25% 100%, 25% 84%, 42% 84%, 42% 16%, 25% 16%);
+}
+
+.loadnothing { --cbd: var(--c-r-border); }
+.loadnothing:hover { --cbd: var(--c-r-border); }
+.loadnothing:active { --cbd: var(--c-r-border); }
+
+.loadnothing::before {
+	clip-path: polygon(50% 39.69%, 89.69% 0%, 100% 11.31%, 61.31% 50%, 100% 89.69%, 89.69% 100%, 50% 61.31%, 11.31% 100%, 0% 89.69%, 39.69% 50%, 0% 11.31%, 11.31% 0%);
+}
+
+section {
 	border-radius: 0.25em;
+	scroll-margin-block-start: 10rem;
 }
 
-span.error {
-	color: var(--c-r-text);
-	background-color: var(--c-r-bg);
+.to-top {
+	width: 2.5ic;
+	height: 2.5ic;
+	position: sticky;
+	inset-block-end: 2ic;
+	float: inline-end;
+	border-radius: 50%;
+	background: none;
+	border: 3px solid var(--cbd);
+	--cbd: var(--c-p-border);
 }
 
-
-
-#new a {
-	margin-inline-start: 0.05em;
-}
-#new a::before {
-	content: '#';
-	text-indent: 0;
-	margin-right: 0.05em;
-	opacity: 0.85;
-}
-#new a.ref::before { content: 'ref. #'; }
-#new a.add::before { content: 'Add'; opacity: 1; }
-#new a.add.add1::before { content: 'Add1'; }
-#new a.add.add3::before { content: 'Add3'; }
-
-#new b.star::before, #new b.star::after { content: '★'; }
-
-#new q::before, #new q::after { content: '\''; }
-#new q.exact::before, #new q.exact::after { content: '"'; }
-#new q.star::before, #new q.star::after { content: '★'; }
-
-#new span.namu::after { content: '(...)'; }
-
-#new span.qm::after { content: '?'; }
-
-:is(.cbefore, .cafter, .edit-inside):not(a) {
-	border-radius: 0.2em;
-	padding: 0.05em;
-	margin: -0.05em;
-}
-
-.cbefore {
-	outline: 1px dotted var(--c-text);
-}
-
-.cafter {
-	outline: 1px dotted var(--c-text);
-}
-
-.edit-inside {
-	color: var(--c-y-text);
-	background-color: var(--c-y-bg);
-	outline: 1px solid var(--c-y-border);
-}
-
-.wrapper.edit-inside {
-	color: var(--c-b-text);
-	background-color: var(--c-b-bg);
-	outline: 1px solid var(--c-b-border);
-}
-
-#new:has( .edit-inside) {
-	outline-style: auto;
-}
-
-#addnew {
-	margin-inline: auto;
-	margin-block-start: 1em;
-	display: block;
-}
-
-@keyframes error-flash {
-	from { box-shadow: 0 0 0 0.75em oklch(from var(--c-r-bga) l c h / 50%); background-color: oklch(from var(--c-r-bga) l c h / 50%); }
-	to { box-shadow: 0 0 0 0.75em transparent; background-color: transparent; }
+.to-top::before {
+	content: '';
+	position: absolute;
+	width: 18.75px;
+	height: 18.75px;
+	inset: 0;
+	margin: auto;
+	background-color: var(--cbd);
+	clip-path: polygon(42% 100%, 42% 30.62%, 11.31% 61.31%, 0 50%, 50% 0, 100% 50%, 88.69% 61.31%, 58% 30.62%, 58% 100%);
 }

@@ -15,7 +15,10 @@ export function showmsg(id, msg, color, time) {
 
 export async function fetchget(path) {
 	const res = await fetch(`${url()}${path}`);
-	if (!res.ok) res.json().then((data) => { throw `${res.status};;${data.detail??''}`; });
+	if (!res.ok) {
+		const data = await res.json();
+		throw `${res.status};;${data.detail??''}`;
+	}
 	return await res.json();
 }
 
@@ -29,7 +32,7 @@ export async function fetchbody(path, method, body) {
 	});
 	if (!res.ok) {
 		const data = await res.json();
-		throw `${res.status};;${data.detail??''}`;
+		throw `${res.status};;${JSON.stringify(data.detail)??''}`;
 	}
 	return await res.json();
 }
