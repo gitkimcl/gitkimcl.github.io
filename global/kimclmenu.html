@@ -240,7 +240,7 @@
 						e && (e.scrollTop=0);
 						break;
 					case 4:
-						attr($('k_menu',sr),'style','opacity: 0; visibility: hidden;');
+						attr($('k_menu',sr),'style','opacity: 0; visibility: hidden; pointer-events: none;');
 						break;
 					case 5:
 						k_cinput?k_endcmdinput():k_startcmdinput();
@@ -268,7 +268,7 @@
 			}
 
 			function k_endcmdinput() {
-				attr($('k_menu',sr),'style','opacity: 0; display: none;');
+				attr($('k_menu',sr),'style','opacity: 0; visibility: hidden; pointer-events: none;');
 				let success = k_exec();
 				attr($("k_commands",sr),"class",success?"k_cmdsuccess":"k_cmdfail");
 				return;

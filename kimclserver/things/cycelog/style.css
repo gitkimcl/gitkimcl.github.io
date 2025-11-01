@@ -304,3 +304,7 @@ section {
 	background-color: var(--cbd);
 	clip-path: polygon(42% 100%, 42% 30.62%, 11.31% 61.31%, 0 50%, 50% 0, 100% 50%, 88.69% 61.31%, 58% 30.62%, 58% 100%);
 }
+
+.hidden {
+	display: none;
+}

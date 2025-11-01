@@ -185,7 +185,7 @@ window.anchor = anchor;
 export async function load_week(id, code, order, button) {
 	console.log(id);
 	try {
-		let res = await fetchget(id?`/cycelog/load?id=${id}`:(code?`/cycelog/load?code=${code}`:`/cycelog/load?order=${order}`));
+		let res = await fetchget(id?`/cycelog/week?id=${id}`:(code?`/cycelog/week?code=${code}`:`/cycelog/week?order=${order}`));
 		if (loaded.includes(res.data.id)) return;
 		let tmp = $(`<section data-wid="${res.data.id}" data-order="${res.data.order}" id="w${res.data.id}">`);
 		tmp.append($("#newweek").clone().contents());
@@ -193,7 +193,7 @@ export async function load_week(id, code, order, button) {
 		$("#weekstart", tmp).replaceWith(`<time class="weekstart" datetime="${res.data.start_date}">${format_date(res.data.start_date)}</time>`);
 		$("#weekend", tmp).replaceWith(`<time class="weekend" datetime="${res.data.end_date}">${format_date(res.data.end_date)}</time>`);
 		$("#weekwrite", tmp).replaceWith(`<time class="weekwrite" datetime="${res.data.write_start_date}">${format_date(res.data.write_start_date)} ~ </time>`);
-		$("#weekcode", tmp).replaceWith(`<data class="weekcode" value="${res.data.code}">${res.data.code}</data>`);
+		$("#weekcode", tmp).replaceWith(`<data class="weekcode" value="${res.data.code}">${res.data.code.toString().padStart(3,'0')}</data>`);
 		for (let e of res.p) {
 			$(".new", tmp).before(`<p class="p" data-pid="${e.id}">${e.content}</p>`);
 		}
@@ -202,13 +202,13 @@ export async function load_week(id, code, order, button) {
 		if (!$("section").length) {
 			$("body").append(tmp);
 			if (res.data.order === 0) {
-				$(".cr_before",tmp).remove();
+				$(".cr_before",tmp).addClass("hidden");
 			}
 			if (parseInt(tmp.prev().attr("data-order"))+1 === res.data.order) {
-				$(".loadafter",tmp.prev()).remove();
-				$(".loadbefore",tmp).remove();
+				$(".loadafter",tmp.prev()).addClass("hidden");
+				$(".loadbefore",tmp).addClass("hidden");
 			} else if (parseInt(tmp.prev().attr("data-order"))+2 === res.data.order) {
-				$(".loadafter",tmp.prev()).remove();
+				$(".loadafter",tmp.prev()).addClass("hidden");
 				$(".loadbefore",tmp).addClass("loadbetween");
 			}
 		} else {
@@ -223,20 +223,20 @@ insert:		{
 				$("body").append(tmp);
 			}
 			if (res.data.order === 0) {
-				$(".cr_before",tmp).remove();
+				$(".cr_before",tmp).addClass("hidden");
 			}
 			if (parseInt(tmp.prev().attr("data-order"))+1 === res.data.order) {
-				$(".cr_after",tmp.prev()).remove();
-				$(".cr_before",tmp).remove();
+				$(".cr_after",tmp.prev()).addClass("hidden");
+				$(".cr_before",tmp).addClass("hidden");
 			} else if (parseInt(tmp.prev().attr("data-order"))+2 === res.data.order) {
-				$(".cr_after",tmp.prev()).remove();
+				$(".cr_after",tmp.prev()).addClass("hidden");
 				$(".loadbefore",tmp).addClass("loadbetween");
 			}
 			if (parseInt(tmp.next().attr("data-order"))-1 === res.data.order) {
-				$(".cr_before",tmp.next()).remove();
-				$(".cr_after",tmp).remove();
+				$(".cr_before",tmp.next()).addClass("hidden");
+				$(".cr_after",tmp).addClass("hidden");
 			} else if (parseInt(tmp.next().attr("data-order"))-2 === res.data.order) {
-				$(".cr_before",tmp.next()).remove();
+				$(".cr_before",tmp.next()).addClass("hidden");
 				$(".loadafter",tmp).addClass("loadbetween");
 			}
 		}
@@ -250,7 +250,7 @@ insert:		{
 		if (init_weeks !== -1) {
 			cur_weeks++;
 			if (cur_weeks === init_weeks && window.cr_onafterload) {
-				for (let e of window.cr_onafterload) e();
+				for (let e of window.cr_onafterload) e(init_weeks);
 				init_weeks = -1;
 			}
 		}
@@ -268,11 +268,12 @@ function format_date(d) {
 	return d;
 }
 
-var init_weeks = 3
+var init_weeks = -1
 var cur_weeks = 0
 var loaded = [];
-fetchget("/cycelog/week/").then((res) => {
-	res = res.slice(-init_weeks);
+fetchget("/cycelog/weeks").then((res) => {
+	init_weeks = res.length;
+	if (init_weeks === 0 && window.cr_onafterload) for (let e of window.cr_onafterload) e(0);
 	for (let e of res) {
 		load_week(e);
 	}

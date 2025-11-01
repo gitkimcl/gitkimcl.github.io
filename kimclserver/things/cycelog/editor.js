@@ -139,7 +139,7 @@ cmd:if (e.originalEvent.key === "Tab") {
 					t = n.textContent + t;
 					if (n.textContent.includes("{")) break;
 				} else {
-					t = "&elem;" + t;
+					t = "\0" + t;
 					els.unshift(n);
 				}
 				remove.push(n);
@@ -157,30 +157,28 @@ cmd:if (e.originalEvent.key === "Tab") {
 			break cmd;
 		}
 		let cmd1 = k2e(t.split("/")[0]).toLowerCase().trim();
-		if (cmd1.includes("&elem;")) {
+		if (cmd1.includes("\0")) {
 			error();
 			break cmd;
 		}
 		let cmd2 = t.split("/").slice(1);
 		if (cmd2.at(-1)==="") cmd2 = cmd2.slice(0,-1);
-		if (cmd2.length > 1) {
-			error();
-			break cmd;
-		}
-		cmd2 = cmd2.length?(cmd2[0].split("&elem;")):[];
+		cmd2 = cmd2.map((e)=>e.split("\0"));
 		console.log(`cmd: ${cmd1} / [${cmd2}]`);
 		let ins = $(`<span class="error block">오류</span>`);
 		let type = -1;
 cmds: 	if (cmd1.startsWith("{#")) {
+			if (cmd2.length > 1) break cmds;
 			type = 1;
 			// anchor
 			let kind = cmd1.charAt(2);
 			let id = parseInt(cmd1.slice(3));
 			if ("s d t g w i".split(' ').indexOf(kind) !== -1 && parseInt(id) == id) {
 				ins = $(`<a id="a${id}" class="${kind}" data-for="${id}">${id}${cmd2.length?' ':''}</a>`);
-				put(ins, cmd2, els);
+				put(ins, cmd2[0], els);
 			} else type = -1;
 		} else if (cmd1.startsWith("{r#")) {
+			if (cmd2.length > 1) break cmds;
 			type = 1;
 			// reference
 			let kind = cmd1.charAt(3);
@@ -192,7 +190,7 @@ cmds: 	if (cmd1.startsWith("{#")) {
 						kind = get_kind(cls);
 						if (kind != 'x') {
 							ins = $(`<a class="ref ${kind}" data-for="${id}">${id}${cmd2.length?' ':''}</a>`);
-							put(ins, cmd2, els);
+							put(ins, cmd2[0], els);
 							break cmds;
 						}
 					}
@@ -206,14 +204,15 @@ cmds: 	if (cmd1.startsWith("{#")) {
 					}).catch(() => {
 						$("#type_pending").replaceWith($(`<span class="error block">오류</span>`));
 					})
-					put(ins, cmd2, els);
+					put(ins, cmd2[0], els);
 					break cmds;
 				} else {
 					ins = $(`<a class="ref ${kind}" data-for="${id}">${id}${cmd2.length?' ':''}</a>`);
-					put(ins, cmd2, els);
+					put(ins, cmd2[0], els);
 				}
 			} else type = -1;
 		} else if (cmd1.startsWith("{a#")) {
+			if (cmd2.length > 0) break cmds;
 			type = 1;
 			// add
 			if (cmd1 === "{a#") ins = $(`<a class="add"></a>`);
@@ -221,42 +220,60 @@ cmds: 	if (cmd1.startsWith("{#")) {
 			else if (cmd1 === "{a#3") ins = $(`<a class="add add3"></a>`);
 			else type = 0;
 		} else if (cmd1 === "{?") {
+			if (cmd2.length > 1) break cmds;
+			if (cmd2[0]?.length>1) break cmds;
 			type = 0;
-			ins = $(`<span class="qm"${cmd2.length?` data-why="${sani(cmd2[0])}"`:''}>`);
+			ins = $(`<span class="qm"${cmd2.length?` data-why="${sani(cmd2[0][0])}"`:''}>`);
 		} else if (cmd1.startsWith("{t")) {
-			type = 1;
+			if (cmd2.length > 1) break cmds;
 			let data = cmd1.slice(2);
-			// TODO: 데이터 가공
-			ins = $(`<time data-time="${data}">${cmd2.length?'':data}</time>`);
-			put(ins, cmd2, els);
+			let anchor = null;
+			if (data.includes("#")) {
+				anchor = data.split("#")[1];
+				data = data.split("#")[0];
+			}
+			if (!/^\d{6}(.\d\d)?$|^0*\d{2}(.\d\d)?$/.test(data)) break cmds;
+			if ($(`time[data-anchor="${anchor}"]`,$("#new")).length) break cmds;
+			type = 1;
+			if (anchor === null) ins = $(`<time data-time="${data}">${cmd2.length?'':data}</time>`);
+			else ins = $(`<time data-time="${data}" data-anchor="${anchor}">${cmd2.length?'':data}</time>`);
+			put(ins, cmd2[0], els);
 		} else if (cmd1.startsWith("{p")) {
+			if (cmd2.length > 2) break cmds;
+			if (cmd2[0]?.length>1 || cmd2[1]?.length>1) break cmds;
 			type = 1;
 			let data = cmd1.slice(2);
-			// TODO: 데이터 가공
-			ins = $(`<data class="person" value="${data}">${cmd2.length?'':data}</data>`);
-			put(ins, cmd2, els);
+			if (cmd2.length === 0) ins = $(`<data class="person" value="${data}">${data}</data>`);
+			else if (cmd2.length === 1) ins = $(`<data class="person" value="${data}">${cmd2[0][0]}</data>`);
+			else ins = $(`<data class="person" value="${data}" data-name="${cmd2[1][0]}">${cmd2[0][0]}</data>`);
 		} else if (cmd1 === "{st") {
+			if (cmd2.length > 1) break cmds;
 			type = 2;
 			ins = $(`<b class="star"></b>`);
-			put(ins, cmd2, els);
+			put(ins, cmd2[0], els);
 		} else if (cmd1 === "{s") {
+			if (cmd2.length > 1) break cmds;
 			type = 2;
 			ins = $(`<s></s>`);
-			put(ins, cmd2, els);
+			put(ins, cmd2[0], els);
 		} else if (cmd1 === "{b" || cmd1 === "{str") {
+			if (cmd2.length > 1) break cmds;
 			type = 2;
 			ins = $(`<strong></strong>`);
-			put(ins, cmd2, els);
+			put(ins, cmd2[0], els);
 		} else if (cmd1 === "{u" || cmd1 === "{em") {
+			if (cmd2.length > 1) break cmds;
 			type = 2;
 			ins = $(`<em></em>`);
-			put(ins, cmd2, els);
+			put(ins, cmd2[0], els);
 		} else if (cmd1 === "{") {
+			if (cmd2.length > 1) break cmds;
 			// wrap
 			type = 2;
 			ins = $(`<span class="wrapper"></span>`);
 			put(ins, cmd2, els);
 		} else if (cmd1.startsWith("{q")) {
+			if (cmd2.length > 1) break cmds;
 			type = 2;
 			if (cmd1 === "{q") ins = $(`<q></q>`);
 			else if (cmd1 === "{q\"") ins = $(`<q class="exact"></a>`);
@@ -265,24 +282,28 @@ cmds: 	if (cmd1.startsWith("{#")) {
 				type = -1;
 				break cmds;
 			}
-			put(ins, cmd2, els);
+			put(ins, cmd2[0], els);
 		} else if (cmd1 === "{^" || cmd1 === "{sup") {
+			if (cmd2.length > 1) break cmds;
 			type = 2;
 			ins = $(`<sup></sup>`);
-			put(ins, cmd2, els);
+			put(ins, cmd2[0], els);
 		} else if (cmd1 === "{_" || cmd1 === "{sub") {
+			if (cmd2.length > 1) break cmds;
 			type = 2;
 			ins = $(`<sub></sub>`);
-			put(ins, cmd2, els);
+			put(ins, cmd2[0], els);
 		} else if (cmd1 === "{.." || cmd1 === "{namu") {
+			if (cmd2.length > 1) break cmds;
 			type = 0;
 			ins = $(`<span class="namu">`);
 		} else if (cmd1.startsWith("{ec")) { // "ㄷㅊ(대체라는 뜻)"
+			if (cmd2.length > 1) break cmds;
 			type = 2;
 			let data = cmd1.slice(3);
 			// TODO: 데이터 가공
 			ins = $(`<data class="placeholder" value="${data}">${cmd2.length?'':data}</data>`);
-			put(ins, cmd2, els);
+			put(ins, cmd2[0], els);
 		}
 		if (type === -1) {
 			error();
@@ -424,20 +445,45 @@ export function add() {
 	np.html($(np).html().replace("&nbsp;"," "));
 	np.get(0).normalize();
 	let p = $("#new").parent();
-	fetchbody("/cycelog/p/","POST",{
+	let body = {
 		head_of_id: ($(".p",p).length)?null:p.attr("data-wid"),
 		parent_id: p.attr("data-wid"),
 		before_id: ($(".p",p).length)?$(".p",p).last().attr("data-pid"):null,
-		anchors: $("a:not(.ref, .add)",np).get().map((e) => {
-			return {id: parseInt(e.attributes['data-for'].value), type: get_kind(e.classList)}
+		anchors: $("a:not(.ref, .add)",np).get().map((e,i) => {
+			let time = null;
+			let te = $(`time[data-anchor="${i+1}"]`,np).first();
+			if (te.length) {
+				let tv = te.attr("data-time");
+				if (tv.startsWith("0*")) time = {
+					week: 0,
+					day: -3,
+					hour: parseInt(tv.slice(2,4)),
+					end_hour: (tv.length>4)?tv.slice(5,7):null,
+					datetime: "test"
+				};
+				else time = {
+					week: parseInt(tv.slice(0,3)),
+					day: parseInt(tv.slice(3,4)),
+					hour: parseInt(tv.slice(4,6)),
+					end_hour: (tv.length>6)?tv.slice(7,9):null,
+					datetime: "test"
+				}
+			}
+			return {id: parseInt(e.attributes['data-for'].value), type: get_kind(e.classList), time: time}
 		}),
 		refs: $("a.ref",np).get().map((e) => {
 			return {ref_id: parseInt(e.attributes['data-for'].value)}
 		}),
-		content: np.get(0).innerHTML
-	}).then((e) => {
+		people: $("data.person",np).get().map((e) => {
+			return {code: e.attributes['value'].value, name: e.attributes['data-name']?.value}
+		}),
+		content: (!/^-+$/.test(np.get(0).innerHTML))?np.get(0).innerHTML:"<hr>"
+	};
+	console.log(body);
+	fetchbody("/cycelog/p","POST",body).then((e) => {
 		console.log(e);
 		let np = $(`<p class="p" data-pid="${e.id}">${e.content}</p>`);
+		if (e === "<hr>") np = $(`<hr class="p" data-pid="${e.id}">`);
 		np.prepend($(`<button class="delete deletep"><svg><use href="#trash"></use></svg></button>`).on("click", () => delete_p(e.id)));
 		deco(np);
 		$(".new", p).before(np);
@@ -472,7 +518,7 @@ function error() {
 
 function delete_p(id) {
 	if (!confirm("이 문단을 삭제하겠습니까?")) return;
-	fetchbody("/cycelog/p/", "DELETE", {
+	fetchbody("/cycelog/p", "DELETE", {
 		id: id
 	}).then((res) => {
 		console.log(res);
@@ -482,10 +528,20 @@ function delete_p(id) {
 
 function delete_week(id) {
 	if (!confirm("이 주차를 삭제하겠습니까?")) return;
-	fetchbody("/cycelog/week/", "DELETE", {
+	fetchbody("/cycelog/week", "DELETE", {
 		id: id
 	}).then((res) => {
 		console.log(res);
+		let prev = $(`section[data-wid=${id}]`).prev();
+		let next = $(`section[data-wid=${id}]`).next();
+		$(".cr_after",prev).removeClass("hidden");
+		$(".cr_before",next).removeClass("hidden");
+		$(".cr_loadnothing",prev).removeClass("cr_loadnothing");
+		$(".cr_loadnothing",next).removeClass("cr_loadnothing");
+		if (parseInt(next.attr("data-order")) - parseInt(prev.attr("data-order")) === 2) {
+			$(".loadafter",prev).addClass("loadbetween");
+			$(".cr_before",next).addClass("hidden");
+		}
 		$(`section[data-wid=${id}]`).remove();
 	})
 }
@@ -516,7 +572,7 @@ function makeweek(order) {
 	if (end_date==null) return;
 	let write_start_date = prompt("기록 시작 일시가 언제인가요? YYYY-MM-DDTHH:MM 형식으로 입력하거나 비워 두세요(T 대신 ㅆ을 써도 됩니다)");
 	if (write_start_date==null) return;
-	write_start_date.replace("ㅆ","T");
+	write_start_date = write_start_date.replace("ㅆ","T");
 	fetchbody("/cycelog/week", "POST", {
 		name: name,
 		code: code,
@@ -526,5 +582,16 @@ function makeweek(order) {
 		write_start_date: (write_start_date!='')?write_start_date:null
 	}).then((res) => {
 		load_week(res.data.id)
+	}).catch((res) => {
+		alert(`주차 생성 실패: ${res}`);
 	});
 }
+
+function init_make_button(w) {
+	if (w === 0) {
+		let nel = $(`<section data-order="-1"><div class="cr_buttons cr_after"><button class="cr_button makeafter" style="display:unset;"></button></div></section>`);
+		$(".makeafter", nel).on("click", function() { makeweek(0); nel.remove(); });
+		$("body").append(nel);
+	}
+}
+window.cr_onafterload.push(init_make_button);
