@@ -35,6 +35,13 @@ function input(e) {
 		e.preventDefault();
 		return;
 	}
+	if (e.originalEvent.key === "Backspace" && $(".cafter").length) {
+		let last = $(".cafter").get(0).lastChild;
+		$(".cafter").replaceWith($(".cafter").contents());
+		s.setPosition(d$("new"),Array.prototype.indexOf.call(d$("new").childNodes,last)+1);
+		e.preventDefault();
+		return;
+	}
 eend:if (e.originalEvent.key === "Enter" || e.originalEvent.key === "ArrowRight") {
 		if (!e.originalEvent.target.classList.contains("editable")) break eend;
 		if (e.originalEvent.key === "ArrowRight") {
