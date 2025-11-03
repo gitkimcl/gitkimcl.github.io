@@ -66,7 +66,7 @@ $(window).on("resize", () => {
 
 var cur_el = null;
 var cur_box = null;
-function attach_dialog(el, clicky) {
+export function attach_dialog(el, clicky) {
 	$("#dialog").css("opacity",0).addClass("closing").removeAttr("id");
 	let rects = el.getClientRects();
 	if (clicky != null) {
@@ -195,7 +195,7 @@ export async function load_week(id, code, order, button) {
 		$("#weekwrite", tmp).replaceWith(`<time class="weekwrite" datetime="${res.data.write_start_date}">${format_date(res.data.write_start_date)} ~ </time>`);
 		$("#weekcode", tmp).replaceWith(`<data class="weekcode" value="${res.data.code}">${res.data.code.toString().padStart(3,'0')}</data>`);
 		for (let e of res.p) {
-			$(".new", tmp).before(`<p class="p" data-pid="${e.id}">${e.content}</p>`);
+			$(".to-top", tmp).before(`<p class="p" data-pid="${e.id}">${e.content}</p>`);
 		}
 		deco(tmp);
 		if (window.cr_onloadweek) cr_onloadweek(tmp);
@@ -230,14 +230,14 @@ insert:		{
 				$(".cr_before",tmp).addClass("hidden");
 			} else if (parseInt(tmp.prev().attr("data-order"))+2 === res.data.order) {
 				$(".cr_after",tmp.prev()).addClass("hidden");
-				$(".loadbefore",tmp).addClass("loadbetween");
+				$(".loadbefore > svg > use",tmp).attr("href", "#between");
 			}
 			if (parseInt(tmp.next().attr("data-order"))-1 === res.data.order) {
 				$(".cr_before",tmp.next()).addClass("hidden");
 				$(".cr_after",tmp).addClass("hidden");
 			} else if (parseInt(tmp.next().attr("data-order"))-2 === res.data.order) {
 				$(".cr_before",tmp.next()).addClass("hidden");
-				$(".loadafter",tmp).addClass("loadbetween");
+				$(".loadafter > svg > use",tmp).attr("href", "#between");
 			}
 		}
 		$(".loadbefore",tmp).on("click", function () {
@@ -250,15 +250,36 @@ insert:		{
 		if (init_weeks !== -1) {
 			cur_weeks++;
 			if (cur_weeks === init_weeks && window.cr_onafterload) {
-				for (let e of window.cr_onafterload) e(init_weeks);
-				init_weeks = -1;
+				let weeks = init_weeks;
+				init_weeks = -1; // 재귀 방지
+				for (let e of window.cr_onafterload) e(weeks);
 			}
 		}
 		return tmp;
 	} catch (e) {
 		console.error(e);
+		$(" > svg > use",button).attr("href", "#x");
 		$(button).addClass("loadnothing");
 		$(button).off("click");
+	}
+	return null;
+}
+
+export async function reload_week(id) {
+	console.log("r: "+id);
+	try {
+		let res = await fetchget(`/cycelog/week?id=${id}`);
+		if (!loaded.includes(res.data.id)) throw "아니 로드도 안하고 리로드를 왜 시킴";
+		let el = $(`section[data-wid=${id}]`);
+		$(".p", el).remove();
+		for (let e of res.p) {
+			$(".to-top", el).before(`<p class="p" data-pid="${e.id}">${e.content}</p>`);
+		}
+		deco(el);
+		if (window.cr_onloadweek) cr_onloadweek(el);
+		return el;
+	} catch (e) {
+		console.error(e);
 	}
 	return null;
 }

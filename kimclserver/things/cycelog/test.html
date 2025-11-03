@@ -15,13 +15,34 @@
 </head>
 <body>
 	<kimcl-menu></kimcl-menu>
-	<h1>끾기록 테스트 페이지 · cycelog</h1>
+	<hgroup>
+		<h1>끾기록 테스트 페이지 · cycelog</h1>
+		<p style="text-align: center;">alpha</p>
+	</hgroup>
 	<svg style="display: none">
 		<symbol id="trash" viewbox="0 0 24 24">
-			<title>삭제</title>
-			<path d="M3 6H21M5 6V20C5 21.1046 5.89543 22 7 22H17C18.1046 22 19 21.1046 19 20V6M8 6V4C8 2.89543 8.89543 2 10 2H14C15.1046 2 16 2.89543 16 4V6" stroke="var(--bd)" fill="transparent" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-			<path d="M14 11V17" stroke="var(--bd)" fill="transparent" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-			<path d="M10 11V17" stroke="var(--bd)" fill="transparent" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+			<path d="M9 3H15M3 6H21M10 16V11M14 16V11M5 6H19L18.1245 19.133C18.0544 20.1836 17.1818 21 16.1289 21L7.8461 21C6.79171 21 5.91842 20.1814 5.85028 19.1292L5 6Z" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+		<symbol id="up" viewbox="0 0 24 24">
+			<path d="M12 5V19M12 5L5 12M12 5L19 12" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+		<symbol id="down" viewbox="0 0 24 24">
+			<path d="M12 19V5M12 19L5 12M12 19L19 12" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+		<symbol id="refresh" viewbox="0 0 24 24">
+			<path d="M12 7V12L15 15M1 11L3 13M3 13L5 11M3 13L3 12C3 7.02944 7.02944 3 12 3C14.6655 3 17.0604 4.15875 18.7083 6C18.8083 6.11174 18.9056 6.226 19 6.34266M19 13L21 11M21 11L23 13M21 11V12C21 16.9706 16.9706 21 12 21C9.17273 21 6.64996 19.6963 5 17.6573" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+		<symbol id="plus" viewbox="0 0 24 24">
+			<path d="M12 5V19M5 12H19" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+		<symbol id="between" viewbox="0 0 24 24">
+			<path d="M8.5 5H15.5M12 5V19M8.5 19H15.5" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+		<symbol id="x" viewbox="0 0 24 24">
+			<path d="M6 6L18 18M6 18L18 6" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+		<symbol id="edit" viewbox="0 0 24 24">
+			<path d="M3 21.0002H21M14.5 3.50023L4.5 13.5002L3.5 17.5002L7.5 16.5002L17.5 6.50023C18.3284 5.6718 18.3284 4.32865 17.5 3.50023C16.6716 2.6718 15.3284 2.6718 14.5 3.50023Z" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
 		</symbol>
 	</svg>
 	<template id="it-is-template-until-here">
@@ -102,28 +123,22 @@
 				<p><span class="weekspan"><time class="weekstart" datetime="2025-01-15">2025. 01. 15.</time> ~ <time class="weekstart" datetime="2025-01-21">2025. 01. 21.</time> <time class="weekwrite" datetime="2025-12-31T12:36">2025. 12. 31. (12:36) ~</time></span> · <data class="weekcode" value="279">279</data></p>
 			</hgroup>
 			<p id="new" contenteditable="plaintext-only">...</p>
-			<button id="addnew" type="button" onclick="add();">추가</button>
+			<button id="addnew" type="button" onclick="add_p();">추가</button>
 		</section>
 	</template>
 	<template id="newweek">
 		<div class="cr_buttons cr_before">
-			<button class="cr_button loadbefore"></button>
-			<button class="cr_button makebefore"></button>
+			<button class="cr_button loadbefore"><svg><use href="#up"></use></svg></button>
+			<button class="cr_button makebefore"><svg><use href="#plus"></use></svg></button>
 		</div>
 		<hgroup>
 			<slot id="weekname"></slot>
-			<p><span class="weekspan"><slot id="weekstart"></slot> ~ <slot id="weekend"></slot> <slot id="weekwrite"></slot></span> · <slot id="weekcode"></slot></p>
+			<p><span class="weekspan"><slot id="weekstart"></slot>&nbsp;~&nbsp;<slot id="weekend"></slot>&nbsp;<slot id="weekwrite"></slot></span>&nbsp;·&nbsp;<slot id="weekcode"></slot></p>
 		</hgroup>
-		<p class="new">내용 입력...</p>
-		<div>
-			<button class="startnew" class="newbutton" type="button" onclick="startnew(this);">편집 시작</button>
-			<button class="addnew" class="newbutton" type="button" onclick="add();">추가</button>
-			<button class="startnew" class="newbutton" type="button" onclick="stopnew();">편집 중단</button>
-		</div>
-		<button class="to-top"></button>
+		<button class="to-top"><svg><use href="#up"></use></svg></button>
 		<div class="cr_buttons cr_after">
-			<button class="cr_button loadafter"></button>
-			<button class="cr_button makeafter"></button>
+			<button class="cr_button loadafter"><svg><use href="#down"></use></svg></button>
+			<button class="cr_button makeafter"><svg><use href="#plus"></use></svg></button>
 		</div>
 	</template>
 </body>

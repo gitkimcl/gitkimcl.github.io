@@ -4,7 +4,6 @@
 body {
 	font-family: "Pretendard GOV Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 	margin-block-end: 10em;
-	padding-inline: 3ic;
 	max-inline-size: 55rem;
 	margin-inline: auto;
 }
@@ -98,7 +97,7 @@ data.placeholder {
 	padding-inline: 0.4em;
 	padding-block: 0.05em;
 	position: relative;
-	bottom: 0.1em;
+	inset-block-end: 0.1em;
 	border-radius: 0.2em;
 }
 
@@ -106,13 +105,24 @@ span.wrapper {
 	border-radius: 0.2em;
 	padding: 0.05em;
 	margin: -0.05em;
+	--c: var(--c-text);
+	--bg: var(--c-bg);
+	--bd: var(--c-text);
 }
 
-span.wrapper:has( > :is(a.ref,a.add,span.qm):is(:hover, .selected)) {
-	color: var(--c-b-text);
-	background-color: var(--c-b-bg);
-	outline: 1px solid var(--c-b-border);
+span.wrapper:has( > :is(a, span.qm):is(:hover, .selected)) {
+	color: var(--c);
+	background-color: var(--bg);
+	outline: 1px solid var(--bd);
 }
+
+span.wrapper:has( > .add:is(:hover, .selected)) { --c: var(--c-w-text); --bg: var(--c-w-bg); --bd: var(--c-w-border); }
+span.wrapper:has( > .w:is(:hover, .selected)) { --c: var(--c-b-text); --bg: var(--c-b-bg); --bd: var(--c-b-border); }
+span.wrapper:has( > .d:is(:hover, .selected)) { --c: var(--c-p-text); --bg: var(--c-p-bg); --bd: var(--c-p-border); }
+span.wrapper:has( > .s:is(:hover, .selected)) { --c: var(--c-r-text); --bg: var(--c-r-bg); --bd: var(--c-r-border); }
+span.wrapper:has( > .i:is(:hover, .selected)) { --c: var(--c-o-text); --bg: var(--c-o-bg); --bd: var(--c-o-border); }
+span.wrapper:has( > .t:is(:hover, .selected)) { --c: var(--c-y-text); --bg: var(--c-y-bg); --bd: var(--c-y-border); }
+span.wrapper:has( > .g:is(:hover, .selected)) { --c: var(--c-g-text); --bg: var(--c-g-bg); --bd: var(--c-g-border); }
 
 sup {
 	vertical-align: text-top;
@@ -235,8 +245,9 @@ dialog button:active {
 .cr_buttons { margin-block: 2.5rem; }
 
 .cr_button {
-	aspect-ratio: 1;
 	width: 4rem;
+	height: 4rem;
+	padding: 0.25rem;
 	border-radius: 2rem;
 	--cbd: var(--c-b-border);
 	border: 4px solid var(--cbd);
@@ -246,37 +257,16 @@ dialog button:active {
 .cr_button:hover { --cbd: var(--c-b-borderh); }
 .cr_button:active { --cbd: var(--c-b-bordera); }
 
-.cr_button::before {
-	content: '';
-	position: absolute;
-	width: 25px;
-	height: 25px;
-	inset: 0;
-	margin: auto;
-	background-color: var(--cbd);
-}
-
-.loadbefore::before {
-	clip-path: polygon(42% 100%, 42% 30.62%, 11.31% 61.31%, 0 50%, 50% 0, 100% 50%, 88.69% 61.31%, 58% 30.62%, 58% 100%);
-}
-
-.loadafter::before {
-	clip-path: polygon(42% 0%, 42% 69.38%, 11.31% 38.69%, 0 50%, 50% 100%, 100% 50%, 88.69% 38.69%, 58% 69.38%, 58% 0);
-}
-
-.loadbetween::before {
-	/*clip-path: polygon(50% 0, 100% 50%, 88.69% 61.31%, 50% 22.62%, 22.62% 50%, 50% 77.38%, 77.38% 50%, 88.69% 61.31%, 50% 100%, 0 50%);*/
-	/*clip-path: polygon(11.31% 26%, 88.69% 26%, 88.69% 42%, 11.31% 42%, 11.31% 58%, 88.69% 58%, 88.69% 74%, 11.31% 74%);*/
-	clip-path: polygon(25% 0, 75% 0, 75% 16%, 58% 16%, 58% 84%, 75% 84%, 75% 100%, 25% 100%, 25% 84%, 42% 84%, 42% 16%, 25% 16%);
+.cr_button svg {
+	width: 100%;
+	height: 100%;
+	--bd: var(--cbd);
+	--w: 4px;
 }
 
 .loadnothing { --cbd: var(--c-r-border); }
 .loadnothing:hover { --cbd: var(--c-r-border); }
 .loadnothing:active { --cbd: var(--c-r-border); }
-
-.loadnothing::before {
-	clip-path: polygon(50% 39.69%, 89.69% 0%, 100% 11.31%, 61.31% 50%, 100% 89.69%, 89.69% 100%, 50% 61.31%, 11.31% 100%, 0% 89.69%, 39.69% 50%, 0% 11.31%, 11.31% 0%);
-}
 
 section {
 	border-radius: 0.25em;
@@ -284,26 +274,25 @@ section {
 }
 
 .to-top {
-	width: 2.5ic;
-	height: 2.5ic;
+	width: 2rem;
+	height: 2rem;
+	padding: 0.125rem;
 	position: sticky;
-	inset-block-end: 2ic;
+	inset-block-end: 2rem;
 	float: inline-end;
+	shape-outside: polygon(100% 0);
 	border-radius: 50%;
 	background: none;
 	border: 3px solid var(--cbd);
 	--cbd: var(--c-p-border);
+	transform: translateX(2.5rem);
 }
 
-.to-top::before {
-	content: '';
-	position: absolute;
-	width: 18.75px;
-	height: 18.75px;
-	inset: 0;
-	margin: auto;
-	background-color: var(--cbd);
-	clip-path: polygon(42% 100%, 42% 30.62%, 11.31% 61.31%, 0 50%, 50% 0, 100% 50%, 88.69% 61.31%, 58% 30.62%, 58% 100%);
+.to-top > svg {
+	width: 100%;
+	height: 100%;
+	--bd: var(--cbd);
+	--w: 3px;
 }
 
 .hidden {

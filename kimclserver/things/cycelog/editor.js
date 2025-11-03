@@ -1,6 +1,6 @@
 import { k2e } from './k2e.js'
 import { fetchget, fetchbody } from '../../global/util.js';
-import { deco, load_week } from './script.js'
+import { deco, load_week, reload_week, attach_dialog } from './script.js'
 
 const d$ = (q) => document.getElementById(q);
 
@@ -10,11 +10,27 @@ function sani(str) {
 	return str.replaceAll("&","&amp;").replaceAll("\"","&quot;").replaceAll("<","&lt;").replaceAll(">","&gt;");
 }
 
+function get_kind(cls) {
+	return (cls.contains('s'))?'s':((cls.contains('d'))?'d':((cls.contains('t'))?'t':((cls.contains('g'))?'g':((cls.contains('w'))?'w':((cls.contains('i'))?'i':'x')))));
+}
+
+function move_cursor_to(e, o) {
+	if (e instanceof $) e = e.get(0);
+	let p = e.parentNode;
+	s.setPosition(p,Array.prototype.indexOf.call(p.childNodes,e)+o);
+}
+
 function put(el, arr, els) {
 	for (let i in arr) {
 		el.append(arr[i]);
 		if (els[i]) el.append(els[i].cloneNode(true));
 	}
+}
+
+function error() {
+	$("#new").css("animation", "none");
+	$("#new").offset();
+	$("#new").css("animation", "error-flash 0.5s ease-out");
 }
 
 // edit
@@ -30,7 +46,7 @@ function input(e) {
 		$("#new").html($("#new").html().replace("&nbsp;"," "));
 		s.removeAllRanges();
 		$("#new").attr("contenteditable", "true");
-		s.setPosition(d$("new"),Array.prototype.indexOf.call(d$("new").childNodes,$(".edit-inside").get(0))+1);
+		move_cursor_to($(".edit-inside"),1);
 		$(".edit-inside").remove();
 		e.preventDefault();
 		return;
@@ -38,7 +54,7 @@ function input(e) {
 	if (e.originalEvent.key === "Backspace" && $(".cafter").length) {
 		let last = $(".cafter").get(0).lastChild;
 		$(".cafter").replaceWith($(".cafter").contents());
-		s.setPosition(d$("new"),Array.prototype.indexOf.call(d$("new").childNodes,last)+1);
+		move_cursor_to(last,1);
 		e.preventDefault();
 		return;
 	}
@@ -72,43 +88,41 @@ estt:if (e.originalEvent.key === "Escape" || e.originalEvent.key === "ArrowLeft"
 		e.preventDefault();
 		return;
 	}
-editr:if (e.originalEvent.key === "Tab" || e.originalEvent.key === "ArrowRight") {
-		if (s.anchorNode.nodeType !== Node.TEXT_NODE || s.anchorOffset === s.anchorNode.textContent.length) {
-			let n = s.anchorNode;
-			if (n.nodeType === Node.TEXT_NODE) {
-				if (s.anchorOffset !== n.textContent.length) break editr;
-				n = n.nextSibling;
-			} else {
-				if (s.anchorOffset === n.childNodes.length) break editr;
-				n = n.childNodes[s.anchorOffset];
-			}
-			if (!n) break editr;
-			if (!n.classList?.contains("editable")) break editr;
-			edit_inside(n);
-			s.selectAllChildren(n);
-			s.collapseToStart();
-			e.preventDefault();
-			return;
+editr:if (e.originalEvent.key === "ArrowRight") {
+		if (s.anchorNode.nodeType === Node.TEXT_NODE && s.anchorOffset !== s.anchorNode.textContent.length) break editr;
+		let n = s.anchorNode;
+		if (n.nodeType === Node.TEXT_NODE) {
+			if (s.anchorOffset !== n.textContent.length) break editr;
+			n = n.nextSibling;
+		} else {
+			if (s.anchorOffset === n.childNodes.length) break editr;
+			n = n.childNodes[s.anchorOffset];
 		}
+		if (!n) break editr;
+		if (!n.classList?.contains("editable")) break editr;
+		edit_inside(n);
+		s.selectAllChildren(n);
+		s.collapseToStart();
+		e.preventDefault();
+		return;
 	}
-editl:if (e.originalEvent.key === "Tab" || e.originalEvent.key === "ArrowLeft") {
-		if (s.anchorNode.nodeType !== Node.TEXT_NODE || s.anchorOffset === 0) {
-			let n = s.anchorNode;
-			if (n.nodeType === Node.TEXT_NODE) {
-				if (s.anchorOffset !== 0) break editl;
-				n = n.previousSibling;
-			} else {
-				if (s.anchorOffset === 0) break editl;
-				n = n.childNodes[s.anchorOffset-1];
-			}
-			if (!n) break editl;
-			if (!n.classList?.contains("editable")) break editl;
-			edit_inside(n);
-			s.selectAllChildren(n);
-			s.collapseToEnd();
-			e.preventDefault();
-			return;
+editl:if (e.originalEvent.key === "ArrowLeft") {
+		if (s.anchorNode.nodeType === Node.TEXT_NODE && s.anchorOffset !== 0) break editl;
+		let n = s.anchorNode;
+		if (n.nodeType === Node.TEXT_NODE) {
+			if (s.anchorOffset !== 0) break editl;
+			n = n.previousSibling;
+		} else {
+			if (s.anchorOffset === 0) break editl;
+			n = n.childNodes[s.anchorOffset-1];
 		}
+		if (!n) break editl;
+		if (!n.classList?.contains("editable")) break editl;
+		edit_inside(n);
+		s.selectAllChildren(n);
+		s.collapseToEnd();
+		e.preventDefault();
+		return;
 	}
 cmd:if (e.originalEvent.key === "Tab") {
 		if (e.originalEvent.isComposing) return;
@@ -119,206 +133,83 @@ cmd:if (e.originalEvent.key === "Tab") {
 			s.collapseToEnd();
 			return;
 		}
-
 		let n = s.anchorNode;
-		let t = "";
-		let bef = null;
-		let aft = null;
+		let bef = null, aft = null;
+		let cmd1 = null, cmd2 = null;
 		let remove = [];
-		let els = [];
-		if (n.nodeType === Node.TEXT_NODE) {
-			t = n.textContent.slice(0,s.anchorOffset);
-			aft = n.textContent.slice(s.anchorOffset);
-			if (!t.includes("{")) {
-				remove.push(n);
-				n = n.previousSibling;
-			}
-		} else {
-			if (s.anchorOffset === 0) {
-				error();
-				break cmd;
-			}
-			n = n.childNodes[s.anchorOffset - 1];
-		}
-		if (!t.includes("{")) {
-			while (n) {
+		let type = -1, ins = null;
+		try {
+			let t = "";
+			let els = [];
+			let put_as = undefined;
+gett:		{
 				if (n.nodeType === Node.TEXT_NODE) {
-					t = n.textContent + t;
-					if (n.textContent.includes("{")) break;
+					t = n.textContent.slice(0,s.anchorOffset);
+					aft = n.textContent.slice(s.anchorOffset);
+					if (t.includes("{")) break gett;
+					remove.push(n);
+					n = n.previousSibling;
 				} else {
-					t = "\0" + t;
-					els.unshift(n);
+					if (s.anchorOffset === 0) throw -1;
+					n = n.childNodes[s.anchorOffset - 1];
 				}
-				remove.push(n);
-				n = n.previousSibling;
-			}
-		}
-		if (!t.includes("{")) {
-			error();
-			break cmd;
-		}
-		bef = t.slice(0,t.length - t.match(/\{[^\{]*$/).at(0).length);
-		t = t.match(/\{[^\{]*$/).at(0);
-		if (!t) {
-			error();
-			break cmd;
-		}
-		let cmd1 = k2e(t.split("/")[0]).toLowerCase().trim();
-		if (cmd1.includes("\0")) {
-			error();
-			break cmd;
-		}
-		let cmd2 = t.split("/").slice(1);
-		if (cmd2.at(-1)==="") cmd2 = cmd2.slice(0,-1);
-		cmd2 = cmd2.map((e)=>e.split("\0"));
-		console.log(`cmd: ${cmd1} / [${cmd2}]`);
-		let ins = $(`<span class="error block">오류</span>`);
-		let type = -1;
-cmds: 	if (cmd1.startsWith("{#")) {
-			if (cmd2.length > 1) break cmds;
-			type = 1;
-			// anchor
-			let kind = cmd1.charAt(2);
-			let id = parseInt(cmd1.slice(3));
-			if ("s d t g w i".split(' ').indexOf(kind) !== -1 && parseInt(id) == id) {
-				ins = $(`<a id="a${id}" class="${kind}" data-for="${id}">${id}${cmd2.length?' ':''}</a>`);
-				put(ins, cmd2[0], els);
-			} else type = -1;
-		} else if (cmd1.startsWith("{r#")) {
-			if (cmd2.length > 1) break cmds;
-			type = 1;
-			// reference
-			let kind = cmd1.charAt(3);
-			let id = cmd1.slice(4);
-			if ("s d t g w i r".split(' ').indexOf(kind) !== -1 && parseInt(id) == id) {
-				if (kind === 'r') {
-					if (d$(`a${id}`)) {
-						let cls = d$(`a${id}`).classList;
-						kind = get_kind(cls);
-						if (kind != 'x') {
-							ins = $(`<a class="ref ${kind}" data-for="${id}">${id}${cmd2.length?' ':''}</a>`);
-							put(ins, cmd2[0], els);
-							break cmds;
-						}
+				while (n) {
+					if (n.nodeType === Node.TEXT_NODE) {
+						t = n.textContent + t;
+						if (n.textContent.includes("{")) break;
+					} else {
+						t = "\uFFFC" + t;
+						els.unshift(n);
 					}
-					if ($("#type_pending").length) {
-						type = -1;
-						break cmds;
-					}
-					ins = $(`<a id="type_pending" class="ref block" data-for="${id}">${id}${cmd2.length?' ':''}</a>`);
-					fetchget(`/cycelog/find/a?id=${id}`).then((res) => {
-						$("#type_pending").addClass(res.type).removeClass("block").attr("id",null);
-					}).catch(() => {
-						$("#type_pending").replaceWith($(`<span class="error block">오류</span>`));
-					})
-					put(ins, cmd2[0], els);
-					break cmds;
-				} else {
-					ins = $(`<a class="ref ${kind}" data-for="${id}">${id}${cmd2.length?' ':''}</a>`);
-					put(ins, cmd2[0], els);
+					remove.push(n);
+					n = n.previousSibling;
 				}
-			} else type = -1;
-		} else if (cmd1.startsWith("{a#")) {
-			if (cmd2.length > 0) break cmds;
-			type = 1;
-			// add
-			if (cmd1 === "{a#") ins = $(`<a class="add"></a>`);
-			else if (cmd1 === "{a#1") ins = $(`<a class="add add1"></a>`);
-			else if (cmd1 === "{a#3") ins = $(`<a class="add add3"></a>`);
-			else type = 0;
-		} else if (cmd1 === "{?") {
-			if (cmd2.length > 1) break cmds;
-			if (cmd2[0]?.length>1) break cmds;
-			type = 0;
-			ins = $(`<span class="qm"${cmd2.length?` data-why="${sani(cmd2[0][0])}"`:''}>`);
-		} else if (cmd1.startsWith("{t")) {
-			if (cmd2.length > 1) break cmds;
-			let data = cmd1.slice(2);
-			let anchor = null;
-			if (data.includes("#")) {
-				anchor = data.split("#")[1];
-				data = data.split("#")[0];
+				if (!t.includes("{")) throw -1;
 			}
-			if (!/^\d{6}(.\d\d)?$|^0*\d{2}(.\d\d)?$/.test(data)) break cmds;
-			if ($(`time[data-anchor="${anchor}"]`,$("#new")).length) break cmds;
-			type = 1;
-			if (anchor === null) ins = $(`<time data-time="${data}">${cmd2.length?'':data}</time>`);
-			else ins = $(`<time data-time="${data}" data-anchor="${anchor}">${cmd2.length?'':data}</time>`);
-			put(ins, cmd2[0], els);
-		} else if (cmd1.startsWith("{p")) {
-			if (cmd2.length > 2) break cmds;
-			if (cmd2[0]?.length>1 || cmd2[1]?.length>1) break cmds;
-			type = 1;
-			let data = cmd1.slice(2);
-			if (cmd2.length === 0) ins = $(`<data class="person" value="${data}">${data}</data>`);
-			else if (cmd2.length === 1) ins = $(`<data class="person" value="${data}">${cmd2[0][0]}</data>`);
-			else ins = $(`<data class="person" value="${data}" data-name="${cmd2[1][0]}">${cmd2[0][0]}</data>`);
-		} else if (cmd1 === "{st") {
-			if (cmd2.length > 1) break cmds;
-			type = 2;
-			ins = $(`<b class="star"></b>`);
-			put(ins, cmd2[0], els);
-		} else if (cmd1 === "{s") {
-			if (cmd2.length > 1) break cmds;
-			type = 2;
-			ins = $(`<s></s>`);
-			put(ins, cmd2[0], els);
-		} else if (cmd1 === "{b" || cmd1 === "{str") {
-			if (cmd2.length > 1) break cmds;
-			type = 2;
-			ins = $(`<strong></strong>`);
-			put(ins, cmd2[0], els);
-		} else if (cmd1 === "{u" || cmd1 === "{em") {
-			if (cmd2.length > 1) break cmds;
-			type = 2;
-			ins = $(`<em></em>`);
-			put(ins, cmd2[0], els);
-		} else if (cmd1 === "{") {
-			if (cmd2.length > 1) break cmds;
-			// wrap
-			type = 2;
-			ins = $(`<span class="wrapper"></span>`);
-			put(ins, cmd2, els);
-		} else if (cmd1.startsWith("{q")) {
-			if (cmd2.length > 1) break cmds;
-			type = 2;
-			if (cmd1 === "{q") ins = $(`<q></q>`);
-			else if (cmd1 === "{q\"") ins = $(`<q class="exact"></a>`);
-			else if (cmd1 === "{qst") ins = $(`<q class="star"></a>`);
-			else {
-				type = -1;
-				break cmds;
-			}
-			put(ins, cmd2[0], els);
-		} else if (cmd1 === "{^" || cmd1 === "{sup") {
-			if (cmd2.length > 1) break cmds;
-			type = 2;
-			ins = $(`<sup></sup>`);
-			put(ins, cmd2[0], els);
-		} else if (cmd1 === "{_" || cmd1 === "{sub") {
-			if (cmd2.length > 1) break cmds;
-			type = 2;
-			ins = $(`<sub></sub>`);
-			put(ins, cmd2[0], els);
-		} else if (cmd1 === "{.." || cmd1 === "{namu") {
-			if (cmd2.length > 1) break cmds;
-			type = 0;
-			ins = $(`<span class="namu">`);
-		} else if (cmd1.startsWith("{ec")) { // "ㄷㅊ(대체라는 뜻)"
-			if (cmd2.length > 1) break cmds;
-			type = 2;
-			let data = cmd1.slice(3);
-			// TODO: 데이터 가공
-			ins = $(`<data class="placeholder" value="${data}">${cmd2.length?'':data}</data>`);
-			put(ins, cmd2[0], els);
-		}
-		if (type === -1) {
+			bef = t.slice(0,t.length - t.match(/\{[^\{]*$/).at(0).length);
+			t = t.match(/\{[^\{]*$/).at(0);
+			if (!t) throw -1;
+
+			cmd1 = k2e(t.split("/")[0]).toLowerCase().trim();
+			if (cmd1.includes("\uFFFC")) throw -1;
+			cmd2 = t.split("/").slice(1);
+			if (cmd2.at(-1)==="") cmd2 = cmd2.slice(0,-1);
+			cmd2 = cmd2.map((e)=>e.split("\uFFFC"));
+			console.log(`cmd: ${cmd1} / [${cmd2}]`);
+
+		 	if (cmd1.startsWith("{#")) [type, ins, put_as] = cmd_a(cmd1, cmd2);
+			else if (cmd1.startsWith("{r#")) [type, ins, put_as] = cmd_ref(cmd1, cmd2);
+			else if (cmd1.startsWith("{a#")) [type, ins, put_as] = cmd_add(cmd1, cmd2)
+			else if (cmd1.startsWith("{t")) [type, ins, put_as] = cmd_time(cmd1, cmd2);
+			else if (cmd1.startsWith("{p") || cmd1.startsWith("{@")) [type, ins, put_as] = cmd_person(cmd1, cmd2);
+			else if (cmd1 === "{?") [type, ins, put_as] = cmd_qm(cmd2);
+			else if (cmd1 === "{st") [type, ins, put_as] = cmd_format(cmd2, `<b class="star">`);
+			else if (cmd1 === "{s") [type, ins, put_as] = cmd_format(cmd2, `<s>`);
+			else if (cmd1 === "{b" || cmd1 === "{str") [type, ins, put_as] = cmd_format(cmd2, `<strong>`);
+			else if (cmd1 === "{u" || cmd1 === "{em") [type, ins, put_as] = cmd_format(cmd2, `<em>`);
+			else if (cmd1 === "{q") [type, ins, put_as] = cmd_format(cmd2, `<q>`);
+			else if (cmd1 === "{q\"") [type, ins, put_as] = cmd_format(cmd2, `<q class="exact">`);
+			else if (cmd1 === "{qst") [type, ins, put_as] = cmd_format(cmd2, `<q class="star">`);
+			else if (cmd1 === "{^" || cmd1 === "{sup") [type, ins, put_as] = cmd_format(cmd2, `<sup>`);
+			else if (cmd1 === "{_" || cmd1 === "{sub") [type, ins, put_as] = cmd_format(cmd2, `<sub>`);
+			else if (cmd1 === "{") [type, ins, put_as] = cmd_wrapper(cmd2);
+			else if (cmd1 === "{.." || cmd1 === "{namu") [type, ins, put_as] = cmd_namu(cmd2);
+			else if (cmd1.startsWith("{ec")) [type, ins, put_as] = cmd_placeholder(cmd1, cmd2); // ㄷㅊ(대체라는 뜻)
+			else throw -1;
+			if (type === -1 || ins == null) throw -1;
+			if (put_as != undefined) put(ins, put_as, els);
+		} catch (e) {
+			console.log(e);
 			error();
 			break cmd;
 		}
 		n.textContent = bef;
 		ins.attr("contenteditable", false);
 		if (type === 1 || type === 2) ins.addClass("editable");
+		if (type === 1) ins.on("click", (e) => {
+			attach_dialog(e.currentTarget, e.clientY);
+			e.stopPropagation();
+		})
 		$(n).after(ins);
 		if (aft) {
 			let after = document.createTextNode(aft);
@@ -326,19 +217,14 @@ cmds: 	if (cmd1.startsWith("{#")) {
 			if (type === 2 && !cmd2.length) edit_inside(ins.get(0));
 			else s.setPosition(after,0);
 		} else {
-			let p = ins.get(0).parentElement;
 			if (type === 2 && !cmd2.length) edit_inside(ins.get(0));
-			else s.setPosition(p, Array.prototype.indexOf.call(p.childNodes,ins.get(0))+1);
+			else move_cursor_to(ins,1);
 		}
 		for (let e of remove) e.remove();
 		d$("new").normalize();
 		cursor();
 		return;
 	}
-}
-
-function get_kind(cls) {
-	return (cls.contains('s'))?'s':((cls.contains('d'))?'d':((cls.contains('t'))?'t':((cls.contains('g'))?'g':((cls.contains('w'))?'w':((cls.contains('i'))?'i':'x')))));
 }
 
 function cursor() {
@@ -357,27 +243,25 @@ sel:{ // firefox
 			n = n.parentElement;
 		}
 		if (n.isContentEditable) break sel;
-		s.setPosition(n.parentElement,Array.prototype.indexOf.call(n.parentElement.childNodes,n)+right);
+		move_cursor_to(n,right);
 		n.parentElement.focus();
 	}
 bef:if (s.anchorNode.nodeType !== Node.TEXT_NODE || s.anchorOffset === s.anchorNode.textContent.length) {
 		let n = s.anchorNode;
 		if (n.nodeType === Node.TEXT_NODE) n = n.nextSibling;
 		else n = n.childNodes[s.anchorOffset];
-		if (!n) break bef;
-		if (!n.classList?.contains("editable")) break bef;
+		if (!n || !n.classList?.contains("editable")) break bef;
 		$(n).addClass("cbefore");
 	}
 aft:if (s.anchorNode.nodeType !== Node.TEXT_NODE || s.anchorOffset === 0) {
 		let n = s.anchorNode;
 		if (n.nodeType === Node.TEXT_NODE) n = n.previousSibling;
 		else n = n.childNodes[s.anchorOffset-1];
-		if (!n) break aft;
-		if (!n.classList?.contains("editable")) break aft;
+		if (!n || !n.classList?.contains("editable")) break aft;
 		$(n).addClass("cafter");
 	}
 	$("#new br").remove(); // 강제 개행 ㄴㄴ염 + <br> 때매 생기는 버그가 좀 있음
-	$("#new div").remove(); // div가 왜 생김????
+	$("#new div:not(.cr_icons)").remove(); // div가 왜 생김????
 	$("#new *[style], #new font").each(function () { // chrome -- 복붙하면 스타일도 적용됨
 		let le = this.lastChild;
 		$(this).replaceWith($(this).contents());
@@ -404,169 +288,233 @@ function cancel_edit_inside(parent,right) {
 	$(".edit-inside").off("blur");
 	$(".edit-inside").attr("contenteditable", "false");
 	$(".edit-inside").get(0).blur();
-	$("#new").html($("#new").html().replace("&nbsp;"," "));
+	$("#new").html($("#new").html().replace("&nbsp;"," ").replace("\uFFFC"," "));
 	s.removeAllRanges();
-	if (parent) {
-		let p = $(".edit-inside").get(0).parentNode;
-		s.setPosition(p,Array.prototype.indexOf.call(p.childNodes,$(".edit-inside").get(0))+(right?1:0));
-		console.log(s.anchorNode);
-		console.log(s.anchorOffset);
-		$(".edit-inside").removeClass("edit-inside");
-		if (p.id === "new") {
-			$("#new").attr("contenteditable", "true");
-			p.focus();
-			return;
-		}
-		edit_inside(p);
-	} else {
+	if (!parent) {
 		$("#new").attr("contenteditable", "true");
-		s.setPosition(d$("new"),Array.prototype.indexOf.call(d$("new").childNodes,$(".edit-inside").get(0))+1);
+		move_cursor_to($(".edit-inside"),1);
 		$(".edit-inside").removeClass("edit-inside");
+		return;
 	}
+	let p = $(".edit-inside").get(0).parentNode;
+	move_cursor_to($(".edit-inside"),(right?1:0));
+	$(".edit-inside").removeClass("edit-inside");
+	if (p.id === "new") {
+		$("#new").attr("contenteditable", "true");
+		p.focus();
+		return;
+	}
+	edit_inside(p);
+}
+
+function cmd_a(cmd1, cmd2) {
+	if (cmd2.length > 1) throw -1;
+	// anchor
+	let kind = cmd1.charAt(2);
+	let id = parseInt(cmd1.slice(3));
+	if ("s d t g w i".split(' ').indexOf(kind) !== -1) {
+		let ins = $(`<a id="a${id}" class="${kind}" data-for="${id}">${id}${cmd2.length?' ':''}</a>`);
+		return [1,ins,cmd2[0]];
+	}
+	throw -1;
+}
+function cmd_ref(cmd1, cmd2) {
+	if (cmd2.length > 1) throw -1;
+	// reference
+	let id = cmd1.slice(3);
+	if (d$(`a${id}`)) {
+		let cls = d$(`a${id}`).classList;
+		let kind = get_kind(cls);
+		if (kind != 'x') {
+			let ins = $(`<a class="ref ${kind}" data-for="${id}">${id}${cmd2.length?' ':''}</a>`);
+			return [1,ins,cmd2[0]];
+		}
+	}
+	if ($("#type_pending").length) throw -1;
+	let ins = $(`<a id="type_pending" class="ref block" data-for="${id}">${id}${cmd2.length?' ':''}</a>`);
+	fetchget(`/cycelog/find/a?id=${id}`).then((res) => {
+		$("#type_pending").addClass(res.type).removeClass("block").attr("id",null);
+	}).catch(() => {
+		$("#type_pending").replaceWith($(`<span class="error block" contenteditable="false">오류</span>`));
+	});
+	return [1,ins,cmd2[0]];
+}
+function cmd_add(cmd1, cmd2) {
+	if (cmd2.length > 0) throw -1;
+	let ins = null
+	if (cmd1 === "{a#") ins = $(`<a class="add"></a>`);
+	else if (cmd1 === "{a#1") ins = $(`<a class="add add1"></a>`);
+	else if (cmd1 === "{a#3") ins = $(`<a class="add add3"></a>`);
+	else throw -1;
+	return [0,ins];
+}
+var zero_star = new Date(2025, 1, 6);
+var zero_zero = new Date(2025, 1, 9);
+function cmd_time(cmd1, cmd2) {
+	if (cmd2.length > 1) throw -1;
+	let data = cmd1.slice(2);
+	let anchor = null;
+	if (data.includes("#")) {
+		anchor = data.split("#")[1];
+		data = data.split("#")[0];
+	}
+	let ins = null;
+	if (data.length === 2) {
+		if (cmd2.length === 0 || cmd2[0]?.length>1) throw -1;
+		let detected = cmd2[0][0].match(/^(\d+)월 (\d+)일(?: (\d+)시(?:(?:경?에서 (\d+)시경$)|경$)|$)/);
+		if (detected == null) throw -1;
+		let week = $("#new").parent();
+		let year = 2000 + parseInt(data); // TODO: 2100년에 여기 업데이트하기
+		let date = new Date(year, detected[1]-1, detected[2]);
+		let order = null, day = null;
+		if (date - zero_star === 0) {
+			order = -1;
+			day = 0;
+		} else {
+			let diff = Math.round((date - zero_zero)/86400000);
+			order = Math.floor(diff/7);
+			day = ((diff%7)+7)%7;
+			if ((order === -1 || order === parseInt(week.attr("data-order"))-1) && day>=5) {
+				order += 1;
+				day += 3; // -7 +10
+			}
+			if (order === parseInt(week.attr("data-order"))+1 && day === 0) {
+				order -= 1;
+				day = 7;
+			}
+		}
+		if ($("#timestamp_pending").length || $("#datetime_pending").length) throw -1;
+		if (anchor === null) ins = $(`<time id="timestamp_pending" class="block">${cmd2[0][0]}</time>`);
+		else ins = $(`<time id="timestamp_pending" class="block" data-anchor="${anchor}">${cmd2[0][0]}</time>`);
+		fetchget(`/cycelog/find/timestamp?order=${order}&day=${day}${detected[3]?`&hour=${detected[3]}`:''}${detected[4]?`&end_hour=${detected[4]}`:''}`).then((res) => {
+			$("#timestamp_pending").attr("data-time",res).attr("id","datetime_pending");
+			fetchget(`/cycelog/find/datetime?timestamp=${res}`).then((res) => {
+				$("#datetime_pending").attr("datetime",res).removeClass("block").attr("id",null);
+			}).catch(() => {
+				$("#datetime_pending").replaceWith($(`<span class="error block" contenteditable="false">오류</span>`));
+			});
+		}).catch(() => {
+			$("#timestamp_pending").replaceWith($(`<span class="error block" contenteditable="false">오류</span>`));
+		});
+		return [1,ins];
+	} else {
+		if (!/^\d{4}(\d\d(\.\d\d)?)?$|^0\*(\d\d(\.\d\d)?)?$/.test(data)) throw -1;
+		if ($(`time[data-anchor="${anchor}"]`,$("#new")).length) throw -1;
+		if (anchor === null) ins = $(`<time id="datetime_pending" class="block" data-time="${data}">${cmd2.length?'':data}</time>`);
+		else ins = $(`<time id="datetime_pending" class="block" data-time="${data}" data-anchor="${anchor}">${cmd2.length?'':data}</time>`);
+		fetchget(`/cycelog/find/datetime?timestamp=${data}`).then((res) => {
+			$("#datetime_pending").attr("datetime",res).removeClass("block").attr("id",null);
+		}).catch(() => {
+			$("#datetime_pending").replaceWith($(`<span class="error block" contenteditable="false">오류</span>`));
+		});
+		return [1,ins,cmd2[0]];
+	}
+}
+function cmd_person(cmd1, cmd2) {
+	if (cmd2.length > 2) throw -1;
+	let data = cmd1.slice(2);
+	if (data.endsWith("=")) {
+		// canon
+		data = data.slice(0, -1);
+		if (cmd2.length === 0 || cmd2[0]?.length>1) throw -1;
+		if ($(`data.person[data-type="canon"][value="${data}"]`,$("#new")).length) throw -1;
+		let ins = $(`<data class="person" data-type="canon" value="${data}" data-name="${cmd2[0][0]}">${cmd2.length===2?'':cmd2[0][0]}</data>`);
+		return [1,ins,cmd2[1]];
+	}
+	if (data.endsWith("~")) {
+		// alias
+		data = data.slice(0, -1);
+		if (cmd2.length === 0 || cmd2[0]?.length>1) throw -1;
+		let ins = $(`<data class="person" data-type="alias" value="${data}" data-name="${cmd2[0][0]}">${cmd2.length===2?'':cmd2[0][0]}</data>`);
+		return [1,ins,cmd2[1]];
+	}
+	// mention
+	if (data === "") {
+		// find
+		if (cmd2.length === 0 || cmd2[0]?.length>1) throw -1;
+		if ($("#person_pending").length)  throw -1;
+		let ins = $(`<data class="person block" id="person_pending" data-type="mention">${cmd2.length===2?'':cmd2[0][0]}</data>`);
+		fetchget(`/cycelog/find/person?name=${cmd2[0][0]}`).then((res) => {
+			$("#person_pending").attr("value", res.code).removeClass("block").attr("id",null);
+		}).catch(() => {
+			$("#person_pending").replaceWith($(`<span class="error block" contenteditable="false">오류</span>`));
+		});
+		return [1,ins,cmd2[1]];
+	}
+	if (cmd2.length === 2) throw -1;
+	if (cmd2.length === 1 && cmd2[0].length === 1 && cmd2[0][0] === "@") {
+		// get canon name
+		if ($("#name_pending").length) throw -1;
+		let ins = $(`<data class="person block" id="name_pending" data-type="mention" value="${data}">(@)</data>`);
+		fetchget(`/cycelog/find/person?code=${data}`).then((res) => {
+			$("#name_pending").text(res.name).removeClass("block").attr("id",null);
+		}).catch(() => {
+			$("#name_pending").replaceWith($(`<span class="error block" contenteditable="false">오류</span>`));
+		});
+		return [1,ins];
+	}
+	let ins = $(`<data class="person" data-type="mention" value="${data}">${cmd2.length?'':data}</data>`);
+	return [1,ins,cmd2[0]];
+}
+function cmd_wrapper(cmd2) {
+	if (cmd2.length > 1) throw -1;
+	let ins = $(`<span class="wrapper"></span>`);
+	return [2,ins,cmd2[0]];
+}
+function cmd_qm(cmd2) {
+	if (cmd2.length > 1 || cmd2[0]?.length>1) throw -1;
+	return [0, $(`<span class="qm"${cmd2.length?` data-why="${sani(cmd2[0][0])}"`:''}>`)];
+}
+function cmd_format(cmd2, format) {
+	if (cmd2.length > 1) throw -1;
+	let ins = $(format);
+	return [2,ins,cmd2[0]];
+}
+function cmd_namu(cmd2) {
+	if (cmd2.length > 0) throw -1;
+	return [0,$(`<span class="namu">`)];
+}
+function cmd_placeholder(cmd1,cmd2) {
+	if (cmd2.length > 1) throw -1;
+	let data = cmd1.slice(3);
+	let ins = $(`<data class="placeholder" value="${data}">${cmd2.length?'':data}</data>`);
+	return [2,ins,cmd2[0]];
 }
 
 $("#new").on("click", (e) => {
 	if ($(".edit-inside").get(0) && !e.originalEvent.target.classList.contains("edit-inside")) cancel_edit_inside(false);
-	if (e.originalEvent.target.classList.contains("editable")) {
-		edit_inside(e.originalEvent.target);
-	}
+	if (e.originalEvent.target.classList.contains("editable")) edit_inside(e.originalEvent.target);
 });
 
 // sorry safari but I don't think I can support you
 
-// at least safari supports this
-export function add() {
-	if ($("#new .block").length) {
-		error();
-		return;
-	}
-	let np = $("#new").clone();
-	np.attr("contenteditable", null);
-	$("*", np).attr("contenteditable", null);
-	$("*", np).removeClass("editable").removeClass("edit-inside");
-	$("*", np).removeClass("cbefore").removeClass("cafter");
-	$(".deletep", np).remove();
-	$("*[class=\"\"]", np).attr("class", null);
-	$(".noclass", np).each(function () { $(this).replaceWith($(this).contents()); });
-	np.attr('id', null).attr("class", "p");
-	np.html($(np).html().replace("&nbsp;"," "));
-	np.get(0).normalize();
-	let p = $("#new").parent();
-	let body = {
-		head_of_id: ($(".p",p).length)?null:p.attr("data-wid"),
-		parent_id: p.attr("data-wid"),
-		before_id: ($(".p",p).length)?$(".p",p).last().attr("data-pid"):null,
-		anchors: $("a:not(.ref, .add)",np).get().map((e,i) => {
-			let time = null;
-			let te = $(`time[data-anchor="${i+1}"]`,np).first();
-			if (te.length) {
-				let tv = te.attr("data-time");
-				if (tv.startsWith("0*")) time = {
-					week: 0,
-					day: -3,
-					hour: parseInt(tv.slice(2,4)),
-					end_hour: (tv.length>4)?tv.slice(5,7):null,
-					datetime: "test"
-				};
-				else time = {
-					week: parseInt(tv.slice(0,3)),
-					day: parseInt(tv.slice(3,4)),
-					hour: parseInt(tv.slice(4,6)),
-					end_hour: (tv.length>6)?tv.slice(7,9):null,
-					datetime: "test"
-				}
-			}
-			return {id: parseInt(e.attributes['data-for'].value), type: get_kind(e.classList), time: time}
-		}),
-		refs: $("a.ref",np).get().map((e) => {
-			return {ref_id: parseInt(e.attributes['data-for'].value)}
-		}),
-		people: $("data.person",np).get().map((e) => {
-			return {code: e.attributes['value'].value, name: e.attributes['data-name']?.value}
-		}),
-		content: (!/^-+$/.test(np.get(0).innerHTML))?np.get(0).innerHTML:"<hr>"
-	};
-	console.log(body);
-	fetchbody("/cycelog/p","POST",body).then((e) => {
-		console.log(e);
-		let np = $(`<p class="p" data-pid="${e.id}">${e.content}</p>`);
-		if (e === "<hr>") np = $(`<hr class="p" data-pid="${e.id}">`);
-		np.prepend($(`<button class="delete deletep"><svg><use href="#trash"></use></svg></button>`).on("click", () => delete_p(e.id)));
-		deco(np);
-		$(".new", p).before(np);
-		$("#new").text("내용 입력...");
-	}).catch((res) => {
-		alert(`문단 추가 실패: ${res}`);
-	});
-}
-window.add = add;
-
-export function startnew(el) {
-	stopnew();
-	$(".new", $(el.parentElement.parentElement)).attr("id","new");
-	$("#new").attr("contenteditable", "true");
-	$("#new").on("keydown", input);
-}
-window.startnew = startnew;
-
-export function stopnew() {
-	$("#new").text("내용 입력...");
-	$("#new").attr("contenteditable", "false");
-	$("#new").off("keydown");
-	$("#new").attr("id", null);
-}
-window.stopnew = stopnew;
-
-function error() {
-	$("#new").css("animation", "none");
-	$("#new").offset();
-	$("#new").css("animation", "error-flash 0.5s ease-out");
-}
-
-function delete_p(id) {
-	if (!confirm("이 문단을 삭제하겠습니까?")) return;
-	fetchbody("/cycelog/p", "DELETE", {
-		id: id
-	}).then((res) => {
-		console.log(res);
-		$(`.p[data-pid=${id}]`).remove();
-	})
-}
-
-function delete_week(id) {
-	if (!confirm("이 주차를 삭제하겠습니까?")) return;
-	fetchbody("/cycelog/week", "DELETE", {
-		id: id
-	}).then((res) => {
-		console.log(res);
-		let prev = $(`section[data-wid=${id}]`).prev();
-		let next = $(`section[data-wid=${id}]`).next();
-		$(".cr_after",prev).removeClass("hidden");
-		$(".cr_before",next).removeClass("hidden");
-		$(".cr_loadnothing",prev).removeClass("cr_loadnothing");
-		$(".cr_loadnothing",next).removeClass("cr_loadnothing");
-		if (parseInt(next.attr("data-order")) - parseInt(prev.attr("data-order")) === 2) {
-			$(".loadafter",prev).addClass("loadbetween");
-			$(".cr_before",next).addClass("hidden");
-		}
-		$(`section[data-wid=${id}]`).remove();
-	})
-}
 
 function cr_onloadweek(el) {
-	$("h2", el).prepend($(`<button class="delete deleteweek"><svg><use href="#trash"></use></svg></button>`).on("click", () => delete_week(parseInt(el.attr("data-wid")))));
+	if ($("#new", el).length) {
+		let is_after = $("#new", el).attr("data-isafter");
+		$(`.p[data-pid=${is_after}]`,el).after($("#new"));
+		$("#new").before($("#newicons"));
+	}
+	$(".cr_icons:not(#newicons)", el).remove();
+	$("h2", el).prepend(function () {
+		let id = $(this).parent().parent().attr("data-wid");
+		return $(`<div class="cr_icons">`).append($(`<button class="cr_icon delete"><svg><use href="#trash"></use></svg></button>`).on("click", () => delete_week(id)))
+			.append($(`<button class="cr_icon refresh"><svg><use href="#refresh"></use></svg></button>`).on("click", () => { if (cancel_new()) reload_week(id); }))
+			.append($(`<button class="cr_icon insert"><svg><use href="#down"></use></svg></button>`).on("click", () => start_new(id, true)));
+	});
 	$(".p", el).prepend(function () {
-		let id = $(this).attr("data-pid");
-		return $(`<button class="delete deletep"><svg><use href="#trash"></use></svg></button>`).on("click", () => delete_p(id));
+		let id = parseInt($(this).attr("data-pid"));
+		return $(`<div class="cr_icons">`).append($(`<button class="cr_icon delete"><svg><use href="#trash"></use></svg></button>`).on("click", () => delete_p(id)))
+			.append($(`<button class="cr_icon insert"><svg><use href="#down"></use></svg></button>`).on("click", () => start_new(id)));
 	});
 	let ord = parseInt(el.attr("data-order"));
-	$(".makebefore", el).on("click", function() { makeweek(ord-1); });
-	$(".makeafter", el).on("click", function() { makeweek(ord+1); });
+	$(".makebefore", el).on("click", function() { add_week(ord-1); });
+	$(".makeafter", el).on("click", function() { add_week(ord+1); });
 	$(".to-top", el).on("click", function() { window.location.hash = ''; window.location.hash=`#w${el.attr("data-wid")}`; for (let e of window.cr_onafterload) e(); });
 }
 window.cr_onloadweek = cr_onloadweek;
 
-function makeweek(order) {
+function add_week(order) {
 	if (!confirm("주차를 만듭시다")) return;
 	let name = prompt("주 이름을 입력하세요");
 	if (name==null) return;
@@ -587,17 +535,153 @@ function makeweek(order) {
 		start_date: start_date,
 		end_date: end_date,
 		write_start_date: (write_start_date!='')?write_start_date:null
+	}).then((res) => { load_week(res.data.id) }).catch((res) => { alert(`주차 추가 실패: ${res}`); });
+}
+
+function delete_week(id) {
+	if (!confirm("이 주차를 삭제하겠습니까?")) return;
+	fetchbody("/cycelog/week", "DELETE", {
+		id: id
 	}).then((res) => {
-		load_week(res.data.id)
+		console.log(res);
+		let prev = $(`section[data-wid=${id}]`).prev();
+		let next = $(`section[data-wid=${id}]`).next();
+		$(".cr_after",prev).removeClass("hidden");
+		$(".cr_before",next).removeClass("hidden");
+		$(".cr_loadnothing",prev).removeClass("cr_loadnothing");
+		$(".cr_loadnothing",next).removeClass("cr_loadnothing");
+		if (parseInt(next.attr("data-order")) - parseInt(prev.attr("data-order")) === 2) {
+			$(".loadafter",prev).addClass("loadbetween");
+			$(".cr_before",next).addClass("hidden");
+		}
+		$(`section[data-wid=${id}]`).remove();
+	}).catch((res) => { alert(`주차 삭제 실패: ${res}`); });
+}
+
+export function add_p() {
+	if ($("#new .block").length) {
+		error();
+		return;
+	}
+	let np = $("#new").clone();
+	np.attr("contenteditable", null);
+	$("*", np).attr("contenteditable", null);
+	$("*", np).removeClass("editable").removeClass("edit-inside");
+	$("*", np).removeClass("cbefore").removeClass("cafter");
+	$(".cr_icons", np).remove();
+	$("*[class=\"\"]", np).attr("class", null);
+	$(".noclass", np).each(function () { $(this).replaceWith($(this).contents()); });
+	np.attr('id', null).attr("class", "p");
+	np.html($(np).html().replace("&nbsp;"," "));
+	np.get(0).normalize();
+	let p = $("#new").parent();
+	let body = {
+		head_of_id: ($(".p:has( + #newicons)").length)?null:p.attr("data-wid"),
+		parent_id: p.attr("data-wid"),
+		before_id: ($(".p:has( + #newicons)").length)?$(".p:has( + #newicons)").attr("data-pid"):null,
+		anchors: $("a:not(.ref, .add)",np).get().map((e,i) => {
+			let te = $(`time[data-anchor="${i+1}"]`,np).first();
+			let time = null;
+			if (te.length) {
+				let tv = te.attr("data-time");
+				if (tv.startsWith("0*")) time = { week: 0, day: -3, hour: (tv.length>2)?parseInt(tv.slice(2,4)):null, end_hour: (tv.length>4)?parseInt(tv.slice(5,7)):null, datetime: te.attr("datetime") };
+				else time = { week: parseInt(tv.slice(0,3)), day: parseInt(tv.slice(3,4)), hour: (tv.length>4)?parseInt(tv.slice(4,6)):null, end_hour: (tv.length>6)?parseInt(tv.slice(7,9)):null, datetime: te.attr("datetime") };
+			}
+			return {id: parseInt(e.attributes['data-for'].value), type: get_kind(e.classList), time: time}
+		}),
+		refs: $("a.ref",np).get().map((e) => {
+			return {ref_id: parseInt(e.attributes['data-for'].value)}
+		}),
+		people: [],
+		content: (!/^-*$/.test(np.get(0).innerHTML))?np.get(0).innerHTML:"<hr>"
+	};
+	let people = {}
+	for (let e of $("data.person",np)) {
+		let data = {type: e.attributes['data-type']?.value, code: e.attributes['value']?.value, name: e.attributes['data-name']?.value}
+		if (data.type === "mention") {
+			if (!people[data.code]) people[data.code] = null;
+		} else if (data.type === "alias") {
+			if (!people[data.code] || people[data.code] === null) people[data.code] = {aliases: [data.name], canon: null}
+			else people[data.code]['aliases'].push(data.name);
+		} else if (data.type === "canon") {
+			if (!people[data.code] || people[data.code] === null) people[data.code] = {aliases: [], canon: data.name}
+			else people[data.code]['canon'] = data.name;
+		}
+	}
+	for (let [k, v] of Object.entries(people)) {
+		if (v === null) body.people.push({code: k, name: null, is_canon: false});
+		else {
+			if (v.canon !== null) body.people.push({code: k, name: v.canon, is_canon: true});
+			for (let e of v.aliases) body.people.push({code: k, name: e, is_canon: false});
+		}
+	}
+	console.log(body);
+	fetchbody("/cycelog/p","POST",body).then((e) => {
+		console.log(e);
+		let np = $(`<p class="p" data-pid="${e.id}">${e.content}</p>`);
+		if (e === "<hr>") np = $(`<hr class="p" data-pid="${e.id}">`);
+		deco(np);
+		np.prepend($(`<div class="cr_icons">`).append($(`<button class="cr_icon delete"><svg><use href="#trash"></use></svg></button>`).on("click", () => delete_p(e.id)))
+			.append($(`<button class="cr_icon insert"><svg><use href="#down"></use></svg></button>`).on("click", () => insert_after(e.id))));
+		$("#new", p).before(np);
+		$("#new").text("");
+		$("#new").before($("#newicons"));
 	}).catch((res) => {
-		alert(`주차 생성 실패: ${res}`);
+		let undeco = $("#new").html();
+		reload_week(p.attr("data-wid")).then(() => {
+			$("#new").html(undeco);
+		});
+		alert(`문단 추가 실패: ${res}`);
 	});
+}
+window.add_p = add_p;
+
+function delete_p(id) {
+	if (!confirm("이 문단을 삭제하겠습니까?")) return;
+	fetchbody("/cycelog/p", "DELETE", {
+		id: id
+	}).then((res) => {
+		console.log(res);
+		$(`.p[data-pid=${id}]`).remove();
+	}).catch((res) => {
+		reload_week($(`.p[data-pid=${id}]`).parent().attr("data-wid"));
+		alert(`문단 삭제 실패: ${res}`);
+	});
+}
+
+function maketest() {
+	fetchbody("/cycelog/week", "POST", { name: "끾주차", code: 277, order: 0, start_date: "3001-01-01", end_date: "3001-01-07", write_start_date: "4001-01-01T00:00" }).then((res) => { load_week(res.data.id) }).catch((res) => { alert(`주차 생성 실패: ${res}`); });
+	fetchbody("/cycelog/week", "POST", { name: "이끾주차", code: 278, order: 1, start_date: "3001-01-08", end_date: "3001-01-14", write_start_date: "4001-01-01T01:00" }).then((res) => { load_week(res.data.id) }).catch((res) => { alert(`주차 생성 실패: ${res}`); });
+	fetchbody("/cycelog/week", "POST", { name: "이르긲주차", code: 279, order: 2, start_date: "3001-01-15", end_date: "3001-01-21", write_start_date: "4001-01-01T02:00" }).then((res) => { load_week(res.data.id) }).catch((res) => { alert(`주차 생성 실패: ${res}`); });
+	fetchbody("/cycelog/week", "POST", { name: "이끼기주차", code: 280, order: 3, start_date: "3001-01-22", end_date: "3001-01-28", write_start_date: "4001-01-01T03:00" }).then((res) => { load_week(res.data.id) }).catch((res) => { alert(`주차 생성 실패: ${res}`); });
+	fetchbody("/cycelog/week", "POST", { name: "이이갸주차", code: 281, order: 4, start_date: "3001-01-29", end_date: "3001-02-04", write_start_date: "4001-01-01T04:00" }).then((res) => { load_week(res.data.id) }).catch((res) => { alert(`주차 생성 실패: ${res}`); });
+}
+
+function start_new(id, head) {
+	if (!cancel_new()) return;
+	let n = $(`<p id="new" contenteditable="plaintext-only" data-isafter="${head?-1:id}"></p>`).on("keydown", input);
+	if (head) {
+		$(`section[data-wid=${id}] > hgroup`).after(n);
+	} else {
+		$(`p[data-pid=${id}]`).after(n);
+	}
+	n.before($(`<div class="cr_icons" id="newicons">`).append($(`<button class="cr_icon cancel"><svg><use href="#x"></use></svg></button>`).on("click", () => cancel_new()))
+		.append($(`<button class="cr_icon insert"><svg><use href="#plus"></use></svg></button>`).on("click", () => add_p())));
+	$("#new").get(0).scrollIntoView({block: "nearest"});
+}
+
+function cancel_new() {
+	if ($("#new").length && $("#new").text().length && !confirm("추가 중인 내용이 사라집니다.")) return false;
+	$("#new").remove();
+	$("#newicons").remove();
+	return true;
 }
 
 function init_make_button(w) {
 	if (w === 0) {
-		let nel = $(`<section data-order="-1"><div class="cr_buttons cr_after"><button class="cr_button makeafter" style="display:unset;"></button></div></section>`);
-		$(".makeafter", nel).on("click", function() { makeweek(0); nel.remove(); });
+		let nel = $(`<section><div class="cr_buttons cr_after"><button class="cr_button makeafter" style="display:unset;"></button> <button class="cr_button maketest"></button></div></section>`);
+		$(".makeafter", nel).on("click", function() { add_week(0); nel.remove(); });
+		$(".maketest", nel).on("click", function() { maketest(); nel.remove(); });
 		$("body").append(nel);
 	}
 }
