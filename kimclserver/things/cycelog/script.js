@@ -1,5 +1,11 @@
 import { fetchget } from '../../global/util.js';
 
+export function sani(str) {
+	// 실수를 막는 거지 보안용은 아님
+	// 이거 개인 프로젝트임
+	return str.replaceAll("&","&amp;").replaceAll("\"","&quot;").replaceAll("<","&lt;").replaceAll(">","&gt;");
+}
+
 function highlight(el) {
 	el.scrollIntoView();
 	el.style.animation = 'none';
@@ -194,16 +200,13 @@ export async function load_week(id, code, order, button) {
 		$("#weekend", tmp).replaceWith(`<time class="weekend" datetime="${res.data.end_date}">${format_date(res.data.end_date)}</time>`);
 		$("#weekwrite", tmp).replaceWith(`<time class="weekwrite" datetime="${res.data.write_start_date}">${format_date(res.data.write_start_date)} ~ </time>`);
 		$("#weekcode", tmp).replaceWith(`<data class="weekcode" value="${res.data.code}">${res.data.code.toString().padStart(3,'0')}</data>`);
-		for (let e of res.p) {
-			$(".to-top", tmp).before(`<p class="p" data-pid="${e.id}">${e.content}</p>`);
-		}
+		for (let e of res.p) $(".to-top", tmp).before(get_p(e.id, e.content));
 		deco(tmp);
+		$(".to-top", tmp).on("click", function() { window.location.hash = ''; window.location.hash=`#w${el.attr("data-wid")}`; for (let e of window.cr_onafterload) e(); });
 		if (window.cr_onloadweek) cr_onloadweek(tmp);
 		if (!$("section").length) {
 			$("body").append(tmp);
-			if (res.data.order === 0) {
-				$(".cr_before",tmp).addClass("hidden");
-			}
+			if (res.data.order === 0) $(".cr_before",tmp).addClass("hidden");
 			if (parseInt(tmp.prev().attr("data-order"))+1 === res.data.order) {
 				$(".loadafter",tmp.prev()).addClass("hidden");
 				$(".loadbefore",tmp).addClass("hidden");
@@ -222,9 +225,7 @@ insert:		{
 				}
 				$("body").append(tmp);
 			}
-			if (res.data.order === 0) {
-				$(".cr_before",tmp).addClass("hidden");
-			}
+			if (res.data.order === 0) $(".cr_before",tmp).addClass("hidden");
 			if (parseInt(tmp.prev().attr("data-order"))+1 === res.data.order) {
 				$(".cr_after",tmp.prev()).addClass("hidden");
 				$(".cr_before",tmp).addClass("hidden");
@@ -240,12 +241,8 @@ insert:		{
 				$(".loadafter > svg > use",tmp).attr("href", "#between");
 			}
 		}
-		$(".loadbefore",tmp).on("click", function () {
-			load_week(undefined, undefined, res.data.order-1, this);
-		});
-		$(".loadafter",tmp).on("click", function () {
-			load_week(undefined, undefined, res.data.order+1, this);
-		});
+		$(".loadbefore",tmp).on("click", function () { load_week(undefined, undefined, res.data.order-1, this); });
+		$(".loadafter",tmp).on("click", function () { load_week(undefined, undefined, res.data.order+1, this); });
 		loaded.push(res.data.id);
 		if (init_weeks !== -1) {
 			cur_weeks++;
@@ -272,9 +269,7 @@ export async function reload_week(id) {
 		if (!loaded.includes(res.data.id)) throw "아니 로드도 안하고 리로드를 왜 시킴";
 		let el = $(`section[data-wid=${id}]`);
 		$(".p", el).remove();
-		for (let e of res.p) {
-			$(".to-top", el).before(`<p class="p" data-pid="${e.id}">${e.content}</p>`);
-		}
+		for (let e of res.p) $(".to-top", el).before(get_p(e.id, e.content));
 		deco(el);
 		if (window.cr_onloadweek) cr_onloadweek(el);
 		return el;
@@ -282,6 +277,11 @@ export async function reload_week(id) {
 		console.error(e);
 	}
 	return null;
+}
+
+export function get_p(id, content) {
+	if (content.startsWith("<hr>") || content.startsWith("<h3>") || content.startsWith("<figure>")) return $(content).addClass("p").attr("data-pid",id);
+	return $(`<p class="p" data-pid="${id}">${content}</p>`);
 }
 
 function format_date(d) {

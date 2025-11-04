@@ -2,6 +2,7 @@
 	outline: 1px solid var(--c-w-border);
 	scroll-margin-block-start: 10rem;
 	scroll-margin-block-end: 10rem;
+	min-height: 1lh;
 }
 #new:has( .edit-inside) { outline-style: auto; }
 
@@ -84,6 +85,7 @@ h2, .p {
 	text-indent: 0;
 	transform: translate(calc(-100% - 0.1ic), 2.5%);
 }
+.cr_icons.weekicon { font-size: 2em; }
 
 .cr_icon {
 	font-size: 1em;

@@ -1,5 +1,6 @@
 @import "/global/colors/full.css";
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-gov-dynamic-subset.min.css");
+@import "/global/font/nanumgothiccoding.css";
 
 body {
 	font-family: "Pretendard GOV Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
@@ -11,6 +12,7 @@ body {
 figure {
 	margin-block-start: 0.5lh;
 	margin-block-end: 1lh;
+	max-inline-size: 55rem;
 }
 
 figcaption {
@@ -31,6 +33,9 @@ p {
 
 hr {
 	border-color: transparent;
+	margin-block: 0.2lh;
+	height: 1lh;
+	border: none;
 }
 
 a {
@@ -90,12 +95,14 @@ em { text-decoration: underline; font-style: inherit; }
 q::before, q::after { content: none; }
 
 data.placeholder {
-	font-family: monospace;
+	font-family: 'Nanum Gothic Coding';
+	font-weight: bold;
+	font-size: 0.85em;
 	background: var(--c-w-bg);
 	--bg: var(--c-w-bg);
 	box-shadow: inset 0 0 0 1px var(--c-text);
-	padding-inline: 0.4em;
-	padding-block: 0.05em;
+	padding-inline: 0.25em;
+	padding-block: 0.15em;
 	position: relative;
 	inset-block-end: 0.1em;
 	border-radius: 0.2em;
@@ -293,6 +300,15 @@ section {
 	height: 100%;
 	--bd: var(--cbd);
 	--w: 3px;
+}
+
+ins {
+	background-color: var(--c-r-bgh);
+	color: var(--c-r-text);
+}
+
+del {
+	background-color: var(--c-w-bga);
 }
 
 .hidden {
