@@ -33,8 +33,8 @@ function load_fragment() {
 		}
 		console.log("업서요");
 	}
-	let target = document.querySelector(window.location.hash)
-	if (target.tagName === 'A') target = target.parentElement;
+	let target = document.querySelector(window.location.hash);
+	if (target.classList.contains("e")) target = target.parentElement;
 	highlight(target);
 }
 window.onhashchange = load_fragment;
