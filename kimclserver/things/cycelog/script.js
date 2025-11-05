@@ -7,13 +7,13 @@ export function sani(str) {
 }
 
 function highlight(el) {
-	el.scrollIntoView();
+	el.scrollIntoView({block: "nearest"});
 	el.style.animation = 'none';
 	el.offsetHeight;
 	el.style.animation = "bg-flash 0.5s ease-out";
 }
 
-function load_anchor() {
+function load_fragment() {
 	if (!window.location.hash) return;
 	if (d$("dialog")) remove_dialog(d$("dialog"));
 	if (!document.querySelector(window.location.hash)) {
@@ -37,17 +37,17 @@ function load_anchor() {
 	if (target.tagName === 'A') target = target.parentElement;
 	highlight(target);
 }
-window.onhashchange = load_anchor;
-window.cr_onafterload = [load_anchor];
+window.onhashchange = load_fragment;
+window.cr_onafterload = [load_fragment];
 
 // selectable text
 export function deco(el) {
-	$("a", el).before(" "); // hair space
-	$("a", el).prepend($(`<span class="before">#</span>`));
-	$("a.ref > .before", el).text("ref. #"); // 6-per-em space
-	$("a.add > .before", el).text("Add");
-	$("a.add1 > .before", el).text("Add1");
-	$("a.add3 > .before", el).text("Add3");
+	$(".e", el).before(" "); // hair space
+	$(".e", el).prepend($(`<span class="before">#</span>`));
+	$(".e.ref > .before", el).text("ref. #"); // 6-per-em space
+	$(".e.add > .before", el).text("Add");
+	$(".e.add1 > .before", el).text("Add1");
+	$(".e.add3 > .before", el).text("Add3");
 	$("b.star", el).prepend("★").append("★");
 	$("q:not(.exact, .star)", el).prepend("'").append("'");
 	$("q.exact", el).prepend("\"").append("\"");;
@@ -55,7 +55,7 @@ export function deco(el) {
 	$("span.wrapper.paren", el).prepend("(").append(" )"); // hair space
 	$("span.namu", el).append("(...)");
 	$("span.qm", el).text("?");
-	$("a, data, time, span.qm", el).on("click", (e) => {
+	$("data, time, span.qm", el).on("click", (e) => {
 		attach_dialog(e.currentTarget, e.clientY);
 		e.stopPropagation();
 	}); // dialog
@@ -126,18 +126,18 @@ function dialog_base() {
 
 function create_dialog() {
 	let el = $(cur_el);
-	if (cur_el.tagName === 'A') {
+	if (el.hasClass("e")) {
 		if (el.hasClass("add")) {
 			$("body").append(dialog_base().append(`<span>수첩 기록 시엔 없었으나<br>
 				${(el.hasClass("add3")?"3차 기록 중":(el.hasClass("add1")?"1차 기록 중":"이후"))} 추가한 내용</span>`));
 			return;
 		}
 		if (el.hasClass("ref")) {
-			$("body").append(dialog_base().append(`<span>${el.attr("data-for")}번 기록 언급<br></span>
-				<button type="button" onclick="anchor(${el.attr("data-for")})">이동</button>`));
+			$("body").append(dialog_base().append(`<span>${el.val()}번 기록 언급<br></span>
+				<button type="button" onclick="to_fragment(${el.val()})">이동</button>`));
 			return;
 		}
-		$("body").append(dialog_base().append(`<span>${el.attr("data-for")}번 기록<br></span>
+		$("body").append(dialog_base().append(`<span>${el.val()}번 기록<br></span>
 			<button type="button" onclick="navigator.clipboard.writeText(\`\${window.location.host}\${window.location.pathname}#a${el.attr("data-for")}\`);">링크 복사</button>`));
 		return;
 	}
@@ -180,12 +180,12 @@ function remove_dialog(e) {
 }
 
 
-export function anchor(to) {
+export function to_fragment(to) {
 	window.location.hash = "";
 	window.location.hash = `#a${to}`;
-	load_anchor();
+	load_fragment();
 }
-window.anchor = anchor;
+window.to_fragment = to_fragment;
 
 
 export async function load_week(id, code, order, button) {
@@ -198,11 +198,11 @@ export async function load_week(id, code, order, button) {
 		$("#weekname", tmp).replaceWith(`<h2>${res.data.name}</h2>`);
 		$("#weekstart", tmp).replaceWith(`<time class="weekstart" datetime="${res.data.start_date}">${format_date(res.data.start_date)}</time>`);
 		$("#weekend", tmp).replaceWith(`<time class="weekend" datetime="${res.data.end_date}">${format_date(res.data.end_date)}</time>`);
-		$("#weekwrite", tmp).replaceWith(`<time class="weekwrite" datetime="${res.data.write_start_date}">${format_date(res.data.write_start_date)} ~ </time>`);
+		$("#weekwrite", tmp).replaceWith(`<time class="weekwrite" datetime="${res.data.write_start_date}">${format_date(res.data.write_start_date, true)} ~ </time>`);
 		$("#weekcode", tmp).replaceWith(`<data class="weekcode" value="${res.data.code}">${res.data.code.toString().padStart(3,'0')}</data>`);
 		for (let e of res.p) $(".to-top", tmp).before(get_p(e.id, e.content));
 		deco(tmp);
-		$(".to-top", tmp).on("click", function() { window.location.hash = ''; window.location.hash=`#w${el.attr("data-wid")}`; for (let e of window.cr_onafterload) e(); });
+		$(".to-top", tmp).on("click", function() { window.location.hash = ''; window.location.hash=`#w${tmp.attr("data-wid")}`; for (let e of window.cr_onafterload) e(); });
 		if (window.cr_onloadweek) cr_onloadweek(tmp);
 		if (!$("section").length) {
 			$("body").append(tmp);
@@ -212,7 +212,7 @@ export async function load_week(id, code, order, button) {
 				$(".loadbefore",tmp).addClass("hidden");
 			} else if (parseInt(tmp.prev().attr("data-order"))+2 === res.data.order) {
 				$(".loadafter",tmp.prev()).addClass("hidden");
-				$(".loadbefore",tmp).addClass("loadbetween");
+				$(".loadbefore > svg > use",tmp).attr("href", "#between");
 			}
 		} else {
 			let cur = $("section");
@@ -280,13 +280,14 @@ export async function reload_week(id) {
 }
 
 export function get_p(id, content) {
-	if (content.startsWith("<hr>") || content.startsWith("<h3>") || content.startsWith("<figure>")) return $(content).addClass("p").attr("data-pid",id);
+	if (content.startsWith("<!--OUTER-->")) return $(content).last().addClass("p").addClass("htmlp").attr("data-pid",id);
 	return $(`<p class="p" data-pid="${id}">${content}</p>`);
 }
 
-function format_date(d) {
+export function format_date(d, time, year) {
 	// TODO
-	return d;
+	let da = new Date(d);
+	return `${year ? `${da.getFullYear().toString().padStart(4,"0")}. ` : ''}${(da.getMonth()+1).toString().padStart(2,"0")}. ${da.getDate().toString().padStart(2,"0")}.${time ? ` (${da.getHours().toString().padStart(2,"0")}:${da.getMinutes().toString().padStart(2,"0")})` : ''}`;
 }
 
 var init_weeks = -1

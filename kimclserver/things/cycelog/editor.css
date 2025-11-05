@@ -1,22 +1,20 @@
 #new {
 	outline: 1px solid var(--c-w-border);
-	scroll-margin-block-start: 10rem;
-	scroll-margin-block-end: 10rem;
 	min-height: 1lh;
 }
 #new:has( .edit-inside) { outline-style: auto; }
 
-#new a { margin-inline-start: 0.05em; }
-#new a::before {
+#new .e { margin-inline-start: 0.05em; }
+#new .e::before {
 	content: '#';
 	text-indent: 0;
 	margin-inline-end: 0.05em;
 	opacity: 0.85;
 }
-#new a.ref::before { content: 'ref. #'; }
-#new a.add::before { content: 'Add'; opacity: 1; }
-#new a.add.add1::before { content: 'Add1'; }
-#new a.add.add3::before { content: 'Add3'; }
+#new .e.ref::before { content: 'ref. #'; }
+#new .e.add::before { content: 'Add'; opacity: 1; }
+#new .e.add.add1::before { content: 'Add1'; }
+#new .e.add.add3::before { content: 'Add3'; }
 #new b.star::before, #new b.star::after { content: '★'; }
 #new q::before, #new q::after { content: '\''; }
 #new q.exact::before, #new q.exact::after { content: '"'; }
@@ -79,18 +77,18 @@ h2, .p {
 
 .cr_icons {
 	position: sticky;
-	inset-block: 1ic;
+	inset-block: 0.9lh;
 	float: inline-start;
 	shape-outside: polygon(0% 0%);
 	text-indent: 0;
-	transform: translate(calc(-100% - 0.1ic), 2.5%);
+	transform: translate(calc(-100% - 0.1ic), 2%);
 }
-.cr_icons.weekicon { font-size: 2em; }
 
 .cr_icon {
 	font-size: 1em;
-	width: 1.15ic;
-	height: 1.15ic;
+	font-family: inherit;
+	width: 0.9lh;
+	height: 0.9lh;
 	padding: 0;
 	border: none;
 	background: none;
@@ -103,15 +101,15 @@ h2, .p {
 	--w: 0.1ic;
 }
 
-.delete { --cbd: var(--c-r-border); }
-.delete:hover { --cbd: var(--c-r-borderh); }
+.delete { --cbd: var(--c-gray1); }
+.delete:is(:hover,:focus) { --cbd: var(--c-r-border); }
 .delete:active { --cbd: var(--c-r-bordera); }
-.insert { --cbd: var(--c-g-border); }
-.insert:hover { --cbd: var(--c-g-borderh); }
+.insert { --cbd: var(--c-gray1); }
+.insert:is(:hover,:focus) { --cbd: var(--c-g-border); }
 .insert:active { --cbd: var(--c-g-bordera); }
-.cancel { --cbd: var(--c-o-border); }
-.cancel:hover { --cbd: var(--c-o-borderh); }
+.cancel { --cbd: var(--c-gray1); }
+.cancel:is(:hover,:focus) { --cbd: var(--c-o-border); }
 .cancel:active { --cbd: var(--c-o-bordera); }
-.refresh { --cbd: var(--c-y-border); }
-.refresh:hover { --cbd: var(--c-y-borderh); }
+.refresh { --cbd: var(--c-gray1); }
+.refresh:is(:hover,:focus) { --cbd: var(--c-y-border); }
 .refresh:active { --cbd: var(--c-y-bordera); }

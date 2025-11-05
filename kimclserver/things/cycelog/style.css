@@ -38,7 +38,7 @@ hr {
 	border: none;
 }
 
-a {
+.e {
 	--bg: transparent;
 	--bd: var(--c-text);
 	--c: var(--c-text);
@@ -52,38 +52,42 @@ a {
 	text-indent: 0;
 	text-decoration-color: var(--c);
 }
-a:hover, a:focus { background-color: var(--bgh); --cbd: var(--bdh); color: var(--ch); text-decoration: none; }
-a:active { background-color: var(--bga); --cbd: var(--bda); color: var(--ca); text-decoration: none; }
+.e:hover, .e:focus {
+	background-color: var(--bgh); --cbd: var(--bdh); color: var(--ch);
+	text-decoration: none;
+	cursor: pointer;
+}
+.e:active { background-color: var(--bga); --cbd: var(--bda); color: var(--ca); text-decoration: none; }
 
-a > .before {
+.e > .before {
 	text-indent: 0;
 	margin-inline-end: 0.05em;
 	opacity: 0.85;
 }
 
-a.add { --bg: var(--c-w-bg); --bd: var(--c-w-border); --c: var(--c-w-text);
+.e.add { --bg: var(--c-w-bg); --bd: var(--c-w-border); --c: var(--c-w-text);
 	--bgh: var(--c-w-bgh); --bdh: var(--c-w-borderh); --ch: var(--c-w-texth);
 	--bga: var(--c-w-bga); --bda: var(--c-w-bordera); --ca: var(--c-w-texta); }
-a.w { --bg: var(--c-b-bg); --bd: var(--c-b-border); --c: var(--c-b-text);
+.e.w { --bg: var(--c-b-bg); --bd: var(--c-b-border); --c: var(--c-b-text);
 	--bgh: var(--c-b-bgh); --bdh: var(--c-b-borderh); --ch: var(--c-b-texth);
 	--bga: var(--c-b-bga); --bda: var(--c-b-bordera); --ca: var(--c-b-texta); }
-a.d { --bg: var(--c-p-bg); --bd: var(--c-p-border); --c: var(--c-p-text);
+.e.d { --bg: var(--c-p-bg); --bd: var(--c-p-border); --c: var(--c-p-text);
 	--bgh: var(--c-p-bgh); --bdh: var(--c-p-borderh); --ch: var(--c-p-texth);
 	--bga: var(--c-p-bga); --bda: var(--c-p-bordera); --ca: var(--c-p-texta); }
-a.s { --bg: var(--c-r-bg); --bd: var(--c-r-border); --c: var(--c-r-text);
+.e.s { --bg: var(--c-r-bg); --bd: var(--c-r-border); --c: var(--c-r-text);
 	--bgh: var(--c-r-bgh); --bdh: var(--c-r-borderh); --ch: var(--c-r-texth);
 	--bga: var(--c-r-bga); --bda: var(--c-r-bordera); --ca: var(--c-r-texta); }
-a.i { --bg: var(--c-o-bg); --bd: var(--c-o-border); --c: var(--c-o-text);
+.e.i { --bg: var(--c-o-bg); --bd: var(--c-o-border); --c: var(--c-o-text);
 	--bgh: var(--c-o-bgh); --bdh: var(--c-o-borderh); --ch: var(--c-o-texth);
 	--bga: var(--c-o-bga); --bda: var(--c-o-bordera); --ca: var(--c-o-texta); }
-a.t { --bg: var(--c-y-bg); --bd: var(--c-y-border); --c: var(--c-y-text);
+.e.t { --bg: var(--c-y-bg); --bd: var(--c-y-border); --c: var(--c-y-text);
 	--bgh: var(--c-y-bgh); --bdh: var(--c-y-borderh); --ch: var(--c-y-texth);
 	--bga: var(--c-y-bga); --bda: var(--c-y-bordera); --ca: var(--c-y-texta); }
-a.g { --bg: var(--c-g-bg); --bd: var(--c-g-border); --c: var(--c-g-text);
+.e.g { --bg: var(--c-g-bg); --bd: var(--c-g-border); --c: var(--c-g-text);
 	--bgh: var(--c-g-bgh); --bdh: var(--c-g-borderh); --ch: var(--c-g-texth);
 	--bga: var(--c-g-bga); --bda: var(--c-g-bordera); --ca: var(--c-g-texta); }
 
-a.add > .before {
+.e.add > .before {
 	opacity: 1;
 	margin-inline-end: 0;
 }
@@ -117,7 +121,7 @@ span.wrapper {
 	--bd: var(--c-text);
 }
 
-span.wrapper:has( > :is(a, span.qm):is(:hover, .selected)) {
+span.wrapper:has( > :is(.e, span.qm):is(:hover, .selected)) {
 	color: var(--c);
 	background-color: var(--bg);
 	outline: 1px solid var(--bd);
@@ -257,7 +261,7 @@ dialog button:active {
 	padding: 0.25rem;
 	border-radius: 2rem;
 	--cbd: var(--c-b-border);
-	border: 4px solid var(--cbd);
+	border: 4px solid transparent;
 	background: none;
 	position: relative;
 }
@@ -277,29 +281,32 @@ dialog button:active {
 
 section {
 	border-radius: 0.25em;
-	scroll-margin-block-start: 10rem;
+	scroll-margin-block: 10rem;
 }
 
 .to-top {
-	width: 2rem;
-	height: 2rem;
+	box-sizing: content-box;
+	width: 2.5rem;
+	height: 2.5rem;
 	padding: 0.125rem;
 	position: sticky;
-	inset-block-end: 2rem;
+	inset-block: 0;
 	float: inline-end;
 	shape-outside: polygon(100% 0);
 	border-radius: 50%;
 	background: none;
-	border: 3px solid var(--cbd);
-	--cbd: var(--c-p-border);
-	transform: translateX(2.5rem);
+	border: 4px solid transparent;
+	--cbd: var(--c-w-border);
+	transform: translate(3.5rem, -2rem);
 }
+.to-top:hover { --cbd: var(--c-w-borderh); }
+.to-top:active { --cbd: var(--c-w-bordera); }
 
 .to-top > svg {
 	width: 100%;
 	height: 100%;
 	--bd: var(--cbd);
-	--w: 3px;
+	--w: 4px;
 }
 
 ins {
@@ -308,7 +315,7 @@ ins {
 }
 
 del {
-	background-color: var(--c-w-bga);
+	color: var(--c-gray6);
 }
 
 .hidden {

@@ -1,6 +1,6 @@
 import { k2e } from './k2e.js'
 import { fetchget, fetchbody } from '../../global/util.js';
-import { deco, load_week, reload_week, attach_dialog, sani, get_p } from './script.js'
+import { deco, load_week, reload_week, attach_dialog, sani, get_p, format_date } from './script.js'
 
 const d$ = (q) => document.getElementById(q);
 
@@ -178,10 +178,13 @@ gett:		{
 			cmd2 = t.split("/").slice(1);
 			if (cmd2.at(-1)==="") cmd2 = cmd2.slice(0,-1);
 			cmd2 = cmd2.map((e)=>e.split("\uFFFC"));
-			console.log(cmd2);
 			console.log(`cmd: ${cmd1} / [${cmd2}]`);
 
-		 	if (cmd1.startsWith("{#")) [type, ins, put_as] = cmd_entry(cmd1, cmd2);
+			if (/\{-+/.test(cmd1)) [type, ins, put_as] = cmd_html(bef, aft, cmd2, `<hr>`);
+			else if (cmd1 === "{todrkremf") [type, ins, put_as] = cmd_html(bef, aft, cmd2, `<h3>생각들</h3>`);
+			else if (cmd1 === "{wjdqh") [type, ins, put_as] = cmd_html(bef, aft, cmd2, `<h3>정보</h3>`);
+			else if (cmd1 === "{fig") [type, ins, put_as] = cmd_fig(bef, aft, cmd2, els);
+		 	else if (cmd1.startsWith("{#")) [type, ins, put_as] = cmd_entry(cmd1, cmd2);
 			else if (cmd1.startsWith("{r#")) [type, ins, put_as] = cmd_ref(cmd1, cmd2);
 			else if (cmd1.startsWith("{a#")) [type, ins, put_as] = cmd_add(cmd1, cmd2)
 			else if (cmd1.startsWith("{t")) [type, ins, put_as] = cmd_time(cmd1, cmd2);
@@ -198,11 +201,10 @@ gett:		{
 			else if (cmd1 === "{_" || cmd1 === "{sub") [type, ins, put_as] = cmd_format(cmd2, `<sub>`);
 			else if (cmd1 === "{ins") [type, ins, put_as] = cmd_format(cmd2, `<ins>`);
 			else if (cmd1 === "{del") [type, ins, put_as] = cmd_format(cmd2, `<del>`);
-			else if (cmd1 === "{end") [type, ins, put_as] = cmd_format(cmd2, `<span class="weekend">`);
 			else if (cmd1 === "{") [type, ins, put_as] = cmd_wrapper(cmd2);
 			else if (cmd1 === "{.." || cmd1 === "{namu") [type, ins, put_as] = cmd_namu(cmd2);
 			else if (cmd1.startsWith("{ec")) [type, ins, put_as] = cmd_placeholder(cmd1, cmd2); // ㄷㅊ(대체라는 뜻)
-			else if (cmd1 === "{fig") [type, ins, put_as] = cmd_fig(bef, aft, cmd2, els);
+			else if (cmd1 === "{end") [type, ins, put_as] = cmd_end(cmd2);
 			else throw "없는 명령";
 			if (type === -1 || ins == null) throw "알 수 없는 오류 발생";
 			if (put_as != undefined) put(ins, put_as, els);
@@ -321,7 +323,7 @@ function cmd_entry(cmd1, cmd2) {
 	let kind = cmd1.charAt(2);
 	let id = parseInt(cmd1.slice(3));
 	if ("s d t g w i".split(' ').indexOf(kind) !== -1) {
-		let ins = $(`<a id="a${id}" class="${kind}" data-for="${id}">${id}${cmd2.length?' ':''}</a>`);
+		let ins = $(`<data id="a${id}" class="e ${kind}" value="${id}">${id}${cmd2.length?' ':''}</data>`);
 		return [3,ins,cmd2[0]];
 	}
 	throw "항목 - 종류가 올바르지 않음";
@@ -334,12 +336,12 @@ function cmd_ref(cmd1, cmd2) {
 		let cls = d$(`a${id}`).classList;
 		let kind = get_kind(cls);
 		if (kind != 'x') {
-			let ins = $(`<a class="ref ${kind}" data-for="${id}">${id}${cmd2.length?' ':''}</a>`);
+			let ins = $(`<data class="e ref ${kind}" value="${id}">${id}${cmd2.length?' ':''}</data>`);
 			return [3,ins,cmd2[0]];
 		}
 	}
 	if ($("#type_pending").length) throw "언급 - 충돌 방지(재시도하면 됨)";
-	let ins = $(`<a id="type_pending" class="ref block" data-for="${id}">${id}${cmd2.length?' ':''}</a>`);
+	let ins = $(`<data id="type_pending" class="e ref block" value="${id}">${id}${cmd2.length?' ':''}</a>`);
 	fetchget(`/cycelog/find/a?id=${id}`).then((res) => {
 		$("#type_pending").addClass(res.type).removeClass("block").attr("id",null);
 	}).catch(() => {
@@ -350,9 +352,9 @@ function cmd_ref(cmd1, cmd2) {
 function cmd_add(cmd1, cmd2) {
 	if (cmd2.length > 0) throw "추가 - 인자가 너무 많음";
 	let ins = null
-	if (cmd1 === "{a#") ins = $(`<a class="add"></a>`);
-	else if (cmd1 === "{a#1") ins = $(`<a class="add add1"></a>`);
-	else if (cmd1 === "{a#3") ins = $(`<a class="add add3"></a>`);
+	if (cmd1 === "{a#") ins = $(`<data class="e add"></data>`);
+	else if (cmd1 === "{a#1") ins = $(`<data class="e add add1"></data>`);
+	else if (cmd1 === "{a#3") ins = $(`<data class="e add add3"></data>`);
 	else throw "추가 - 올바르지 않은 명령";
 	return [1,ins];
 }
@@ -408,9 +410,17 @@ function cmd_time(cmd1, cmd2) {
 		return [3,ins];
 	} else {
 		if (!/^\d{4}(\d\d(\.\d\d)?)?$|^0\*(\d\d(\.\d\d)?)?$/.test(data)) throw "시간 - 타임스탬프 형식이 올바르지 않음";
-		if (entry === null) ins = $(`<time id="datetime_pending" class="block" data-time="${data}">${cmd2.length?'':data}</time>`);
-		else ins = $(`<time id="datetime_pending" class="block" data-time="${data}" data-entry="${entry}">${cmd2.length?'':data}</time>`);
+		if ($("#timestamp_pending").length || $("#datetime_pending").length) throw "시간 - 충돌 방지(재시도하면 됨)";
+		let incl_year = true;
+		if (cmd2[0]?.length === 1 && cmd2[0][0] === "") {
+			cmd2 = [];
+			incl_year = false;
+		}
+		let incl_time = /^\d{6}(\.\d\d)?$|^0\*\d\d(\.\d\d)?$/.test(data);
+		if (entry === null) ins = $(`<time id="datetime_pending" class="block" data-time="${data}">${cmd2.length?'':'...'}</time>`);
+		else ins = $(`<time id="datetime_pending" class="block" data-time="${data}" data-entry="${entry}">${cmd2.length?'':'...'}</time>`);
 		fetchget(`/cycelog/find/datetime?timestamp=${data}`).then((res) => {
+			if (!cmd2.length) $("#datetime_pending").text(format_date(res, incl_time, incl_year));
 			$("#datetime_pending").attr("datetime",res).removeClass("block").attr("id",null);
 		}).catch(() => {
 			$("#datetime_pending").replaceWith($(`<span class="error block" contenteditable="false">오류</span>`));
@@ -488,10 +498,19 @@ function cmd_placeholder(cmd1,cmd2) {
 	let ins = $(`<data class="placeholder" value="${data}">${cmd2.length?'':data}</data>`);
 	return [6,ins,cmd2[0]];
 }
+function cmd_end(cmd2) {
+	if (cmd2.length > 0) throw `주차 종료 - 인자가 너무 많음`;
+	let ins = $(`<span class="weekend">그렇게 ${$("h2", $("#new").parent()).text()}가 끝났다.</span>`);
+	return [0,ins,cmd2[0]];
+}
+function cmd_html(bef, aft, cmd2, format) {
+	if ((bef != null && bef !== "") || (aft != null && aft !== "")) throw "문단 나눔 - 이것 외에는 내용이 없어야 함";
+	if (cmd2.length > 0) throw "문단 나눔 - 인자가 없어야 함";
+	let newhtml = $(format).attr("id", "new").addClass("newhtml").attr("data-isafter", $("#new").attr("data-isafter"));
+	$("#new").replaceWith(newhtml);
+	throw -1;
+}
 function cmd_fig(bef, aft, cmd2, els) {
-	console.log(bef);
-	console.log(aft);
-	console.log(els);
 	if ((bef != null && bef !== "") || (aft != null && aft !== "")) throw "정보 - 이것 외에는 내용이 없어야 함";
 	if (cmd2.length <= 1) throw "정보 - 첫 번째 인자로 설명을, 그 다음부터 html을 제공해야 함";
 	let flat = [];
@@ -528,14 +547,16 @@ function cr_onloadweek(el) {
 		$(`.p[data-pid=${is_after}]`,el).after($("#new"));
 		$("#new").before($("#newicons"));
 	}
-	$(".cr_icons:not(#newicons)", el).remove();
-	$("h2", el).before(function () {
+	$("h2:not(:has( > .cr_icons))", el).prepend(function () {
 		let id = $(this).parent().parent().attr("data-wid");
 		return $(`<div class="cr_icons weekicon">`).append($(`<button class="cr_icon delete"><svg><use href="#trash"></use></svg></button>`).on("click", () => delete_week(id)))
 			.append($(`<button class="cr_icon refresh"><svg><use href="#refresh"></use></svg></button>`).on("click", () => { if (cancel_new()) reload_week(id); }))
 			.append($(`<button class="cr_icon insert"><svg><use href="#down"></use></svg></button>`).on("click", () => start_new(id, true)));
 	});
-	$(".p", el).before(function () {
+	$("hr", el).replaceWith(function () {
+		return $(`<p class="p htmlp" data-pid="${this.attributes['data-pid'].value}"><br></p>`);
+	})
+	$(".p", el).prepend(function () {
 		let id = parseInt($(this).attr("data-pid"));
 		return $(`<div class="cr_icons">`).append($(`<button class="cr_icon delete"><svg><use href="#trash"></use></svg></button>`).on("click", function () { delete_p(this, id); }))
 			.append($(`<button class="cr_icon insert"><svg><use href="#down"></use></svg></button>`).on("click", () => start_new(id)));
@@ -571,7 +592,6 @@ function add_week(order) {
 }
 
 function delete_week(id) {
-	console.log(id);
 	if (!confirm("이 주차를 삭제하겠습니까?")) return;
 	fetchbody("/cycelog/week", "DELETE", {
 		id: id
@@ -584,8 +604,19 @@ function delete_week(id) {
 		$(".cr_loadnothing",prev).removeClass("cr_loadnothing");
 		$(".cr_loadnothing",next).removeClass("cr_loadnothing");
 		if (parseInt(next.attr("data-order")) - parseInt(prev.attr("data-order")) === 2) {
-			$(".loadafter",prev).addClass("loadbetween");
+			$(".loadafter > svg > use",prev).attr("href", "#between");
 			$(".cr_before",next).addClass("hidden");
+		} else if (parseInt(next.attr("data-order")) - parseInt(prev.attr("data-order")) === 3) {
+			$(".loadafter > svg > use",prev).attr("href", "#down");
+			$(".loadbefore > svg > use",next).attr("href", "#up");
+			$(".cr_after",prev).removeClass("hidden");
+			$(".cr_before",next).removeClass("hidden");
+		} else if (!prev.attr("data-order")) {
+			$(".loadbefore > svg > use",next).attr("href", "#up");
+			$(".cr_before",next).removeClass("hidden");
+		} else if (!next.attr("data-order")) {
+			$(".loadafter > svg > use",prev).attr("href", "#down");
+			$(".cr_after",prev).removeClass("hidden");
 		}
 		$(`section[data-wid=${id}]`).remove();
 	}).catch((res) => { alert(`주차 삭제 실패: ${res}`); });
@@ -596,87 +627,102 @@ export function add_p() {
 		error();
 		return;
 	}
-	let np = $("#new").clone();
-	np.attr("contenteditable", null);
+
+	let np = $("#new").clone().attr("id",null).attr("class",null).attr("data-isafter",null).attr("style",null);
 	$("*", np).attr("contenteditable", null);
 	$("*", np).removeClass("editable").removeClass("edit-inside");
 	$("*", np).removeClass("cbefore").removeClass("cafter");
-	$(".cr_icons", np).remove();
 	$("*[class=\"\"]", np).attr("class", null);
-	$(".noclass", np).each(function () { $(this).replaceWith($(this).contents()); });
-	np.attr('id', null).attr("class", "p");
 	np.html($(np).html().replace("&nbsp;"," "));
 	np.get(0).normalize();
+	let body = get_body(np);
 	let p = $("#new").parent();
-	let body = {
-		head_of_id: ($(".p:has( + #newicons)").length)?null:p.attr("data-wid"),
-		parent_id: p.attr("data-wid"),
-		before_id: ($(".p:has( + #newicons)").length)?$(".p:has( + #newicons)").attr("data-pid"):null,
-		entries: $("a:not(.ref, .add)",np).get().map((e,i) => {
-			let te = $(`time[data-entry="${i+1}"]`,np).first();
-			let time = null;
-			if (te.length) {
-				let tv = te.attr("data-time");
-				if (tv.startsWith("0*")) time = { week: 0, day: -3, hour: (tv.length>2)?parseInt(tv.slice(2,4)):null, end_hour: (tv.length>4)?parseInt(tv.slice(5,7)):null, datetime: te.attr("datetime") };
-				else time = { week: parseInt(tv.slice(0,3)), day: parseInt(tv.slice(3,4)), hour: (tv.length>4)?parseInt(tv.slice(4,6)):null, end_hour: (tv.length>6)?parseInt(tv.slice(7,9)):null, datetime: te.attr("datetime") };
-			}
-			return {id: parseInt(e.attributes['data-for'].value), type: get_kind(e.classList), time: time}
-		}),
-		refs: $("a.ref",np).get().map((e) => {
-			return {ref_id: parseInt(e.attributes['data-for'].value)}
-		}),
-		people: [],
-		content: np.get(0).innerHTML
-	};
-	if (/^-*$/.test(body.content)) body.content = "<hr>";
-	else if (body.content === "생각들") body.content = "<h3>생각들</h3>"
-	else if (body.content === "정보") body.content = "<h3>정보</h3>"
-
-	let people = {}
-	for (let e of $("data.person",np)) {
-		let data = {type: e.attributes['data-type']?.value, code: e.attributes['value']?.value, name: e.attributes['data-name']?.value}
-		if (data.type === "mention") {
-			if (!people[data.code]) people[data.code] = null;
-		} else if (data.type === "alias") {
-			if (!people[data.code] || people[data.code] === null) people[data.code] = {aliases: [data.name], canon: null}
-			else people[data.code]['aliases'].push(data.name);
-		} else if (data.type === "canon") {
-			if (!people[data.code] || people[data.code] === null) people[data.code] = {aliases: [], canon: data.name}
-			else people[data.code]['canon'] = data.name;
-		}
-	}
-	for (let [k, v] of Object.entries(people)) {
-		if (v === null) body.people.push({code: k, name: null, is_canon: false});
-		else {
-			if (v.canon !== null) body.people.push({code: k, name: v.canon, is_canon: true});
-			for (let e of v.aliases) body.people.push({code: k, name: e, is_canon: false});
-		}
-	}
+	body.parent_id = p.attr("data-wid");
+	body.head_of_id = body.before_id = null;
+	if ($("#new").attr("data-isafter")=="-1") body.head_of_id = p.attr("data-wid");
+	else body.before_id = $("#new").attr("data-isafter");
 	console.log(body);
 	fetchbody("/cycelog/p","POST",body).then((e) => {
 		console.log(e);
 		let np = get_p(e.id, e.content);
+		if (np.get(0).tagName === "HR") np = get_p(e.id, "<br>").addClass("htmlp");
 		deco(np);
-		console.log(np);
 		$("#new", p).before(np);
-		np.before($(`<div class="cr_icons">`).append($(`<button class="cr_icon delete"><svg><use href="#trash"></use></svg></button>`).on("click", function () { delete_p(this, e.id); }))
-			.append($(`<button class="cr_icon insert"><svg><use href="#down"></use></svg></button>`).on("click", () => start_new(e.id))));
-		$("#new").replaceWith($(`<p id="new" data-isafter="${np.attr("data-pid")}" contenteditable="plaintext-only">`).on("keydown", input));
+		np.prepend($(`<div class="cr_icons">`)
+			.append($(`<button class="cr_icon delete"><svg><use href="#trash"></use></svg></button>`)
+				.on("click", function () { delete_p(this, e.id); }))
+			.append($(`<button class="cr_icon insert"><svg><use href="#down"></use></svg></button>`)
+				.on("click", () => start_new(e.id))));
+		$("#new").replaceWith($(`<p id="new" data-isafter="${np.attr("data-pid")}" contenteditable="plaintext-only">`)
+			.on("keydown", input));
 		$("#new").before($("#newicons"));
 		$("#new").get(0).focus();
 	}).catch((res) => {
 		let undeco = $("#new").html();
-		reload_week(p.attr("data-wid")).then(() => {
-			$("#new").html(undeco);
-		});
+		reload_week(p.attr("data-wid")).then(() => $("#new").html(undeco));
 		alert(`문단 추가 실패: ${res}`);
 	});
 }
 window.add_p = add_p;
 
+function get_body(el) {
+	let entries = [];
+	let eel = $(".e:not(.ref, .add)",el).get();
+	for (let i in eel) {
+		let te = $(`time[data-entry="${parseInt(i)+1}"]`,el).first();
+		let time = null;
+		if (te.length) {
+			let tv = te.attr("data-time");
+			if (tv.startsWith("0*")) time = {
+				week: 0, day: -3,
+				hour: (tv.length>2)?parseInt(tv.slice(2,4)):null,
+				end_hour: (tv.length>4)?parseInt(tv.slice(5,7)):null, datetime: te.attr("datetime")
+			};
+			else time = {
+				week: parseInt(tv.slice(0,3)), day: parseInt(tv.slice(3,4)),
+				hour: (tv.length>4)?parseInt(tv.slice(4,6)):null,
+				end_hour: (tv.length>6)?parseInt(tv.slice(7,9)):null, datetime: te.attr("datetime")
+			};
+		}
+		entries.push({
+			id: parseInt(eel[i].attributes['value'].value),
+			type: get_kind(eel[i].classList), time: time
+		});
+	}
+
+	let refs = [];
+	for (let e of $(".e.ref",el).get()) refs.push({ref_id: parseInt(e.attributes['value'].value)});
+
+	let people = [];
+	let ptmp = {}
+	for (let e of $("data.person",el)) {
+		let data = {type: e.attributes['data-type']?.value, code: e.attributes['value']?.value, name: e.attributes['data-name']?.value}
+		if (data.type === "mention") {
+			if (!ptmp[data.code]) ptmp[data.code] = null;
+		} else if (data.type === "alias") {
+			if (!ptmp[data.code] || ptmp[data.code] === null) ptmp[data.code] = {aliases: [data.name], canon: null}
+			else ptmp[data.code]['aliases'].push(data.name);
+		} else if (data.type === "canon") {
+			if (!ptmp[data.code] || ptmp[data.code] === null) ptmp[data.code] = {aliases: [], canon: data.name}
+			else ptmp[data.code]['canon'] = data.name;
+		}
+	}
+	for (let [k, v] of Object.entries(ptmp)) {
+		if (v === null) people.push({code: k, name: null, is_canon: false});
+		else {
+			if (v.canon !== null) people.push({code: k, name: v.canon, is_canon: true});
+			for (let e of v.aliases) people.push({code: k, name: e, is_canon: false});
+		}
+	}
+	$("*", el).attr("data-entry", null).attr("data-type", null).attr("data-name", null);
+
+	let content = (el.get(0).tagName === "P") ? el.get(0).innerHTML : "<!--OUTER-->"+el.get(0).outerHTML;
+	if (!content.length) content = "<!--OUTER--><hr>";
+	let textcontent = el.get(0).textContent;
+	return {entries: entries, refs: refs, people: people, content: content.replace(/\s+/g, " "), textcontent: textcontent.replace(/\s+/g, " ")};
+}
+
 function delete_p(el, id) {
-	console.log(el);
-	console.log(id);
 	if (!confirm("이 문단을 삭제하겠습니까?")) return;
 	fetchbody("/cycelog/p", "DELETE", {
 		id: id
@@ -690,12 +736,25 @@ function delete_p(el, id) {
 	});
 }
 
-function maketest() {
-	fetchbody("/cycelog/week", "POST", { name: "끾주차", code: 277, order: 0, start_date: "3001-01-01", end_date: "3001-01-07", write_start_date: "4001-01-01T00:00" }).then((res) => { load_week(res.data.id) }).catch((res) => { alert(`주차 생성 실패: ${res}`); });
-	fetchbody("/cycelog/week", "POST", { name: "이끾주차", code: 278, order: 1, start_date: "3001-01-08", end_date: "3001-01-14", write_start_date: "4001-01-01T01:00" }).then((res) => { load_week(res.data.id) }).catch((res) => { alert(`주차 생성 실패: ${res}`); });
-	fetchbody("/cycelog/week", "POST", { name: "이르긲주차", code: 279, order: 2, start_date: "3001-01-15", end_date: "3001-01-21", write_start_date: "4001-01-01T02:00" }).then((res) => { load_week(res.data.id) }).catch((res) => { alert(`주차 생성 실패: ${res}`); });
-	fetchbody("/cycelog/week", "POST", { name: "이끼기주차", code: 280, order: 3, start_date: "3001-01-22", end_date: "3001-01-28", write_start_date: "4001-01-01T03:00" }).then((res) => { load_week(res.data.id) }).catch((res) => { alert(`주차 생성 실패: ${res}`); });
-	fetchbody("/cycelog/week", "POST", { name: "이이갸주차", code: 281, order: 4, start_date: "3001-01-29", end_date: "3001-02-04", write_start_date: "4001-01-01T04:00" }).then((res) => { load_week(res.data.id) }).catch((res) => { alert(`주차 생성 실패: ${res}`); });
+async function maketest() {
+	await fetchbody("/cycelog/week", "POST", { name: "끾주차", code: 277, order: 0, start_date: "3001-01-01", end_date: "3001-01-07", write_start_date: "4001-01-01T00:00" }).then((res) => { load_week(res.data.id) }).catch((res) => { alert(`주차 생성 실패: ${res}`); });
+	await fetchbody("/cycelog/week", "POST", { name: "이끾주차", code: 278, order: 1, start_date: "3001-01-08", end_date: "3001-01-14", write_start_date: "4001-01-01T01:00" }).then((res) => { load_week(res.data.id) }).catch((res) => { alert(`주차 생성 실패: ${res}`); });
+	await fetchbody("/cycelog/week", "POST", { name: "이르긲주차", code: 279, order: 2, start_date: "3001-01-15", end_date: "3001-01-21", write_start_date: "4001-01-01T02:00" }).then((res) => { load_week(res.data.id) }).catch((res) => { alert(`주차 생성 실패: ${res}`); });
+	await fetchbody("/cycelog/week", "POST", { name: "이끼기주차", code: 280, order: 3, start_date: "3001-01-22", end_date: "3001-01-28", write_start_date: "4001-01-01T03:00" }).then((res) => { load_week(res.data.id) }).catch((res) => { alert(`주차 생성 실패: ${res}`); });
+	await fetchbody("/cycelog/week", "POST", { name: "이이갸주차", code: 281, order: 4, start_date: "3001-01-29", end_date: "3001-02-04", write_start_date: "4001-01-01T04:00" }).then((res) => { load_week(res.data.id) }).catch((res) => { alert(`주차 생성 실패: ${res}`); });
+
+	const complete_body = (b, pid, hid, bid) => { b.parent_id = pid; b.head_of_id = hid; b.before_id = bid; return b; }
+	let test = $(await (await fetch('./test.html')).text());
+	let id = null;
+	for (let e of $("section",test).get()) {
+		console.log(e);
+		for (let ee of $(e).children()) {
+			console.log(id);
+			id = (await fetchbody("/cycelog/p", "POST", complete_body(get_body($(ee)), $(e).attr("data-wid"), (id==null)?$(e).attr("data-wid"):null, (id==null)?null:id))).id;
+		}
+		id = null;
+	}
+	reload_week(1); reload_week(2); reload_week(3); reload_week(4); reload_week(5);
 }
 
 function start_new(id, head) {

@@ -1,145 +1,66 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-	<title>cycelog</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="/global/gallery.css">
-	<link rel="stylesheet" type="text/css" href="style.css">
-	<link rel="stylesheet" type="text/css" href="editor.css">
-	<script src="/global/jquery_slim.js"></script>
-	<script src="script.js" type="module"></script>
-	<script src="editor.js" type="module"></script>
-	<script src="/global/kimclmenu.js" type="module"></script>
-	<script src="/kimclserver/global/kservermenu.js" type="module"></script>
-</head>
-<body>
-	<kimcl-menu></kimcl-menu>
-	<hgroup>
-		<h1>끾기록 테스트 페이지 · cycelog</h1>
-		<p style="text-align: center;">alpha</p>
-	</hgroup>
-	<svg style="display: none">
-		<symbol id="trash" viewbox="0 0 24 24">
-			<path d="M9 3H15M3 6H21M10 16V11M14 16V11M5 6H19L18.1245 19.133C18.0544 20.1836 17.1818 21 16.1289 21L7.8461 21C6.79171 21 5.91842 20.1814 5.85028 19.1292L5 6Z" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
-		</symbol>
-		<symbol id="up" viewbox="0 0 24 24">
-			<path d="M12 5V19M12 5L5 12M12 5L19 12" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
-		</symbol>
-		<symbol id="down" viewbox="0 0 24 24">
-			<path d="M12 19V5M12 19L5 12M12 19L19 12" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
-		</symbol>
-		<symbol id="refresh" viewbox="0 0 24 24">
-			<path d="M12 7V12L15 15M1 11L3 13M3 13L5 11M3 13L3 12C3 7.02944 7.02944 3 12 3C14.6655 3 17.0604 4.15875 18.7083 6C18.8083 6.11174 18.9056 6.226 19 6.34266M19 13L21 11M21 11L23 13M21 11V12C21 16.9706 16.9706 21 12 21C9.17273 21 6.64996 19.6963 5 17.6573" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
-		</symbol>
-		<symbol id="plus" viewbox="0 0 24 24">
-			<path d="M12 5V19M5 12H19" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
-		</symbol>
-		<symbol id="between" viewbox="0 0 24 24">
-			<path d="M8.5 5H15.5M12 5V19M8.5 19H15.5" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
-		</symbol>
-		<symbol id="x" viewbox="0 0 24 24">
-			<path d="M6 6L18 18M6 18L18 6" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
-		</symbol>
-		<symbol id="edit" viewbox="0 0 24 24">
-			<path d="M3 21.0002H21M14.5 3.50023L4.5 13.5002L3.5 17.5002L7.5 16.5002L17.5 6.50023C18.3284 5.6718 18.3284 4.32865 17.5 3.50023C16.6716 2.6718 15.3284 2.6718 14.5 3.50023Z" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
-		</symbol>
-	</svg>
-	<template id="it-is-template-until-here">
-		<section>
-			<hgroup>
-				<h2>끾주차</h2>
-				<p><span class="weekspan"><time class="weekstart" datetime="2025-01-01">2025. 01. 01.</time> ~ <time class="weekstart" datetime="2025-01-07">2025. 01. 07.</time> <time class="weekwrite" datetime="2025-12-31T12:34">2025. 12. 31. (12:34) ~</time></span> · <data class="weekcode" value="277">277</data></p>
-			</hgroup>
-			<p>뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.<a id="a1" class="g" data-for="1">1</a></p>
-			<p>뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.<a id="a2000" class="w" data-for="2000">2000</a></p>
-			<hr>
-			<p>뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			<span class="wrapper">뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.<a class="add"></a></span>
-			<span class="wrapper">뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet<a class="add add1"></a>.</span>
-			<span class="wrapper">뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.<a class="add add3"></a></span>
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.<a class="ref w" data-for="2000">2000</a></p>
-			<p>뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.<a class="add"></a></p>
-
-			<h3>생각들</h3>
-
-			<p>뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.<a id="a1235" class="t" data-for="1235">1235 <time data-time="277277">12.34.</time></a></p>
-			<hr>
-			<p>뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
-			뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.<a id="a115" class="t" data-for="115">115 <time data-time="277277">12.34.</time></a></p>
-			<h3>정보</h3>
-			<figure>
-				<figcaption>이끾끼의 미래<a id="a5213" class="i" data-for="5213">5213</a></figcaption>
-				<iframe style="width: 100%; aspect-ratio: 16 / 9;" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=jsFtGCGhF5qoofuj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</figure>
-			<figure>
-				<figcaption>이끾끼의 미래<a id="a5214" class="i" data-for="5214">5214</a></figcaption>
-				<iframe style="width: 100%; aspect-ratio: 16 / 9;" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=jsFtGCGhF5qoofuj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-			</figure>
-		</section>
-		<section>
-			<hgroup>
-				<h2>이끾주차</h2>
-				<p><span class="weekspan"><time class="weekstart" datetime="2025-01-08">2025. 01. 08.</time> ~ <time class="weekstart" datetime="2025-01-14">2025. 01. 14.</time> <time class="weekwrite" datetime="2025-12-31T12:35">2025. 12. 31. (12:35) ~</time></span> · <data class="weekcode" value="278">278</data></p>
-			</hgroup>
-			<p><time data-time="272727">끾월 끾일 끾시경</time>, <data class="person" value="2203">2203</data>은 <b class="star">이끾끼</b>를 외쳤다<span class="wrapper">(<s>이끾끼</s> <strong>이끾끼</strong> <span class="wrapper">이<em>끾</em>끼<span class="qm"></span>)</span><a class="ref g" data-for="1">1</a></span>.
-				그러자, 옆에 있던 <data class="person" value="1234">1234</data>가 <q class="exact">나 <data class="person" value="1234">이이갸</data>가 곧 이끾끼다</q>라고 말했으며, <q><data class="person" value="1234">1234</data>를 숭배하지 않는 자들은 벌을 받을 것이</q>라고 주장했다.<!--
-			--><span class="wrapper">(이는 과학적으로 확인되지 않은<sup>이끾끼 연구소에서 현재 연구 진행 중</sup> 주장<sub>captain 아님<span class="namu"></s></sub>이다. <a class="add"></a><a class="add"></a><a class="add"></a><a class="add"></a><a class="add"></a>)</span></p>
-			<p>끾스크립트로 안녕하세요는 <data class="placeholder" value="dkssudgktpdy">끼족 끾스크립트: 안녕하세요</data>이다. 이런 걸 적으면 디지털화하는 미래의 내가 <span class="wrapper">좋아 <span class="wrapper">죽을<span class="qm" data-why="죽진 않나"></span></span> 것이다<s>이끾끼<span class="namu"></span></s><a class="ref s" data-for="11">11</a><a class="ref i" data-for="22">22</a><a class="ref t" data-for="33">33</a><a class="ref g" data-for="44">44</a><a class="ref w" data-for="55">55</a><a class="ref d" data-for="66">66</a></span>.<a id="a277" class="t" data-for="277">277</a></p>
-			<hr>
-			<p>이끾끼를 저끾끼하며, <span class="weekend">그렇게 이끾주차가 끝났다.</span></p>
-		</section>
-		<section>
-			<hgroup>
-				<h2>이르긲주차</h2>
-				<p><span class="weekspan"><time class="weekstart" datetime="2025-01-15">2025. 01. 15.</time> ~ <time class="weekstart" datetime="2025-01-21">2025. 01. 21.</time> <time class="weekwrite" datetime="2025-12-31T12:36">2025. 12. 31. (12:36) ~</time></span> · <data class="weekcode" value="279">279</data></p>
-			</hgroup>
-			<p id="new" contenteditable="plaintext-only">...</p>
-			<button id="addnew" type="button" onclick="add_p();">추가</button>
-		</section>
-	</template>
-	<template id="newweek">
-		<div class="cr_buttons cr_before">
-			<button class="cr_button loadbefore"><svg><use href="#up"></use></svg></button>
-			<button class="cr_button makebefore"><svg><use href="#plus"></use></svg></button>
-		</div>
-		<hgroup>
-			<slot id="weekname"></slot>
-			<p><span class="weekspan"><slot id="weekstart"></slot>&nbsp;~&nbsp;<slot id="weekend"></slot>&nbsp;<slot id="weekwrite"></slot></span>&nbsp;·&nbsp;<slot id="weekcode"></slot></p>
-		</hgroup>
-		<button class="to-top"><svg><use href="#up"></use></svg></button>
-		<div class="cr_buttons cr_after">
-			<button class="cr_button loadafter"><svg><use href="#down"></use></svg></button>
-			<button class="cr_button makeafter"><svg><use href="#plus"></use></svg></button>
-		</div>
-	</template>
-</body>
-</html>
+<main>
+	<section data-wid="1">
+		<p>뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.<data class="e g" id="a1" value="1">1</data></p>
+		<p>뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.<data class="e w" id="a2000" value="2000">2000</data></p>
+		<hr>
+		<p>뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		<span class="wrapper">뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.<data class="e add"></data></span>
+		<span class="wrapper">뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet<data class="e add add1"></data>.</span>
+		<span class="wrapper">뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.<data class="e add add3"></data></span>
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.<data class="e ref w" value="2000">2000</data></p>
+		<p>뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.<data class="e add"></data></p>
+		<h3>생각들</h3>
+		<p>뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.<data id="a1235" class="e t" value="1235">1235 <time data-time="277001" data-entry="1" datetime="2025-02-09T01:00">12.34.</time></data></p>
+		<hr>
+		<p>뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.
+		뤼엡 뷜리뷔아 뒤 쉬샤프라쉬스 미들륍 Lorem ipsum dolor sit emet.<data id="a115" class="e t" value="115">115 <time data-time="277002" data-entry="1" datetime="2025-02-09T02:00">12.34.</time></data></p>
+		<h3>정보</h3>
+		<figure>
+		<figcaption>이끾끼의 미래<data class="e i" id="a5213" value="5213">5213</data></figcaption>
+		<iframe style="width: 100%; aspect-ratio: 16 / 9;" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=jsFtGCGhF5qoofuj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		</figure>
+		<figure>
+		<figcaption>이끾끼의 미래<data class="e i" id="a5214" value="5214">5214</data></figcaption>
+		<iframe style="width: 100%; aspect-ratio: 16 / 9;" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=jsFtGCGhF5qoofuj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		</figure>
+	</section>
+	<section data-wid="5">
+		<p>이끾끼의 여정을 시작한 지 어언 975년, 드디어 이끾니티 스톤이 한 자리에 모였다.<data class="e s" id="a11" value="11">11</data><data class="e i" id="a2" value="22">22</data><data class="e t" id="a33" value="33">33</data><data class="e g" id="a44" value="44">44</data><data class="e w" id="a55" value="55">55</data><data class="e d" id="a66" value="66">66</data></p>
+	</section>
+	<section data-wid="2">
+		<p><time data-time="278026" data-entry="1" datetime="2025-02-17T02:00">끾월 끾일 끾시경</time>, <data class="person" value="2203" data-type="canon" data-name="김준섭">2203</data>은 <b class="star">이끾끼</b>를 외쳤다<span class="wrapper">(<s>이끾끼</s> <strong>이끾끼</strong> <span class="wrapper">이<em>끾</em>끼<span class="qm"></span>)</span><data class="e ref g" value="1">1</data></span>.
+		그러자, 옆에 있던 <data class="person" value="1234">1234</data>가 <q class="exact">나 <data class="person" value="1234" data-type="canon" data-name="이이갸">이이갸</data>가 곧 이끾끼다</q>라고 말했으며, <q><data class="person" value="1234">1234</data>를 숭배하지 않는 자들은 벌을 받을 것이</q>라고 주장했다.<!--
+		--><span class="wrapper">(이는 과학적으로 확인되지 않은<sup>이끾끼 연구소에서 현재 연구 진행 중</sup> 주장<sub>captain 아님<span class="namu"></s></sub>이다. <data class="e add"></data><data class="e add"></data><data class="e add"></data><data class="e add"></data><data class="e add"></data>)</span><data class="e g" id="a2" value="2">2</data></p>
+		<p>끾스크립트로 안녕하세요는 <data class="placeholder" value="dkssudgktpdy">끼족 끾스크립트: 안녕하세요</data>이다. 이런 걸 적으면 디지털화하는 미래의 내가 <span class="wrapper">좋아 <span class="wrapper">죽을<span class="qm" data-why="죽진 않나"></span></span> 것이다<s>이끾끼<span class="namu"></span></s><data class="e ref s" value="11">11</data><data class="e ref i" value="22">22</data><data class="e ref t" value="33">33</data><data class="e ref g" value="44">44</data><data class="e ref w" value="55">55</data><data class="e ref d" value="66">66</data></span>.<data class="e t" id="a277" value="277">277</data></p>
+		<hr>
+		<p>이끾끼를 저끾끼하며, <span class="weekend">그렇게 이끾주차가 끝났다.</span></p>
+	</section>
+</main>
