@@ -1,4 +1,4 @@
-import { fetchget } from '../../global/util.js';
+import { url, fetchget } from '../../global/util.js';
 
 export function sani(str) {
 	// 실수를 막는 거지 보안용은 아님
@@ -300,3 +300,6 @@ fetchget("/cycelog/weeks").then((res) => {
 		load_week(e);
 	}
 });
+$(":root").css("--print-title", `""`);
+$(":root").css("--server", `"${url()}"`);
+$(":root").css("--href", `"${window.location.href}"`);

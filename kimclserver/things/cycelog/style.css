@@ -321,3 +321,21 @@ del {
 .hidden {
 	display: none;
 }
+
+@media print {
+	body {
+		margin: 0 !important;
+		padding: 0 !important;
+	}
+	@page {
+		size: A4 !important;
+		margin: 12.5mm !important;
+		@top-left { font-family: 'Nanum Gothic Coding'; font-weight: bold; font-size: 0.8rem; content: '끾기록·cycelog'; margin-inline-start: -8mm; }
+		@top-right { font-family: 'Nanum Gothic Coding'; font-weight: bold; font-size: 0.8rem; content: "    " counter(page) "/" counter(pages); text-align: right; margin-inline-end: -8mm; }
+		@bottom-left { font-family: 'Nanum Gothic Coding'; font-weight: bold; font-size: 0.8rem; content: var(--server); margin-inline-start: -8mm; }
+		@bottom-right { font-family: 'Nanum Gothic Coding'; font-weight: bold; font-size: 0.8rem; content: var(--href); text-align: right; margin-inline-end: -8mm; }
+	}
+	h1 { margin-block-start: 0 !important; }
+	p { orphans: 2 !important; } /* i guess you have to not use Firefox when printing */
+	.cr_buttons, .cr_button, .cr_icons { display: none !important; }
+}
