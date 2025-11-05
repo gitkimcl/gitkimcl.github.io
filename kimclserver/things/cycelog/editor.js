@@ -28,6 +28,7 @@ function error() {
 }
 
 // edit
+
 const s = window.getSelection();
 function input(e) {
 	/*console.log(e.originalEvent.key);
@@ -39,7 +40,7 @@ function input(e) {
 	}
 	if (e.originalEvent.key === "Enter") {
 		if (confirm("문단을 추가하시겠습니까?")) {
-			add_p();
+			(d$("newicons").classList.contains("editnewicons"))?edit_p():add_p();
 			e.preventDefault();
 		}
 	}
@@ -48,7 +49,7 @@ function input(e) {
 		$(".edit-inside").get(0).blur();
 		$("#new").html($("#new").html().replace("&nbsp;"," "));
 		s.removeAllRanges();
-		$("#new").attr("contenteditable", "true");
+		$("#new").attr("contenteditable", "plaintext-only");
 		move_cursor_to($(".edit-inside"),1);
 		$(".edit-inside").remove();
 		e.preventDefault();
@@ -270,14 +271,6 @@ aft:if (s.anchorNode.nodeType !== Node.TEXT_NODE || s.anchorOffset === 0) {
 		if (!n || !n.classList?.contains("editable")) break aft;
 		$(n).addClass("cafter");
 	}
-	$("#new br").remove(); // 강제 개행 ㄴㄴ염 + <br> 때매 생기는 버그가 좀 있음
-	$("#new div:not(.cr_icons)").remove(); // div가 왜 생김????
-	$("#new *[style], #new font").each(function () { // chrome -- 복붙하면 스타일도 적용됨
-		let le = this.lastChild;
-		$(this).replaceWith($(this).contents());
-		s.removeAllRanges();
-		s.setPosition(le,(le.nodeType === Node.TEXT_NODE) ? le.textContent.length : le.childNodes.length);
-	});
 }
 $(document).on("selectionchange", cursor);
 $("#new").on("focus", cursor);
@@ -288,7 +281,7 @@ function edit_inside(e) {
 	$(".edit-inside").off("blur");
 	$(".edit-inside").attr("contenteditable", "false");
 	$(".edit-inside").removeClass("edit-inside");
-	$(e).attr("contenteditable", "true");
+	$(e).attr("contenteditable", "plaintext-only");
 	$(e).addClass("edit-inside");
 	$(e).on("blur", ()=>cancel_edit_inside(false));
 	e.focus();
@@ -301,7 +294,7 @@ function cancel_edit_inside(parent,right) {
 	$("#new").html($("#new").html().replace("&nbsp;"," ").replace("\uFFFC"," "));
 	s.removeAllRanges();
 	if (!parent) {
-		$("#new").attr("contenteditable", "true");
+		$("#new").attr("contenteditable", "plaintext-only");
 		move_cursor_to($(".edit-inside"),1);
 		$(".edit-inside").removeClass("edit-inside");
 		return;
@@ -310,7 +303,7 @@ function cancel_edit_inside(parent,right) {
 	move_cursor_to($(".edit-inside"),(right?1:0));
 	$(".edit-inside").removeClass("edit-inside");
 	if (p.id === "new") {
-		$("#new").attr("contenteditable", "true");
+		$("#new").attr("contenteditable", "plaintext-only");
 		p.focus();
 		return;
 	}
@@ -420,7 +413,7 @@ function cmd_time(cmd1, cmd2) {
 		if (entry === null) ins = $(`<time id="datetime_pending" class="block" data-time="${data}">${cmd2.length?'':'...'}</time>`);
 		else ins = $(`<time id="datetime_pending" class="block" data-time="${data}" data-entry="${entry}">${cmd2.length?'':'...'}</time>`);
 		fetchget(`/cycelog/find/datetime?timestamp=${data}`).then((res) => {
-			if (!cmd2.length) $("#datetime_pending").text(format_date(res, incl_time, incl_year));
+			if (!cmd2.length) $("#datetime_pending").text(format_date(res, incl_time, !incl_year));
 			$("#datetime_pending").attr("datetime",res).removeClass("block").attr("id",null);
 		}).catch(() => {
 			$("#datetime_pending").replaceWith($(`<span class="error block" contenteditable="false">오류</span>`));
@@ -540,6 +533,12 @@ $("#new").on("click", (e) => {
 
 // sorry safari but I don't think I can support you
 
+function p_icons() {
+	let id = parseInt($(this).attr("data-pid"));
+	return $(`<div class="cr_icons">`).append($(`<button class="cr_icon delete"><svg><use href="#trash"></use></svg></button>`).on("click", function () { delete_p(id); }))
+		.append($(`<button class="cr_icon edit"><svg><use href="#edit"></use></svg></button>`).on("click", () => start_edit(id)))
+		.append($(`<button class="cr_icon insert"><svg><use href="#down"></use></svg></button>`).on("click", () => start_new(id)));
+}
 
 function cr_onloadweek(el) {
 	if ($("#new", el).length) {
@@ -556,11 +555,7 @@ function cr_onloadweek(el) {
 	$("hr", el).replaceWith(function () {
 		return $(`<p class="p htmlp" data-pid="${this.attributes['data-pid'].value}"><br></p>`);
 	})
-	$(".p", el).prepend(function () {
-		let id = parseInt($(this).attr("data-pid"));
-		return $(`<div class="cr_icons">`).append($(`<button class="cr_icon delete"><svg><use href="#trash"></use></svg></button>`).on("click", function () { delete_p(this, id); }))
-			.append($(`<button class="cr_icon insert"><svg><use href="#down"></use></svg></button>`).on("click", () => start_new(id)));
-	});
+	$(".p", el).prepend(p_icons);
 	let ord = parseInt(el.attr("data-order"));
 	$(".makebefore", el).on("click", function() { add_week(ord-1); });
 	$(".makeafter", el).on("click", function() { add_week(ord+1); });
@@ -648,11 +643,7 @@ export function add_p() {
 		if (np.get(0).tagName === "HR") np = get_p(e.id, "<br>").addClass("htmlp");
 		deco(np);
 		$("#new", p).before(np);
-		np.prepend($(`<div class="cr_icons">`)
-			.append($(`<button class="cr_icon delete"><svg><use href="#trash"></use></svg></button>`)
-				.on("click", function () { delete_p(this, e.id); }))
-			.append($(`<button class="cr_icon insert"><svg><use href="#down"></use></svg></button>`)
-				.on("click", () => start_new(e.id))));
+		np.prepend(p_icons);
 		$("#new").replaceWith($(`<p id="new" data-isafter="${np.attr("data-pid")}" contenteditable="plaintext-only">`)
 			.on("keydown", input));
 		$("#new").before($("#newicons"));
@@ -664,6 +655,39 @@ export function add_p() {
 	});
 }
 window.add_p = add_p;
+
+export function edit_p() {
+	if ($("#new .block").length) {
+		error();
+		return;
+	}
+
+	let np = $("#new").clone().attr("id",null).attr("class",null).attr("data-isafter",null).attr("style",null);
+	$("*", np).attr("contenteditable", null);
+	$("*", np).removeClass("editable").removeClass("edit-inside");
+	$("*", np).removeClass("cbefore").removeClass("cafter");
+	$("*[class=\"\"]", np).attr("class", null);
+	np.html($(np).html().replace("&nbsp;"," "));
+	np.get(0).normalize();
+	let body = get_body(np);
+	body.id = $("#new").attr("data-isafter");
+	console.log(body);
+	fetchbody("/cycelog/p","PUT",body).then((e) => {
+		console.log(e);
+		let np = get_p(e.id, e.content);
+		if (np.get(0).tagName === "HR") np = get_p(e.id, "<br>").addClass("htmlp");
+		deco(np);
+		$(`.p[data-pid=${e.id}]`).replaceWith(np);
+		np.prepend(p_icons);
+		$("#new").replaceWith($(`<p id="new" data-isafter="${np.attr("data-pid")}" contenteditable="plaintext-only">`)
+			.on("keydown", input));
+		$("#new").before($("#newicons"));
+		$("#new").get(0).focus();
+	}).catch((res) => {
+		alert(`문단 수정 실패: ${res}`);
+	});
+}
+window.edit_p = edit_p;
 
 function get_body(el) {
 	let entries = [];
@@ -691,7 +715,13 @@ function get_body(el) {
 	}
 
 	let refs = [];
-	for (let e of $(".e.ref",el).get()) refs.push({ref_id: parseInt(e.attributes['value'].value)});
+	let rtmp = [];
+	for (let e of $(".e.ref",el).get()) {
+		let rid = parseInt(e.attributes['value'].value);
+		if (rtmp.includes(rid)) continue;
+		refs.push({ref_id: rid});
+		rtmp.push(rid);
+	};
 
 	let people = [];
 	let ptmp = {}
@@ -714,7 +744,7 @@ function get_body(el) {
 			for (let e of v.aliases) people.push({code: k, name: e, is_canon: false});
 		}
 	}
-	$("*", el).attr("data-entry", null).attr("data-type", null).attr("data-name", null);
+	$("*", el).attr("data-type", null).attr("data-name", null);
 
 	let content = (el.get(0).tagName === "P") ? el.get(0).innerHTML : "<!--OUTER-->"+el.get(0).outerHTML;
 	if (!content.length) content = "<!--OUTER--><hr>";
@@ -722,14 +752,13 @@ function get_body(el) {
 	return {entries: entries, refs: refs, people: people, content: content.replace(/\s+/g, " "), textcontent: textcontent.replace(/\s+/g, " ")};
 }
 
-function delete_p(el, id) {
+function delete_p(id) {
 	if (!confirm("이 문단을 삭제하겠습니까?")) return;
 	fetchbody("/cycelog/p", "DELETE", {
 		id: id
 	}).then((res) => {
 		console.log(res);
 		$(`.p[data-pid=${id}]`).remove();
-		el.parentElement.remove();
 	}).catch((res) => {
 		reload_week($(`.p[data-pid=${id}]`).parent().attr("data-wid"));
 		alert(`문단 삭제 실패: ${res}`);
@@ -767,6 +796,28 @@ function start_new(id, head) {
 	}
 	n.before($(`<div class="cr_icons" id="newicons">`).append($(`<button class="cr_icon cancel"><svg><use href="#x"></use></svg></button>`).on("click", () => cancel_new()))
 		.append($(`<button class="cr_icon insert"><svg><use href="#plus"></use></svg></button>`).on("click", () => add_p())));
+	$("#new").get(0).scrollIntoView({block: "nearest"});
+	$("#new").get(0).focus();
+}
+
+async function start_edit(id) {
+	if (!cancel_new()) return;
+	if ($(`.p[data-pid=${id}]`).hasClass("htmlp")) {
+		alert("이 문단은 편집할 수 없습니다.");
+		return;
+	}
+	let n = $(`<p id="new" contenteditable="plaintext-only" data-isafter="${id}"></p>`).on("keydown", input);
+	$(`.p[data-pid=${id}]`).after(n);
+	n.before($(`<div class="cr_icons editnewicons" id="newicons">`).append($(`<button class="cr_icon cancel"><svg><use href="#x"></use></svg></button>`).on("click", () => cancel_new()))
+		.append($(`<button class="cr_icon edit"><svg><use href="#up"></use></svg></button>`).on("click", () => edit_p())));
+	let orig = (await fetchget(`/cycelog/p?id=${id}`)).content;
+	n.html(orig);
+	$("data, time, span.qm", n).on("click", (e) => {
+		attach_dialog(e.currentTarget, e.clientY);
+		e.stopPropagation();
+	});
+	$("*", n).attr("contenteditable", "false");
+	$("*:not(span.namu, span.end, .e.add, span.qm)", n).addClass("editable");
 	$("#new").get(0).scrollIntoView({block: "nearest"});
 	$("#new").get(0).focus();
 }

@@ -31,7 +31,7 @@ span.error {
 	text-decoration: wavy red underline;
 }
 
-:is(.cbefore, .cafter, .edit-inside):not(a) {
+:is(.cbefore, .cafter, .edit-inside):not(.e) {
 	border-radius: 0.2em;
 	padding: 0.05em;
 	margin: -0.05em;
@@ -101,15 +101,22 @@ h2, .p {
 	--w: 0.1ic;
 }
 
-.delete { --cbd: var(--c-gray1); }
-.delete:is(:hover,:focus) { --cbd: var(--c-r-border); }
-.delete:active { --cbd: var(--c-r-bordera); }
-.insert { --cbd: var(--c-gray1); }
-.insert:is(:hover,:focus) { --cbd: var(--c-g-border); }
-.insert:active { --cbd: var(--c-g-bordera); }
-.cancel { --cbd: var(--c-gray1); }
-.cancel:is(:hover,:focus) { --cbd: var(--c-o-border); }
-.cancel:active { --cbd: var(--c-o-bordera); }
-.refresh { --cbd: var(--c-gray1); }
-.refresh:is(:hover,:focus) { --cbd: var(--c-y-border); }
-.refresh:active { --cbd: var(--c-y-bordera); }
+.delete { --cbd: var(--c-gray2); }
+.delete:is(:hover,:focus-visible) { --cbd: var(--c-r-text); }
+.delete:active { --cbd: var(--c-r-texta); }
+.insert { --cbd: var(--c-gray2); }
+.insert:is(:hover,:focus-visible) { --cbd: var(--c-g-text); }
+.insert:active { --cbd: var(--c-g-texta); }
+.cancel { --cbd: var(--c-gray2); }
+.cancel:is(:hover,:focus-visible) { --cbd: var(--c-o-text); }
+.cancel:active { --cbd: var(--c-o-texta); }
+.refresh { --cbd: var(--c-gray2); }
+.refresh:is(:hover,:focus-visible) { --cbd: var(--c-y-text); }
+.refresh:active { --cbd: var(--c-y-texta); }
+.edit { --cbd: var(--c-gray2); }
+.edit:is(:hover,:focus-visible) { --cbd: var(--c-p-text); }
+.edit:active { --cbd: var(--c-p-texta); }
+
+p:has( + .editnewicons) {
+	opacity: 0.6;
+}

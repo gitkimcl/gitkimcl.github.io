@@ -284,10 +284,10 @@ export function get_p(id, content) {
 	return $(`<p class="p" data-pid="${id}">${content}</p>`);
 }
 
-export function format_date(d, time, year) {
+export function format_date(d, time, noyear) {
 	// TODO
 	let da = new Date(d);
-	return `${year ? `${da.getFullYear().toString().padStart(4,"0")}. ` : ''}${(da.getMonth()+1).toString().padStart(2,"0")}. ${da.getDate().toString().padStart(2,"0")}.${time ? ` (${da.getHours().toString().padStart(2,"0")}:${da.getMinutes().toString().padStart(2,"0")})` : ''}`;
+	return `${noyear ? '' : `${da.getFullYear().toString().padStart(4,"0")}. `}${(da.getMonth()+1).toString().padStart(2,"0")}. ${da.getDate().toString().padStart(2,"0")}.${time ? ` (${da.getHours().toString().padStart(2,"0")}:${da.getMinutes().toString().padStart(2,"0")})` : ''}`;
 }
 
 var init_weeks = -1
