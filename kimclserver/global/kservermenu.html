@@ -21,13 +21,13 @@
 				z-index: 5000;
 				padding: 0;
 				border-radius: 5.6px;
-				background-color: var(--color);
+				background-color: var(--i);
 				cursor: pointer;
 				transition: width 0.2s, height 0.2s, background-color 0.2s;
 			}
 			#ks_button:hover, #ks_button:focus { width: 42px; height: 42px; }
-			#ks_button:hover { background-color: var(--colorh); }
-			#ks_button:active { background-color: var(--colora); transition: width 0.2s, height 0.2s; }
+			#ks_button:hover { background-color: var(--ih); }
+			#ks_button:active { background-color: var(--ia); transition: width 0.2s, height 0.2s; }
 
 			#ks_button:before {
 				content: '';
@@ -136,7 +136,7 @@
 			#ks_main.hidden { opacity: 0; visibility: hidden; }
 			#ks_main .hidden { display: none; }
 		</style>
-		<div id="ks_menu" role="menu" style="--color: var(--c-o-text); --colorh: var(--c-o-texth); --colora: var(--c-o-texta);">
+		<div id="ks_menu" role="menu" style="--c: var(--c-2-c); --ch: var(--c-2-ch); --ca: var(--c-2-ca); --i: var(--c-2-i2); --ih: var(--c-2-i3); --ia: var(--c-2-i4);">
 			<button id="ks_button" role="menuitem" type="button" title="서버 메뉴 열기"></button>
 			<div id="ks_main" class="hidden">
 				<div id="ks_flex">
@@ -150,7 +150,7 @@
 						<span class="ks_dim">주소:</span>
 						<span id="ks_url"></span>
 					</div>
-					<div class="ks_row" style="color: var(--color);">
+					<div class="ks_row" style="color: var(--c);">
 						<span class="ks_dim"><span id="ks_status">연결중</span> · 핑 <span id="ks_ping">---</span></span>
 						<button type="submit" id="ks_refresh">새로고침</button>
 					</div>
@@ -222,14 +222,17 @@
 			}
 
 			function setColor(c) {
-				$("ks_menu",sr).style.setProperty('--color',`var(--c-${c}-text)`);
-				$("ks_menu",sr).style.setProperty('--colorh',`var(--c-${c}-texth)`);
-				$("ks_menu",sr).style.setProperty('--colora',`var(--c-${c}-texta)`);
+				$("ks_menu",sr).style.setProperty('--c',`var(--c-${c}-c)`);
+				$("ks_menu",sr).style.setProperty('--ch',`var(--c-${c}-ch)`);
+				$("ks_menu",sr).style.setProperty('--ca',`var(--c-${c}-ca)`);
+				$("ks_menu",sr).style.setProperty('--i',`var(--c-${c}-i2)`);
+				$("ks_menu",sr).style.setProperty('--ih',`var(--c-${c}-i3)`);
+				$("ks_menu",sr).style.setProperty('--ia',`var(--c-${c}-i4)`);
 			}
 
 			function updatestate() {
 				if (url() == null) {
-					setColor("w");
+					setColor("0");
 					$("ks_status",sr).textContent = "서버 없음";
 					$("ks_ping",sr).textContent = "---";
 					$("ks_hide",sr).classList.add("invis");
@@ -237,7 +240,7 @@
 					return;
 				}
 				if (!connected) {
-					setColor("r");
+					setColor("1");
 					$("ks_status",sr).textContent = "연결 실패";
 					$("ks_ping",sr).textContent = "---";
 					$("ks_hide",sr).classList.add("invis");
@@ -245,13 +248,13 @@
 					return;
 				}
 				if (localStorage.getItem("server.loginid")) {
-					setColor((ping<=500)?"p":"y");
+					setColor((ping<=500)?"8":"3");
 					$("ks_status",sr).textContent = "로그인됨";
 					$("ks_ping",sr).textContent = `${ping}ms`;
 					$("ks_hide",sr).classList.remove("invis");
 					return;
 				}
-				setColor((ping<=500)?"g":"y");
+				setColor((ping<=500)?"4":"3");
 				$("ks_status",sr).textContent = "연결됨";
 				$("ks_ping",sr).textContent = `${ping}ms`;
 				$("ks_hide",sr).classList.remove("invis");

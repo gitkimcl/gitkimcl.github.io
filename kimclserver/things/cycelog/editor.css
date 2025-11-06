@@ -1,5 +1,5 @@
 #new {
-	outline: 1px solid var(--c-w-border);
+	outline: 1px solid var(--c-0-bd);
 	min-height: 1lh;
 }
 #new:has( .edit-inside) { outline-style: auto; }
@@ -23,8 +23,8 @@
 #new span.qm::after { content: '?'; }
 
 span.error {
-	color: var(--c-r-text);
-	background-color: var(--c-r-bg);
+	color: var(--c-1-c);
+	background-color: var(--c-1-bg);
 }
 
 .block {
@@ -41,32 +41,32 @@ span.error {
 .cafter { outline: 1px dotted var(--c-text); }
 
 .edit-inside {
-	color: var(--c-y-text);
-	background-color: var(--c-y-bg);
-	outline: 1px solid var(--c-y-border);
+	color: var(--c-3-c);
+	background-color: var(--c-3-bg);
+	outline: 1px solid var(--c-3-bd);
 }
 
 .wrapper.edit-inside {
-	color: var(--c-b-text);
-	background-color: var(--c-b-bg);
-	outline: 1px solid var(--c-b-border);
+	color: var(--c-7-c);
+	background-color: var(--c-7-bg);
+	outline: 1px solid var(--c-7-bd);
 }
 
 @keyframes error-flash {
-	from { box-shadow: 0 0 0 0.5em oklch(from var(--c-r-bga) l c h / 50%); background-color: oklch(from var(--c-r-bga) l c h / 50%); }
+	from { box-shadow: 0 0 0 0.5em oklch(from var(--c-1-bga) l c h / 50%); background-color: oklch(from var(--c-1-bga) l c h / 50%); }
 	to { box-shadow: 0 0 0 0.5em transparent; background-color: transparent; }
 }
 
-.makebefore, .makeafter { --cbd: var(--c-g-border); }
-:is(.makebefore, .makeafter):hover { --cbd: var(--c-g-borderh); }
-:is(.makebefore, .makeafter):active { --cbd: var(--c-g-bordera); }
+.makebefore, .makeafter { --cbd: var(--c-5-bd); }
+:is(.makebefore, .makeafter):hover { --cbd: var(--c-5-bdh); }
+:is(.makebefore, .makeafter):active { --cbd: var(--c-5-bda); }
 
 .makebefore, .makeafter { display: none; }
 .loadnothing + :is(.makebefore, .makeafter) { display: unset; }
 
-.maketest { --cbd: var(--c-p-border); }
-.maketest:hover { --cbd: var(--c-p-borderh); }
-.maketest:active { --cbd: var(--c-p-bordera); }
+.maketest { --cbd: var(--c-8-bd); }
+.maketest:hover { --cbd: var(--c-8-bdh); }
+.maketest:active { --cbd: var(--c-8-bda); }
 .maketest::before {
 	clip-path: polygon(0 0, 100% 0, 100% 16%, 58% 16%, 58% 100%, 42% 100%, 42% 16%, 0 16%);
 }
@@ -102,20 +102,20 @@ h2, .p {
 }
 
 .delete { --cbd: var(--c-gray2); }
-.delete:is(:hover,:focus-visible) { --cbd: var(--c-r-text); }
-.delete:active { --cbd: var(--c-r-texta); }
+.delete:is(:hover,:focus-visible) { --cbd: var(--c-1-c); }
+.delete:active { --cbd: var(--c-1-ca); }
 .insert { --cbd: var(--c-gray2); }
-.insert:is(:hover,:focus-visible) { --cbd: var(--c-g-text); }
-.insert:active { --cbd: var(--c-g-texta); }
+.insert:is(:hover,:focus-visible) { --cbd: var(--c-5-c); }
+.insert:active { --cbd: var(--c-5-ca); }
 .cancel { --cbd: var(--c-gray2); }
-.cancel:is(:hover,:focus-visible) { --cbd: var(--c-o-text); }
-.cancel:active { --cbd: var(--c-o-texta); }
+.cancel:is(:hover,:focus-visible) { --cbd: var(--c-2-c); }
+.cancel:active { --cbd: var(--c-2-ca); }
 .refresh { --cbd: var(--c-gray2); }
-.refresh:is(:hover,:focus-visible) { --cbd: var(--c-y-text); }
-.refresh:active { --cbd: var(--c-y-texta); }
+.refresh:is(:hover,:focus-visible) { --cbd: var(--c-3-c); }
+.refresh:active { --cbd: var(--c-3-ca); }
 .edit { --cbd: var(--c-gray2); }
-.edit:is(:hover,:focus-visible) { --cbd: var(--c-p-text); }
-.edit:active { --cbd: var(--c-p-texta); }
+.edit:is(:hover,:focus-visible) { --cbd: var(--c-8-c); }
+.edit:active { --cbd: var(--c-8-ca); }
 
 p:has( + .editnewicons) {
 	opacity: 0.6;

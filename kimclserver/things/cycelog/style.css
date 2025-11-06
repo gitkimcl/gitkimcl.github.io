@@ -65,27 +65,28 @@ hr {
 	opacity: 0.85;
 }
 
-.e.add { --bg: var(--c-w-bg); --bd: var(--c-w-border); --c: var(--c-w-text);
-	--bgh: var(--c-w-bgh); --bdh: var(--c-w-borderh); --ch: var(--c-w-texth);
-	--bga: var(--c-w-bga); --bda: var(--c-w-bordera); --ca: var(--c-w-texta); }
-.e.w { --bg: var(--c-b-bg); --bd: var(--c-b-border); --c: var(--c-b-text);
-	--bgh: var(--c-b-bgh); --bdh: var(--c-b-borderh); --ch: var(--c-b-texth);
-	--bga: var(--c-b-bga); --bda: var(--c-b-bordera); --ca: var(--c-b-texta); }
-.e.d { --bg: var(--c-p-bg); --bd: var(--c-p-border); --c: var(--c-p-text);
-	--bgh: var(--c-p-bgh); --bdh: var(--c-p-borderh); --ch: var(--c-p-texth);
-	--bga: var(--c-p-bga); --bda: var(--c-p-bordera); --ca: var(--c-p-texta); }
-.e.s { --bg: var(--c-r-bg); --bd: var(--c-r-border); --c: var(--c-r-text);
-	--bgh: var(--c-r-bgh); --bdh: var(--c-r-borderh); --ch: var(--c-r-texth);
-	--bga: var(--c-r-bga); --bda: var(--c-r-bordera); --ca: var(--c-r-texta); }
-.e.i { --bg: var(--c-o-bg); --bd: var(--c-o-border); --c: var(--c-o-text);
-	--bgh: var(--c-o-bgh); --bdh: var(--c-o-borderh); --ch: var(--c-o-texth);
-	--bga: var(--c-o-bga); --bda: var(--c-o-bordera); --ca: var(--c-o-texta); }
-.e.t { --bg: var(--c-y-bg); --bd: var(--c-y-border); --c: var(--c-y-text);
-	--bgh: var(--c-y-bgh); --bdh: var(--c-y-borderh); --ch: var(--c-y-texth);
-	--bga: var(--c-y-bga); --bda: var(--c-y-bordera); --ca: var(--c-y-texta); }
-.e.g { --bg: var(--c-g-bg); --bd: var(--c-g-border); --c: var(--c-g-text);
-	--bgh: var(--c-g-bgh); --bdh: var(--c-g-borderh); --ch: var(--c-g-texth);
-	--bga: var(--c-g-bga); --bda: var(--c-g-bordera); --ca: var(--c-g-texta); }
+.e.add { --bg: var(--c-0-bg); --bd: var(--c-0-bd); --c: var(--c-0-c);
+	--bgh: var(--c-0-bgh); --bdh: var(--c-0-bdh); --ch: var(--c-0-ch);
+	--bga: var(--c-0-bga); --bda: var(--c-0-bda); --ca: var(--c-0-ca); }
+/* 6.8 */
+.e.w { --bg: color-mix(in oklch, var(--c-6-bg), var(--c-7-bg) 80%); --bd: color-mix(in oklch, var(--c-6-bd), var(--c-7-bd) 80%); --c: color-mix(in oklch, var(--c-6-c), var(--c-7-c) 80%);
+	--bgh: color-mix(in oklch, var(--c-6-bgh), var(--c-7-bgh) 80%); --bdh: color-mix(in oklch, var(--c-6-bdh), var(--c-7-bdh) 80%); --ch: color-mix(in oklch, var(--c-6-ch), var(--c-7-ch) 80%);
+	--bga: color-mix(in oklch, var(--c-6-bga), var(--c-7-bga) 80%); --bda: color-mix(in oklch, var(--c-6-bda), var(--c-7-bda) 80%); --ca: color-mix(in oklch, var(--c-6-ca), var(--c-7-ca) 80%); }
+.e.d { --bg: var(--c-8-bg); --bd: var(--c-8-bd); --c: var(--c-8-c);
+	--bgh: var(--c-8-bgh); --bdh: var(--c-8-bdh); --ch: var(--c-8-ch);
+	--bga: var(--c-8-bga); --bda: var(--c-8-bda); --ca: var(--c-8-ca); }
+.e.s { --bg: var(--c-1-bg); --bd: var(--c-1-bd); --c: var(--c-1-c);
+	--bgh: var(--c-1-bgh); --bdh: var(--c-1-bdh); --ch: var(--c-1-ch);
+	--bga: var(--c-1-bga); --bda: var(--c-1-bda); --ca: var(--c-1-ca); }
+.e.i { --bg: var(--c-2-bg); --bd: var(--c-2-bd); --c: var(--c-2-c);
+	--bgh: var(--c-2-bgh); --bdh: var(--c-2-bdh); --ch: var(--c-2-ch);
+	--bga: var(--c-2-bga); --bda: var(--c-2-bda); --ca: var(--c-2-ca); }
+.e.t { --bg: var(--c-3-bg); --bd: var(--c-3-bd); --c: var(--c-3-c);
+	--bgh: var(--c-3-bgh); --bdh: var(--c-3-bdh); --ch: var(--c-3-ch);
+	--bga: var(--c-3-bga); --bda: var(--c-3-bda); --ca: var(--c-3-ca); }
+.e.g { --bg: var(--c-5-bg); --bd: var(--c-5-bd); --c: var(--c-5-c);
+	--bgh: var(--c-5-bgh); --bdh: var(--c-5-bdh); --ch: var(--c-5-ch);
+	--bga: var(--c-5-bga); --bda: var(--c-5-bda); --ca: var(--c-5-ca); }
 
 .e.add > .before {
 	opacity: 1;
@@ -102,8 +103,8 @@ data.placeholder {
 	font-family: 'Nanum Gothic Coding';
 	font-weight: bold;
 	font-size: 0.85em;
-	background: var(--c-w-bg);
-	--bg: var(--c-w-bg);
+	background: var(--c-0-bg);
+	--bg: var(--c-0-bg);
 	box-shadow: inset 0 0 0 1px var(--c-text);
 	padding-inline: 0.25em;
 	padding-block: 0.15em;
@@ -127,13 +128,13 @@ span.wrapper:has( > :is(.e, span.qm):is(:hover, .selected)) {
 	outline: 1px solid var(--bd);
 }
 
-span.wrapper:has( > .add:is(:hover, .selected)) { --c: var(--c-w-text); --bg: var(--c-w-bg); --bd: var(--c-w-border); }
-span.wrapper:has( > .w:is(:hover, .selected)) { --c: var(--c-b-text); --bg: var(--c-b-bg); --bd: var(--c-b-border); }
-span.wrapper:has( > .d:is(:hover, .selected)) { --c: var(--c-p-text); --bg: var(--c-p-bg); --bd: var(--c-p-border); }
-span.wrapper:has( > .s:is(:hover, .selected)) { --c: var(--c-r-text); --bg: var(--c-r-bg); --bd: var(--c-r-border); }
-span.wrapper:has( > .i:is(:hover, .selected)) { --c: var(--c-o-text); --bg: var(--c-o-bg); --bd: var(--c-o-border); }
-span.wrapper:has( > .t:is(:hover, .selected)) { --c: var(--c-y-text); --bg: var(--c-y-bg); --bd: var(--c-y-border); }
-span.wrapper:has( > .g:is(:hover, .selected)) { --c: var(--c-g-text); --bg: var(--c-g-bg); --bd: var(--c-g-border); }
+span.wrapper:has( > .add:is(:hover, .selected)) { --c: var(--c-0-c); --bg: var(--c-0-bg); --bd: var(--c-0-bd); }
+span.wrapper:has( > .w:is(:hover, .selected)) { --c: color-mix(in oklch, var(--c-6-c), var(--c-7-c) 80%); --bg: color-mix(in oklch, var(--c-6-bg), var(--c-7-bg) 80%); --bd: color-mix(in oklch, var(--c-6-bd), var(--c-7-bd) 80%); }
+span.wrapper:has( > .d:is(:hover, .selected)) { --c: var(--c-8-c); --bg: var(--c-8-bg); --bd: var(--c-8-bd); }
+span.wrapper:has( > .s:is(:hover, .selected)) { --c: var(--c-1-c); --bg: var(--c-1-bg); --bd: var(--c-1-bd); }
+span.wrapper:has( > .i:is(:hover, .selected)) { --c: var(--c-2-c); --bg: var(--c-2-bg); --bd: var(--c-2-bd); }
+span.wrapper:has( > .t:is(:hover, .selected)) { --c: var(--c-3-c); --bg: var(--c-3-bg); --bd: var(--c-3-bd); }
+span.wrapper:has( > .g:is(:hover, .selected)) { --c: var(--c-5-c); --bg: var(--c-5-bg); --bd: var(--c-5-bd); }
 
 sup {
 	vertical-align: text-top;
@@ -165,7 +166,7 @@ span.weekspan {
 }
 
 time.weekwrite {
-	color: var(--c-w-text);
+	color: var(--c-0-c);
 }
 
 data.weekcode {
@@ -197,8 +198,8 @@ dialog {
 	--c: var(--c-text);
 	--bd: var(--c-text);
 	--bg: var(--c-bg);
-	--bgh: var(--c-w-bg);
-	--bga: var(--c-w-bgh);
+	--bgh: var(--c-0-bg);
+	--bga: var(--c-0-bgh);
 	color: var(--c);
 	inline-size: max-content;
 	max-inline-size: 60vi;
@@ -260,13 +261,13 @@ dialog button:active {
 	height: 4rem;
 	padding: 0.25rem;
 	border-radius: 2rem;
-	--cbd: var(--c-b-border);
+	--cbd: var(--c-7-bd);
 	border: 4px solid transparent;
 	background: none;
 	position: relative;
 }
-.cr_button:hover { --cbd: var(--c-b-borderh); }
-.cr_button:active { --cbd: var(--c-b-bordera); }
+.cr_button:hover { --cbd: var(--c-7-bdh); }
+.cr_button:active { --cbd: var(--c-7-bda); }
 
 .cr_button svg {
 	width: 100%;
@@ -275,9 +276,9 @@ dialog button:active {
 	--w: 4px;
 }
 
-.loadnothing { --cbd: var(--c-r-border); }
-.loadnothing:hover { --cbd: var(--c-r-border); }
-.loadnothing:active { --cbd: var(--c-r-border); }
+.loadnothing { --cbd: var(--c-1-bd); }
+.loadnothing:hover { --cbd: var(--c-1-bd); }
+.loadnothing:active { --cbd: var(--c-1-bd); }
 
 section {
 	border-radius: 0.25em;
@@ -296,11 +297,11 @@ section {
 	border-radius: 50%;
 	background: none;
 	border: 4px solid transparent;
-	--cbd: var(--c-w-border);
+	--cbd: var(--c-0-bd);
 	transform: translate(3.5rem, -2rem);
 }
-.to-top:hover { --cbd: var(--c-w-borderh); }
-.to-top:active { --cbd: var(--c-w-bordera); }
+.to-top:hover { --cbd: var(--c-0-bdh); }
+.to-top:active { --cbd: var(--c-0-bda); }
 
 .to-top > svg {
 	width: 100%;
@@ -310,12 +311,12 @@ section {
 }
 
 ins {
-	background-color: var(--c-r-bgh);
-	color: var(--c-r-text);
+	background-color: var(--c-1-bgh);
+	color: var(--c-1-c);
 }
 
 del {
-	color: var(--c-gray6);
+	color: var(--c-gray7);
 }
 
 .hidden {

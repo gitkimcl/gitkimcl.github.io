@@ -127,10 +127,10 @@ a { text-decoration: none; font-weight: 600; }
 	--dglow2: var(--dglow);
 	--dglow3: var(--dglow);
 	--dglow4: var(--dglow);
-	--glow1: light-dark(oklch(from var(--dglow1) calc(1.185 - l) c h / calc(0.9 * alpha)),var(--dglow1)); /* 1.185 = 98.5% + 30% */
-	--glow2: light-dark(oklch(from var(--dglow2) calc(1.185 - l) c h / calc(0.9 * alpha)),var(--dglow2));
-	--glow3: light-dark(oklch(from var(--dglow3) calc(1.185 - l) c h / calc(0.9 * alpha)),var(--dglow3));
-	--glow4: light-dark(oklch(from var(--dglow4) calc(1.185 - l) c h / calc(0.9 * alpha)),var(--dglow4));
+	--glow1: light-dark(oklch(from var(--dglow1) calc(1.235 - l) c h / calc(0.9 * alpha)),var(--dglow1)); /* 1.235 = 98.5% + 25% */
+	--glow2: light-dark(oklch(from var(--dglow2) calc(1.235 - l) c h / calc(0.9 * alpha)),var(--dglow2));
+	--glow3: light-dark(oklch(from var(--dglow3) calc(1.235 - l) c h / calc(0.9 * alpha)),var(--dglow3));
+	--glow4: light-dark(oklch(from var(--dglow4) calc(1.235 - l) c h / calc(0.9 * alpha)),var(--dglow4));
 	
 	transition: transform 0.2s;
 	display: block;

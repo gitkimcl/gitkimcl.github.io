@@ -13,27 +13,36 @@
 	position: relative;
 }
 
-.test-post[data-color="0"] { --bg: var(--c-w-bg); --b: var(--c-w-border); --c: var(--c-w-text); }
-.test-post.int[data-color="0"]:not(:has(.noactive:hover)):hover { --bg: var(--c-w-bgh); --b: var(--c-w-borderh); }
-.test-post.int[data-color="0"]:not(:has(.noactive:active)):active { --bg: var(--c-w-bga); --b: var(--c-w-bordera); }
-.test-post[data-color="1"] { --bg: var(--c-b-bg); --b: var(--c-b-border); --c: var(--c-b-text); }
-.test-post.int[data-color="1"]:not(:has(.noactive:hover)):hover { --bg: var(--c-b-bgh); --b: var(--c-b-borderh); }
-.test-post.int[data-color="1"]:not(:has(.noactive:active)):active { --bg: var(--c-b-bga); --b: var(--c-b-bordera); }
-.test-post[data-color="2"] { --bg: var(--c-p-bg); --b: var(--c-p-border); --c: var(--c-p-text); }
-.test-post.int[data-color="2"]:not(:has(.noactive:hover)):hover { --bg: var(--c-p-bgh); --b: var(--c-p-borderh); }
-.test-post.int[data-color="2"]:not(:has(.noactive:active)):active { --bg: var(--c-p-bga); --b: var(--c-p-bordera); }
-.test-post[data-color="3"] { --bg: var(--c-r-bg); --b: var(--c-r-border); --c: var(--c-r-text); }
-.test-post.int[data-color="3"]:not(:has(.noactive:hover)):hover { --bg: var(--c-r-bgh); --b: var(--c-r-borderh); }
-.test-post.int[data-color="3"]:not(:has(.noactive:active)):active { --bg: var(--c-r-bga); --b: var(--c-r-bordera); }
-.test-post[data-color="4"] { --bg: var(--c-o-bg); --b: var(--c-o-border); --c: var(--c-o-text); }
-.test-post.int[data-color="4"]:not(:has(.noactive:hover)):hover { --bg: var(--c-o-bgh); --b: var(--c-o-borderh); }
-.test-post.int[data-color="4"]:not(:has(.noactive:active)):active { --bg: var(--c-o-bga); --b: var(--c-o-bordera); }
-.test-post[data-color="5"] { --bg: var(--c-y-bg); --b: var(--c-y-border); --c: var(--c-y-text); }
-.test-post.int[data-color="5"]:not(:has(.noactive:hover)):hover { --bg: var(--c-y-bgh); --b: var(--c-y-borderh); }
-.test-post.int[data-color="5"]:not(:has(.noactive:active)):active { --bg: var(--c-y-bga); --b: var(--c-y-bordera); }
-.test-post[data-color="6"] { --bg: var(--c-g-bg); --b: var(--c-g-border); --c: var(--c-g-text); }
-.test-post.int[data-color="6"]:not(:has(.noactive:hover)):hover { --bg: var(--c-g-bgh); --b: var(--c-g-borderh); }
-.test-post.int[data-color="6"]:not(:has(.noactive:active)):active { --bg: var(--c-g-bga); --b: var(--c-g-bordera); }
+.test-post[data-color="0"] { --bg: var(--c-0-bg); --b: var(--c-0-bd); --c: var(--c-0-c); }
+.test-post.int[data-color="0"]:not(:has(.noactive:hover)):hover { --bg: var(--c-0-bgh); --b: var(--c-0-bdh); }
+.test-post.int[data-color="0"]:not(:has(.noactive:active)):active { --bg: var(--c-0-bga); --b: var(--c-0-bda); }
+.test-post[data-color="1"] { --bg: var(--c-1-bg); --b: var(--c-1-bd); --c: var(--c-1-c); }
+.test-post.int[data-color="1"]:not(:has(.noactive:hover)):hover { --bg: var(--c-1-bgh); --b: var(--c-1-bdh); }
+.test-post.int[data-color="1"]:not(:has(.noactive:active)):active { --bg: var(--c-1-bga); --b: var(--c-1-bda); }
+.test-post[data-color="2"] { --bg: var(--c-2-bg); --b: var(--c-2-bd); --c: var(--c-2-c); }
+.test-post.int[data-color="2"]:not(:has(.noactive:hover)):hover { --bg: var(--c-2-bgh); --b: var(--c-2-bdh); }
+.test-post.int[data-color="2"]:not(:has(.noactive:active)):active { --bg: var(--c-2-bga); --b: var(--c-2-bda); }
+.test-post[data-color="3"] { --bg: var(--c-3-bg); --b: var(--c-3-bd); --c: var(--c-3-c); }
+.test-post.int[data-color="3"]:not(:has(.noactive:hover)):hover { --bg: var(--c-3-bgh); --b: var(--c-3-bdh); }
+.test-post.int[data-color="3"]:not(:has(.noactive:active)):active { --bg: var(--c-3-bga); --b: var(--c-3-bda); }
+.test-post[data-color="4"] { --bg: var(--c-4-bg); --b: var(--c-4-bd); --c: var(--c-4-c); }
+.test-post.int[data-color="4"]:not(:has(.noactive:hover)):hover { --bg: var(--c-4-bgh); --b: var(--c-4-bdh); }
+.test-post.int[data-color="4"]:not(:has(.noactive:active)):active { --bg: var(--c-4-bga); --b: var(--c-4-bda); }
+.test-post[data-color="5"] { --bg: var(--c-5-bg); --b: var(--c-5-bd); --c: var(--c-5-c); }
+.test-post.int[data-color="5"]:not(:has(.noactive:hover)):hover { --bg: var(--c-5-bgh); --b: var(--c-5-bdh); }
+.test-post.int[data-color="5"]:not(:has(.noactive:active)):active { --bg: var(--c-5-bga); --b: var(--c-5-bda); }
+.test-post[data-color="6"] { --bg: var(--c-6-bg); --b: var(--c-6-bd); --c: var(--c-6-c); }
+.test-post.int[data-color="6"]:not(:has(.noactive:hover)):hover { --bg: var(--c-6-bgh); --b: var(--c-6-bdh); }
+.test-post.int[data-color="6"]:not(:has(.noactive:active)):active { --bg: var(--c-6-bga); --b: var(--c-6-bda); }
+.test-post[data-color="7"] { --bg: var(--c-7-bg); --b: var(--c-7-bd); --c: var(--c-7-c); }
+.test-post.int[data-color="7"]:not(:has(.noactive:hover)):hover { --bg: var(--c-7-bgh); --b: var(--c-7-bdh); }
+.test-post.int[data-color="7"]:not(:has(.noactive:active)):active { --bg: var(--c-7-bga); --b: var(--c-7-bda); }
+.test-post[data-color="8"] { --bg: var(--c-8-bg); --b: var(--c-8-bd); --c: var(--c-8-c); }
+.test-post.int[data-color="8"]:not(:has(.noactive:hover)):hover { --bg: var(--c-8-bgh); --b: var(--c-8-bdh); }
+.test-post.int[data-color="8"]:not(:has(.noactive:active)):active { --bg: var(--c-8-bga); --b: var(--c-8-bda); }
+.test-post[data-color="9"] { --bg: var(--c-9-bg); --b: var(--c-9-bd); --c: var(--c-9-c); }
+.test-post.int[data-color="9"]:not(:has(.noactive:hover)):hover { --bg: var(--c-9-bgh); --b: var(--c-9-bdh); }
+.test-post.int[data-color="9"]:not(:has(.noactive:active)):active { --bg: var(--c-9-bga); --b: var(--c-9-bda); }
 
 .test-post#newpost {
 	background-color: color-mix(in oklch, var(--bg) 40%, transparent);
