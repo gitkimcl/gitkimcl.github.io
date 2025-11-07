@@ -54,3 +54,21 @@ figure {
 figure > * {
 	max-width: 100%;
 }
+
+ul:not(ul ul) {
+	width: min-content;
+	padding: 0;
+	margin-inline: auto;
+}
+
+ul > li:has( > details) {
+	list-style: none;
+}
+
+ul > li > details > summary {
+	list-style-position: outside;
+}
+
+ul ul {
+	padding-inline-start: 1em;
+}
