@@ -11,6 +11,10 @@ figure {
 	margin-block-end: 1lh;
 }
 
+figure:nth-last-child(3) {
+	margin-block-end: 0;
+}
+
 figcaption {
 	text-align: start;
 }
@@ -257,13 +261,13 @@ dialog button:active {
 	height: 4rem;
 	padding: 0.25rem;
 	border-radius: 2rem;
-	--cbd: var(--c-7-bd);
+	--cbd: var(--c-7-i2);
 	border: 4px solid transparent;
 	background: none;
 	position: relative;
 }
-.cr_button:hover { --cbd: var(--c-7-bdh); }
-.cr_button:active { --cbd: var(--c-7-bda); }
+.cr_button:hover { --cbd: var(--c-7-i3); }
+.cr_button:active { --cbd: var(--c-7-i4); }
 
 .cr_button svg {
 	width: 100%;
@@ -272,38 +276,50 @@ dialog button:active {
 	--w: 4px;
 }
 
-.loadnothing { --cbd: var(--c-1-bd); }
-.loadnothing:hover { --cbd: var(--c-1-bd); }
-.loadnothing:active { --cbd: var(--c-1-bd); }
+.loadnothing { --cbd: var(--c-1-i2); }
+.loadnothing:hover { --cbd: var(--c-1-i2); }
+.loadnothing:active { --cbd: var(--c-1-i2); }
 
 section {
 	border-radius: 0.25em;
 	scroll-margin-block: 10rem;
+	padding-block-end: 1px; /* prevents margin collapse because it makes .to-top wanky */
 }
 
 .to-top {
 	box-sizing: content-box;
-	width: 2.5rem;
-	height: 2.5rem;
-	padding: 0.125rem;
+	width: 2.25rem;
+	height: 2.25rem;
+	padding: 0;
 	position: sticky;
 	inset-block: 0;
 	float: inline-end;
 	shape-outside: polygon(100% 0);
-	border-radius: 50%;
+	border-radius: 20%;
 	background: none;
 	border: 4px solid transparent;
-	--cbd: var(--c-0-bd);
-	transform: translate(3.5rem, -2rem);
+	--cbd: var(--c-0-i2);
+	transform: translate(3rem, -2rem);
 }
-.to-top:hover { --cbd: var(--c-0-bdh); }
-.to-top:active { --cbd: var(--c-0-bda); }
+.to-top:hover { --cbd: var(--c-0-i3); }
+.to-top:active { --cbd: var(--c-0-i4); }
 
 .to-top > svg {
 	width: 100%;
 	height: 100%;
 	--bd: var(--cbd);
 	--w: 4px;
+}
+
+@media screen and (max-width: 480px) {
+	.to-top {
+		--cbd: var(--c-0-i4);
+		transform: translate(0.5rem, -2rem);
+		border: 4px solid var(--cbd);
+		opacity: 0.4;
+	}
+	.to-top:hover { --cbd: var(--c-0-i4); opacity: 0.7; }
+	.to-top:active { opacity: 1; }
 }
 
 ins {

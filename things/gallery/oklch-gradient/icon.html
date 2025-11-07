@@ -61,6 +61,13 @@
 			z-index: 1;
 			mix-blend-mode: overlay;
 		}
+
+		@media screen and (max-width: 480px) {
+			.stack { overflow: hidden; }
+			.stack::before {
+				content: '화면이 너무 좁아요';
+			}
+		}
 		
 		.plus {
 			font-size: 0.65em;
