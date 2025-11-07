@@ -230,6 +230,12 @@ a { text-decoration: none; font-weight: 600; }
 .tile-img.pixel { image-rendering: pixelated; }
 .tile-img.tilted { transform: scale(1.6) rotate3d(-1,1,1,45deg); }
 
+.tile-img.dark { display: none; }
+@media (prefers-color-scheme: dark) {
+	.tile-img.dark { display: inline-block; }
+	.tile-img.light { display: none; }
+}
+
 .tile-icon {
 	display: block;
 	position: absolute;

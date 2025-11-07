@@ -1,5 +1,17 @@
 :root { background-color: var(--c-gray1); }
 
+#cycelog-tile::before {
+	background: conic-gradient(from -45deg,
+		light-dark(var(--c-1-l1),var(--c-1-0)),
+		light-dark(var(--c-2-l1),var(--c-2-0)),
+		light-dark(var(--c-3-l1),var(--c-3-0)),
+		light-dark(var(--c-5-l1),var(--c-5-0)),
+		color-mix(in oklch, light-dark(var(--c-6-l1),var(--c-6-0)),light-dark(var(--c-7-l1),var(--c-7-0)) 70%),
+		light-dark(var(--c-8-l1),var(--c-8-0)),
+		light-dark(var(--c-1-l1),var(--c-1-0)));
+}
+
+.hidden-site { background-color: var(--c-gray2); }
 .hidden { opacity: 0; display: none; }
 .invis { visibility: hidden; }
 .transparent { opacity: 0; }

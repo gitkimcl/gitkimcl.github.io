@@ -1,0 +1,66 @@
+<svg id="ahfugAGEWHfci" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 350 350" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <style>
+        svg { color-scheme: light dark; background: light-dark(oklch(98.5% 0 0),oklch(25% 0 0)); }
+        symbol * { stroke-width: 42; }
+        polygon, polyline, circle, line { stroke: light-dark(oklch(20% 0 0),oklch(98.5% 0 0)); fill: transparent; }
+        .fill { fill: light-dark(oklch(20% 0 0),oklch(98.5% 0 0)); }
+        circle.fill { stroke: transparent; }
+    </style>
+    <polygon stroke-linecap="round" stroke-linejoin="round" points="175,255 261.6,105 88.4,105" fill="transparent" stroke-width="28"/>
+    <line stroke-linecap="round" stroke-linejoin="round" x1="75" y1="175" x2="275" y2="175" stroke-width="28"/>
+    <line stroke-linecap="round" stroke-linejoin="round" x1="175" y1="255" x2="275" y2="255" stroke-width="28"/>
+    <symbol id="R2" viewBox="0 0 350 350">
+        <polygon stroke-linecap="round" stroke-linejoin="round" points="175,90 82.6,250 267.4,250" fill="transparent"/>
+        <circle class="fill" cx="175" cy="293" r="24.5"/>
+    </symbol>
+    <symbol id="l" viewBox="0 0 350 350">
+        <line stroke-linecap="round" x1="85.4" y1="175" x2="264.6" y2="175"/>
+        <line stroke-linecap="round" x1="175" y1="85.4" x2="175" y2="264.6"/>
+    </symbol>
+    <symbol id="r" viewBox="0 0 350 350">
+        <polygon stroke-linecap="round" stroke-linejoin="round" points="175,90 82.6,250 267.4,250" fill="transparent"/>
+    </symbol>
+    <symbol id="f" viewBox="0 0 350 350">
+        <polygon stroke-linecap="round" stroke-linejoin="round" points="95,95 255,95 255,255 95,255" fill="transparent"/>
+    </symbol>
+    <symbol id="h" viewBox="0 0 350 350">
+        <polyline stroke-linecap="round" stroke-linejoin="round" points="264.6,250 175,100 85.4,250" fill="transparent"/>
+    </symbol>
+    <symbol id="c2" viewBox="0 0 350 350">
+        <polygon class="fill" stroke-linecap="round" stroke-linejoin="round" points="90,175 250,267.4 250,82.6"/>
+    </symbol>
+    <symbol id="mod2" viewBox="0 0 350 350">
+        <line stroke-linecap="round" x1="90.4" y1="175" x2="259.6" y2="175"/>
+        <line stroke-linecap="round" x1="90.4" y1="85.4" x2="90.4" y2="264.6"/>
+        <line stroke-linecap="round" x1="259.6" y1="85.4" x2="259.6" y2="264.6"/>
+    </symbol>
+    <symbol id="e" viewBox="0 0 350 350">
+        <polygon stroke-linecap="round" stroke-linejoin="round" points="260,175 100,82.6 100,267.4" fill="transparent"/>
+        <line stroke-linecap="round" x1="120" y1="307" x2="230" y2="307"/>
+    </symbol>
+    <symbol id="o" viewBox="0 0 350 350">
+        <polyline stroke-linecap="round" stroke-linejoin="round" points="95,264.6 245,175 95,85.4" fill="transparent"/>
+        <line stroke-linecap="round" x1="255" y1="80" x2="255" y2="270"/>
+    </symbol>
+    <symbol id="g" viewBox="0 0 350 350">
+        <circle cx="175" cy="175" r="90" fill="transparent"/>
+        <line stroke-linecap="round" x1="120" y1="307" x2="230" y2="307"/>
+    </symbol>
+    <use width="35px" height="35px" x="70" y="52" href="#R2"/>
+    <use width="35px" height="35px" x="95" y="52" href="#l"/>
+    <use width="35px" height="35px" x="120" y="52" href="#R2"/>
+    <use width="35px" height="35px" x="145" y="52" href="#r"/>
+    <use width="35px" height="35px" x="170" y="52" href="#l"/>
+    <use width="35px" height="35px" x="195" y="52" href="#f"/>
+    <use width="35px" height="35px" x="220" y="52" href="#h"/>
+    <use width="35px" height="35px" x="245" y="52" href="#r"/>
+    
+    <use width="28px" height="28px" x="83" y="271" href="#c2"/>
+    <use width="28px" height="28px" x="105" y="271" href="#mod2"/>
+    <use width="28px" height="28px" x="127" y="271" href="#h"/>
+    <use width="28px" height="28px" x="149" y="271" href="#c2"/>
+    <use width="28px" height="28px" x="171" y="271" href="#e"/>
+    <use width="28px" height="28px" x="193" y="271" href="#l"/>
+    <use width="28px" height="28px" x="215" y="271" href="#o"/>
+    <use width="28px" height="28px" x="237" y="271" href="#g"/>
+</svg>

@@ -8,4 +8,6 @@ function logo_click(e) {
 	if (clicks<6) return;
 	$("#logo-img").removeClass("tilted");
 	$("#title").text("rlachi server");
+	$(".hidden-site").removeClass("hidden");
+	$(".hidden-site").removeAttr("hidden");
 }
