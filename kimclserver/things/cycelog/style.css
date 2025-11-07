@@ -4,15 +4,11 @@
 
 body {
 	font-family: "Pretendard GOV Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
-	margin-block-end: 10em;
-	max-inline-size: 55rem;
-	margin-inline: auto;
 }
 
 figure {
 	margin-block-start: 0.5lh;
 	margin-block-end: 1lh;
-	max-inline-size: 55rem;
 }
 
 figcaption {
