@@ -14,7 +14,9 @@
 </head>
 <body>
 	<kimcl-menu></kimcl-menu>
-	<div id="fontload" style="position: absolute; opacity: 0;">
+	<kserver-menu></kserver-menu>
+	<button id="back" onclick="window.location.href = '.';"><svg><use href="#left"></use></svg></button>
+	<div id="fontload" style="position: absolute; opacity: 0; pointer-events: none;">
 		<div style="font-family: 'Pretendard GOV Variable';"> <!-- 이거 없으면 내용에 없는 폰트는 인쇄할 때 기본 폰트가 됨 -->
 			<p>안녕하세요</p>
 			<p style="font-weight: bold;">안녕하세요</p>
@@ -34,6 +36,9 @@
 		</symbol>
 		<symbol id="down" viewbox="0 0 24 24">
 			<path d="M12 19V5M12 19L5 12M12 19L19 12" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+		<symbol id="left" viewbox="0 0 24 24">
+			<path d="M5 12H19M5 12L12 5M5 12L12 19" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
 		</symbol>
 		<symbol id="between" viewbox="0 0 24 24">
 			<path d="M8.5 5H15.5M12 5V19M8.5 19H15.5" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>

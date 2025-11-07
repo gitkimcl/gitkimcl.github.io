@@ -136,7 +136,7 @@
 			#ks_main.hidden { opacity: 0; visibility: hidden; }
 			#ks_main .hidden { display: none; }
 		</style>
-		<div id="ks_menu" role="menu" style="--c: var(--c-2-c); --ch: var(--c-2-ch); --ca: var(--c-2-ca); --i: var(--c-2-i2); --ih: var(--c-2-i3); --ia: var(--c-2-i4);">
+		<div id="ks_menu" role="menu" style="display: none; --c: var(--c-2-c); --ch: var(--c-2-ch); --ca: var(--c-2-ca); --i: var(--c-2-i2); --ih: var(--c-2-i3); --ia: var(--c-2-i4);">
 			<button id="ks_button" role="menuitem" type="button" title="서버 메뉴 열기"></button>
 			<div id="ks_main" class="hidden">
 				<div id="ks_flex">
@@ -260,6 +260,8 @@
 				}
 				$("ks_ping",sr).textContent = `${ping}ms`;
 				$("ks_hide",sr).classList.remove("invis");
+
+				$("ks_menu",sr).style.display = "block";
 			}
 
 			function changeurl() {
