@@ -67,6 +67,7 @@ ul > li:has( > details) {
 
 ul > li > details > summary {
 	list-style-position: outside;
+	font-weight: 600;
 }
 
 ul ul {
