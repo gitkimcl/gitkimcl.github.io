@@ -1,8 +1,8 @@
 export const url = () => localStorage.getItem("server.url");
 
-export function authinfo() {
-	if (!localStorage.getItem("server.loginid")) return null;
-	return {id: localStorage.getItem("server.loginid"), time: localStorage.getItem("server.logintime"), hash: localStorage.getItem("server.loginhash")};
+export function logged_in() {
+	if (!localStorage.getItem("server.username") || !localStorage.getItem("server.token")) return false;
+	return true;
 }
 
 export function showmsg(id, msg, color, time) {
@@ -14,7 +14,11 @@ export function showmsg(id, msg, color, time) {
 }
 
 export async function fetchget(path) {
-	const res = await fetch(`${url()}${path}`);
+	const res = await fetch(`${url()}${path}`, {
+		headers: {
+			...(logged_in() && {"Authorization": `Bearer ${localStorage.getItem("server.token")}`})
+		},
+	});
 	if (!res.ok) {
 		const data = await res.json();
 		throw `${res.status};;${data.detail??''}`;
@@ -26,9 +30,22 @@ export async function fetchbody(path, method, body) {
 	const res = await fetch(`${url()}${path}`, {
 		method: method,
 		headers: {
+			...(logged_in() && {"Authorization": `Bearer ${localStorage.getItem("server.token")}`}),
 			"Content-Type": "application/json",
 		},
 		body: JSON.stringify(body)
+	});
+	if (!res.ok) {
+		const data = await res.json();
+		throw `${res.status};;${JSON.stringify(data.detail)??''}`;
+	}
+	return await res.json();
+}
+
+export async function fetchform(path, method, form) {
+	const res = await fetch(`${url()}${path}`, {
+		method: method,
+		body: new FormData(form)
 	});
 	if (!res.ok) {
 		const data = await res.json();

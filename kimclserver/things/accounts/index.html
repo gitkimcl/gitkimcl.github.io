@@ -16,20 +16,32 @@
 	<kimcl-menu></kimcl-menu>
 	<kserver-menu></kserver-menu>
 	<h1>계정 관리</h1>
+	<p>관리자 계정으로 로그인돼 있어야 아래 도구를 사용할 수 있습니다.</p>
+	<p>서버에 관리자 계정이 없다면, 서버 파일에서 create_account.py를 실행해 관리자 계정을 만들면 됩니다.</p>
 	<section style="color: var(--c-5-c);">
 		<h2>계정 생성</h2>
-		<form id="create" action="javascript:create_account();">
-			<input type="text" id="createid" placeholder="계정명" name="id" required><br>
+		<form id="create" onsubmit="event.preventDefault(); create_account();">
+			<input type="text" id="createid" placeholder="계정명" name="id" autocomplete="off" required><br>
 			<input type="password" id="createpw" placeholder="비밀번호" name="pw" autocomplete="new-password" required minlength="4" oninvalid="if (this.validity.tooShort) this.setCustomValidity('아무리 그래도 4글자도 안 넘으면 느낌이 안 나잖아요');" oninput="this.setCustomValidity(this.validity.tooShort ? '4글자 이상의 비밀번호를 입력하세요.' : '');"><br>
 			<input type="submit" value="계정 생성">
 		</form>
 		<p id="makelog" style="visibility: hidden;">ecyc e</p>
 	</section>
+	<section style="color: var(--c-3-c);">
+		<h2>계정 비밀번호 변경</h2>
+		<form id="create" onsubmit="event.preventDefault(); change_password();">
+			<input type="text" id="changeid" placeholder="계정명" name="id" autocomplete="off" required><br>
+			<input type="password" id="changepw" placeholder="새 비밀번호" name="pw" autocomplete="new-password" required minlength="4" oninvalid="if (this.validity.tooShort) this.setCustomValidity('아무리 그래도 4글자도 안 넘으면 느낌이 안 나잖아요');" oninput="this.setCustomValidity(this.validity.tooShort ? '4글자 이상의 비밀번호를 입력하세요.' : '');"><br>
+			<label for="changefr">진짜죠?</label>
+			<input type="checkbox" id="changefr" name="changecheck" required>
+			<input type="submit" value="계정 비밀번호 변경">
+		</form>
+		<p id="changelog" style="visibility: hidden;">ecyc e</p>
+	</section>
 	<section style="color: var(--c-1-c);">
 		<h2>계정 삭제</h2>
-		<form id="delete" action="javascript:delete_account();" autocomplete="off">
+		<form id="delete" onsubmit="event.preventDefault(); delete_account();" autocomplete="off">
 			<input type="text" id="deleteid" placeholder="계정명" name="delid" required><br>
-			<input type="password" id="deletepw" placeholder="비밀번호" name="delpw" required minlength="4" oninvalid="if (this.validity.tooShort) this.setCustomValidity('비밀번호는 4글자 이상입니다.');" oninput="this.setCustomValidity(this.validity.tooShort ? '비밀번호는 4글자 이상입니다.' : '');"><br>
 			<label for="deletefr">진짜죠?</label>
 			<input type="checkbox" id="deletefr" name="delcheck" required>
 			<input type="submit" value="계정 삭제">

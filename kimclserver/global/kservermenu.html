@@ -159,10 +159,10 @@
 						계정명이 'guest_'로 시작하는 계정은 임시 계정으로, 무슨 비밀번호를 입력해도 로그인할 수 있습니다.
 					</p>
 					<div class="ks_gap"></div>
-					<form id="ks_loginf" class="ks_row">
+					<form id="ks_loginf" class="ks_row" enctype="multipart/form-data">
 						<div>
-							<input id="ks_id" type="text" name="id" placeholder="계정명 입력" required><br>
-							<input id="ks_pw" type="password" name="pw" placeholder="비밀번호 입력" required>
+							<input id="ks_id" type="text" name="username" placeholder="계정명 입력" required><br>
+							<input id="ks_pw" type="password" name="password" placeholder="비밀번호 입력" required>
 						</div>
 						<button id="ks_login" type="submit" disabled>로그인</button>
 					</form>
@@ -177,8 +177,7 @@
 			</div>
 		</div>
 		<script id="script" type="module">
-			import { SHA256 } from "/global/sha256.js";
-			import { url, fetchget, fetchbody, authinfo } from "/kimclserver/global/util.js";
+			import { url, fetchget, fetchbody, fetchform, logged_in } from "/kimclserver/global/util.js";
 
 			function $(id, el) { el=el??document; return el.getElementById(id); }
 			function $q(q, el) { el=el??document; return el.querySelector(q); }
@@ -247,15 +246,18 @@
 					$('ks_main',sr).classList.remove('hidden');
 					return;
 				}
-				if (localStorage.getItem("server.loginid")) {
-					setColor((ping<=500)?"8":"3");
-					$("ks_status",sr).textContent = "로그인됨";
-					$("ks_ping",sr).textContent = `${ping}ms`;
-					$("ks_hide",sr).classList.remove("invis");
-					return;
+				if (logged_in()) {
+					if (localStorage.getItem("server.is_admin")) {
+						setColor((ping<=500)?"8":"3");
+						$("ks_status",sr).textContent = "로그인됨(관리자)";
+					} else {
+						setColor((ping<=500)?"6":"3");
+						$("ks_status",sr).textContent = "로그인됨";
+					}
+				} else {
+					setColor((ping<=500)?"4":"3");
+					$("ks_status",sr).textContent = "연결됨";
 				}
-				setColor((ping<=500)?"4":"3");
-				$("ks_status",sr).textContent = "연결됨";
 				$("ks_ping",sr).textContent = `${ping}ms`;
 				$("ks_hide",sr).classList.remove("invis");
 			}
@@ -276,10 +278,10 @@
 					$("ks_login",sr).setAttribute("disabled","true");
 					return;
 				}
-				if (authinfo()) {
-					fetchbody("/auth", "POST", authinfo())
+				if (logged_in()) {
+					fetchbody("/auth", "POST")
 					.then((data) => {
-						$("ks_account",sr).textContent = localStorage.getItem("server.loginid");
+						$("ks_account",sr).textContent = localStorage.getItem("server.username");
 						$("ks_logout",sr).classList.remove("hidden");
 						$("ks_id",sr).setAttribute("disabled","true");
 						$("ks_pw",sr).setAttribute("disabled","true");
@@ -299,20 +301,20 @@
 			}
 
 			function logout() {
-				localStorage.removeItem("server.loginid");
-				localStorage.removeItem("server.logintime");
-				localStorage.removeItem("server.loginhash");
+				localStorage.removeItem("server.username");
+				localStorage.removeItem("server.token");
+				localStorage.removeItem("server.is_admin");
 				checklogin();
 				updatestate();
 			}
 
-			function login() {
-				let data = {id: $("ks_id",sr).value, pw: SHA256(`${$("ks_id",sr).value}ecyce${$("ks_pw",sr).value}`)}
-				fetchbody("/login", "POST", data)
+			function login(e) {
+				e.preventDefault();
+				fetchform("/login", "POST", this)
 				.then((data) => {
-					localStorage.setItem("server.loginid", data.id);
-					localStorage.setItem("server.logintime", data.time);
-					localStorage.setItem("server.loginhash", data.hash);
+					localStorage.setItem("server.username", data.username);
+					localStorage.setItem("server.token", data.access_token);
+					if (data.is_admin) localStorage.setItem("server.is_admin", "true");
 					checklogin();
 				}).catch((e) => {
 					alert(e);

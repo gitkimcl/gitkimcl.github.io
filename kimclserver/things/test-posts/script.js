@@ -1,4 +1,4 @@
-import { showmsg, fetchget, fetchbody, authinfo } from "../../global/util.js";
+import { showmsg, fetchget, fetchbody } from "../../global/util.js";
 
 $("#titleinput").on("input", (_) => {
 	$("#titleinput br").remove();
@@ -46,10 +46,10 @@ window.get_data = function get_data() {
 	try {
 		update_posts();
 	} catch (e) {
-		showmsg("log", `작업 실패: ${e}`, "r-bright");
+		showmsg("log", `작업 실패: ${e}`, "1-0");
 		return;
 	}
-	showmsg("log", "작업 성공: 새로고침 완료", "g-text");
+	showmsg("log", "작업 성공: 새로고침 완료", "4-c");
 }
 
 window.post = function post() {
@@ -57,26 +57,26 @@ window.post = function post() {
 	let content = $("#contentinput").text();
 	let color = $("#newpost").attr("data-color");
 	if (!title) {
-		showmsg("log", "작업 실패: 제목 없음", "r-bright");
+		showmsg("log", "작업 실패: 제목 없음", "1-0");
 		return;
 	}
-	fetchbody("/test-posts/", "POST", {title: title, content: content, color: color, auth: authinfo()})
+	fetchbody("/test-posts/", "POST", {title: title, content: content, color: color})
 	.then((data) => {
 		show_data(data);
-		showmsg("log", "작업 성공: 글 추가됨", "g-text");
+		showmsg("log", "작업 성공: 글 추가됨", "5-c");
 	})
 	.catch((e) => {
-		showmsg("log", `작업 실패: ${e}`, "r-bright");
+		showmsg("log", `작업 실패: ${e}`, "1-0");
 	});
 }
 
 window.delete_post = function delete_post(id) {
-	fetchbody("/test-posts/", "DELETE", {id: id, auth: authinfo()})
+	fetchbody("/test-posts/", "DELETE", {id: id})
 	.then((data) => {
 		show_data(data);
-		showmsg("log", "작업 성공: 글 삭제됨", "r-text");
+		showmsg("log", "작업 성공: 글 삭제됨", "1-c");
 	}).catch((e) => {
-		showmsg("log", `작업 실패: ${e}`, "r-bright");
+		showmsg("log", `작업 실패: ${e}`, "1-0");
 	});
 }
 
