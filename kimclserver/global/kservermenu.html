@@ -215,7 +215,6 @@
 					connected = true;
 				}).catch((_) => {})
 				.finally((_) => {
-					checklogin();
 					updatestate();
 				});
 			}
@@ -230,23 +229,24 @@
 			}
 
 			function updatestate() {
+				$("ks_menu",sr).style.display = "block";
+
 				if (url() == null) {
 					setColor("0");
 					$("ks_status",sr).textContent = "서버 없음";
 					$("ks_ping",sr).textContent = "---";
 					$("ks_hide",sr).classList.add("invis");
 					$('ks_main',sr).classList.remove('hidden');
-					return;
-				}
-				if (!connected) {
+					if (logged_in()) logout();
+				} else if (!connected) {
 					setColor("1");
 					$("ks_status",sr).textContent = "연결 실패";
 					$("ks_ping",sr).textContent = "---";
 					$("ks_hide",sr).classList.add("invis");
 					$('ks_main',sr).classList.remove('hidden');
+					if (logged_in()) logout();
 					return;
-				}
-				if (logged_in()) {
+				} else if (logged_in()) {
 					if (localStorage.getItem("server.is_admin")) {
 						setColor((ping<=500)?"8":"3");
 						$("ks_status",sr).textContent = "로그인됨(관리자)";
@@ -254,33 +254,7 @@
 						setColor((ping<=500)?"6":"3");
 						$("ks_status",sr).textContent = "로그인됨";
 					}
-				} else {
-					setColor((ping<=500)?"4":"3");
-					$("ks_status",sr).textContent = "연결됨";
-				}
-				$("ks_ping",sr).textContent = `${ping}ms`;
-				$("ks_hide",sr).classList.remove("invis");
-
-				$("ks_menu",sr).style.display = "block";
-			}
-
-			function changeurl() {
-				localStorage.setItem("server.url", $("ks_nurl",sr).value);
-				logout();
-				connect();
-				return false; // 새로고침 방지
-			}
-			
-			function checklogin() {
-				if (!connected) {
-					$("ks_account",sr).textContent = "[없음]";
-					$("ks_logout",sr).classList.add("hidden");
-					$("ks_id",sr).setAttribute("disabled","true");
-					$("ks_pw",sr).setAttribute("disabled","true");
-					$("ks_login",sr).setAttribute("disabled","true");
-					return;
-				}
-				if (logged_in()) {
+					
 					fetchbody("/auth", "POST")
 					.then((data) => {
 						$("ks_account",sr).textContent = localStorage.getItem("server.username");
@@ -292,21 +266,33 @@
 					.catch((e) => {
 						alert(e);
 						logout();
+						updatestate();
 					});
 				} else {
+					setColor((ping<=500)?"4":"3");
+					$("ks_status",sr).textContent = "연결됨";
+
 					$("ks_account",sr).textContent = "[없음]";
 					$("ks_logout",sr).classList.add("hidden");
 					$("ks_id",sr).removeAttribute("disabled")
 					$("ks_pw",sr).removeAttribute("disabled")
 					$("ks_login",sr).removeAttribute("disabled");
 				}
+				$("ks_ping",sr).textContent = `${ping}ms`;
+				$("ks_hide",sr).classList.remove("invis");
+			}
+
+			function changeurl() {
+				localStorage.setItem("server.url", $("ks_nurl",sr).value);
+				logout();
+				connect();
+				return false; // 새로고침 방지
 			}
 
 			function logout() {
 				localStorage.removeItem("server.username");
 				localStorage.removeItem("server.token");
 				localStorage.removeItem("server.is_admin");
-				checklogin();
 				updatestate();
 			}
 
@@ -317,7 +303,6 @@
 					localStorage.setItem("server.username", data.username);
 					localStorage.setItem("server.token", data.access_token);
 					if (data.is_admin) localStorage.setItem("server.is_admin", "true");
-					checklogin();
 				}).catch((e) => {
 					alert(e);
 				}).finally((_) => updatestate());

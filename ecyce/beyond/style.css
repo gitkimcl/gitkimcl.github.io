@@ -1,6 +1,6 @@
-:root {
-	background-color: #277AEA;
-}
+@import "/global/font/nanumgothiccoding.css";
+
+:root { background-color: #277AEA; }
 
 #wrapper {
 	transform-style: preserve-3d;
@@ -52,7 +52,7 @@
 }
 
 .restricted #wrapper { transform-style: flat; perspective: none; overscroll-behavior: none; contain: none; }
-.restricted #wrapper:before { content: ''; position: fixed; inset: 0; background-image: url('pure.png'); background-size: 840px 840px;  animation: infinite linear 30s forwards bgscroll1; pointer-events: none; }
+.restricted #wrapper:before { content: ''; position: fixed; inset: 0; background-image: url('pure.png'); background-size: 840px 840px;  animation: infinite linear 30s forwards bgscroll1; pointer-events: none; z-index: -1; }
 .restricted :is(#bg1, #bg2) { transform: none; display: none; }
 
 ecyce-ocean { display: block; height: 1777px; }
@@ -86,3 +86,16 @@ main.tiles { transform: translateZ(0); -webkit-mask-image: linear-gradient(black
 #b02msg2 { filter: invert(1); mix-blend-mode: overlay; width: 60%; position: relative; left: 25%; top: 10%;}
 #b02msg3 { mix-blend-mode: overlay; zoom: 6; text-align: center; }
 #b02msg3 > svg { max-width: 95%; }
+
+/* 03 */
+
+.b03txt { max-inline-size: 55rem; box-sizing: border-box; margin-inline: auto; font-family: 'Nanum Gothic Coding', 'Courier New', monospace; }
+#b03txt2 { padding-left: 10rem; }
+#b03txt3 { text-align: end; }
+#b03txt4, #b03txt7 { text-align: end; font-family: 'Courier New', monospace; }
+#b03txt5 { text-align: center; line-height: 1.5; }
+#b03txt6 { line-height: 1.5; }
+.b03uu { text-decoration: double underline; }
+.b03u { text-decoration: underline; }
+.b03o { text-decoration: overline; }
+.b03oo { text-decoration: double overline; }

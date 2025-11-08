@@ -1,6 +1,17 @@
 @import "essential.css";
 
 :root, :host {
+	--c-0-l5: var(--c-grayl5);
+	--c-0-l4: var(--c-grayl4);
+	--c-0-l3: var(--c-grayl3);
+	--c-0-l2: var(--c-grayl2);
+	--c-0-l1: var(--c-grayl1);
+	--c-0-: var(--c-gray);
+	--c-0-d1: var(--c-grayd1);
+	--c-0-d2: var(--c-grayd2);
+	--c-0-d3: var(--c-grayd3);
+	--c-0-d4: var(--c-grayd4);
+	--c-0-d5: var(--c-grayd5);
 	--c-0-bg: light-dark(var(--c-0-l5),var(--c-0-d5));
 	--c-0-bgh: light-dark(var(--c-0-l4),var(--c-0-d4));
 	--c-0-bga: light-dark(var(--c-0-l3),var(--c-0-d3));

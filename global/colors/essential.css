@@ -5,17 +5,17 @@
 	--c-dbg: oklch(25% 0 0);
 	--c-ltext: oklch(98.5% 0 0);
 	--c-dtext: oklch(20% 0 0);
-	--c-0-l5: oklch(95% 0 0);
-	--c-0-l4: oklch(91% 0 0);
-	--c-0-l3: oklch(85% 0 0);
-	--c-0-l2: oklch(80.5% 0 0);
-	--c-0-l1: oklch(74% 0 0);
-	--c-0-0: oklch(65% 0 0);
-	--c-0-d1: oklch(58% 0 0);
-	--c-0-d2: oklch(48% 0 0);
-	--c-0-d3: oklch(41.5% 0 0);
-	--c-0-d4: oklch(35% 0 0);
-	--c-0-d5: oklch(30% 0 0);
+	--c-grayl5: oklch(95% 0 0);
+	--c-grayl4: oklch(91% 0 0);
+	--c-grayl3: oklch(85% 0 0);
+	--c-grayl2: oklch(80.5% 0 0);
+	--c-grayl1: oklch(74% 0 0);
+	--c-gray: oklch(65% 0 0);
+	--c-grayd1: oklch(58% 0 0);
+	--c-grayd2: oklch(48% 0 0);
+	--c-grayd3: oklch(41.5% 0 0);
+	--c-grayd4: oklch(35% 0 0);
+	--c-grayd5: oklch(30% 0 0);
 	--c-black: black;
 	--c-white: white;
 
