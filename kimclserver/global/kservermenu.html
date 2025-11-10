@@ -25,7 +25,7 @@
 				cursor: pointer;
 				transition: width 0.2s, height 0.2s, background-color 0.2s;
 			}
-			#ks_button:hover, #ks_button:focus { width: 42px; height: 42px; }
+			#ks_button:hover, #ks_button:focus-visible { width: 42px; height: 42px; }
 			#ks_button:hover { background-color: var(--ih); }
 			#ks_button:active { background-color: var(--ia); transition: width 0.2s, height 0.2s; }
 
@@ -55,7 +55,7 @@
 				display: block;
 				@starting-style { opacity: 0; }
 			}
-			#ks_main:hover, #ks_main:focus, #ks_main:has(:focus) { transform: scale(1.02); opacity: 1; }
+			#ks_main:hover, #ks_main:focus-visible, #ks_main:has(:focus-visible) { transform: scale(1.02); opacity: 1; }
 
 			#ks_flex {
 				display: flex;

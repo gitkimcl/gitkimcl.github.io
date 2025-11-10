@@ -45,7 +45,7 @@ div {
 div, p, h1, h2, h3, h4, h5, h6, figure, form { text-align: center; }
 
 a { color: var(--c-link); text-decoration: none; }
-a:hover, a:focus { color: var(--c-linkh); text-decoration: underline; }
+a:hover, a:focus-visible { color: var(--c-linkh); text-decoration: underline; }
 a:active { color: var(--c-linka); text-decoration: underline; }
 
 figcaption {

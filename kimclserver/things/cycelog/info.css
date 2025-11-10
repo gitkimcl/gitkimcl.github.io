@@ -1,0 +1,18 @@
+body > section:not(:last-of-type) {
+	border-block-end: 3px solid var(--c-text);
+	border-image: linear-gradient(90deg, light-dark(var(--c-1-l1),var(--c-1-0)),
+		light-dark(var(--c-2-l1),var(--c-2-0)),
+		light-dark(var(--c-3-l1),var(--c-3-0)),
+		light-dark(var(--c-5-l1),var(--c-5-0)),
+		color-mix(in oklch, light-dark(var(--c-6-l1),var(--c-6-0)),light-dark(var(--c-7-l1),var(--c-7-0)) 80%),
+		light-dark(var(--c-8-l1),var(--c-8-0)),
+		light-dark(var(--c-1-l1),var(--c-1-0))) 3;
+}
+
+body > section:not(:last-of-type) {
+	padding-block-end: 2rem;
+}
+
+.hidden {
+	display: none;
+}

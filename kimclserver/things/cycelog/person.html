@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<title>cycelog</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="/global/gallery.css">
+	<link rel="stylesheet" type="text/css" href="common.css">
+	<link rel="stylesheet" type="text/css" href="info.css">
+	<link rel="stylesheet" type="text/css" href="/global/font/pretendardvariable-gov.css" media="screen and (min-width: 480px)">
+	<style>
+		#pdesc .p {
+			position: relative;
+			margin-block-start: 1.5rem;
+			margin-block-end: 1rem;
+			box-shadow: 0 0 0 0.75rem var(--c-0-bg);
+			background-color: var(--c-0-bg);
+		}
+		#pdesc .p:hover {
+			box-shadow: 0 0 0 0.75rem var(--c-8-bgh);
+			background-color: var(--c-8-bgh);
+		}
+		#pdesc .p::before {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			inset: 0;
+			inset-inline-start: -0.75rem;
+			inset-block-start: -0.75rem;
+			content: '';
+			padding: 0.75rem;
+		}
+		
+		#pname span:hover {
+			color: var(--c-8-0);
+			text-decoration: var(--c-8-0) underline;
+		}
+
+		#palias q:hover {
+			color: var(--c-1-0);
+			text-decoration: var(--c-1-0) underline;
+		}
+
+		#addalias { color: var(--c-0-i2); }
+		#addalias:hover {
+			color: var(--c-5-0);
+			text-decoration: var(--c-5-0) underline;
+		}
+	</style>
+	<script src="/global/jquery_slim.js"></script>
+	<script type="module">
+		import { fetchget, fetchbody } from '../../global/util.js';
+		import { deco, format_date, get_p } from './util.js';
+
+		const code = new URLSearchParams(window.location.search).get("code");
+		fetchget(`/cycelog/find/person?info=true&code=${code}`).then((res) => {
+			console.log(res);
+			$("#pcode").html(`<data class="person" value="${code}">${code}</data>`);
+			$("#pname").html(`<span>${res.name}</span>`);
+			$("#palias").html("");
+			for (let e of res.aliases) {
+				$("#palias").append($(`<q>${e}</q>`).on("click", function () {
+					if (!confirm("이 별칭을 삭제하시겠습니까?")) return;
+					fetchbody("/cycelog/person/alias", "DELETE", {
+						'code':code,
+						'value':this.textContent.slice(1,-1)
+					}).then(() => window.location.reload());
+				}));
+				$("#palias").append("<span> · </span>");
+			}
+			$("#palias").get(0).lastChild?.remove();
+			if (!res.aliases.length) $("#palias").html("<span>없음</span>");
+			$("#pdesc").html(get_p(-1, res.desc).removeAttr("id").removeAttr("data-pid"))
+			$("#refs").html('');
+			for (let e of res.is_shown_in) {
+				let sec = $(`<section><h4>${e.week.name}</hr></section>`);
+				for (let ee of e.p) {
+					let p = get_p(ee.id, ee.content);
+					$(`.person[value="${code}"]`, p).replaceWith(function () {
+						return $("<mark>").append($(this).clone());
+					});
+					sec.append(p);
+				}
+				$("#refs").append(sec);
+			}
+			deco(undefined);
+		});
+		$("#addalias").on("click", function () {
+			let newalias = prompt("추가할 별칭을 입력하세요");
+			if (newalias == null) return;
+			fetchbody("/cycelog/person/alias", "POST", {
+				'code':code,
+				'value':newalias
+			}).then(() => window.location.reload());
+		});
+		$("#pname").on("click", function () {
+			let name = prompt("새 이름을 입력하세요");
+			if (name == null) return;
+			fetchbody("/cycelog/person/name", "PUT", {
+				'code':code,
+				'value':name
+			}).then(() => window.location.reload());
+		});
+		$("#pdesc").on("click", function () {
+			let name = prompt("설명을 입력하세요. HTML 넣어도 됩니다.");
+			if (name == null) return;
+			fetchbody("/cycelog/person/desc", "PUT", {
+				'code':code,
+				'value':name
+			}).then(() => window.location.reload());
+		});
+	</script>
+	<script src="/global/kimclmenu.js" type="module"></script>
+	<script src="/kimclserver/global/kservermenu.js" type="module"></script>
+</head>
+<body>
+	<kimcl-menu></kimcl-menu>
+	<kserver-menu></kserver-menu>
+	<svg style="display: none">
+		<symbol id="up" viewbox="0 0 24 24">
+			<path d="M12 5V19M12 5L5 12M12 5L19 12" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+		<symbol id="down" viewbox="0 0 24 24">
+			<path d="M12 19V5M12 19L5 12M12 19L19 12" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+		<symbol id="left" viewbox="0 0 24 24">
+			<path d="M5 12H19M5 12L12 5M5 12L12 19" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+		<symbol id="between" viewbox="0 0 24 24">
+			<path d="M8.5 5H15.5M12 5V19M8.5 19H15.5" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+		<symbol id="x" viewbox="0 0 24 24">
+			<path d="M6 6L18 18M6 18L18 6" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+	</svg>
+	<button id="back" onclick="history.back();"><svg><use href="#left"></use></svg></button>
+	<hgroup>
+		<h1>인물 정보</h1>
+		<p style="text-align: center;">cycelog beta</p>
+	</hgroup>
+	<section>
+		<h2><slot id="pcode">---</slot> · <slot id="pname">---</slot></h2>
+		<span>별칭: <slot id="palias">---</slot> <span id="addalias">추가...</span></span>
+		<slot id="pdesc"><p class="p">---</p></slot>
+	</section>
+	<section>
+		<h2>언급된 곳</h2>
+		<slot id="refs">---</slot>
+	</section>
+</body>
+</html>

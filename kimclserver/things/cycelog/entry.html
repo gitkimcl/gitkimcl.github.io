@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<title>cycelog</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="/global/gallery.css">
+	<link rel="stylesheet" type="text/css" href="common.css">
+	<link rel="stylesheet" type="text/css" href="info.css">
+	<link rel="stylesheet" type="text/css" href="/global/font/pretendardvariable-gov.css" media="screen and (min-width: 480px)">
+	<style>
+		.etype.w { color: color-mix(in oklch, var(--c-6-c), var(--c-7-c) 80%); }
+		.etype.d { color: var(--c-8-c); }
+		.etype.s { color: var(--c-1-c); }
+		.etype.i { color: var(--c-2-c); }
+		.etype.t { color: var(--c-3-c); }
+		.etype.g { color: var(--c-5-c); }
+	
+		#eicn .e {
+			box-shadow: inset 0 0 0 2px var(--cbd);
+		}
+
+		#where .p {
+			margin-block-start: 1.5rem;
+			margin-block-end: 1rem;
+			box-shadow: 0 0 0 0.75rem var(--c-0-bg);
+			background-color: var(--c-0-bg);
+		}
+	</style>
+	<script src="/global/jquery_slim.js"></script>
+	<script type="module">
+		import { fetchget } from '../../global/util.js';
+		import { deco, format_date, get_p } from './util.js';
+
+		const id = new URLSearchParams(window.location.search).get("id");
+		fetchget(`/cycelog/find/entry?info=true&id=${id}`).then((res) => {
+			console.log(res);
+			$("#eicn").html(`<data class="e ${res.type}" value="${id}">${id}</data>`);
+			$("#enum").html(`<span>${id}</span>`);
+			$("#eweek").html(`<span>${res.parent.week.name}</span>`);
+			$("#etime").html(`${res.time ? `<time datetime=${res.time.datetime}>${format_date(new Date(res.time.datetime),res.time.hour)}</time>` : '<span>시간 정보 없음</span>'}`);
+			switch (res.type) {
+				case 's':
+					$("#etype").html(`<span class="etype s">공부</span>`); break;
+				case 'd':
+					$("#etype").html(`<span class="etype d">대화</span>`); break;
+				case 't':
+					$("#etype").html(`<span class="etype t">생각</span>`); break;
+				case 'g':
+					$("#etype").html(`<span class="etype g">일상</span>`); break;
+				case 'w':
+					$("#etype").html(`<span class="etype w">작업</span>`); break;
+				case 'i':
+					$("#etype").html(`<span class="etype i">정보</span>`); break;
+			}
+			let whp = get_p(res.parent.p.id, res.parent.p.content)
+			$(`.e[value="${id}"]`, whp).replaceWith(function () {
+				return $("<mark>").append($(this).clone());
+			});
+			$("#where").html(whp);
+			$("#refs").html('');
+			for (let e of res.refs) {
+				let sec = $(`<section><h4>${e.week.name}</hr></section>`);
+				for (let ee of e.p) {
+					let p = get_p(ee.id, ee.content);
+					$(`.e[value="${id}"]`, p).replaceWith(function () {
+						return $("<mark>").append($(this).clone());
+					});
+					sec.append(p);
+				}
+				$("#refs").append(sec);
+			}
+			deco(undefined);
+		});
+	</script>
+	<script src="/global/kimclmenu.js" type="module"></script>
+	<script src="/kimclserver/global/kservermenu.js" type="module"></script>
+</head>
+<body>
+	<kimcl-menu></kimcl-menu>
+	<kserver-menu></kserver-menu>
+	<svg style="display: none">
+		<symbol id="up" viewbox="0 0 24 24">
+			<path d="M12 5V19M12 5L5 12M12 5L19 12" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+		<symbol id="down" viewbox="0 0 24 24">
+			<path d="M12 19V5M12 19L5 12M12 19L19 12" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+		<symbol id="left" viewbox="0 0 24 24">
+			<path d="M5 12H19M5 12L12 5M5 12L12 19" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+		<symbol id="between" viewbox="0 0 24 24">
+			<path d="M8.5 5H15.5M12 5V19M8.5 19H15.5" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+		<symbol id="x" viewbox="0 0 24 24">
+			<path d="M6 6L18 18M6 18L18 6" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
+		</symbol>
+	</svg>
+	<button id="back" onclick="history.back();"><svg><use href="#left"></use></svg></button>
+	<hgroup>
+		<h1>기록 정보</h1>
+		<p style="text-align: center;">cycelog beta</p>
+	</hgroup>
+	<section>
+		<h2><slot id="eicn"><data class="e">---</data></slot> <slot id="enum">---</slot>번 기록</h2>
+		<slot id="eweek">---</slot> · <slot id="etime">---</slot> · <slot id="etype">---</slot>
+		<slot id="where"><p class="p">---</p></slot>
+	</section>
+	<section>
+		<h2>언급된 곳</h2>
+		<slot id="refs">---</slot>
+	</section>
+</body>
+</html>

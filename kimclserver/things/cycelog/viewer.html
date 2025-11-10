@@ -5,31 +5,26 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="/global/gallery.css">
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="common.css">
+	<link rel="stylesheet" type="text/css" href="viewer.css">
 	<link rel="stylesheet" type="text/css" href="/global/font/pretendardvariable-gov.css" media="screen and (min-width: 480px)">
 	<script src="/global/jquery_slim.js"></script>
-	<script src="script.js" type="module"></script>
+	<script type="module">
+		import { url } from '../../global/util.js';
+		import { deco } from './util.js';
+		import { load_weeks } from './load.js';
+		deco(undefined);
+		load_weeks();
+		$(":root").css("--print-title", `""`);
+		$(":root").css("--server", `"${url()}"`);
+		$(":root").css("--href", `"${window.location.href}"`);
+	</script>
 	<script src="/global/kimclmenu.js" type="module"></script>
 	<script src="/kimclserver/global/kservermenu.js" type="module"></script>
 </head>
 <body>
 	<kimcl-menu></kimcl-menu>
 	<kserver-menu></kserver-menu>
-	<button id="back" onclick="window.location.href = '.';"><svg><use href="#left"></use></svg></button>
-	<div id="fontload" style="position: absolute; opacity: 0; pointer-events: none;">
-		<div style="font-family: 'Pretendard GOV Variable';"> <!-- 이거 없으면 내용에 없는 폰트는 인쇄할 때 기본 폰트가 됨 -->
-			<p>안녕하세요</p>
-			<p style="font-weight: bold;">안녕하세요</p>
-		</div>
-		<div style="font-family: 'Nanum Gothic Coding';">
-			<p>안녕하세요</p>
-			<p style="font-weight: bold;">안녕하세요</p>
-		</div>
-	</div>
-	<hgroup>
-		<h1>끾기록 뷰어 테스트 페이지 · cycelog</h1>
-		<p style="text-align: center;">beta</p>
-	</hgroup>
 	<svg style="display: none">
 		<symbol id="up" viewbox="0 0 24 24">
 			<path d="M12 5V19M12 5L5 12M12 5L19 12" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
@@ -47,6 +42,21 @@
 			<path d="M6 6L18 18M6 18L18 6" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
 		</symbol>
 	</svg>
+	<div id="fontload"> <!-- 이거 없으면 내용에 없는 폰트는 인쇄할 때 기본 폰트가 됨 -->
+		<div style="font-family: 'Pretendard GOV Variable';">
+			<p>안녕하세요</p>
+			<p style="font-weight: bold;">안녕하세요</p>
+		</div>
+		<div style="font-family: 'Nanum Gothic Coding';">
+			<p>안녕하세요</p>
+			<p style="font-weight: bold;">안녕하세요</p>
+		</div>
+	</div>
+	<button id="back" onclick="history.back();"><svg><use href="#left"></use></svg></button>
+	<hgroup>
+		<h1>끾기록 뷰어 테스트 페이지 · cycelog</h1>
+		<p style="text-align: center;">beta</p>
+	</hgroup>
 	<template id="newweek">
 		<div class="cr_buttons cr_before">
 			<button class="cr_button loadbefore"><svg><use href="#up"></use></svg></button>

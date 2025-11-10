@@ -145,7 +145,7 @@ a { text-decoration: none; font-weight: 600; }
 		-14px 14px 14px rgb(from var(--c-black) r g b / 10%);
 	break-inside: avoid-page;
 }
-.tile:hover, .tile:focus { transform: scale(1.02); }
+.tile:hover, .tile:focus-visible { transform: scale(1.02); }
 
 @media screen and (max-width: 480px) {
 	.tiles {

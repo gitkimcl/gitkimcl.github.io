@@ -6,18 +6,6 @@ body {
 	font-family: "Pretendard GOV Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
-hgroup h1 + p {
-	padding-block-end: 0.5rem;
-	border-bottom: 3px solid var(--c-text);
-	border-image: linear-gradient(90deg, light-dark(var(--c-1-l1),var(--c-1-0)),
-		light-dark(var(--c-2-l1),var(--c-2-0)),
-		light-dark(var(--c-3-l1),var(--c-3-0)),
-		light-dark(var(--c-5-l1),var(--c-5-0)),
-		color-mix(in oklch, light-dark(var(--c-6-l1),var(--c-6-0)),light-dark(var(--c-7-l1),var(--c-7-0)) 70%),
-		light-dark(var(--c-8-l1),var(--c-8-0)),
-		light-dark(var(--c-1-l1),var(--c-1-0))) 3;
-}
-
 figure {
 	margin-block-start: 0.5lh;
 	margin-block-end: 1lh;
@@ -35,25 +23,27 @@ h2, h3, h4, h5, h6 {
 	text-align: start;
 }
 
-p {
+p { text-align: start; }
+
+p.p {
 	text-align: justify;
 	text-indent: 1ic;
 	margin-block: 0.2lh;
-	border-radius: 0.25em;
-	scroll-margin-block-start: 10rem;
 }
+
+.p { scroll-margin-block: 10rem; border-radius: 0.25em; }
 
 hr {
 	border-color: transparent;
 	margin-block: 0.2lh;
-	height: 1lh;
+	block-size: 1lh;
 	border: none;
 }
 
 .e {
-	--bg: transparent;
-	--bd: var(--c-text);
-	--c: var(--c-text);
+	--bg: transparent; --bgh: transparent; --bga: transparent;
+	--bd: var(--c-text); --bdh: var(--c-text); --bda: var(--c-text);
+	--c: var(--c-text); --ch: var(--c-text); --ca: var(--c-text);
 	border-radius: 0.2em;
 	background-color: var(--bg);
 	--cbd: var(--bd);
@@ -64,7 +54,7 @@ hr {
 	text-indent: 0;
 	text-decoration-color: var(--c);
 }
-.e:hover, .e:focus {
+.e:hover, .e:focus-visible {
 	background-color: var(--bgh); --cbd: var(--bdh); color: var(--ch);
 	text-decoration: none;
 	cursor: pointer;
@@ -140,6 +130,12 @@ span.wrapper:has( > :is(.e, span.qm):is(:hover, .selected)) {
 	outline: 1px solid var(--bd);
 }
 
+span.wrapper:has( > mark > .e:is(:hover, .selected)) {
+	color: var(--c);
+	background-color: var(--bg);
+	outline: 1px solid var(--bd);
+}
+
 span.wrapper:has( > .add:is(:hover, .selected)) { --c: var(--c-0-c); --bg: var(--c-0-bg); --bd: var(--c-0-bd); }
 span.wrapper:has( > .w:is(:hover, .selected)) { --c: color-mix(in oklch, var(--c-6-c), var(--c-7-c) 80%); --bg: color-mix(in oklch, var(--c-6-bg), var(--c-7-bg) 80%); --bd: color-mix(in oklch, var(--c-6-bd), var(--c-7-bd) 80%); }
 span.wrapper:has( > .d:is(:hover, .selected)) { --c: var(--c-8-c); --bg: var(--c-8-bg); --bd: var(--c-8-bd); }
@@ -147,6 +143,7 @@ span.wrapper:has( > .s:is(:hover, .selected)) { --c: var(--c-1-c); --bg: var(--c
 span.wrapper:has( > .i:is(:hover, .selected)) { --c: var(--c-2-c); --bg: var(--c-2-bg); --bd: var(--c-2-bd); }
 span.wrapper:has( > .t:is(:hover, .selected)) { --c: var(--c-3-c); --bg: var(--c-3-bg); --bd: var(--c-3-bd); }
 span.wrapper:has( > .g:is(:hover, .selected)) { --c: var(--c-5-c); --bg: var(--c-5-bg); --bd: var(--c-5-bd); }
+span.wrapper:has( > mark > .e:is(:hover, .selected)) { --bd: light-dark(MarkText,Mark); }
 
 sup {
 	vertical-align: text-top;
@@ -166,15 +163,11 @@ span.qm {
 	vertical-align: text-top;
 }
 
-hgroup p {
-	text-indent: 0;
-	margin-block-start: 0;
-	margin-block-end: 0.5lh;
-}
-
 span.weekspan {
 	background-color: light-dark(rgb(255, 255, 0),rgb(110, 90, 0));
-	--bg: light-dark(color-mix(in srgb, rgb(255, 255, 0) 30%, var(--c-bg)),color-mix(in srgb, rgb(110, 90, 0) 30%, var(--c-bg)));
+	--bg: light-dark(color-mix(in srgb, rgb(255, 255, 0) 50%, var(--c-bg)),color-mix(in srgb, rgb(110, 90, 0) 50%, var(--c-bg)));
+	--bgh: light-dark(color-mix(in srgb, rgb(255, 255, 0) 70%, var(--c-bg)),color-mix(in srgb, rgb(110, 90, 0) 70%, var(--c-bg)));
+	--bga: light-dark(color-mix(in srgb, rgb(255, 255, 0) 90%, var(--c-bg)),color-mix(in srgb, rgb(110, 90, 0) 90%, var(--c-bg)));
 }
 
 time.weekwrite {
@@ -197,11 +190,41 @@ data:hover, time:hover, span.qm:hover {
 }
 
 @media screen and (max-width: 480px) {
-	data, time, span.qm {
+	data:not(.e), time, span.qm {
 		text-decoration: underline;
 		text-decoration-style: dotted;
 		cursor: help;
 	}
+}
+
+ins {
+	background-color: var(--c-1-bgh);
+	color: var(--c-1-c);
+}
+
+del {
+	color: var(--c-gray7);
+}
+
+mark {
+	background-color: color-mix(in srgb, Mark 95%, var(--c-bg));
+}
+
+mark:has( > .e:only-child) {
+	background: none;
+}
+
+mark .e.e {
+	color: unset;
+	background-color: unset;
+	box-shadow: inset 0 0 0 1px MarkText;
+}
+
+mark > .e:only-child {
+	color: MarkText;
+	background-color: color-mix(in srgb, Mark 95%, var(--c-bg));
+	box-shadow: inset 0 0 0 1px MarkText,
+		0 0 0 1px Mark;
 }
 
 dialog {
@@ -216,6 +239,7 @@ dialog {
 	inline-size: max-content;
 	max-inline-size: 60vi;
 	word-break: keep-all;
+	line-height: 1.5;
 	box-sizing: border-box;
 	border-width: 1.5px;
 	border-color: var(--bd);
@@ -237,7 +261,9 @@ dialog:not(:popover-open) {
 	visibility: hidden;
 }
 
-dialog button {
+dialog :is(a, button) {
+	display: inline-block;
+	font-family: inherit;
 	color: inherit;
 	background-color: inherit;
 	border: none;
@@ -245,28 +271,27 @@ dialog button {
 	box-shadow: inset 0 0 0 1.5px var(--bd);
 	line-height: 1;
 	padding-block: 0.2em;
-	margin-inline-end: 2px;
+	padding-inline: 0.25em;
 	font-size: 1em;
 }
 
-dialog button:hover {
+dialog :is(a, button):has( + :is(a, button)) {
+	margin-inline-end: 2px;
+}
+
+dialog :is(a, button):hover {
 	color: var(--ch, var(--c));
 	background-color: var(--bgh, var(--bg));
 	box-shadow: inset 0 0 0 1.5px var(--bdh, var(--bd));
 }
 
-dialog button:active {
+dialog :is(a, button):active {
 	color: var(--ca, var(--c));
 	background-color: var(--bga, var(--bg));
 	box-shadow: inset 0 0 0 1.5px var(--bda, var(--bd));
 }
 
-@keyframes bg-flash {
-	from { box-shadow: 0 0 0 0.75em rgb(255 185 0 / 50%); background-color: rgb(255 185 0 / 50%); }
-	to { box-shadow: 0 0 0 0.75em transparent; background-color: transparent; }
-}
-
-.cr_buttons { margin-block: 2.5rem; }
+.cr_buttons { margin-block-start: 2rem; }
 
 .cr_button {
 	width: 4rem;
@@ -291,80 +316,6 @@ dialog button:active {
 .loadnothing { --cbd: var(--c-1-i2); }
 .loadnothing:hover { --cbd: var(--c-1-i2); }
 .loadnothing:active { --cbd: var(--c-1-i2); }
-
-section {
-	border-radius: 0.25em;
-	scroll-margin-block: 10rem;
-	padding-block-end: 1px; /* prevents margin collapse because it makes .to-top wanky */
-}
-
-.to-top {
-	box-sizing: content-box;
-	width: 2.25rem;
-	height: 2.25rem;
-	padding: 0;
-	position: sticky;
-	inset-block: 0;
-	float: inline-end;
-	shape-outside: polygon(100% 0);
-	border-radius: 20%;
-	background: none;
-	border: 4px solid transparent;
-	--cbd: var(--c-0-i2);
-	transform: translate(3rem, -2rem);
-}
-.to-top:hover { --cbd: var(--c-0-i3); }
-.to-top:active { --cbd: var(--c-0-i4); }
-
-.to-top > svg {
-	width: 100%;
-	height: 100%;
-	--bd: var(--cbd);
-	--w: 4px;
-}
-
-@media screen and (max-width: 480px) {
-	.to-top {
-		--cbd: var(--c-0-i3);
-		transform: translate(0.5rem, -2rem);
-		border: 4px solid var(--c-extreme);
-		background-color: var(--c-extreme);
-		opacity: 0.6;
-	}
-	.to-top:hover { --cbd: var(--c-0-i3); opacity: 0.8; }
-	.to-top:active { --cbd: var(--c-0-i3); opacity: 1; }
-}
-
-ins {
-	background-color: var(--c-1-bgh);
-	color: var(--c-1-c);
-}
-
-del {
-	color: var(--c-gray7);
-}
-
-.hidden {
-	display: none;
-}
-
-@media print {
-	body {
-		margin: 0 !important;
-		padding: 0 !important;
-	}
-	@page {
-		size: A4 !important;
-		margin: 12.5mm !important;
-		@top-left { font-family: 'Nanum Gothic Coding'; font-weight: bold; font-size: 0.8rem; content: '끾기록·cycelog'; margin-inline-start: -8mm; }
-		@top-right { font-family: 'Nanum Gothic Coding'; font-weight: bold; font-size: 0.8rem; content: "    " counter(page) "/" counter(pages); text-align: right; margin-inline-end: -8mm; }
-		@bottom-left { font-family: 'Nanum Gothic Coding'; font-weight: bold; font-size: 0.8rem; content: var(--server); margin-inline-start: -8mm; }
-		@bottom-right { font-family: 'Nanum Gothic Coding'; font-weight: bold; font-size: 0.8rem; content: var(--href); text-align: right; margin-inline-end: -8mm; }
-	}
-	h1 { margin-block-start: 0 !important; }
-	p { orphans: 2 !important; } /* i guess you have to not use Firefox when printing */
-	.cr_buttons, .cr_button, .cr_icons { display: none !important; }
-}
 
 #back {
 	position: absolute;
@@ -400,4 +351,14 @@ del {
 		margin-inline-end: 0.1rem;
 		margin-block-end: 0.1rem;
 	}
+}
+
+#fontload {
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.hidden {
+	display: none;
 }

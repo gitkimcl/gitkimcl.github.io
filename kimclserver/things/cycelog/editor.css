@@ -1,6 +1,6 @@
 #new {
 	outline: 1px solid var(--c-0-bd);
-	min-height: 1lh;
+	min-block-size: 1lh;
 }
 #new:has( .edit-inside) { outline-style: auto; }
 
@@ -71,10 +71,6 @@ span.error {
 	clip-path: polygon(0 0, 100% 0, 100% 16%, 58% 16%, 58% 100%, 42% 100%, 42% 16%, 0 16%);
 }
 
-h2, .p {
-	position: relative;
-}
-
 .cr_icons {
 	position: sticky;
 	inset-block: 0.9lh;
@@ -117,6 +113,4 @@ h2, .p {
 .edit:is(:hover,:focus-visible) { --cbd: var(--c-8-c); }
 .edit:active { --cbd: var(--c-8-ca); }
 
-p:has( + .editnewicons) {
-	opacity: 0.6;
-}
+p:has( + .editnewicons) { opacity: 0.6; }
