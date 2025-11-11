@@ -64,7 +64,7 @@ figure > * {
 }
 
 ul:not(ul ul) {
-	inline-size: min-content;
+	inline-size: fit-content;
 	padding: 0;
 	margin-inline: auto;
 }
