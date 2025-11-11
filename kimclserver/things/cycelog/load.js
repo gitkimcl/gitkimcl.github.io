@@ -3,7 +3,7 @@ import { d$, deco, get_p, get_navp, format_date } from './util.js';
 import { remove_dialog } from './dialog.js';
 import { make_edit_buttons, make_init_buttons } from './editui.js';
 
-const EDIT_FLAG = window.location.pathname.endsWith("editor.html");
+const EDIT_FLAG = !!(new URLSearchParams(window.location.search).get("edit"));
 
 function highlight(el) {
 	if (el.tagName === "SECTION") {
