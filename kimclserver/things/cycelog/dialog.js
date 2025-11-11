@@ -80,7 +80,7 @@ async function create_dialog() {
 		if (el.hasClass("ref")) {
 			if (INFO_PAGE_FLAG) {
 				$("body").append(dialog_base().append(`<span>${el.val()}번 기록 언급<br></span>`)
-					.append($(`<a href="./viewer.html#p${el.closest(".p").attr("data-pid")}">기록에서 보기</a>`))
+					.append($(`<a href="./main.html#p${el.closest(".p").attr("data-pid")}">기록에서 보기</a>`))
 					.append("<br>").append($(`<a href="./entry.html?id=${el.val()}">관련 정보 보기</a>`)));
 				return;
 			}
@@ -91,7 +91,7 @@ async function create_dialog() {
 		}
 		if (INFO_PAGE_FLAG) {
 			$("body").append(dialog_base().append(`<span>${el.val()}번 기록<br></span>`)
-				.append($(`<a href="./viewer.html#a${el.val()}">기록에서 보기</a>`))
+				.append($(`<a href="./main.html#a${el.val()}">기록에서 보기</a>`))
 				.append("<br>").append($(`<a href="./entry.html?id=${el.val()}">관련 정보 보기</button>`)));
 			return;
 		}
@@ -110,7 +110,7 @@ async function create_dialog() {
 		if (INFO_PAGE_FLAG) {
 			$("body").append(dialog_base().append(`<span>${el.val()} · ${await fetchget(`/cycelog/find/person?code=${el.val()}`)
 				.then((res) => res.name)}<br></span>`)
-				.append($(`<a href="./viewer.html#p${el.closest(".p").attr("data-pid")}">기록에서 보기</a>`))
+				.append($(`<a href="./main.html#p${el.closest(".p").attr("data-pid")}">기록에서 보기</a>`))
 				.append("<br>").append($(`<a href="./person.html?code=${el.val()}">관련 정보 보기</a>`)));
 			return;
 		}
