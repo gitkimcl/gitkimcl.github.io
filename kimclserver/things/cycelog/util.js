@@ -30,8 +30,22 @@ export function get_kind(cls) {
 }
 
 export function get_p(id, content) {
-	if (content.startsWith("<!--OUTER-->")) return $(content).last().addClass("p").addClass("htmlp").attr("data-pid",id).attr("id",`p${id}`);
-	return $(`<p id="p${id}" class="p" data-pid="${id}">${content}</p>`);
+	if (content.startsWith("<!--OUTER-->")) return $(content).last().addClass("p").addClass("htmlp").attr("data-pid",id);
+	return $(`<p class="p" data-pid="${id}">${content}</p>`);
+}
+
+export function get_navp(p, id, content) {
+	let np = $(`<a class="ndata nwp" href="#p${id}" data-pid="${id}"></a>`);
+	if (content === "<!--OUTER--><hr>") np.addClass("invis");
+	if (content.startsWith("<!--OUTER--><h3>")) {
+		np.addClass("nwh");
+		np.append($(`<span class="ndesc">${p.text()}</span>`));
+	} else {
+		np.append($(`<span class="ndesc"></span>`).text($(".e:not(.ref, .add)",p).map(
+			function () { return this.value; }
+		).get().join()));
+	}
+	return np;
 }
 
 export function format_date(d, time, noyear) {

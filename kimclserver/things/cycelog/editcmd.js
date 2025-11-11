@@ -317,7 +317,7 @@ function cmd_entry(cmd1, cmd2) {
 	let kind = cmd1.charAt(2);
 	let id = parseInt(cmd1.slice(3));
 	if ("s d t g w i".split(' ').indexOf(kind) !== -1) {
-		let ins = $(`<data id="a${id}" class="e ${kind}" value="${id}">${id}${cmd2.length?' ':''}</data>`);
+		let ins = $(`<data class="e ${kind}" value="${id}">${id}${cmd2.length?' ':''}</data>`);
 		return [3,ins,cmd2[0]];
 	}
 	throw "항목 - 종류가 올바르지 않음";

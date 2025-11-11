@@ -1,5 +1,5 @@
 import { fetchbody } from '../../global/util.js';
-import { deco, get_p, get_kind } from './util.js';
+import { deco, get_p, get_navp, get_kind } from './util.js';
 import { load_week, reload_week } from "./load.js";
 import { get_new } from "./editcmd.js";
 import { p_icons } from "./editui.js";
@@ -33,9 +33,8 @@ export function delete_week(id) {
 	fetchbody("/cycelog/week", "DELETE", {
 		id: id
 	}).then((res) => {
-		console.log(res);
-		let prev = $(`section[data-wid=${id}]`).prev();
-		let next = $(`section[data-wid=${id}]`).next();
+		let prev = $(`section[data-wid="${id}"]`).prev();
+		let next = $(`section[data-wid="${id}"]`).next();
 		$(".cr_after",prev).removeClass("hidden");
 		$(".cr_before",next).removeClass("hidden");
 		$(".cr_loadnothing",prev).removeClass("cr_loadnothing");
@@ -49,13 +48,21 @@ export function delete_week(id) {
 			$(".cr_after",prev).removeClass("hidden");
 			$(".cr_before",next).removeClass("hidden");
 		} else if (!prev.attr("data-order")) {
+			$(".loadbefore",next).removeClass("loadnothing");
 			$(".loadbefore > svg > use",next).attr("href", "#up");
 			$(".cr_before",next).removeClass("hidden");
 		} else if (!next.attr("data-order")) {
+			$(".loadafter",prev).removeClass("loadnothing");
 			$(".loadafter > svg > use",prev).attr("href", "#down");
 			$(".cr_after",prev).removeClass("hidden");
 		}
-		$(`section[data-wid=${id}]`).remove();
+		$(`section[data-wid="${id}"]`).remove();
+		let nav = $(`.navweek[data-wid="${id}"]`);
+		let nprev = nav.prev();
+		if (parseInt(nav.attr("data-order")) - parseInt(nprev.attr("data-order")) === 1) {
+			$(".nwend",nprev).removeClass("invis");
+		}
+		nav.remove();
 	}).catch((res) => { alert(`주차 삭제 실패: ${res}`); });
 }
 
@@ -145,6 +152,7 @@ export function add_p() {
 	fetchbody("/cycelog/p","POST",body).then((e) => {
 		console.log(e);
 		let np = get_p(e.id, e.content);
+		let nav = get_navp(np, e.id, e.content);
 		if (np.get(0).tagName === "HR") np = get_p(e.id, "<br>").addClass("htmlp");
 		deco(np);
 		$("#new", p).before(np);
@@ -152,6 +160,8 @@ export function add_p() {
 		$("#new").replaceWith(get_new(np.attr("data-pid")));
 		$("#new").before($("#newicons"));
 		$("#new").get(0).focus();
+		if (body.before_id == null) $(`.nwstart[data-wid="${body.head_of_id}"]`).after(nav);
+		else $(`.nwp[data-pid="${body.before_id}"]`).after(nav);
 	}).catch((res) => {
 		let undeco = $("#new").html();
 		reload_week(p.attr("data-wid")).then(() => $("#new").html(undeco));
@@ -180,7 +190,7 @@ export function edit_p() {
 		let np = get_p(e.id, e.content);
 		if (np.get(0).tagName === "HR") np = get_p(e.id, "<br>").addClass("htmlp");
 		deco(np);
-		$(`.p[data-pid=${e.id}]`).replaceWith(np);
+		$(`.p[data-pid="${e.id}"]`).replaceWith(np);
 		np.prepend(p_icons);
 		$("#new").replaceWith(get_new(np.attr("data-pid")));
 		$("#new").html(e.content);
@@ -196,9 +206,10 @@ export function delete_p(id) {
 		id: id
 	}).then((res) => {
 		console.log(res);
-		$(`.p[data-pid=${id}]`).remove();
+		$(`.p[data-pid="${id}"]`).remove();
+		$(`.nwp[data-pid="${id}"]`).remove();
 	}).catch((res) => {
-		reload_week($(`.p[data-pid=${id}]`).parent().attr("data-wid"));
+		reload_week($(`.p[data-pid="${id}"]`).parent().attr("data-wid"));
 		alert(`문단 삭제 실패: ${res}`);
 	});
 }

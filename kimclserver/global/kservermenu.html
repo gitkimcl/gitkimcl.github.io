@@ -161,8 +161,8 @@
 					<div class="ks_gap"></div>
 					<form id="ks_loginf" class="ks_row" enctype="multipart/form-data">
 						<div>
-							<input id="ks_id" type="text" name="username" placeholder="계정명 입력" required><br>
-							<input id="ks_pw" type="password" name="password" placeholder="비밀번호 입력" required>
+							<input id="ks_id" type="text" name="username" autocomplete="username" placeholder="계정명 입력" required><br>
+							<input id="ks_pw" type="password" name="password" autocomplete="current-password" placeholder="비밀번호 입력" required>
 						</div>
 						<button id="ks_login" type="submit" disabled>로그인</button>
 					</form>
@@ -311,7 +311,7 @@
 
 			if (localStorage.getItem("server.url")) $("ks_nurl",sr).value = localStorage.getItem("server.url");
 			connect();
-			window.setInterval(connect, 3000);
+			window.setInterval(connect, 10000);
 		</script>
 	</template>
 </body>

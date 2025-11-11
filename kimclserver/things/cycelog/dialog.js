@@ -85,7 +85,7 @@ async function create_dialog() {
 				return;
 			}
 			$("body").append(dialog_base().append(`<span>${el.val()}번 기록 언급<br></span>`)
-				.append($(`<button type="button">기록으로 이동</button>`).on("click",()=>to_fragment(el.val())))
+				.append($(`<button type="button">기록으로 이동</button>`).on("click",()=>to_fragment(`#a${el.val()}`)))
 				.append("<br>").append($(`<a href="./entry.html?id=${el.val()}">관련 정보 보기</a>`)));
 			return;
 		}

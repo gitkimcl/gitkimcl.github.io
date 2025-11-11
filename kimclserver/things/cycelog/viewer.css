@@ -1,6 +1,13 @@
+:root {
+	--nav-on: 1;
+}
+
 section {
 	border-radius: 0.25em;
-	scroll-margin-block: 10rem;
+	scroll-margin-block: 5rem;
+}
+
+section:has(.cr_after.hidden) {
 	padding-block-end: 1px; /* prevents margin collapse because it makes .to-top wanky */
 }
 
@@ -48,7 +55,7 @@ section {
 	background: none;
 	border: 4px solid transparent;
 	--cbd: var(--c-0-i2);
-	transform: translate(3rem, -2rem);
+	transform: translate(2.65rem, -2rem);
 }
 .to-top:hover { --cbd: var(--c-0-i3); }
 .to-top:active { --cbd: var(--c-0-i4); }
@@ -72,6 +79,130 @@ section {
 	.to-top:active { --cbd: var(--c-0-i3); opacity: 1; }
 }
 
+aside {
+	position: fixed;
+	inset: 0;
+	inset-inline-start: 50vi;
+	mask-image: linear-gradient(90deg, transparent 0 27.5rem, white 29.5rem 100%), linear-gradient(transparent 0% 2rem, white 4rem calc(100% - 4rem), transparent calc(100% - 2rem) 100%);
+	mask-composite: intersect;
+	z-index: -1;
+}
+
+aside:has( nav:hover) {
+	z-index: 0;
+	mask-image: linear-gradient(90deg, transparent 0%, white 5% 100%), linear-gradient(transparent 0% 2rem, white 4rem calc(100% - 4rem), transparent calc(100% - 2rem) 100%);
+}
+
+.navscroll {
+	block-size: 100%;
+	scrollbar-width: none;
+	overscroll-behavior: contain;
+	overflow-inline: clip;
+	overflow-block: scroll;
+}
+
+nav {
+	inline-size: 32px;
+	padding-inline-start: calc(50vi - 27.5rem - 80px);
+	padding-inline-end: 32px;
+	margin-inline-start: auto;
+	margin-inline-end: 0;
+	padding-block: 50vb;
+}
+
+.navweek:has(.nwend:not(.invis)) { margin-block-end: 30px; }
+
+.nw1 { --bg: var(--c-1-bgh); --bgv: var(--c-1-i0); --bgh: var(--c-1-i1); --bga: var(--c-1-i2); --c: var(--c-1-i1); --cv: var(--c-1-0); --ch: var(--c-1-c); --ca: var(--c-1-ch); }
+.nw0 { --bg: var(--c-0-bgh); --bgv: var(--c-0-i0); --bgh: var(--c-0-i1); --bga: var(--c-0-i2); --c: var(--c-0-i1); --cv: var(--c-0-0); --ch: var(--c-0-c); --ca: var(--c-0-ch); }
+.nw2 { --bg: var(--c-2-bgh); --bgv: var(--c-2-i0); --bgh: var(--c-2-i1); --bga: var(--c-2-i2); --c: var(--c-2-i1); --cv: var(--c-2-0); --ch: var(--c-2-c); --ca: var(--c-2-ch); }
+.nw3 { --bg: var(--c-3-bgh); --bgv: var(--c-3-i0); --bgh: var(--c-3-i1); --bga: var(--c-3-i2); --c: var(--c-3-i1); --cv: var(--c-3-0); --ch: var(--c-3-c); --ca: var(--c-3-ch); }
+.nw4 { --bg: var(--c-4-bgh); --bgv: var(--c-4-i0); --bgh: var(--c-4-i1); --bga: var(--c-4-i2); --c: var(--c-4-i1); --cv: var(--c-4-0); --ch: var(--c-4-c); --ca: var(--c-4-ch); }
+.nw5 { --bg: var(--c-5-bgh); --bgv: var(--c-5-i0); --bgh: var(--c-5-i1); --bga: var(--c-5-i2); --c: var(--c-5-i1); --cv: var(--c-5-0); --ch: var(--c-5-c); --ca: var(--c-5-ch); }
+.nw6 { --bg: var(--c-6-bgh); --bgv: var(--c-6-i0); --bgh: var(--c-6-i1); --bga: var(--c-6-i2); --c: var(--c-6-i1); --cv: var(--c-6-0); --ch: var(--c-6-c); --ca: var(--c-6-ch); }
+.nw7 { --bg: var(--c-7-bgh); --bgv: var(--c-7-i0); --bgh: var(--c-7-i1); --bga: var(--c-7-i2); --c: var(--c-7-i1); --cv: var(--c-7-0); --ch: var(--c-7-c); --ca: var(--c-7-ch); }
+.nw8 { --bg: var(--c-8-bgh); --bgv: var(--c-8-i0); --bgh: var(--c-8-i1); --bga: var(--c-8-i2); --c: var(--c-8-i1); --cv: var(--c-8-0); --ch: var(--c-8-c); --ca: var(--c-8-ch); }
+.nw9 { --bg: var(--c-9-bgh); --bgv: var(--c-9-i0); --bgh: var(--c-9-i1); --bga: var(--c-9-i2); --c: var(--c-9-i1); --cv: var(--c-9-0); --ch: var(--c-9-c); --ca: var(--c-9-ch); }
+
+.ndata {
+	display: block;
+	padding-inline: calc(50% - 3px);
+	margin-inline: auto;
+	background: var(--bg);
+	background-clip: content-box;
+	position: relative;
+}
+.nwp { block-size: 30px; }
+.nwstart { block-size: 32px; }
+.nwstart:not(:has( + .nwp)) { block-size: 40px; }
+.nwend { block-size: 16px; }
+.ndata.invis { block-size: 0; }
+
+.ndata::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	margin: auto;
+	border-radius: 50%;
+}
+
+.nwp::before {
+	width: 14px; height: 14px;
+	background: var(--bg);
+}
+
+.nwstart::before {
+	width: 20px; height: 20px;
+	border: 6px solid var(--bg);
+	background: var(--c-bg);
+}
+.nwstart:not(:has( + .nwp))::before { inset-block-end: 8px; }
+
+.nwend::before {
+	inline-size: 16px;
+	block-size: 0px;
+	border-radius: 0;
+	border: 4px solid var(--bg);
+	background: var(--c-bg);
+	inset-block-start: 8px;
+}
+
+.nwh::before {
+	width: 10px; height: 10px;
+	border: 6px solid var(--bg);
+	background: var(--c-bg);
+}
+
+.ndata.invis::before { content: none; }
+
+.ndesc {
+	display: inline-block;
+	position: absolute;
+	inset-block: 0;
+	color: var(--c);
+	block-size: fit-content;
+	margin-block: auto;
+	white-space: nowrap;
+}
+.nwp > .ndesc { inset-inline-end: calc(50% + 11px); }
+.nwh > .ndesc { inset-inline-end: calc(50% + 15px); }
+.nwstart > .ndesc { inset-inline-end: calc(50% + 20px); }
+.nwstart:not(:has( + .nwp)) > .ndesc { inset-block-end: 8px; }
+aside:hover .ndesc { background-color: oklch(from var(--c-bg) l c h / 90%); box-shadow: 0 0 0 0.2rem oklch(from var(--c-bg) l c h / 90%);}
+
+.ndata.inview, .inview + .nwend { --bg: var(--bgv); --c: var(--cv); }
+.ndata:hover { --bg: var(--bgh); --c: var(--ch); }
+.ndata:active { --bg: var(--bga); --c: var(--ca); }
+
+@media screen and (max-width: 70rem) {
+	:root {
+		--nav-on: 0;
+	}
+
+	aside {
+		display: none;
+	}
+}
+
 @media print {
 	body {
 		margin: 0 !important;
@@ -88,10 +219,6 @@ section {
 	h1 { margin-block-start: 0 !important; }
 	p { orphans: 2 !important; } /* i guess you have to not use Firefox when printing */
 	.cr_buttons, .cr_button, .cr_icons { display: none !important; }
-}
-
-#back {
-	position: absolute;
 }
 
 .hidden {

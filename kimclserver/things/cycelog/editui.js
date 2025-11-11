@@ -15,7 +15,7 @@ export function make_init_buttons() {
 export function make_edit_buttons(el) {
 	if ($("#new", el).length) {
 		let is_after = $("#new", el).attr("data-isafter");
-		$(`.p[data-pid=${is_after}]`,el).after($("#new"));
+		$(`.p[data-pid="${is_after}"]`,el).after($("#new"));
 		$("#new").before($("#newicons"));
 	}
 	$("h2:not(:has( > .cr_icons))", el).prepend(function () {
@@ -44,9 +44,9 @@ function start_new(id, head) {
 	if (!cancel_new()) return;
 	let n = get_new(head?-1:id);
 	if (head) {
-		$(`section[data-wid=${id}] > hgroup`).after(n);
+		$(`section[data-wid="${id}"] > hgroup`).after(n);
 	} else {
-		$(`.p[data-pid=${id}]`).after(n);
+		$(`.p[data-pid="${id}"]`).after(n);
 	}
 	n.before($(`<div class="cr_icons" id="newicons">`).append($(`<button class="cr_icon cancel"><svg><use href="#x"></use></svg></button>`).on("click", () => cancel_new()))
 		.append($(`<button class="cr_icon insert"><svg><use href="#plus"></use></svg></button>`).on("click", () => add_p())));
@@ -56,12 +56,12 @@ function start_new(id, head) {
 
 async function start_edit(id) {
 	if (!cancel_new()) return;
-	if ($(`.p[data-pid=${id}]`).hasClass("htmlp")) {
+	if ($(`.p[data-pid="${id}"]`).hasClass("htmlp")) {
 		alert("이 문단은 편집할 수 없습니다.");
 		return;
 	}
 	let n = get_new(id);
-	$(`.p[data-pid=${id}]`).after(n);
+	$(`.p[data-pid="${id}"]`).after(n);
 	n.before($(`<div class="cr_icons editnewicons" id="newicons">`).append($(`<button class="cr_icon cancel"><svg><use href="#x"></use></svg></button>`).on("click", () => cancel_new()))
 		.append($(`<button class="cr_icon edit"><svg><use href="#up"></use></svg></button>`).on("click", () => edit_p())));
 	let orig = (await fetchget(`/cycelog/p?id=${id}`)).content;

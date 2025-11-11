@@ -11,13 +11,11 @@
 	<script src="/global/jquery_slim.js"></script>
 	<script type="module">
 		import { url } from '../../global/util.js';
-		import { deco } from './util.js';
 		import { load_weeks } from './load.js';
-		deco(undefined);
-		load_weeks();
 		$(":root").css("--print-title", `""`);
 		$(":root").css("--server", `"${url()}"`);
 		$(":root").css("--href", `"${window.location.href}"`);
+		load_weeks();
 	</script>
 	<script src="/global/kimclmenu.js" type="module"></script>
 	<script src="/kimclserver/global/kservermenu.js" type="module"></script>
@@ -54,8 +52,8 @@
 	</div>
 	<button id="back" onclick="history.back();"><svg><use href="#left"></use></svg></button>
 	<hgroup>
-		<h1>끾기록 뷰어 테스트 페이지 · cycelog</h1>
-		<p style="text-align: center;">beta</p>
+		<h1>끾기록 테스트 페이지 · cycelog</h1>
+		<p style="text-align: center;">beta 2</p>
 	</hgroup>
 	<template id="newweek">
 		<div class="cr_buttons cr_before">
@@ -70,5 +68,6 @@
 			<button class="cr_button loadafter"><svg><use href="#down"></use></svg></button>
 		</div>
 	</template>
+	<aside><div class="navscroll"><nav></nav></div></aside>
 </body>
 </html>
