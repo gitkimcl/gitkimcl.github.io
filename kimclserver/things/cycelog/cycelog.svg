@@ -1,0 +1,11 @@
+<svg id="ahfugAGEWHfci" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 350 350" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+    <style>
+        svg { color-scheme: light dark; background: light-dark(oklch(98.5% 0 0),oklch(25% 0 0)); }
+        polygon, polyline, circle, line { stroke: light-dark(oklch(20% 0 0),oklch(98.5% 0 0)); fill: transparent; }
+        .fill { fill: light-dark(oklch(20% 0 0),oklch(98.5% 0 0)); }
+        circle.fill { stroke: transparent; }
+    </style>
+    <polygon stroke-linecap="round" stroke-linejoin="round" points="175,255 261.6,105 88.4,105" fill="transparent" stroke-width="28"/>
+    <line stroke-linecap="round" stroke-linejoin="round" x1="75" y1="175" x2="275" y2="175" stroke-width="28"/>
+    <line stroke-linecap="round" stroke-linejoin="round" x1="175" y1="255" x2="275" y2="255" stroke-width="28"/>
+</svg>

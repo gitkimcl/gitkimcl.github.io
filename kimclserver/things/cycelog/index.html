@@ -6,36 +6,95 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="/global/gallery.css">
 	<link rel="stylesheet" type="text/css" href="common.css">
+	<style>
+		#logo {
+			display: block;
+			inline-size: 30rem;
+			max-inline-size: 90%;
+			margin-inline: auto;
+		}
+
+		nav {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 0.3em;
+		}
+
+		.navgroup {
+			display: inline-block;
+			text-align: center;
+		}
+
+		.todo { color: var(--c-0-c); }
+		.todo:hover { color: var(--c-0-ch); }
+		.todo:active { color: var(--c-0-ca); }
+
+		#noscript {
+			text-align: center;
+			display: none;
+		}
+	</style>
+	<noscript>
+		<style>
+			#noscript {
+				display: block;
+			}
+		</style>
+	</noscript>
+	<link rel="stylesheet" type="text/css" href="/global/font/pretendardvariable-gov.css" media="screen and (min-width: 480px)">
 	<script src="/global/jquery_slim.js"></script>
 	<script src="/global/kimclmenu.js" type="module"></script>
 	<script src="/kimclserver/global/kservermenu.js" type="module"></script>
-	<style>
-		hgroup p {
-			padding-block-end: 0.5em;
-			border-bottom: 3px solid var(--c-text);
-			border-image: linear-gradient(90deg, light-dark(var(--c-1-l1),var(--c-1-0)),
-				light-dark(var(--c-2-l1),var(--c-2-0)),
-				light-dark(var(--c-3-l1),var(--c-3-0)),
-				light-dark(var(--c-5-l1),var(--c-5-0)),
-				color-mix(in oklch, light-dark(var(--c-6-l1),var(--c-6-0)),light-dark(var(--c-7-l1),var(--c-7-0)) 70%),
-				light-dark(var(--c-8-l1),var(--c-8-0)),
-				light-dark(var(--c-1-l1),var(--c-1-0))) 3;
-		}
-	</style>
-	<link rel="stylesheet" type="text/css" href="/global/font/pretendardvariable-gov.css" media="screen and (min-width: 480px)">
+	<script type="module">
+		import { url } from '../../global/util.js';
+		$("#ssr").attr("href", `${url()}/cycelog/ssr`);
+	</script>
 </head>
 <body>
 	<kimcl-menu></kimcl-menu>
 	<kserver-menu></kserver-menu>
 	<hgroup>
 		<h1>끾기록 · cycelog</h1>
-		<p style="text-align: center;">beta 3</p>
+		<p style="text-align: center;">끾기록 베타 4</p>
 	</hgroup>
-	<p>끾기록에 오신 것을 환영합니다. 이곳은 임시 메인 페이지입니다.</p>
-	<p>끾기록은 관리자 계정으로 로그인된 상태에서만 볼 수 있습니다.</p>
-	<ul>
-		<li><a href="main.html" title="끾기록 보기">main.html</a></li>
-		<li><a href="main.html?edit=1" title="끾기록 편집기">main.html?edit=1</a></li>
-	</ul>
+	<p>끾기록에 오신 것을 환영합니다. 끾기록은 관리자 계정으로 로그인된 상태에서만 볼 수 있습니다.</p>
+	<div style="height: 2rem;"></div>
+	<nav>
+		<span class="navgroup">
+			<a class="todo" href="record0.html" title="수첩 기록">수첩 기록</a><br>
+			<a class="todo" href="record0.html?edit=1" title="수첩 기록 편집">(편집)</a>
+		</span>
+		&raquo;
+		<span class="navgroup">
+			<a class="todo" href="record1.html" title="1차 기록">1차 기록</a><br>
+			<a class="todo" href="record1.html?edit=1" title="1차 기록 편집">(편집)</a>
+		</span>
+		&raquo;
+		<span class="navgroup">
+			<a href="record3.html" title="3차 기록">3차 기록</a><br>
+			<a href="record3.html?edit=1" title="3차 기록 편집">(편집)</a>
+		</span>
+	</nav>
+	<svg id="logo" role="img" viewBox="50 89.5 250 181" shape-rendering="geometricPrecision" text-rendering="geometricPrecision">
+		<style>
+			polygon, polyline, circle, line { stroke: var(--c-text); fill: transparent; }
+		</style>
+		<polygon stroke-linecap="round" stroke-linejoin="round" points="175,255 261.6,105 88.4,105" fill="transparent" stroke-width="21"/>
+		<line stroke-linecap="round" stroke-linejoin="round" x1="75" y1="175" x2="275" y2="175" stroke-width="21"/>
+		<line stroke-linecap="round" stroke-linejoin="round" x1="175" y1="255" x2="275" y2="255" stroke-width="21"/>
+	</svg>
+	<nav>
+		<a class="todo" href="ftee.html" title="효율적인 이끾끼를 위하여">효끾위</a>
+		&middot;
+		<a class="todo" href="stats.html" title="통계">통계</a>
+		&middot;
+		<a class="todo" id="ssr" title="3차 기록 SSR">SSR</a>
+	</nav>
+	<p id="noscript">
+		자바스크립트가 비활성화돼 있어 위 페이지들은 작동하지 않습니다.<br>
+		자바스크립트가 필요하지 않은 아래 페이지에 접속해 볼 수 있습니다.<br>
+		3차 기록 SSR 링크: [서버 URL]/cycelog/ssr
+	</p>
 </body>
 </html>

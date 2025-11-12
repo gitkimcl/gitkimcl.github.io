@@ -227,7 +227,6 @@ export async function maketest() {
 	for (let e of $("section",test).get()) {
 		console.log(e);
 		for (let ee of $(e).children()) {
-			console.log(id);
 			id = (await fetchbody("/cycelog/p", "POST", complete_body(get_p_body($(ee)), $(e).attr("data-wid"), (id==null)?$(e).attr("data-wid"):null, (id==null)?null:id))).id;
 		}
 		id = null;``

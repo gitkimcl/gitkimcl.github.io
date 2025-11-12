@@ -177,7 +177,7 @@
 			</div>
 		</div>
 		<script id="script" type="module">
-			import { url, fetchget, fetchbody, fetchform, logged_in } from "/kimclserver/global/util.js";
+			import { url, fetchget, fetchbody, logged_in, login, logout } from "/kimclserver/global/util.js";
 
 			function $(id, el) { el=el??document; return el.getElementById(id); }
 			function $q(q, el) { el=el??document; return el.querySelector(q); }
@@ -192,8 +192,16 @@
 			$("ks_hide",sr).onclick = (_) => {
 				(connected) && $('ks_main',sr).classList.add('hidden');
 			}
-			$("ks_loginf",sr).onsubmit = login;
-			$("ks_logout",sr).onclick = logout;
+			$("ks_loginf",sr).onsubmit = function (e) {
+				e.preventDefault();
+				login(this).then(updatestate);
+				return false;
+			};
+			$("ks_logout",sr).onclick = function (e) {
+				e.preventDefault();
+				logout().then(updatestate);
+				return false;
+			};
 
 			let connected = false;
 			let ping = -1;
@@ -238,6 +246,7 @@
 					$("ks_hide",sr).classList.add("invis");
 					$('ks_main',sr).classList.remove('hidden');
 					if (logged_in()) logout();
+					return;
 				} else if (!connected) {
 					setColor("1");
 					$("ks_status",sr).textContent = "연결 실패";
@@ -255,19 +264,11 @@
 						$("ks_status",sr).textContent = "로그인됨";
 					}
 					
-					fetchbody("/auth", "POST")
-					.then((data) => {
-						$("ks_account",sr).textContent = localStorage.getItem("server.username");
-						$("ks_logout",sr).classList.remove("hidden");
-						$("ks_id",sr).setAttribute("disabled","true");
-						$("ks_pw",sr).setAttribute("disabled","true");
-						$("ks_login",sr).setAttribute("disabled","true");
-					})
-					.catch((e) => {
-						alert(e);
-						logout();
-						updatestate();
-					});
+					$("ks_account",sr).textContent = localStorage.getItem("server.username");
+					$("ks_logout",sr).classList.remove("hidden");
+					$("ks_id",sr).setAttribute("disabled","true");
+					$("ks_pw",sr).setAttribute("disabled","true");
+					$("ks_login",sr).setAttribute("disabled","true");
 				} else {
 					setColor((ping<=500)?"4":"3");
 					$("ks_status",sr).textContent = "연결됨";
@@ -286,26 +287,6 @@
 				localStorage.setItem("server.url", $("ks_nurl",sr).value);
 				logout();
 				connect();
-				return false; // 새로고침 방지
-			}
-
-			function logout() {
-				localStorage.removeItem("server.username");
-				localStorage.removeItem("server.token");
-				localStorage.removeItem("server.is_admin");
-				updatestate();
-			}
-
-			function login(e) {
-				e.preventDefault();
-				fetchform("/login", "POST", this)
-				.then((data) => {
-					localStorage.setItem("server.username", data.username);
-					localStorage.setItem("server.token", data.access_token);
-					if (data.is_admin) localStorage.setItem("server.is_admin", "true");
-				}).catch((e) => {
-					alert(e);
-				}).finally((_) => updatestate());
 				return false; // 새로고침 방지
 			}
 
