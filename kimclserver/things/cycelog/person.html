@@ -48,6 +48,7 @@
 		}
 	</style>
 	<script src="/global/jquery_slim.js"></script>
+	<script src="version.js" defer></script>
 	<script type="module">
 		import { fetchget, fetchbody } from '../../global/util.js';
 		import { deco, format_date, get_p } from './util.js';
@@ -136,7 +137,7 @@
 	<button id="back" onclick="history.back();"><svg><use href="#left"></use></svg></button>
 	<hgroup>
 		<h1>3차 기록 인물 정보</h1>
-		<p style="text-align: center;">끾기록 베타 4</p>
+		<p id="version">끾기록 베타</p>
 	</hgroup>
 	<section>
 		<h2><slot id="pcode">---</slot> · <slot id="pname">---</slot></h2>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<title>cycelog</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="/global/gallery.css">
+	<link rel="stylesheet" type="text/css" href="common.css">
+	<link rel="stylesheet" type="text/css" href="/global/font/pretendardvariable-gov.css" media="screen and (min-width: 480px)">
+	<style>
+		ul, ol {
+			margin-block: 0;
+			padding-inline-start: 1em;
+		}
+
+		li { position: relative; }
+		ol > li::before {
+			content: '';
+			position: absolute;
+			inset-inline-start: -1em;
+			inset-inline-end: 100%;
+			padding-inline-start: 0.125em;
+			padding-inline-end: 0.725em;
+			inset-block-start: 1lh;
+			inset-block-end: 0;
+			background-color: var(--c-0-i0);
+			background-clip: content-box;
+		}
+	</style>
+	<script src="/global/jquery_slim.js"></script>
+	<script src="version.js" defer></script>
+	<script type="module">
+		import { fetchget } from '../../global/util.js';
+		fetchget("/cycelog/ftee", true).then((res) => {
+			$("main").html(res);
+		});
+	</script>
+	<script src="/global/kimclmenu.js" type="module"></script>
+	<script src="/kimclserver/global/kservermenu.js" type="module"></script>
+</head>
+<body>
+	<kimcl-menu></kimcl-menu>
+	<kserver-menu></kserver-menu>
+	<svg style="display: none">
+		<symbol id="left" viewbox="0 0 24 24"><path d="M5 12H19M5 12L12 5M5 12L12 19" stroke="var(--bd)" fill="transparent" stroke-width="var(--w, 2)" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+	</svg>
+	<button id="back" onclick="history.back();"><svg><use href="#left"></use></svg></button>
+	<hgroup>
+		<h1>효율적인 이끾끼를 위하여</h1>
+		<p id="version">끾기록 베타</p>
+	</hgroup>
+	<main>효끾위 가져오기 실패</main>
+</body>
+</html>

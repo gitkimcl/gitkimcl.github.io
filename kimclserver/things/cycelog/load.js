@@ -72,7 +72,8 @@ export async function load_week(id) {
 	$("#weekname", tmp).replaceWith(title);
 	$("#weekstart", tmp).replaceWith(`<time class="weekstart" datetime="${res.data.start_date}">${format_date(res.data.start_date)}</time>`);
 	$("#weekend", tmp).replaceWith(`<time class="weekend" datetime="${res.data.end_date}">${format_date(res.data.end_date)}</time>`);
-	$("#weekwrite", tmp).replaceWith(`<time class="weekwrite" datetime="${res.data.write_start_date}">${format_date(res.data.write_start_date, true)} ~ </time>`);
+	if (res.data.write_start_date != null) $("#weekwrite", tmp).replaceWith(`<time class="weekwrite" datetime="${res.data.write_start_date}">${format_date(res.data.write_start_date, true)} ~ </time>`);
+	else $("#weekwrite", tmp).remove();
 	$("#weekcode", tmp).replaceWith(`<data class="weekcode" value="${res.data.code}">${res.data.code.toString().padStart(3,'0')}</data>`);
 	$(".to-top", tmp).on("click", () => to_fragment(`#w${tmp.attr("data-wid")}`));
 	let nav = $(`<div class="navweek nw${res.data.code%10}" data-wid="${res.data.id}" data-order="${res.data.order}">`);

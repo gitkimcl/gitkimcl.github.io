@@ -10,6 +10,7 @@
 	<link rel="stylesheet" type="text/css" href="editor.css">
 	<link rel="stylesheet" type="text/css" href="/global/font/pretendardvariable-gov.css" media="screen and (min-width: 480px)">
 	<script src="/global/jquery_slim.js"></script>
+	<script src="version.js" defer></script>
 	<script type="module">
 		import { url } from '../../global/util.js';
 		import { load_weeks } from './load.js';
@@ -48,7 +49,7 @@
 	<button id="back" onclick="history.back();"><svg><use href="#left"></use></svg></button>
 	<hgroup>
 		<h1>3차 기록</h1>
-		<p style="text-align: center;">끾기록 베타 4</p>
+		<p id="version">끾기록 베타</p>
 	</hgroup>
 	<template id="newweek">
 		<div class="cr_buttons cr_before">

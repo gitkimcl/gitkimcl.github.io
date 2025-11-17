@@ -7,6 +7,10 @@
 	<link rel="stylesheet" href="/global/gallery.css">
 	<link rel="stylesheet" type="text/css" href="common.css">
 	<style>
+		body {
+			margin-block-end: 0;
+		}
+
 		#logo {
 			display: block;
 			inline-size: 30rem;
@@ -44,19 +48,20 @@
 	</noscript>
 	<link rel="stylesheet" type="text/css" href="/global/font/pretendardvariable-gov.css" media="screen and (min-width: 480px)">
 	<script src="/global/jquery_slim.js"></script>
-	<script src="/global/kimclmenu.js" type="module"></script>
-	<script src="/kimclserver/global/kservermenu.js" type="module"></script>
+	<script src="version.js" defer></script>
 	<script type="module">
 		import { url } from '../../global/util.js';
 		$("#ssr").attr("href", `${url()}/cycelog/ssr`);
 	</script>
+	<script src="/global/kimclmenu.js" type="module"></script>
+	<script src="/kimclserver/global/kservermenu.js" type="module"></script>
 </head>
 <body>
 	<kimcl-menu></kimcl-menu>
 	<kserver-menu></kserver-menu>
 	<hgroup>
 		<h1>끾기록 · cycelog</h1>
-		<p style="text-align: center;">끾기록 베타 4</p>
+		<p id="version">끾기록 베타</p>
 	</hgroup>
 	<p>끾기록에 오신 것을 환영합니다. 끾기록은 관리자 계정으로 로그인된 상태에서만 볼 수 있습니다.</p>
 	<div style="height: 2rem;"></div>
@@ -85,16 +90,18 @@
 		<line stroke-linecap="round" stroke-linejoin="round" x1="175" y1="255" x2="275" y2="255" stroke-width="21"/>
 	</svg>
 	<nav>
-		<a class="todo" href="ftee.html" title="효율적인 이끾끼를 위하여">효끾위</a>
+		<a class="todo" href="ftee.html" title="검색">검색</a>
 		&middot;
 		<a class="todo" href="stats.html" title="통계">통계</a>
 		&middot;
 		<a class="todo" id="ssr" title="3차 기록 SSR">SSR</a>
 	</nav>
+	<nav><a href="ftee.html" title="효율적인 이끾끼를 위하여">효끾위</a></nav>
 	<p id="noscript">
 		자바스크립트가 비활성화돼 있어 위 페이지들은 작동하지 않습니다.<br>
 		자바스크립트가 필요하지 않은 아래 페이지에 접속해 볼 수 있습니다.<br>
 		3차 기록 SSR 링크: [서버 URL]/cycelog/ssr
+		효끾위 SSR 링크: [서버 URL]/cycelog/ssr/ftee
 	</p>
 </body>
 </html>

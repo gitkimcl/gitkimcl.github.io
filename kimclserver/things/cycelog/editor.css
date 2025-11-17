@@ -1,6 +1,11 @@
 #new {
 	outline: 1px solid var(--c-0-bd);
 	min-block-size: 1lh;
+	text-align: justify;
+	text-indent: 1ic;
+	margin-block: 0.2lh;
+	scroll-margin-block: 5rem;
+	border-radius: 0.25em;
 }
 #new:has( .edit-inside) { outline-style: auto; }
 

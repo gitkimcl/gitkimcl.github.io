@@ -88,7 +88,7 @@ aside {
 	z-index: -1;
 }
 
-aside:has( nav:hover) {
+aside:has( nav:hover), aside:has( :focus-visible) {
 	z-index: 0;
 	mask-image: linear-gradient(90deg, transparent 0%, white 5% 100%), linear-gradient(transparent 0% 2rem, white 4rem calc(100% - 4rem), transparent calc(100% - 2rem) 100%);
 }
@@ -187,10 +187,10 @@ nav {
 .nwh > .ndesc { inset-inline-end: calc(50% + 15px); }
 .nwstart > .ndesc { inset-inline-end: calc(50% + 20px); }
 .nwstart:not(:has( + .nwp)) > .ndesc { inset-block-end: 8px; }
-aside:hover .ndesc { background-color: oklch(from var(--c-bg) l c h / 90%); box-shadow: 0 0 0 0.2rem oklch(from var(--c-bg) l c h / 90%);}
+aside:hover .ndesc, aside:has( :focus-visible) .ndesc { background-color: oklch(from var(--c-bg) l c h / 90%); box-shadow: 0 0 0 0.2rem oklch(from var(--c-bg) l c h / 90%);}
 
 .ndata.inview, .inview + .nwend { --bg: var(--bgv); --c: var(--cv); }
-.ndata:hover { --bg: var(--bgh); --c: var(--ch); }
+.ndata:hover, .ndata:focus-visible { --bg: var(--bgh); --c: var(--ch); }
 .ndata:active { --bg: var(--bga); --c: var(--ca); }
 
 @media screen and (max-width: 70rem) {

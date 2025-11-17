@@ -38,7 +38,7 @@ export function showmsg(id, msg, color, time) {
 	$(`#${id}`).attr("data-timeout",window.setTimeout(() => {$(`#${id}`).css("visibility","hidden")}, time??1000));
 }
 
-export async function fetchget(path) {
+export async function fetchget(path, raw) {
 	const res = await fetch(`${url()}${path}`, {
 		headers: {
 			...(logged_in() && {"Authorization": `Bearer ${localStorage.getItem("server.token")}`})
@@ -53,10 +53,11 @@ export async function fetchget(path) {
 		}
 		throw `${res.status};;${data.detail??''}`;
 	}
+	if (raw) return await res.text();
 	return await res.json();
 }
 
-export async function fetchbody(path, method, body) {
+export async function fetchbody(path, method, body, raw) {
 	const res = await fetch(`${url()}${path}`, {
 		method: method,
 		headers: {
@@ -74,5 +75,6 @@ export async function fetchbody(path, method, body) {
 		const data = await res.json();
 		throw `${res.status};;${JSON.stringify(data.detail)??''}`;
 	}
+	if (raw) return await res.text();
 	return await res.json();
 }

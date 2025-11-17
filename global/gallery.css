@@ -63,21 +63,21 @@ figure > * {
 	max-inline-size: 100%;
 }
 
-ul:not(ul ul) {
+:is(ul, ol):where(:not(:is(ul, ol) :is(ul, ol))) {
 	inline-size: fit-content;
 	padding: 0;
 	margin-inline: auto;
 }
 
-ul > li:has( > details) {
+:is(ul, ol) > li:has( > details) {
 	list-style: none;
 }
 
-ul > li > details > summary {
+:is(ul, ol) > li > details > summary {
 	list-style-position: outside;
 	font-weight: 500;
 }
 
-ul ul {
+:is(ul, ol) :is(ul, ol) {
 	padding-inline-start: 1em;
 }

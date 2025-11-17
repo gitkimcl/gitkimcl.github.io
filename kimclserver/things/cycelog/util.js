@@ -36,7 +36,7 @@ export function get_p(id, content) {
 
 export function get_navp(p, id, content) {
 	let np = $(`<a class="ndata nwp" href="#p${id}" data-pid="${id}"></a>`);
-	if (content === "<!--OUTER--><hr>") np.addClass("invis");
+	if (content === "<!--OUTER--><hr>") np.addClass("invis").attr("tabindex","-1");
 	if (content.startsWith("<!--OUTER--><h3>")) {
 		np.addClass("nwh");
 		np.append($(`<span class="ndesc">${p.text()}</span>`));

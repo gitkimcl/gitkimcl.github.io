@@ -6,7 +6,8 @@ body {
 	font-family: "Pretendard GOV Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
-hgroup:has(h1) p {
+#version {
+	text-align: center;
 	padding-block-end: 0.5em;
 	border-bottom: 3px solid var(--c-text);
 	border-image: linear-gradient(90deg, light-dark(var(--c-1-l1),var(--c-1-0)),

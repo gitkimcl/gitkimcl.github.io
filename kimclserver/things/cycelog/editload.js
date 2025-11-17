@@ -10,14 +10,30 @@ export function add_week(order) {
 	if (name==null) return;
 	let code = prompt("주 번호를 입력하세요");
 	if (code==null) return;
+	if (code != parseInt(code) || parseInt(code) < 0 || parseInt(code) > 999) {
+		alert("제대로(숫자 3개) 입력하세요");
+		return;
+	}
 	code = parseInt(code);
 	let start_date = prompt("시작일이 언제인가요? YYYY-MM-DD 형식으로 입력하세요");
 	if (start_date==null) return;
+	if (isNaN(new Date(start_date).getFullYear())) {
+		alert("제대로 입력하세요");
+		return;
+	}
 	let end_date = prompt("종료일이 언제인가요? YYYY-MM-DD 형식으로 입력하세요");
 	if (end_date==null) return;
+	if (isNaN(new Date(end_date).getFullYear())) {
+		alert("제대로 입력하세요");
+		return;
+	}
 	let write_start_date = prompt("기록 시작 일시가 언제인가요? YYYY-MM-DDTHH:MM 형식으로 입력하거나 비워 두세요(T 대신 ㅆ을 써도 됩니다)");
 	if (write_start_date==null) return;
 	write_start_date = write_start_date.replace("ㅆ","T");
+	if (write_start_date != "" && isNaN(new Date(write_start_date).getFullYear())) {
+		alert("제대로 입력하세요");
+		return;
+	}
 	fetchbody("/cycelog/week", "POST", {
 		name: name,
 		code: code,
