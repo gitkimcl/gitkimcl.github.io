@@ -202,6 +202,7 @@ gett:		{
 			else if (cmd1 === "{.." || cmd1 === "{namu") [type, ins, put_as] = cmd_namu(cmd2);
 			else if (cmd1.startsWith("{ec")) [type, ins, put_as] = cmd_placeholder(cmd1, cmd2); // ㄷㅊ(대체라는 뜻)
 			else if (cmd1 === "{end") [type, ins, put_as] = cmd_end(cmd2);
+			else if (cmd1 === "{.") [type, ins, put_as] = cmd_middot(cmd2);
 			else throw "없는 명령";
 			if (type === -1 || ins == null) throw "알 수 없는 오류 발생";
 			if (put_as != undefined) put(ins, put_as, els);
@@ -211,6 +212,20 @@ gett:		{
 			break cmd;
 		}
 		n.textContent = bef;
+		if (type === 8) {
+			ins = document.createTextNode(ins)
+			n.parentNode.insertBefore(ins, n.nextSibling); // n.nextSibling == null => 알아서 맨 마지막에 넣어줌
+			if (aft) {
+				let after = document.createTextNode(aft);
+				ins.parentNode.insertBefore(after, ins.nextSibling);
+				s.setPosition(after,0);
+			} else {
+				move_cursor_to(ins,1);
+			}
+			d$("new").normalize();
+			cursor();
+			return;
+		}
 		ins.attr("contenteditable", false);
 		if (type & 1) ins.on("click", dialog);
 		if (type & 2) ins.addClass("editable");
@@ -476,7 +491,7 @@ function cmd_wrapper(cmd2) {
 }
 function cmd_qm(cmd2) {
 	if (cmd2.length > 1 || cmd2[0]?.length>1) throw "추가 정보 - 인자가 너무 많거나 텍스트만으로 이루어지지 않음";
-	return [1, $(`<span class="qm"${cmd2.length?` data-why="${sani(cmd2[0][0])}"`:''}>`)];
+	return [1, $(`<span class="qm"${cmd2.length?` data-why="${cmd2[0][0].replaceAll("\"","&quot;")}"`:''}>`)];
 }
 function cmd_format(cmd2, format) {
 	if (cmd2.length > 1) throw `꾸미기(${format}) - 인자가 너무 많음`;
@@ -526,4 +541,8 @@ function cmd_fig(bef, aft, cmd2, els) {
 	newhtml.append(fig);
 	$("#new").replaceWith(newhtml);
 	throw -1;
+}
+function cmd_middot(cmd2) {
+	if (cmd2.length > 0) throw "가운뎃점 - 인자가 없어야 함";
+	return [8,"·"];
 }

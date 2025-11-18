@@ -24,7 +24,7 @@ export function load_fragment() {
 	if (h.startsWith("#w")) {
 		target = $(`section[data-wid="${parseInt(h.slice(2))}"]`).get(0);
 	} else if (h.startsWith("#a")) {
-		target = $(`.e[value="${parseInt(h.slice(2))}"]`).parent().get(0);
+		target = $(`.e:not(.ref)[value="${parseInt(h.slice(2))}"]`).parent().get(0);
 	} else if (h.startsWith("#p")) {
 		target = $(`.p[data-pid="${parseInt(h.slice(2))}"]`).get(0);
 	}
@@ -72,7 +72,12 @@ export async function load_week(id) {
 	$("#weekname", tmp).replaceWith(title);
 	$("#weekstart", tmp).replaceWith(`<time class="weekstart" datetime="${res.data.start_date}">${format_date(res.data.start_date)}</time>`);
 	$("#weekend", tmp).replaceWith(`<time class="weekend" datetime="${res.data.end_date}">${format_date(res.data.end_date)}</time>`);
-	if (res.data.write_start_date != null) $("#weekwrite", tmp).replaceWith(`<time class="weekwrite" datetime="${res.data.write_start_date}">${format_date(res.data.write_start_date, true)} ~ </time>`);
+	if (res.data.write_start_date != null) {
+		if (res.data.write_start_date.includes("T"))
+			$("#weekwrite", tmp).replaceWith(`<time class="weekwrite" datetime="${res.data.write_start_date}">${format_date(res.data.write_start_date, true)} ~ </time>`);
+		else
+			$("#weekwrite", tmp).replaceWith(`<time class="weekwrite" datetime="${res.data.write_start_date}">${format_date(res.data.write_start_date, false)} ~ </time>`);
+	}
 	else $("#weekwrite", tmp).remove();
 	$("#weekcode", tmp).replaceWith(`<data class="weekcode" value="${res.data.code}">${res.data.code.toString().padStart(3,'0')}</data>`);
 	$(".to-top", tmp).on("click", () => to_fragment(`#w${tmp.attr("data-wid")}`));

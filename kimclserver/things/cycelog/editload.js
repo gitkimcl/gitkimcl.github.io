@@ -27,7 +27,7 @@ export function add_week(order) {
 		alert("제대로 입력하세요");
 		return;
 	}
-	let write_start_date = prompt("기록 시작 일시가 언제인가요? YYYY-MM-DDTHH:MM 형식으로 입력하거나 비워 두세요(T 대신 ㅆ을 써도 됩니다)");
+	let write_start_date = prompt("기록 시작 일시가 언제인가요? YYYY-MM-DD 또는 YYYY-MM-DDTHH:MM 형식으로 입력하거나 비워 두세요(T 대신 ㅆ을 써도 됩니다)");
 	if (write_start_date==null) return;
 	write_start_date = write_start_date.replace("ㅆ","T");
 	if (write_start_date != "" && isNaN(new Date(write_start_date).getFullYear())) {
